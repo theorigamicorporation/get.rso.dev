@@ -1,0 +1,62 @@
+name: 🚀 Deploy | s.rso.dev
+run-name: 🚀 Deploy | ${{ github.run_number }} | by @${{ github.actor }} | ${{ github.event_name}}
+
+#######################################################
+# Version: 0.0.2
+#######################################################
+# TODO: Optimize triggers.
+# TODO: Add a job to build README files.
+#######################################################
+# NOTE:
+# This workflow uploads/syncs the files a remote FTP server.
+#######################################################
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+    - '.templates/**'
+    - '.github/**'
+    - '.gitignore'
+    - 'README.md'
+    - 'LICENSE.md'
+
+  workflow_dispatch:
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Get Codebase
+        uses: actions/checkout@v4
+
+      - name: Prepare for Deploy
+        run: |
+            shopt -s nullglob
+            for file in *.sh *.ps1; do
+                mv "$file" "${file%.*}"
+            done
+            shopt -u nullglob
+            rm -rf .git .github README.md .templates
+            ls -lha
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          protocol: ftp
+          local-dir: ./
+          server-dir: ./
+          state-name: .ftp-deploy-sync-state.json
+          dangerous-clean-slate: false
+
+      - name: Purge CF Cache
+        uses: jakejarvis/cloudflare-purge-action@0.3.0
+        env:
+            CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+            CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}

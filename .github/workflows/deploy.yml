@@ -49,7 +49,18 @@ jobs:
           server-dir: ./
           state-name: .ftp-deploy-sync-state.json
           dangerous-clean-slate: false
-          exclude: .git,.github,.gitignore,.gitattributes,.gitmodules,.gitkeep,.DS_Store,.vscode,.idea,.sourcemaps,.vs,.nyc_output,.nycrc,.nycrc.json,.nycrc.yml,.nycrc.yaml,.nycrc.js,.nycrc.cjs
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/_templates/
+            **/.github/
+            .gitkeep
+            .gitignore
+            README.md
+            LICENSE
+            CODEOWNERS
+            CONTRIBUTING.md
 
       - name: Purge CF Cache
         uses: jakejarvis/cloudflare-purge-action@v0.3.0

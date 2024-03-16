@@ -17,6 +17,7 @@ on:
   push:
     branches:
       - master
+      - main
     paths-ignore:
     - '.templates/**'
     - '.github/**'
@@ -48,6 +49,7 @@ jobs:
           server-dir: ./
           state-name: .ftp-deploy-sync-state.json
           dangerous-clean-slate: false
+          exclude: .git,.github,.gitignore,.gitattributes,.gitmodules,.gitkeep,.DS_Store,.vscode,.idea,.sourcemaps,.vs,.nyc_output,.nycrc,.nycrc.json,.nycrc.yml,.nycrc.yaml,.nycrc.js,.nycrc.cjs
 
       - name: Purge CF Cache
         uses: jakejarvis/cloudflare-purge-action@v0.3.0

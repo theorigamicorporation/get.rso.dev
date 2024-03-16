@@ -64,7 +64,7 @@ function Get-PCInfo {
         RAM          = (Get-WmiObject -Class Win32_ComputerSystem -ComputerName $ComputerName).TotalPhysicalMemory
     }
 
-    Write-Log "PC info for $ComputerName: $($PCInfo | ConvertTo-Json -Depth 5)" "Debug"
+    Write-Log "PC info for ${ComputerName}: $($PCInfo | ConvertTo-Json -Depth 5)" "Debug"
 
     return $PCInfo
 }

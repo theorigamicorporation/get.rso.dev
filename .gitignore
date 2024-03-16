@@ -1,0 +1,50 @@
+# Operating System Files
+.DS_Store  # macOS specific
+Thumbs.db  # Windows specific
+.Spotlight-V100  # macOS specific
+.Trashes  # macOS specific
+
+# IDEs
+# This covers a wide array of common IDEs. Uncomment the ones you use.
+.idea/ 
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.sln  # Visual Studio
+*.suo  # Visual Studio
+*.csproj  # Visual Studio 
+*.user  # Visual Studio
+*.userprefs  # Visual Studio
+nbproject/  # NetBeans
+
+# Build Output / Artifacts
+build/
+dist/
+out/
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.lib
+*.o 
+*.so
+
+# Logs, temporary files, etc.
+*.log
+*.tmp
+*~
+
+# Dependency directories 
+# Varies based on your languages/package managers 
+node_modules/ 
+venv/
+**/__pycache__/
+
+# Test Output
+test-results/
+coverage/
+
+# Local configuration 
+# (Be careful if these contain sensitive info!)
+.env

@@ -1,4 +1,4 @@
-name: 🚀 Deploy | s.rso.dev
+name: 🚀 Deploy | get.rso.dev
 run-name: 🚀 Deploy | ${{ github.run_number }} | by @${{ github.actor }} | ${{ github.event_name}}
 
 #######################################################
@@ -6,6 +6,8 @@ run-name: 🚀 Deploy | ${{ github.run_number }} | by @${{ github.actor }} | ${{
 #######################################################
 # TODO: Optimize triggers.
 # TODO: Add a job to build README files.
+# TODO: Add malicious code scanner.
+# TODO: Add a CR LF formatter.
 #######################################################
 # NOTE:
 # This workflow uploads/syncs the files a remote FTP server.
@@ -31,16 +33,8 @@ jobs:
 
       - name: Get Codebase
         uses: actions/checkout@v4
-
-      - name: Prepare for Deploy
-        run: |
-            shopt -s nullglob
-            for file in *.sh *.ps1; do
-                mv "$file" "${file%.*}"
-            done
-            shopt -u nullglob
-            rm -rf .git .github README.md .templates
-            ls -lha
+        with:
+          fetch-depth: 0
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.2.0

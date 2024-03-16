@@ -50,7 +50,7 @@ jobs:
           dangerous-clean-slate: false
 
       - name: Purge CF Cache
-        uses: jakejarvis/cloudflare-purge-action@0.3.0
+        uses: jakejarvis/cloudflare-purge-action@v0.3.0
         env:
             CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
             CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}

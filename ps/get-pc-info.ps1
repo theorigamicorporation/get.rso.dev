@@ -1,12 +1,20 @@
-#-----------------------------------------------------
-# Get PC Info
-#
-# Description: Provides a basic structure and functions
-#              for robust PowerShell scripts 
-#
-# Version: 1.0
-#-----------------------------------------------------
+<# 
+    .SYNOPSIS
+    Get PC Info
 
+    .DESCRIPTION
+    Provides a basic structure and functions for robust PowerShell scripts
+
+    .PARAMETER ComputerName
+    The name of the computer to get info for
+
+    .EXAMPLE
+    Get-PCInfo -ComputerName "localhost"
+
+    .NOTES
+    Version: 1.0
+
+#>
 #-----------------------------------------------------
 # Configuration
 #-----------------------------------------------------

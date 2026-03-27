@@ -135,6 +135,25 @@ Must pass `shellcheck --shell=sh`, `checkbashisms`, and `dash -n`.
 
 Must pass `shellcheck --shell=bash`. Bash features are allowed.
 
+### Download tool resilience
+
+Never hardcode `curl` or `wget`. Always support both with a fallback:
+
+```sh
+if command -v curl >/dev/null 2>&1; then
+    curl -fsSL "$url"
+elif command -v wget >/dev/null 2>&1; then
+    wget -qO- "$url"
+else
+    log "Neither curl nor wget available" "ERR"
+    exit 1
+fi
+```
+
+This applies everywhere: downloading signing keys, fetching installer scripts, hitting APIs. Minimal container images often have only one or neither — don't assume.
+
+Do **not** install curl/wget as a prerequisite just to download something. Use whichever is already available.
+
 ### PowerShell scripts
 
 Place metadata tags inside the `<# ... #>` comment block.

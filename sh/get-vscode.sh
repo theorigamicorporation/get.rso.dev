@@ -371,12 +371,21 @@ install_via_apt() {
     ensure_sudo
 
     # Install prerequisites
-    $_SUDO_CMD apt-get install -y -qq wget gpg apt-transport-https
+    $_SUDO_CMD apt-get install -y -qq gpg apt-transport-https
 
     # Add Microsoft GPG key
-    wget -qO- https://packages.microsoft.com/keys/microsoft.asc \
-        | gpg --dearmor \
-        | $_SUDO_CMD tee /usr/share/keyrings/microsoft-vscode.gpg >/dev/null
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL https://packages.microsoft.com/keys/microsoft.asc \
+            | gpg --dearmor \
+            | $_SUDO_CMD tee /usr/share/keyrings/microsoft-vscode.gpg >/dev/null
+    elif command -v wget >/dev/null 2>&1; then
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc \
+            | gpg --dearmor \
+            | $_SUDO_CMD tee /usr/share/keyrings/microsoft-vscode.gpg >/dev/null
+    else
+        log "Neither curl nor wget available. Cannot download signing key." "ERR"
+        exit 1
+    fi
 
     # Add Microsoft VS Code repository
     printf 'deb [arch=%s signed-by=/usr/share/keyrings/microsoft-vscode.gpg] https://packages.microsoft.com/repos/code stable main\n' "$_ARCH" \

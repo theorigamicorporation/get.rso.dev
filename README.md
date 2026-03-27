@@ -157,6 +157,17 @@ Your script will appear on the landing page under the `@category` you specified,
 - **POSIX sh** for all Linux scripts (`#!/usr/bin/env sh`) — must pass `shellcheck --shell=sh` and `dash -n`
 - **No bashisms** in `sh/` scripts: use `[ ]` not `[[ ]]`, `printf` not `echo -ne`, no arrays, no `function` keyword
 - Bash scripts (like `get-pc-info.sh`) use `#!/usr/bin/env bash` and are linted separately
+- **Always support both curl and wget** — never hardcode one download tool. Use the pattern:
+  ```sh
+  if command -v curl >/dev/null 2>&1; then
+      curl -fsSL "$url"
+  elif command -v wget >/dev/null 2>&1; then
+      wget -qO- "$url"
+  else
+      log "Neither curl nor wget available" "ERR"
+      exit 1
+  fi
+  ```
 - Clean URLs via `.htaccess` rewriting: `get.rso.dev/sh/get-jq` serves `get-jq.sh`
 - `catalog.md` is auto-generated — edit scripts or `scripts/generate-catalog.sh`, not the catalog directly
 

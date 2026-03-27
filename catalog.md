@@ -11,8 +11,8 @@ Lightweight command-line JSON processor
 **Tags:** json, parser, filter, cli
 
 ```bash
-wget -qO- https://get.rso.dev/sh/get-jq | sh
-# alt: curl -s https://get.rso.dev/sh/get-jq | sh
+wget -qO- get.rso.dev/sh/get-jq | sh
+# alt: curl -s get.rso.dev/sh/get-jq | sh
 ```
 
 **Options:**
@@ -27,12 +27,12 @@ wget -qO- https://get.rso.dev/sh/get-jq | sh
 
 ```bash
 # Install via specific method
-wget -qO- https://get.rso.dev/sh/get-jq | sh -s -- --method=github-release
-# alt: curl -s https://get.rso.dev/sh/get-jq | sh -s -- --method=github-release
+wget -qO- get.rso.dev/sh/get-jq | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-jq | sh -s -- --method=github-release
 
 # Update existing install
-wget -qO- https://get.rso.dev/sh/get-jq | sh -s -- --update
-# alt: curl -s https://get.rso.dev/sh/get-jq | sh -s -- --update
+wget -qO- get.rso.dev/sh/get-jq | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-jq | sh -s -- --update
 ```
 
 ### get-yq
@@ -44,8 +44,8 @@ Lightweight command-line YAML, JSON, and XML processor
 **Tags:** yaml, json, xml, parser, cli
 
 ```bash
-wget -qO- https://get.rso.dev/sh/get-yq | sh
-# alt: curl -s https://get.rso.dev/sh/get-yq | sh
+wget -qO- get.rso.dev/sh/get-yq | sh
+# alt: curl -s get.rso.dev/sh/get-yq | sh
 ```
 
 **Options:**
@@ -60,12 +60,12 @@ wget -qO- https://get.rso.dev/sh/get-yq | sh
 
 ```bash
 # Install via specific method
-wget -qO- https://get.rso.dev/sh/get-yq | sh -s -- --method=github-release
-# alt: curl -s https://get.rso.dev/sh/get-yq | sh -s -- --method=github-release
+wget -qO- get.rso.dev/sh/get-yq | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-yq | sh -s -- --method=github-release
 
 # Update existing install
-wget -qO- https://get.rso.dev/sh/get-yq | sh -s -- --update
-# alt: curl -s https://get.rso.dev/sh/get-yq | sh -s -- --update
+wget -qO- get.rso.dev/sh/get-yq | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-yq | sh -s -- --update
 ```
 
 ## System Utilities
@@ -78,8 +78,8 @@ Display machine information including hostname, user, and system details
 **Tags:** system, info, hostname, uname
 
 ```bash
-wget -qO- https://get.rso.dev/sh/get-pc-info | sh
-# alt: curl -s https://get.rso.dev/sh/get-pc-info | sh
+wget -qO- get.rso.dev/sh/get-pc-info | sh
+# alt: curl -s get.rso.dev/sh/get-pc-info | sh
 ```
 
 # Windows
@@ -93,6 +93,6 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 
 ```powershell
-powershell.exe -command "iex(New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')"
+powershell.exe -command "iex(New-Object Net.WebClient).DownloadString('get.rso.dev/ps/get-pc-info')"
 ```
 

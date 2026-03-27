@@ -648,15 +648,23 @@
             }
         }
 
-        // Custom renderer
+        // Custom renderer — marked v12 passes token objects to renderer methods
         const renderer = new marked.Renderer();
-        renderer.heading = function(text, level) {
+
+        renderer.heading = function(token) {
+            // token: { text, depth, raw } in marked v12, or (text, level) in older
+            const text = typeof token === 'object' ? token.text : token;
+            const level = typeof token === 'object' ? token.depth : arguments[1];
             const slug = slugify(text);
             return '<h' + level + ' id="' + slug + '">' + text + '</h' + level + '>';
         };
 
-        // Custom code renderer to handle # alt: lines
-        renderer.code = function(code, lang) {
+        // Custom code renderer to handle # alt: lines and wget/curl toggle
+        renderer.code = function(token) {
+            // token: { text, lang, escaped } in marked v12, or (code, lang) in older
+            const code = typeof token === 'object' ? token.text : token;
+            const lang = typeof token === 'object' ? token.lang : arguments[1];
+
             const hasAlt = code.includes('# alt:');
             let wgetText = code, curlText = code;
 

@@ -90,8 +90,8 @@ generate_platform() {
         # Primary install command
         if [ "$_lang" = "bash" ] || [ "$_lang" = "sh" ]; then
             printf '```bash\n'
-            printf 'wget -qO- https://get.rso.dev/%s | %s\n' "$_url" "$_invoke"
-            printf '# alt: curl -s https://get.rso.dev/%s | %s\n' "$_url" "$_invoke"
+            printf 'wget -qO- get.rso.dev/%s | %s\n' "$_url" "$_invoke"
+            printf '# alt: curl -s get.rso.dev/%s | %s\n' "$_url" "$_invoke"
             printf '```\n\n'
 
             # Extra examples for installer scripts
@@ -107,17 +107,17 @@ generate_platform() {
 
                 printf '```bash\n'
                 printf '# Install via specific method\n'
-                printf 'wget -qO- https://get.rso.dev/%s | %s -s -- --method=github-release\n' "$_url" "$_invoke"
-                printf '# alt: curl -s https://get.rso.dev/%s | %s -s -- --method=github-release\n' "$_url" "$_invoke"
+                printf 'wget -qO- get.rso.dev/%s | %s -s -- --method=github-release\n' "$_url" "$_invoke"
+                printf '# alt: curl -s get.rso.dev/%s | %s -s -- --method=github-release\n' "$_url" "$_invoke"
                 printf '\n'
                 printf '# Update existing install\n'
-                printf 'wget -qO- https://get.rso.dev/%s | %s -s -- --update\n' "$_url" "$_invoke"
-                printf '# alt: curl -s https://get.rso.dev/%s | %s -s -- --update\n' "$_url" "$_invoke"
+                printf 'wget -qO- get.rso.dev/%s | %s -s -- --update\n' "$_url" "$_invoke"
+                printf '# alt: curl -s get.rso.dev/%s | %s -s -- --update\n' "$_url" "$_invoke"
                 printf '```\n\n'
             fi
         elif [ "$_lang" = "powershell" ]; then
             printf '```powershell\n'
-            printf 'powershell.exe -command "iex(New-Object Net.WebClient).DownloadString('"'"'https://get.rso.dev/%s'"'"')"\n' "$_url"
+            printf 'powershell.exe -command "iex(New-Object Net.WebClient).DownloadString('"'"'get.rso.dev/%s'"'"')"\n' "$_url"
             printf '```\n\n'
         fi
     done

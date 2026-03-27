@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-jq.sh — Install jq across Linux distributions
-# Usage: curl -s https://get.rso.dev/sh/get-jq | sh
+# Usage: curl -s get.rso.dev/sh/get-jq | sh
 #        sh get-jq.sh [--method=apt|dnf|yum|snap|asdf|gitpak|github-release]
 #        sh get-jq.sh --interactive
 #        sh get-jq.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s https://get.rso.dev/sh/get-jq | sh
+  curl -s get.rso.dev/sh/get-jq | sh
   sh get-jq.sh --method=github-release
   sh get-jq.sh --interactive
   sh get-jq.sh --update

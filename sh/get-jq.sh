@@ -9,7 +9,7 @@
 # =============================================================================
 # @description Lightweight command-line JSON processor
 # @category JSON & Data Tools
-# @tags json, parser, filter, cli
+# @tags json, parser, filter, query, cli
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 # @methods apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 # @verify jq --version

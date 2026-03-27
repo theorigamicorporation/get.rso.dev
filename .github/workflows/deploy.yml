@@ -57,6 +57,7 @@ jobs:
             **/_templates/
             **/.github/
             **/tests/
+            **/docs/
             .gitkeep
             .gitignore
             README.md

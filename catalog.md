@@ -10,9 +10,9 @@ Google Chrome web browser
 **Methods:** apt, dnf, flatpak
 **Prereqs:** curl|wget, gpg
 **Tags:** browser, chrome, google, web
-**Hash:** `722d394bad06`
+**Hash:** `0ad565fabee4`
 
-<!-- tests:get-google-chrome hash:722d394bad06 amazonlinux-2023:pass debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-google-chrome hash:0ad565fabee4 amazonlinux-2023:pass debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-google-chrome | sh
@@ -50,9 +50,9 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Prereqs:** curl|wget
 **Requires:** non-root user
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
-**Hash:** `8bfc856bd99f`
+**Hash:** `e7140a5ba964`
 
-<!-- tests:get-rustup hash:8bfc856bd99f amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-rustup hash:e7140a5ba964 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-rustup | sh
@@ -87,9 +87,9 @@ Visual Studio Code editor
 **Methods:** apt, dnf, snap, flatpak
 **Prereqs:** curl|wget, gpg
 **Tags:** editor, ide, vscode, microsoft, code
-**Hash:** `cf34834fb4b1`
+**Hash:** `70783dc4fee5`
 
-<!-- tests:get-vscode hash:cf34834fb4b1 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-vscode hash:70783dc4fee5 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-vscode | sh
@@ -202,9 +202,9 @@ Accelerated apt package manager wrapper using aria2
 **Methods:** apt
 **Prereqs:** software-properties-common
 **Tags:** apt, fast, aria2, package-manager, accelerator
-**Hash:** `18c3b35b5a7c`
+**Hash:** `d6301194a189`
 
-<!-- tests:get-apt-fast hash:18c3b35b5a7c amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-apt-fast hash:d6301194a189 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-apt-fast | sh
@@ -257,7 +257,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `480f70c4786b`
 
-<!-- tests:get-pc-info hash:1fecbac694f6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pc-info hash:480f70c4786b -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

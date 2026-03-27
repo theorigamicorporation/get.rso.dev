@@ -716,32 +716,47 @@
 
                 const pre = code.parentElement;
                 const lines = rawText.split('\n');
-                const wgetLines = [];
-                const curlLines = [];
+                const primaryResult = [];
+                const altResult = [];
 
                 for (const line of lines) {
                     if (line.trim().startsWith('# alt:')) {
-                        curlLines.push(line.replace(/^(\s*)# alt:\s*/, '$1'));
+                        // Replace the previous line in altResult with the alt version
+                        altResult.pop();
+                        altResult.push(line.replace(/^(\s*)# alt:\s*/, '$1'));
                     } else {
-                        wgetLines.push(line);
-                        curlLines.push(line);
+                        primaryResult.push(line);
+                        altResult.push(line);
                     }
                 }
 
-                const wgetText = wgetLines.join('\n');
-                const curlText = curlLines.join('\n');
+                // Trim trailing empty lines
+                while (primaryResult.length && !primaryResult[primaryResult.length - 1].trim()) primaryResult.pop();
+                while (altResult.length && !altResult[altResult.length - 1].trim()) altResult.pop();
 
-                pre.dataset.wget = wgetText;
-                pre.dataset.curl = curlText;
+                const primaryText = primaryResult.join('\n');
+                const altText = altResult.join('\n');
+
+                pre.dataset.primary = primaryText;
+                pre.dataset.alt = altText;
                 pre.dataset.hasAlt = 'true';
 
+                // Detect toggle labels from content
+                const lang = (code.className.match(/language-(\w+)/) || [])[1] || '';
+                if (lang === 'powershell') {
+                    pre.dataset.primaryLabel = 'WebClient';
+                    pre.dataset.altLabel = 'Invoke-WebRequest';
+                } else {
+                    pre.dataset.primaryLabel = primaryText.includes('wget') ? 'wget' : 'option 1';
+                    pre.dataset.altLabel = altText.includes('curl') ? 'curl' : 'option 2';
+                }
+
                 // Show active variant
-                const displayText = dlTool === 'curl' ? curlText : wgetText;
+                const displayText = dlPref === 'alt' ? altText : primaryText;
                 code.textContent = displayText;
 
-                // Re-highlight after changing content
-                const lang = (code.className.match(/language-(\w+)/) || [])[1];
-                if (lang) hljs.highlightElement(code);
+                // Re-highlight
+                if (lang && hljs.getLanguage(lang)) hljs.highlightElement(code);
             });
         }
 
@@ -802,8 +817,8 @@
             });
         }
 
-        // Global preference for download tool
-        let dlTool = localStorage.getItem('get-rso-dl-tool') || 'wget';
+        // Global preference: 'primary' (first option) or 'alt' (second option)
+        let dlPref = localStorage.getItem('get-rso-dl-pref') || 'primary';
 
         function addCopyButtons() {
             document.querySelectorAll('pre').forEach(pre => {
@@ -821,24 +836,29 @@
                     pre.appendChild(badge);
                 }
 
-                // Add wget/curl toggle if this block has alternatives
+                // Add toggle if this block has alternatives
                 if (pre.dataset.hasAlt === 'true') {
+                    const primaryLabel = pre.dataset.primaryLabel || 'wget';
+                    const altLabel = pre.dataset.altLabel || 'curl';
+
                     const toggle = document.createElement('div');
                     toggle.className = 'dl-toggle';
 
-                    const wgetBtn = document.createElement('button');
-                    wgetBtn.className = 'dl-toggle-btn' + (dlTool === 'wget' ? ' active' : '');
-                    wgetBtn.textContent = 'wget';
+                    const primaryBtn = document.createElement('button');
+                    primaryBtn.className = 'dl-toggle-btn' + (dlPref === 'primary' ? ' active' : '');
+                    primaryBtn.textContent = primaryLabel;
+                    primaryBtn.dataset.pref = 'primary';
 
-                    const curlBtn = document.createElement('button');
-                    curlBtn.className = 'dl-toggle-btn' + (dlTool === 'curl' ? ' active' : '');
-                    curlBtn.textContent = 'curl';
+                    const altBtn = document.createElement('button');
+                    altBtn.className = 'dl-toggle-btn' + (dlPref === 'alt' ? ' active' : '');
+                    altBtn.textContent = altLabel;
+                    altBtn.dataset.pref = 'alt';
 
-                    wgetBtn.onclick = () => switchDlTool('wget');
-                    curlBtn.onclick = () => switchDlTool('curl');
+                    primaryBtn.onclick = () => switchDlPref('primary');
+                    altBtn.onclick = () => switchDlPref('alt');
 
-                    toggle.appendChild(wgetBtn);
-                    toggle.appendChild(curlBtn);
+                    toggle.appendChild(primaryBtn);
+                    toggle.appendChild(altBtn);
                     pre.appendChild(toggle);
                 }
 
@@ -860,23 +880,22 @@
             });
         }
 
-        function switchDlTool(tool) {
-            dlTool = tool;
-            localStorage.setItem('get-rso-dl-tool', tool);
+        function switchDlPref(pref) {
+            dlPref = pref;
+            localStorage.setItem('get-rso-dl-pref', pref);
 
             // Update all code blocks with alternatives
             document.querySelectorAll('pre[data-has-alt]').forEach(pre => {
                 const code = pre.querySelector('code');
-                const lang = code.className.replace('language-', '');
-                const text = decodeURIComponent(tool === 'curl' ? pre.dataset.curl : pre.dataset.wget);
-                code.innerHTML = lang && hljs.getLanguage(lang)
-                    ? hljs.highlight(text, { language: lang }).value
-                    : text;
+                const lang = (code.className.match(/language-(\w+)/) || [])[1] || '';
+                const text = pref === 'alt' ? pre.dataset.alt : pre.dataset.primary;
+                code.textContent = text;
+                if (lang && hljs.getLanguage(lang)) hljs.highlightElement(code);
             });
 
             // Update all toggle buttons
             document.querySelectorAll('.dl-toggle-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent === tool);
+                btn.classList.toggle('active', btn.dataset.pref === pref);
             });
         }
 

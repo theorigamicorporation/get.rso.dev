@@ -93,6 +93,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 
 ```powershell
-powershell.exe -command "iex(New-Object Net.WebClient).DownloadString('get.rso.dev/ps/get-pc-info')"
+iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')
+# alt: iex (Invoke-WebRequest -Uri 'https://get.rso.dev/ps/get-pc-info').Content
 ```
 

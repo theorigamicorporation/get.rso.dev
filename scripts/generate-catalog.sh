@@ -117,7 +117,8 @@ generate_platform() {
             fi
         elif [ "$_lang" = "powershell" ]; then
             printf '```powershell\n'
-            printf 'powershell.exe -command "iex(New-Object Net.WebClient).DownloadString('"'"'get.rso.dev/%s'"'"')"\n' "$_url"
+            printf 'iex (New-Object Net.WebClient).DownloadString('"'"'https://get.rso.dev/%s'"'"')\n' "$_url"
+            printf '# alt: iex (Invoke-WebRequest -Uri '"'"'https://get.rso.dev/%s'"'"').Content\n' "$_url"
             printf '```\n\n'
         fi
     done

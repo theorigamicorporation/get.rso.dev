@@ -35,11 +35,19 @@ jobs:
 
       - name: ShellCheck POSIX scripts (sh/)
         run: |
-          if compgen -G "sh/*.sh" > /dev/null; then
-            shellcheck --shell=sh --severity=warning sh/*.sh
-          else
-            echo "No .sh files found in sh/"
-          fi
+          failed=0
+          for f in sh/*.sh; do
+            [ -f "$f" ] || continue
+            # Check shebang — only lint POSIX sh scripts (skip bash scripts)
+            if head -1 "$f" | grep -q 'env sh' || head -1 "$f" | grep -q 'bin/sh'; then
+              echo "Checking (POSIX): $f"
+              shellcheck --shell=sh --severity=warning "$f" || failed=1
+            else
+              echo "Checking (bash): $f"
+              shellcheck --shell=bash --severity=warning "$f" || failed=1
+            fi
+          done
+          exit $failed
 
       - name: ShellCheck Bash templates (_templates/)
         run: |
@@ -59,13 +67,20 @@ jobs:
       - name: Install checkbashisms
         run: sudo apt-get install -y devscripts
 
-      - name: Check for bashisms in sh/ scripts
+      - name: Check for bashisms in POSIX sh scripts
         run: |
-          if compgen -G "sh/*.sh" > /dev/null; then
-            checkbashisms sh/*.sh
-          else
-            echo "No .sh files found in sh/"
-          fi
+          failed=0
+          for f in sh/*.sh; do
+            [ -f "$f" ] || continue
+            # Only check scripts with #!/usr/bin/env sh shebang
+            if head -1 "$f" | grep -q 'env sh' || head -1 "$f" | grep -q 'bin/sh'; then
+              echo "Checking: $f"
+              checkbashisms "$f" || failed=1
+            else
+              echo "Skipping (bash script): $f"
+            fi
+          done
+          exit $failed
 
   syntax-check:
     name: Dash Syntax Validation

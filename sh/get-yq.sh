@@ -522,7 +522,6 @@ verify_install() {
 # Error Handling
 ###########################
 set -e
-trap 'log "Script failed at line $LINENO" "ERR"' ERR 2>/dev/null || true
 
 ###########################
 # Main

@@ -111,11 +111,17 @@ generate_platform() {
             printf '<!-- tests:%s hash:%s -->\n\n' "$_name" "$_hash"
         fi
 
+        # Detect interpreter from shebang
+        _shell="$_invoke"
+        if head -1 "$_script" | grep -q 'bash'; then
+            _shell="bash"
+        fi
+
         # Primary install command
         if [ "$_lang" = "bash" ] || [ "$_lang" = "sh" ]; then
             printf '```bash\n'
-            printf 'wget -qO- get.rso.dev/%s | %s\n' "$_url" "$_invoke"
-            printf '# alt: curl -s get.rso.dev/%s | %s\n' "$_url" "$_invoke"
+            printf 'wget -qO- get.rso.dev/%s | %s\n' "$_url" "$_shell"
+            printf '# alt: curl -s get.rso.dev/%s | %s\n' "$_url" "$_shell"
             printf '```\n\n'
 
             # Extra examples for installer scripts
@@ -131,12 +137,12 @@ generate_platform() {
 
                 printf '```bash\n'
                 printf '# Install via specific method\n'
-                printf 'wget -qO- get.rso.dev/%s | %s -s -- --method=github-release\n' "$_url" "$_invoke"
-                printf '# alt: curl -s get.rso.dev/%s | %s -s -- --method=github-release\n' "$_url" "$_invoke"
+                printf 'wget -qO- get.rso.dev/%s | %s -s -- --method=github-release\n' "$_url" "$_shell"
+                printf '# alt: curl -s get.rso.dev/%s | %s -s -- --method=github-release\n' "$_url" "$_shell"
                 printf '\n'
                 printf '# Update existing install\n'
-                printf 'wget -qO- get.rso.dev/%s | %s -s -- --update\n' "$_url" "$_invoke"
-                printf '# alt: curl -s get.rso.dev/%s | %s -s -- --update\n' "$_url" "$_invoke"
+                printf 'wget -qO- get.rso.dev/%s | %s -s -- --update\n' "$_url" "$_shell"
+                printf '# alt: curl -s get.rso.dev/%s | %s -s -- --update\n' "$_url" "$_shell"
                 printf '```\n\n'
             fi
         elif [ "$_lang" = "powershell" ]; then

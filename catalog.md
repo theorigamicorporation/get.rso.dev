@@ -1,5 +1,117 @@
 # Linux
 
+## Browsers
+
+### get-google-chrome
+
+Google Chrome web browser
+
+**Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
+**Methods:** apt, dnf, flatpak
+**Tags:** browser, chrome, google, web
+**Hash:** `db7939cd67ac`
+
+<!-- tests:get-google-chrome hash:db7939cd67ac -->
+
+```bash
+wget -qO- get.rso.dev/sh/get-google-chrome | sh
+# alt: curl -s get.rso.dev/sh/get-google-chrome | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/sh/get-google-chrome | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-google-chrome | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/sh/get-google-chrome | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-google-chrome | sh -s -- --update
+```
+
+## Development Tools
+
+### get-rustup
+
+Rust toolchain installer (rustup, cargo, rustc)
+
+**Supported:** All Linux distributions
+**Methods:** official
+**Tags:** rust, cargo, rustc, rustup, compiler, toolchain
+**Hash:** `d53c5a0f87fb`
+
+<!-- tests:get-rustup hash:d53c5a0f87fb -->
+
+```bash
+wget -qO- get.rso.dev/sh/get-rustup | sh
+# alt: curl -s get.rso.dev/sh/get-rustup | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/sh/get-rustup | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-rustup | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/sh/get-rustup | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-rustup | sh -s -- --update
+```
+
+### get-vscode
+
+Visual Studio Code editor
+
+**Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
+**Methods:** apt, dnf, snap, flatpak
+**Tags:** editor, ide, vscode, microsoft, code
+**Hash:** `3159e49b4824`
+
+<!-- tests:get-vscode hash:3159e49b4824 -->
+
+```bash
+wget -qO- get.rso.dev/sh/get-vscode | sh
+# alt: curl -s get.rso.dev/sh/get-vscode | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/sh/get-vscode | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-vscode | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/sh/get-vscode | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-vscode | sh -s -- --update
+```
+
 ## JSON & Data Tools
 
 ### get-jq
@@ -76,6 +188,42 @@ wget -qO- get.rso.dev/sh/get-yq | sh -s -- --update
 
 ## System Utilities
 
+### get-apt-fast
+
+Accelerated apt package manager wrapper using aria2
+
+**Supported:** Ubuntu, Debian, Mint
+**Methods:** apt
+**Tags:** apt, fast, aria2, package-manager, accelerator
+**Hash:** `f8bf55d2f275`
+
+<!-- tests:get-apt-fast hash:f8bf55d2f275 -->
+
+```bash
+wget -qO- get.rso.dev/sh/get-apt-fast | sh
+# alt: curl -s get.rso.dev/sh/get-apt-fast | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/sh/get-apt-fast | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-apt-fast | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/sh/get-apt-fast | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-apt-fast | sh -s -- --update
+```
+
 ### get-pc-info
 
 Display machine information including hostname, user, and system details
@@ -87,8 +235,8 @@ Display machine information including hostname, user, and system details
 <!-- tests:get-pc-info hash:1fecbac694f6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
-wget -qO- get.rso.dev/sh/get-pc-info | sh
-# alt: curl -s get.rso.dev/sh/get-pc-info | sh
+wget -qO- get.rso.dev/sh/get-pc-info | bash
+# alt: curl -s get.rso.dev/sh/get-pc-info | bash
 ```
 
 # Windows

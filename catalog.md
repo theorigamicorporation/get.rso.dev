@@ -11,7 +11,7 @@ Google Chrome web browser
 **Tags:** browser, chrome, google, web
 **Hash:** `db7939cd67ac`
 
-<!-- tests:get-google-chrome hash:db7939cd67ac -->
+<!-- tests:get-google-chrome hash:db7939cd67ac amazonlinux-2023:pass debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-google-chrome | sh
@@ -49,7 +49,7 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
 **Hash:** `d53c5a0f87fb`
 
-<!-- tests:get-rustup hash:d53c5a0f87fb -->
+<!-- tests:get-rustup hash:d53c5a0f87fb amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-rustup | sh
@@ -85,7 +85,7 @@ Visual Studio Code editor
 **Tags:** editor, ide, vscode, microsoft, code
 **Hash:** `3159e49b4824`
 
-<!-- tests:get-vscode hash:3159e49b4824 -->
+<!-- tests:get-vscode hash:3159e49b4824 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-vscode | sh
@@ -197,7 +197,7 @@ Accelerated apt package manager wrapper using aria2
 **Tags:** apt, fast, aria2, package-manager, accelerator
 **Hash:** `f8bf55d2f275`
 
-<!-- tests:get-apt-fast hash:f8bf55d2f275 -->
+<!-- tests:get-apt-fast hash:f8bf55d2f275 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-apt-fast | sh

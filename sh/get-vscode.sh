@@ -23,7 +23,6 @@ SCRIPT_NAME="GET VSCODE"
 ###########################
 TOOL_NAME="code"
 TOOL_CMD="code"
-GITHUB_REPO=""
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""

@@ -23,7 +23,6 @@ SCRIPT_NAME="GET APT-FAST"
 ###########################
 TOOL_NAME="apt-fast"
 TOOL_CMD="apt-fast"
-GITHUB_REPO=""
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""

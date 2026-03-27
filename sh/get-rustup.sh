@@ -24,7 +24,6 @@ SCRIPT_NAME="GET RUSTUP"
 ###########################
 TOOL_NAME="rustup"
 TOOL_CMD="rustup"
-GITHUB_REPO=""
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""

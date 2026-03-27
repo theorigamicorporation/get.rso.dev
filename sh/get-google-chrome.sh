@@ -23,7 +23,6 @@ SCRIPT_NAME="GET GOOGLE-CHROME"
 ###########################
 TOOL_NAME="google-chrome-stable"
 TOOL_CMD="google-chrome-stable"
-GITHUB_REPO=""
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""

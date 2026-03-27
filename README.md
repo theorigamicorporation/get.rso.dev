@@ -39,7 +39,11 @@ wget -qO- get.rso.dev/sh/get-jq | sh -s -- --update
 ├── scripts/                # Build tooling
 │   └── generate-catalog.sh # Auto-generates catalog.md from script metadata
 ├── tests/                  # Podman-based test suite
-│   └── test-installer.sh
+│   ├── test-installer.sh   # Test runner
+│   └── asserts/            # Custom per-script assertions
+│       ├── get-jq.sh
+│       └── get-yq.sh
+├── Makefile                # Development and testing targets
 ├── index.html              # Landing page (served at get.rso.dev)
 ├── catalog.md              # Auto-generated script catalog (do not edit)
 ├── .htaccess               # URL rewriting for clean URLs
@@ -50,19 +54,24 @@ wget -qO- get.rso.dev/sh/get-jq | sh -s -- --update
 
 ## Adding a New Script
 
-1. Copy `_templates/installer.sh` to `sh/get-<toolname>.sh`
-2. Fill in the metadata tags at the top:
-   ```sh
-   # @description Short description of the tool
-   # @category Category Name
-   # @tags comma, separated, tags
-   # @supported Ubuntu, Debian, RHEL, etc.
-   # @methods apt, dnf, yum, github-release, etc.
-   ```
-3. Implement the install methods
-4. Push to main — the deploy pipeline auto-generates the catalog and deploys
+### 1. Create the script
 
-## Script Metadata Tags
+```bash
+cp _templates/installer.sh sh/get-mytool.sh
+```
+
+### 2. Fill in the metadata
+
+Every script must have metadata tags at the top. These drive the landing page catalog, the method picker, and the test runner.
+
+```sh
+# @description Lightweight command-line JSON processor
+# @category JSON & Data Tools
+# @tags json, parser, filter, cli
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @methods apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
+# @verify mytool --version
+```
 
 | Tag | Required | Description |
 |-----|----------|-------------|
@@ -71,6 +80,73 @@ wget -qO- get.rso.dev/sh/get-jq | sh -s -- --update
 | `@tags` | No | Comma-separated search tags |
 | `@supported` | No | Supported distros |
 | `@methods` | No | Available install methods (installer scripts only) |
+| `@verify` | No | Command to verify successful install (used by test runner) |
+
+### 3. Implement the install methods
+
+Edit the `install_via_*` functions in your script. Remove methods that don't apply and adjust the `detect_available_methods` function accordingly. Key things to customize:
+
+- `TOOL_NAME`, `TOOL_CMD`, `GITHUB_REPO` in the Configuration section
+- The GitHub release asset name pattern in `install_via_github_release`
+- The `normalize_version` function if the tool has a non-standard version format
+
+### 4. Add tests
+
+The test runner auto-discovers scripts from `sh/get-*.sh` and uses `@verify` for basic validation. For more thorough testing, add a custom assert script:
+
+```bash
+cat > tests/asserts/get-mytool.sh << 'EOF'
+#!/usr/bin/env sh
+set -e
+
+echo "Assert: mytool binary exists"
+command -v mytool
+
+echo "Assert: mytool can process input"
+result=$(echo 'test' | mytool --some-flag)
+[ "$result" = "expected" ]
+
+echo "All mytool assertions passed"
+EOF
+```
+
+Assert scripts run inside the Podman container after the installer completes. They must exit 0 on success. The filename must match the script name (`get-mytool.sh` → `tests/asserts/get-mytool.sh`).
+
+### 5. Test locally
+
+```bash
+# Quick smoke test
+make test-quick SCRIPT=get-mytool.sh
+
+# Full test on one distro
+make test SCRIPT=get-mytool.sh IMAGE=ubuntu:24.04
+
+# Test a specific install method
+make test-method METHOD=github-release SCRIPT=get-mytool.sh
+
+# Test all methods across all distros
+make test-all-methods SCRIPT=get-mytool.sh
+
+# Open a shell in a container to debug interactively
+make shell IMAGE=ubuntu:24.04
+# Then inside: sh /scripts/get-mytool.sh --interactive
+```
+
+### 6. Push
+
+```bash
+git add sh/get-mytool.sh tests/asserts/get-mytool.sh
+git commit -m "feat: add get-mytool installer"
+git push
+```
+
+The deploy pipeline will:
+1. Run ShellCheck + POSIX lint checks
+2. Auto-generate `catalog.md` from your script's metadata
+3. FTP deploy to get.rso.dev
+4. Purge Cloudflare cache
+
+Your script will appear on the landing page under the `@category` you specified, with the method picker, wget/curl toggle, and copy button — all automatic.
 
 ## Conventions
 

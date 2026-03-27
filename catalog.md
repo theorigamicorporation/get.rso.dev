@@ -9,6 +9,9 @@ Lightweight command-line JSON processor
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Tags:** json, parser, filter, cli
+**Hash:** `a604342335f3`
+
+<!-- tests:get-jq hash:a604342335f3 -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-jq | sh
@@ -42,6 +45,9 @@ Lightweight command-line YAML, JSON, and XML processor
 **Supported:** Ubuntu 24.04+, Debian, Mint, RHEL (EPEL), Rocky, Amazon Linux
 **Methods:** apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Tags:** yaml, json, xml, parser, cli
+**Hash:** `1504b3ab3a2b`
+
+<!-- tests:get-yq hash:1504b3ab3a2b -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-yq | sh
@@ -76,6 +82,9 @@ Display machine information including hostname, user, and system details
 
 **Supported:** All Linux distributions
 **Tags:** system, info, hostname, uname
+**Hash:** `1fecbac694f6`
+
+<!-- tests:get-pc-info hash:1fecbac694f6 -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-pc-info | sh
@@ -91,6 +100,9 @@ wget -qO- get.rso.dev/sh/get-pc-info | sh
 Display PC information including OS, CPU, RAM, and system details
 
 **Tags:** system, info, windows, hardware
+**Hash:** `480f70c4786b`
+
+<!-- tests:get-pc-info hash:480f70c4786b -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

@@ -78,6 +78,22 @@ generate_platform() {
             _prev_category="$_category"
         fi
 
+        # File hash for change tracking
+        _hash=$(sha256sum "$_script" 2>/dev/null | cut -c1-12)
+        [ -z "$_hash" ] && _hash=$(shasum -a 256 "$_script" 2>/dev/null | cut -c1-12)
+
+        # Preserve existing test results from current catalog if hash matches
+        _test_results=""
+        if [ -f "$OUTPUT" ]; then
+            _existing=$(grep "<!-- tests:${_name} " "$OUTPUT" 2>/dev/null | head -1 || true)
+            if [ -n "$_existing" ]; then
+                _existing_hash=$(printf '%s' "$_existing" | grep -o 'hash:[a-f0-9]*' | cut -d: -f2)
+                if [ "$_existing_hash" = "$_hash" ]; then
+                    _test_results="$_existing"
+                fi
+            fi
+        fi
+
         # Script entry
         printf '### %s\n\n' "$_name"
         printf '%s\n\n' "$_desc"
@@ -85,7 +101,15 @@ generate_platform() {
         [ -n "$_supported" ] && printf '**Supported:** %s\n' "$_supported"
         [ -n "$_methods" ] && printf '**Methods:** %s\n' "$_methods"
         [ -n "$_tags" ] && printf '**Tags:** %s\n' "$_tags"
+        printf '**Hash:** `%s`\n' "$_hash"
         [ -n "$_supported" ] || [ -n "$_methods" ] || [ -n "$_tags" ] && printf '\n'
+
+        # Test results comment (parsed by landing page JS)
+        if [ -n "$_test_results" ]; then
+            printf '%s\n\n' "$_test_results"
+        else
+            printf '<!-- tests:%s hash:%s -->\n\n' "$_name" "$_hash"
+        fi
 
         # Primary install command
         if [ "$_lang" = "bash" ] || [ "$_lang" = "sh" ]; then

@@ -584,6 +584,54 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Test result badges */
+        .test-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin: 0.25rem 0;
+        }
+
+        .test-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: 3px;
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .test-badge.pass {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(63, 185, 80, 0.3);
+        }
+
+        .test-badge.fail {
+            background: rgba(248, 81, 73, 0.15);
+            color: #f85149;
+            border: 1px solid rgba(248, 81, 73, 0.3);
+        }
+
+        .test-badge.skip, .test-badge.untested {
+            background: rgba(139, 148, 158, 0.1);
+            color: var(--text-muted);
+            border: 1px solid rgba(139, 148, 158, 0.2);
+        }
+
+        .test-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .test-badge.pass .dot { background: var(--success); }
+        .test-badge.fail .dot { background: #f85149; }
+        .test-badge.skip .dot, .test-badge.untested .dot { background: var(--text-muted); }
+
         /* Collapsible details/spoiler */
         details.script-details {
             margin: 0.5rem 0 1.5rem;
@@ -787,6 +835,9 @@
             // Wrap Options and Examples in collapsible details
             wrapCollapsibles();
 
+            // Render test result badges from HTML comments in raw markdown
+            renderTestBadges(allSections[tabName] || '');
+
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.tab === tabName);
@@ -852,6 +903,106 @@
         }
 
         // Add method picker dropdowns to installer script code blocks
+        // Parse <!-- tests:scriptname hash:xxx distro:result ... --> comments and render badges
+        function renderTestBadges(rawMarkdown) {
+            const testRegex = /<!-- tests:(\S+) hash:(\S+)(.*?)-->/g;
+            let match;
+            const testData = {};
+
+            while ((match = testRegex.exec(rawMarkdown)) !== null) {
+                const name = match[1];
+                const hash = match[2];
+                const resultsStr = match[3].trim();
+                const results = {};
+
+                if (resultsStr) {
+                    resultsStr.split(/\s+/).forEach(entry => {
+                        const [distro, status] = entry.split(':');
+                        if (distro && status) results[distro] = status;
+                    });
+                }
+
+                testData[name] = { hash, results };
+            }
+
+            // Attach badges to each h3 script heading
+            document.querySelectorAll('#content h3').forEach(h3 => {
+                const scriptName = h3.textContent.trim();
+                const data = testData[scriptName];
+                if (!data) return;
+
+                const hasResults = Object.keys(data.results).length > 0;
+
+                // Create collapsible test status
+                const details = document.createElement('details');
+                details.className = 'script-details';
+
+                const summary = document.createElement('summary');
+                const passCount = Object.values(data.results).filter(v => v === 'pass').length;
+                const failCount = Object.values(data.results).filter(v => v === 'fail').length;
+                const total = Object.keys(data.results).length;
+
+                if (!hasResults) {
+                    summary.textContent = 'Tests (not yet run)';
+                } else if (failCount === 0) {
+                    summary.textContent = 'Tests (' + passCount + '/' + total + ' passing)';
+                } else {
+                    summary.textContent = 'Tests (' + passCount + '/' + total + ' passing, ' + failCount + ' failing)';
+                }
+
+                details.appendChild(summary);
+
+                const inner = document.createElement('div');
+                inner.className = 'details-content';
+
+                if (hasResults) {
+                    const badges = document.createElement('div');
+                    badges.className = 'test-badges';
+
+                    // Sort distros for consistent display
+                    Object.entries(data.results).sort().forEach(([distro, status]) => {
+                        const badge = document.createElement('span');
+                        badge.className = 'test-badge ' + status;
+                        // Clean up distro name for display
+                        const displayName = distro.replace(/^(docker\.io-library-|docker\.io-)/, '');
+                        badge.innerHTML = '<span class="dot"></span>' + displayName;
+                        badges.appendChild(badge);
+                    });
+
+                    inner.appendChild(badges);
+                } else {
+                    const note = document.createElement('p');
+                    note.style.cssText = 'color: var(--text-muted); font-size: 0.8rem; margin: 0;';
+                    note.textContent = 'No test results yet. Tests run automatically when the script is modified.';
+                    inner.appendChild(note);
+                }
+
+                // Show hash
+                const hashEl = document.createElement('p');
+                hashEl.style.cssText = 'color: var(--text-muted); font-size: 0.65rem; margin: 0.5rem 0 0; font-family: "JetBrains Mono", monospace; opacity: 0.5;';
+                hashEl.textContent = 'sha256: ' + data.hash;
+                inner.appendChild(hashEl);
+
+                details.appendChild(inner);
+
+                // Insert after the metadata paragraph (Supported/Methods/Tags/Hash)
+                let insertAfter = h3.nextElementSibling;
+                while (insertAfter && insertAfter.tagName === 'P') {
+                    const nextSib = insertAfter.nextElementSibling;
+                    // Stop after the metadata paragraph (contains Hash)
+                    if (insertAfter.textContent.includes('Hash:')) {
+                        insertAfter = insertAfter;
+                        break;
+                    }
+                    if (!nextSib || nextSib.tagName !== 'P') break;
+                    insertAfter = nextSib;
+                }
+                if (insertAfter) {
+                    insertAfter.parentNode.insertBefore(details, insertAfter.nextSibling);
+                }
+            });
+        }
+
         function addMethodPickers() {
             const content = document.getElementById('content');
 

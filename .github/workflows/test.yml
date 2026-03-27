@@ -1,0 +1,209 @@
+name: Test Scripts
+run-name: Test | ${{ github.run_number }} | by @${{ github.actor }}
+
+#######################################################
+# Version: 0.1.0
+#######################################################
+# Tests modified scripts across distro containers and
+# updates catalog.md with test result badges.
+#######################################################
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'sh/**'
+      - 'ps/**'
+      - 'tests/**'
+  workflow_dispatch:
+    inputs:
+      script:
+        description: 'Script to test (e.g. get-jq.sh), leave empty for all changed'
+        required: false
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      scripts: ${{ steps.changed.outputs.scripts }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed scripts
+        id: changed
+        run: |
+          if [ -n "${{ github.event.inputs.script }}" ]; then
+            echo "scripts=${{ github.event.inputs.script }}" >> $GITHUB_OUTPUT
+            echo "Testing (manual): ${{ github.event.inputs.script }}"
+          else
+            CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'sh/get-*.sh' | xargs -I{} basename {} 2>/dev/null | tr '\n' ' ')
+            if [ -z "$CHANGED" ]; then
+              # If tests/ changed, test all installer scripts
+              if git diff --name-only HEAD~1 HEAD -- 'tests/' | grep -q .; then
+                CHANGED=$(ls sh/get-*.sh 2>/dev/null | xargs -I{} basename {} | tr '\n' ' ')
+              fi
+            fi
+            echo "scripts=${CHANGED}" >> $GITHUB_OUTPUT
+            echo "Testing: ${CHANGED:-none}"
+          fi
+
+  test:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.scripts != ''
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - ubuntu:22.04
+          - ubuntu:24.04
+          - ubuntu:25.04
+          - debian:12
+          - debian:13
+          - rockylinux/rockylinux:9
+          - rockylinux/rockylinux:10
+          - amazonlinux:2023
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test scripts on ${{ matrix.image }}
+        id: test
+        run: |
+          SCRIPTS="${{ needs.detect-changes.outputs.scripts }}"
+          IMAGE="docker.io/${{ matrix.image }}"
+
+          # Normalize image name for use as a label
+          LABEL=$(echo "${{ matrix.image }}" | tr '/:' '-')
+
+          RESULTS=""
+          for script in $SCRIPTS; do
+            [ -z "$script" ] && continue
+            [ ! -f "sh/$script" ] && continue
+
+            TOOL=$(echo "$script" | sed 's/^get-//; s/\.sh$//')
+
+            # Detect shell
+            SHELL_CMD="sh"
+            if head -1 "sh/$script" | grep -q 'bash'; then
+              SHELL_CMD="bash"
+            fi
+
+            # Get verify command
+            VERIFY=$(grep -m1 '@verify' "sh/$script" 2>/dev/null | sed 's/.*@verify[[:space:]]*//' || true)
+
+            echo "::group::Testing $script on ${{ matrix.image }}"
+
+            # Run the script + verify
+            RESULT="fail"
+            if [ -n "$VERIFY" ]; then
+              if docker run --rm -v "$PWD/sh:/scripts:ro" "$IMAGE" \
+                $SHELL_CMD -c "$SHELL_CMD /scripts/$script && $VERIFY" 2>&1; then
+                RESULT="pass"
+              fi
+            else
+              if docker run --rm -v "$PWD/sh:/scripts:ro" "$IMAGE" \
+                $SHELL_CMD -c "$SHELL_CMD /scripts/$script" 2>&1; then
+                RESULT="pass"
+              fi
+            fi
+
+            echo "::endgroup::"
+            echo "$script: $RESULT"
+            RESULTS="${RESULTS}${script}=${RESULT} "
+          done
+
+          echo "label=${LABEL}" >> $GITHUB_OUTPUT
+          echo "results=${RESULTS}" >> $GITHUB_OUTPUT
+
+      - name: Save results file
+        run: |
+          mkdir -p /tmp/test-results
+          echo "${{ steps.test.outputs.results }}" > /tmp/test-results/${{ steps.test.outputs.label }}.txt
+
+      - name: Upload results artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ steps.test.outputs.label }}
+          path: /tmp/test-results/
+
+  update-catalog:
+    needs: [detect-changes, test]
+    if: always() && needs.detect-changes.outputs.scripts != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/all-results
+          pattern: results-*
+          merge-multiple: true
+
+      - name: Regenerate catalog with test results
+        run: |
+          # First regenerate the catalog
+          sh scripts/generate-catalog.sh
+
+          # Parse test results and update catalog.md
+          SCRIPTS="${{ needs.detect-changes.outputs.scripts }}"
+
+          for script in $SCRIPTS; do
+            [ -z "$script" ] && continue
+            NAME=$(echo "$script" | sed 's/\.sh$//')
+
+            # Get file hash
+            HASH=$(sha256sum "sh/$script" 2>/dev/null | cut -c1-12)
+
+            # Collect results from all distro artifacts
+            BADGE_LINE="<!-- tests:${NAME} hash:${HASH}"
+            for result_file in /tmp/all-results/*.txt; do
+              [ -f "$result_file" ] || continue
+              DISTRO=$(basename "$result_file" .txt)
+
+              # Parse the results for this script
+              RESULT=$(grep "${script}=" "$result_file" 2>/dev/null | grep -o "${script}=[a-z]*" | cut -d= -f2 || echo "skip")
+              [ -z "$RESULT" ] && RESULT="skip"
+
+              BADGE_LINE="${BADGE_LINE} ${DISTRO}:${RESULT}"
+            done
+            BADGE_LINE="${BADGE_LINE} -->"
+
+            # Replace the test comment line in catalog.md
+            if grep -q "<!-- tests:${NAME} " catalog.md; then
+              sed -i "s|<!-- tests:${NAME} .*-->|${BADGE_LINE}|g" catalog.md
+            fi
+
+            echo "Updated: $NAME -> $BADGE_LINE"
+          done
+
+          cat catalog.md
+
+      - name: Commit updated catalog
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Pull latest to avoid conflicts with concurrent pushes
+          git pull --rebase origin main || git pull --rebase origin master || true
+
+          git add catalog.md
+          if git diff --cached --quiet; then
+            echo "No changes to catalog.md"
+          else
+            # [skip ci] prevents deploy/lint/test workflows from re-triggering
+            git commit -m "ci: update test results in catalog.md [skip ci]"
+            # Retry push in case of race with another workflow
+            git push || { git pull --rebase && git push; }
+          fi

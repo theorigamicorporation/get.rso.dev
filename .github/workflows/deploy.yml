@@ -75,6 +75,7 @@ jobs:
             .gitkeep
             .gitignore
             README.md
+            Makefile
             LICENSE
             CODEOWNERS
             CONTRIBUTING.md

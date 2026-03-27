@@ -1,17 +1,20 @@
-#-----------------------------------------------------
-# PowerShell Boilerplate
-#
-# Description: Provides a basic structure and functions
-#              for robust PowerShell scripts 
-#
-# Version: 1.0
-#-----------------------------------------------------
+<#
+    .SYNOPSIS
+    SCRIPT_NAME
+
+    .DESCRIPTION
+    TODO: Describe what this script does.
+
+    @description TODO: Short description of the tool
+    @category TODO: Category Name
+    @tags TODO: comma, separated, tags
+#>
 
 #-----------------------------------------------------
 # Configuration
 #-----------------------------------------------------
-# NOTE: Place global configuration variables here
-
+$ScriptVersion = "0.1"
+$ScriptName = "SCRIPT_NAME"
 
 #-----------------------------------------------------
 # Functions
@@ -30,11 +33,11 @@ function Write-Log {
     $Timestamp = Get-Date -Format "dd.MM.yyyy-HH:mm:ss-zzz"
 
     switch ($Level) {
-        'Info'    { Write-Host "[INFO][$Timestamp]: $Message" -ForegroundColor White }
-        'Warning' { Write-Host "[WARN][$Timestamp]: $Message" -ForegroundColor Yellow }
-        'Error'   { Write-Error "[ERROR][$Timestamp]: $Message"  }
-        'Debug'   { if ($PSBoundParameters.ContainsKey('Verbose')) { Write-Verbose "[DEBUG][$Timestamp]: $Message" }  }
-    } 
+        'Info'    { Write-Host "[INFO][$ScriptName $ScriptVersion][$Timestamp]: $Message" -ForegroundColor White }
+        'Warning' { Write-Host "[WARN][$ScriptName $ScriptVersion][$Timestamp]: $Message" -ForegroundColor Yellow }
+        'Error'   { Write-Error "[ERR][$ScriptName $ScriptVersion][$Timestamp]: $Message" }
+        'Debug'   { Write-Verbose "[DEBUG][$ScriptName $ScriptVersion][$Timestamp]: $Message" }
+    }
 }
 
 function Exit-Script {
@@ -47,22 +50,24 @@ function Exit-Script {
     exit $ExitCode
 }
 
-# NOTE: Place additional custom functions here
+# TODO: Add your functions here.
 
 #-----------------------------------------------------
-# Error Handling 
+# Error Handling
 #-----------------------------------------------------
+$ErrorActionPreference = "Stop"
+
 Trap {
     $ErrorRecord = $_
-    Write-Log "Error in $($ErrorRecord.InvocationInfo.ScriptName):$($ErrorRecord.InvocationInfo.MyCommand.Name)[$($ErrorRecord.InvocationInfo.Line)] Failed with status $($ErrorRecord.Exception.GetType().Name): $($ErrorRecord.Exception.Message)" "Error" 
+    Write-Log "Error: $($ErrorRecord.Exception.Message)" "Error"
     Exit-Script 1
 }
 
 #-----------------------------------------------------
-# Main 
+# Main
 #-----------------------------------------------------
 Write-Log "Starting script" "Info"
 
-# NOTE: Place your script logic here.
+# TODO: Add your script logic here.
 
 Exit-Script 0

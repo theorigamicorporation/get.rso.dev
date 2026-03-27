@@ -1,0 +1,19 @@
+DirectoryIndex index.html
+
+# Remove .sh extension for clean URLs
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.sh -f
+RewriteRule ^(.+)$ $1.sh [L]
+
+# Remove .ps1 extension for clean URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.ps1 -f
+RewriteRule ^(.+)$ $1.ps1 [L]
+
+# Serve scripts as plain text
+<FilesMatch "\.(sh|ps1)$">
+    Header set Content-Type "text/plain; charset=UTF-8"
+</FilesMatch>

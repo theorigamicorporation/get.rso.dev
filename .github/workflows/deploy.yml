@@ -65,7 +65,6 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
-            **/_templates/
             **/.github/
             **/tests/
             **/tests/**

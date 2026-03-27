@@ -101,21 +101,77 @@ jobs:
               SHELL_CMD="bash"
             fi
 
-            # Get verify command
+            # Get metadata
             VERIFY=$(grep -m1 '@verify' "sh/$script" 2>/dev/null | sed 's/.*@verify[[:space:]]*//' || true)
+            NOROOT=$(grep -m1 '@noroot' "sh/$script" 2>/dev/null | sed 's/.*@noroot[[:space:]]*//' || true)
+            PREREQS_RAW=$(grep -m1 '@prereqs' "sh/$script" 2>/dev/null | sed 's/.*@prereqs[[:space:]]*//; s/ (.*)//' || true)
+
+            # Build prereqs install command
+            PREREQS_CMD=""
+            if [ -n "$PREREQS_RAW" ]; then
+              APT_PKGS="ca-certificates"
+              DNF_PKGS="ca-certificates"
+              IFS=',' read -ra ITEMS <<< "$PREREQS_RAW"
+              for item in "${ITEMS[@]}"; do
+                item=$(echo "$item" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/ (.*)//g')
+                [ -z "$item" ] && continue
+                case "$item" in
+                  *"|"*) first=$(echo "$item" | cut -d'|' -f1); APT_PKGS="$APT_PKGS $first"; DNF_PKGS="$DNF_PKGS $first" ;;
+                  "gpg") APT_PKGS="$APT_PKGS gpg"; DNF_PKGS="$DNF_PKGS gnupg2" ;;
+                  "software-properties-common") APT_PKGS="$APT_PKGS software-properties-common" ;;
+                  *) APT_PKGS="$APT_PKGS $item"; DNF_PKGS="$DNF_PKGS $item" ;;
+                esac
+              done
+              PREREQS_CMD="if command -v apt-get >/dev/null 2>&1; then apt-get update -qq && apt-get install -y -qq $APT_PKGS >/dev/null 2>&1; elif command -v dnf >/dev/null 2>&1; then dnf install -y -q $DNF_PKGS >/dev/null 2>&1; elif command -v yum >/dev/null 2>&1; then yum install -y -q $DNF_PKGS >/dev/null 2>&1; fi; "
+            fi
 
             echo "::group::Testing $script on ${{ matrix.image }}"
 
-            # Run the script + verify
+            # Build the user command
+            USER_CMD="$SHELL_CMD /scripts/$script"
+            [ -n "$VERIFY" ] && USER_CMD="$USER_CMD && $VERIFY"
+
             RESULT="fail"
-            if [ -n "$VERIFY" ]; then
-              if docker run --rm -v "$PWD/sh:/scripts:ro" "$IMAGE" \
-                $SHELL_CMD -c "$SHELL_CMD /scripts/$script && $VERIFY" 2>&1; then
+            if [ "$NOROOT" = "true" ]; then
+              # Encode the user command to avoid quoting issues
+              ENCODED_USER=$(printf '%s' "$USER_CMD" | base64 -w0)
+              ENCODED_ROOT=$(printf '%s' "$PREREQS_CMD" | base64 -w0)
+
+              if docker run --rm -v "$PWD/sh:/hostscripts:ro" "$IMAGE" \
+                sh -c "
+                  cp -r /hostscripts /scripts 2>/dev/null || true
+                  chmod -R 755 /scripts 2>/dev/null || true
+                  # Install su/useradd if missing
+                  if ! command -v su >/dev/null 2>&1 || ! command -v useradd >/dev/null 2>&1; then
+                    if command -v apt-get >/dev/null 2>&1; then
+                      apt-get update -qq && apt-get install -y -qq login >/dev/null 2>&1
+                    elif command -v dnf >/dev/null 2>&1; then
+                      dnf install -y -q util-linux shadow-utils >/dev/null 2>&1
+                    elif command -v yum >/dev/null 2>&1; then
+                      yum install -y -q util-linux shadow-utils >/dev/null 2>&1
+                    fi
+                  fi
+                  # Run prereqs as root
+                  printf '%s' '$ENCODED_ROOT' | base64 -d > /tmp/rootcmd.sh
+                  chmod 755 /tmp/rootcmd.sh; sh /tmp/rootcmd.sh
+                  # Create testuser
+                  if command -v useradd >/dev/null 2>&1; then
+                    useradd -m testuser 2>/dev/null || true
+                  elif command -v adduser >/dev/null 2>&1; then
+                    adduser -D testuser 2>/dev/null || true
+                  fi
+                  # Write and run user command as testuser
+                  printf '#!/bin/sh\nexport PATH=\"\$HOME/.cargo/bin:\$HOME/.local/bin:\$PATH\"\n' > /tmp/testcmd.sh
+                  printf '%s' '$ENCODED_USER' | base64 -d >> /tmp/testcmd.sh
+                  chmod 755 /tmp/testcmd.sh
+                  su testuser -s /bin/sh -c 'sh /tmp/testcmd.sh'
+                " 2>&1; then
                 RESULT="pass"
               fi
             else
+              # Normal (root) execution with prereqs
               if docker run --rm -v "$PWD/sh:/scripts:ro" "$IMAGE" \
-                $SHELL_CMD -c "$SHELL_CMD /scripts/$script" 2>&1; then
+                $SHELL_CMD -c "${PREREQS_CMD}${USER_CMD}" 2>&1; then
                 RESULT="pass"
               fi
             fi

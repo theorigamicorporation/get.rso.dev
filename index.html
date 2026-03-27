@@ -832,11 +832,11 @@
             // Add method pickers to installer script blocks
             addMethodPickers();
 
+            // Render test result badges (before collapsibles so it appears above Options)
+            renderTestBadges(allSections[tabName] || '');
+
             // Wrap Options and Examples in collapsible details
             wrapCollapsibles();
-
-            // Render test result badges from HTML comments in raw markdown
-            renderTestBadges(allSections[tabName] || '');
 
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -979,17 +979,17 @@
 
                 details.appendChild(inner);
 
-                // Insert after the metadata paragraph (Supported/Methods/Tags/Hash)
+                // Insert after: method-picker > pre (code block) > metadata paragraphs
                 let insertAfter = h3.nextElementSibling;
-                while (insertAfter && insertAfter.tagName === 'P') {
-                    const nextSib = insertAfter.nextElementSibling;
-                    // Stop after the metadata paragraph (contains Hash)
-                    if (insertAfter.textContent.includes('Hash:')) {
-                        insertAfter = insertAfter;
+                while (insertAfter) {
+                    const next = insertAfter.nextElementSibling;
+                    // Keep going past paragraphs, code blocks, and method pickers
+                    if (next && (next.tagName === 'P' || next.tagName === 'PRE' ||
+                        (next.classList && next.classList.contains('method-picker')))) {
+                        insertAfter = next;
+                    } else {
                         break;
                     }
-                    if (!nextSib || nextSib.tagName !== 'P') break;
-                    insertAfter = nextSib;
                 }
                 if (insertAfter) {
                     insertAfter.parentNode.insertBefore(details, insertAfter.nextSibling);

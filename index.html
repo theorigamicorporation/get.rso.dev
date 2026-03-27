@@ -656,7 +656,7 @@
 
         async function init() {
             try {
-                const response = await fetch('./README.md');
+                const response = await fetch('./catalog.md');
                 fullMarkdown = await response.text();
 
                 allSections = parseTabs(fullMarkdown);

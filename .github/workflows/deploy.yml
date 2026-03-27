@@ -58,9 +58,6 @@ jobs:
             **/.github/
             **/tests/
             **/tests/**
-            **/docs/
-            **/docs/**
-            docs/**
             tests/**
             .gitkeep
             .gitignore

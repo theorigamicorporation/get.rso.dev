@@ -657,20 +657,22 @@
         // Parse markdown into tab sections based on H1 headings
         function parseTabs(markdown) {
             const sections = {};
-            const parts = markdown.split(/^# /m);
 
-            parts.forEach(part => {
-                if (!part.trim()) return;
-                const lines = part.split('\n');
-                const title = lines[0].trim().toLowerCase();
-                const content = lines.slice(1).join('\n');
+            // Match only top-level H1 headings (# Linux, # Windows)
+            // Avoid splitting on # comments inside code blocks
+            const tabRegex = /^# (Linux|Windows)\s*$/gmi;
+            let match;
+            const boundaries = [];
 
-                if (title === 'linux') {
-                    sections.linux = content;
-                } else if (title === 'windows') {
-                    sections.windows = content;
-                }
-            });
+            while ((match = tabRegex.exec(markdown)) !== null) {
+                boundaries.push({ name: match[1].toLowerCase(), start: match.index + match[0].length });
+            }
+
+            for (let i = 0; i < boundaries.length; i++) {
+                const start = boundaries[i].start;
+                const end = i + 1 < boundaries.length ? boundaries[i + 1].start - boundaries[i + 1].name.length - 2 : markdown.length;
+                sections[boundaries[i].name] = markdown.substring(start, end).trim();
+            }
 
             return sections;
         }

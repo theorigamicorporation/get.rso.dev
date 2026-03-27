@@ -12,7 +12,19 @@
 # =============================================================================
 set -e
 
-echo "Running assertions for ${TEST_SCRIPT} on ${TEST_IMAGE} (method: ${TEST_METHOD})"
+echo "Running assertions for ${TEST_SCRIPT} on ${TEST_IMAGE} (method: ${TEST_METHOD:-default})"
+
+# Install prereqs for github-release method (needs curl or wget)
+if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+    echo "Installing prereq: curl..."
+    if command -v apt-get >/dev/null 2>&1; then
+        apt-get update -qq && apt-get install -y -qq curl >/dev/null 2>&1
+    elif command -v dnf >/dev/null 2>&1; then
+        dnf install -y -q curl >/dev/null 2>&1
+    elif command -v yum >/dev/null 2>&1; then
+        yum install -y -q curl >/dev/null 2>&1
+    fi
+fi
 
 echo "Assert: yq binary exists"
 command -v yq

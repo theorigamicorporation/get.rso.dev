@@ -3,9 +3,7 @@
 # Custom assertions for get-apt-fast.sh
 #
 # Environment variables set by test runner:
-#   TEST_SCRIPT  — script being tested
-#   TEST_IMAGE   — container image
-#   TEST_METHOD  — install method (only set for installer scripts with --method)
+#   TEST_SCRIPT, TEST_IMAGE, TEST_METHOD, TEST_PREREQS
 # =============================================================================
 set -e
 
@@ -14,14 +12,16 @@ echo "Running assertions for ${TEST_SCRIPT} on ${TEST_IMAGE} (method: ${TEST_MET
 # apt-fast is Debian-family only
 case "${TEST_IMAGE}" in
     *ubuntu*|*debian*|*mint*)
+        # Install prereqs that the script expects to exist
+        echo "Installing prereqs: software-properties-common..."
+        apt-get update -qq >/dev/null 2>&1
+        apt-get install -y -qq software-properties-common >/dev/null 2>&1
+
         echo "Assert: apt-fast binary exists"
         command -v apt-fast
 
         echo "Assert: apt-fast is executable"
         [ -x "$(command -v apt-fast)" ]
-
-        echo "Assert: apt-fast can show help"
-        apt-fast --help >/dev/null 2>&1 || apt-fast help >/dev/null 2>&1 || true
 
         echo "Assert: aria2c is installed (apt-fast dependency)"
         command -v aria2c

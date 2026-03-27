@@ -13,6 +13,7 @@
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 # @methods apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 # @verify jq --version
+# @prereqs curl|wget (for github-release method)
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET JQ"

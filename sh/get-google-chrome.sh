@@ -13,6 +13,7 @@
 # @supported Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
 # @methods apt, dnf, flatpak
 # @verify google-chrome-stable --version
+# @prereqs curl|wget, gpg
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET GOOGLE-CHROME"
@@ -443,11 +444,27 @@ set -e
 ###########################
 # Main
 ###########################
+check_prereqs() {
+    _missing=""
+    if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+        _missing="${_missing} curl or wget"
+    fi
+    if ! command -v gpg >/dev/null 2>&1; then
+        _missing="${_missing} gpg"
+    fi
+    if [ -n "$_missing" ]; then
+        log "Missing prerequisites:${_missing}" "ERR"
+        log "Install them first: apt-get install -y curl gpg  OR  dnf install -y curl gnupg2" "ERR"
+        exit 1
+    fi
+}
+
 main() {
     parse_args "$@"
 
     log "Starting $SCRIPT_NAME v$SCRIPT_VERSION" "INFO"
 
+    check_prereqs
     detect_distro
     detect_arch
     check_existing_install

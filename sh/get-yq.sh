@@ -13,6 +13,7 @@
 # @supported Ubuntu 24.04+, Debian, Mint, RHEL (EPEL), Rocky, Amazon Linux
 # @methods apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
 # @verify yq --version
+# @prereqs curl|wget (for github-release method)
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET YQ"

@@ -42,6 +42,7 @@ Fill in the tags at the top of the file:
 | `@supported` | No | Distros the script supports |
 | `@methods` | No | Available install methods (installer scripts only) |
 | `@verify` | No | Command the test runner uses to verify install worked |
+| `@prereqs` | No | Required tools the script expects (e.g. `curl\|wget, gpg`). Script errors if missing; test asserts install them |
 
 ### 3. Configure the script
 

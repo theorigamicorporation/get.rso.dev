@@ -13,6 +13,7 @@
 # @supported Ubuntu, Debian, Mint
 # @methods apt
 # @verify command -v apt-fast
+# @prereqs software-properties-common
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET APT-FAST"
@@ -373,11 +374,20 @@ set -e
 ###########################
 # Main
 ###########################
+check_prereqs() {
+    if ! command -v add-apt-repository >/dev/null 2>&1; then
+        log "Missing prerequisite: software-properties-common (provides add-apt-repository)" "ERR"
+        log "Install it first: sudo apt-get update && sudo apt-get install -y software-properties-common" "ERR"
+        exit 1
+    fi
+}
+
 main() {
     parse_args "$@"
 
     log "Starting $SCRIPT_NAME v$SCRIPT_VERSION" "INFO"
 
+    check_prereqs
     detect_distro
     detect_arch
     check_existing_install

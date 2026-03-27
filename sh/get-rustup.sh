@@ -13,6 +13,7 @@
 # @supported All Linux distributions
 # @methods official
 # @verify rustup --version
+# @prereqs curl|wget
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET RUSTUP"
@@ -406,10 +407,20 @@ set -e
 ###########################
 # Main
 ###########################
+check_prereqs() {
+    if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+        log "Missing prerequisites: curl or wget" "ERR"
+        log "Install one first: apt-get install -y curl  OR  dnf install -y curl" "ERR"
+        exit 1
+    fi
+}
+
 main() {
     parse_args "$@"
 
     log "Starting $SCRIPT_NAME v$SCRIPT_VERSION" "INFO"
+
+    check_prereqs
 
     # Refuse to run as root
     if [ "$(id -u)" -eq 0 ]; then

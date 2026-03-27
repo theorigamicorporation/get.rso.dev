@@ -1,5 +1,9 @@
 # get.rso.dev
 
+[![Deploy](https://github.com/theorigamicorporation/get.rso.dev/actions/workflows/deploy.yml/badge.svg)](https://github.com/theorigamicorporation/get.rso.dev/actions/workflows/deploy.yml)
+[![Lint](https://github.com/theorigamicorporation/get.rso.dev/actions/workflows/lint.yml/badge.svg)](https://github.com/theorigamicorporation/get.rso.dev/actions/workflows/lint.yml)
+[![Test](https://github.com/theorigamicorporation/get.rso.dev/actions/workflows/test.yml/badge.svg)](https://github.com/theorigamicorporation/get.rso.dev/actions/workflows/test.yml)
+
 Cross-distro install scripts for your terminal. Each script auto-detects your Linux distribution and lets you pick an install method (apt, dnf, yum, asdf, gitpak, flatpak, snap, or direct GitHub release binary).
 
 Browse all scripts at [get.rso.dev](https://get.rso.dev).

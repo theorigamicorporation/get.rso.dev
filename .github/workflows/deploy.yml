@@ -38,6 +38,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Generate catalog from script metadata
+        run: sh scripts/generate-catalog.sh
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
         with:
@@ -59,6 +62,9 @@ jobs:
             **/tests/
             **/tests/**
             tests/**
+            **/scripts/
+            **/scripts/**
+            scripts/**
             .gitkeep
             .gitignore
             README.md

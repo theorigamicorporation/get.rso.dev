@@ -1,9 +1,13 @@
-<# 
+<#
     .SYNOPSIS
     Get PC Info
 
     .DESCRIPTION
     Provides a basic structure and functions for robust PowerShell scripts
+
+    @description Display PC information including OS, CPU, RAM, and system details
+    @category System Utilities
+    @tags system, info, windows, hardware
 
     .PARAMETER ComputerName
     The name of the computer to get info for

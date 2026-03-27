@@ -631,14 +631,46 @@
             return '<h' + level + ' id="' + slug + '">' + text + '</h' + level + '>';
         };
 
+        // Custom code renderer to handle # alt: lines
+        renderer.code = function(code, lang) {
+            const hasAlt = code.includes('# alt:');
+            let wgetText = code, curlText = code;
+
+            if (hasAlt) {
+                const lines = code.split('\n');
+                const wgetLines = [];
+                const curlLines = [];
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    if (line.trim().startsWith('# alt:')) {
+                        curlLines.push(line.replace(/^(\s*)# alt:\s*/, '$1'));
+                    } else {
+                        wgetLines.push(line);
+                        curlLines.push(line);
+                    }
+                }
+
+                wgetText = wgetLines.join('\n');
+                curlText = curlLines.join('\n');
+            }
+
+            const displayText = dlTool === 'curl' ? curlText : wgetText;
+            let highlighted = displayText;
+            if (lang && hljs.getLanguage(lang)) {
+                highlighted = hljs.highlight(displayText, { language: lang }).value;
+            }
+
+            const langAttr = lang ? ' class="language-' + lang + '"' : '';
+            const dataAttrs = hasAlt
+                ? ' data-wget="' + encodeURIComponent(wgetText) + '" data-curl="' + encodeURIComponent(curlText) + '" data-has-alt="true"'
+                : '';
+
+            return '<pre' + dataAttrs + '><code' + langAttr + '>' + highlighted + '</code></pre>\n';
+        };
+
         marked.setOptions({
             renderer: renderer,
-            highlight: function(code, lang) {
-                if (lang && hljs.getLanguage(lang)) {
-                    return hljs.highlight(code, { language: lang }).value;
-                }
-                return hljs.highlightAuto(code).value;
-            },
             breaks: false,
             gfm: true
         });
@@ -669,11 +701,6 @@
             const content = allSections[tabName] || '';
             const html = marked.parse(content);
             document.getElementById('content').innerHTML = html;
-
-            // Highlight
-            document.querySelectorAll('pre code').forEach(block => {
-                hljs.highlightElement(block);
-            });
 
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -763,38 +790,8 @@
                     pre.appendChild(badge);
                 }
 
-                // Parse wget/curl alternatives from "# alt:" comments
-                const rawText = code.textContent;
-                const hasAlt = rawText.includes('# alt:');
-
-                if (hasAlt) {
-                    const lines = rawText.split('\n');
-                    const wgetLines = [];
-                    const curlLines = [];
-
-                    for (let i = 0; i < lines.length; i++) {
-                        const line = lines[i];
-                        if (line.trim().startsWith('# alt:')) {
-                            // This is the curl alternative for the previous line
-                            curlLines.push(line.replace(/^(\s*)# alt:\s*/, '$1'));
-                        } else {
-                            wgetLines.push(line);
-                            curlLines.push(line);
-                        }
-                    }
-
-                    const wgetText = wgetLines.join('\n').replace(/\n+$/, '');
-                    const curlText = curlLines.join('\n').replace(/\n+$/, '');
-
-                    // Store both versions
-                    pre.dataset.wget = wgetText;
-                    pre.dataset.curl = curlText;
-
-                    // Apply current preference
-                    code.textContent = dlTool === 'curl' ? curlText : wgetText;
-                    hljs.highlightElement(code);
-
-                    // Add toggle
+                // Add wget/curl toggle if this block has alternatives
+                if (pre.dataset.hasAlt === 'true') {
                     const toggle = document.createElement('div');
                     toggle.className = 'dl-toggle';
 
@@ -837,10 +834,13 @@
             localStorage.setItem('get-rso-dl-tool', tool);
 
             // Update all code blocks with alternatives
-            document.querySelectorAll('pre[data-wget]').forEach(pre => {
+            document.querySelectorAll('pre[data-has-alt]').forEach(pre => {
                 const code = pre.querySelector('code');
-                code.textContent = tool === 'curl' ? pre.dataset.curl : pre.dataset.wget;
-                hljs.highlightElement(code);
+                const lang = code.className.replace('language-', '');
+                const text = decodeURIComponent(tool === 'curl' ? pre.dataset.curl : pre.dataset.wget);
+                code.innerHTML = lang && hljs.getLanguage(lang)
+                    ? hljs.highlight(text, { language: lang }).value
+                    : text;
             });
 
             // Update all toggle buttons

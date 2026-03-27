@@ -2,12 +2,13 @@
 
 ## JSON & Data Tools
 
-### jq
+### get-jq
 
-Lightweight command-line JSON processor.
+Lightweight command-line JSON processor
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
+**Tags:** json, parser, filter, cli
 
 ```bash
 wget -qO- https://get.rso.dev/sh/get-jq | sh
@@ -34,12 +35,13 @@ wget -qO- https://get.rso.dev/sh/get-jq | sh -s -- --update
 # alt: curl -s https://get.rso.dev/sh/get-jq | sh -s -- --update
 ```
 
-### yq
+### get-yq
 
-Lightweight command-line YAML, JSON, and XML processor.
+Lightweight command-line YAML, JSON, and XML processor
 
 **Supported:** Ubuntu 24.04+, Debian, Mint, RHEL (EPEL), Rocky, Amazon Linux
 **Methods:** apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
+**Tags:** yaml, json, xml, parser, cli
 
 ```bash
 wget -qO- https://get.rso.dev/sh/get-yq | sh
@@ -70,11 +72,14 @@ wget -qO- https://get.rso.dev/sh/get-yq | sh -s -- --update
 
 ### get-pc-info
 
-Display machine information including hostname, user, and system details.
+Display machine information including hostname, user, and system details
+
+**Supported:** All Linux distributions
+**Tags:** system, info, hostname, uname
 
 ```bash
-wget -qO- https://get.rso.dev/sh/get-pc-info | bash
-# alt: curl -s https://get.rso.dev/sh/get-pc-info | bash
+wget -qO- https://get.rso.dev/sh/get-pc-info | sh
+# alt: curl -s https://get.rso.dev/sh/get-pc-info | sh
 ```
 
 # Windows
@@ -83,8 +88,11 @@ wget -qO- https://get.rso.dev/sh/get-pc-info | bash
 
 ### get-pc-info
 
-Display PC information including OS, CPU, RAM, and system details.
+Display PC information including OS, CPU, RAM, and system details
+
+**Tags:** system, info, windows, hardware
 
 ```powershell
 powershell.exe -command "iex(New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')"
 ```
+

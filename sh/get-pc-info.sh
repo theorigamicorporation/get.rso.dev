@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 #shellcheck disable=SC2317
+# @description Display machine information including hostname, user, and system details
+# @category System Utilities
+# @tags system, info, hostname, uname
+# @supported All Linux distributions
 _SCRIPT_VERSION="0.1"
 _SCRIPT_NAME="GET MACHINE INFO"
 ###########################

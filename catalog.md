@@ -52,7 +52,7 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
 **Hash:** `8bfc856bd99f`
 
-<!-- tests:get-rustup hash:8bfc856bd99f -->
+<!-- tests:get-rustup hash:8bfc856bd99f amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-rustup | sh

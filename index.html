@@ -648,59 +648,8 @@
             }
         }
 
-        // Custom renderer (handles both marked v12 token objects and legacy positional args)
-        const renderer = new marked.Renderer();
-
-        renderer.heading = function(textOrToken, level) {
-            const text = (typeof textOrToken === 'object' && textOrToken !== null) ? (textOrToken.text || '') : String(textOrToken);
-            const lvl = (typeof textOrToken === 'object' && textOrToken !== null) ? (textOrToken.depth || level) : level;
-            const slug = slugify(text);
-            return '<h' + lvl + ' id="' + slug + '">' + text + '</h' + lvl + '>';
-        };
-
-        // Custom code renderer to handle # alt: lines and wget/curl toggle
-        renderer.code = function(codeOrToken, langArg) {
-            const code = (typeof codeOrToken === 'object' && codeOrToken !== null) ? (codeOrToken.text || '') : String(codeOrToken);
-            const lang = (typeof codeOrToken === 'object' && codeOrToken !== null) ? (codeOrToken.lang || '') : (langArg || '');
-
-            const hasAlt = code.includes('# alt:');
-            let wgetText = code, curlText = code;
-
-            if (hasAlt) {
-                const lines = code.split('\n');
-                const wgetLines = [];
-                const curlLines = [];
-
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i];
-                    if (line.trim().startsWith('# alt:')) {
-                        curlLines.push(line.replace(/^(\s*)# alt:\s*/, '$1'));
-                    } else {
-                        wgetLines.push(line);
-                        curlLines.push(line);
-                    }
-                }
-
-                wgetText = wgetLines.join('\n');
-                curlText = curlLines.join('\n');
-            }
-
-            const displayText = dlTool === 'curl' ? curlText : wgetText;
-            let highlighted = displayText;
-            if (lang && hljs.getLanguage(lang)) {
-                highlighted = hljs.highlight(displayText, { language: lang }).value;
-            }
-
-            const langAttr = lang ? ' class="language-' + lang + '"' : '';
-            const dataAttrs = hasAlt
-                ? ' data-wget="' + encodeURIComponent(wgetText) + '" data-curl="' + encodeURIComponent(curlText) + '" data-has-alt="true"'
-                : '';
-
-            return '<pre' + dataAttrs + '><code' + langAttr + '>' + highlighted + '</code></pre>\n';
-        };
-
+        // Configure marked — use default renderer, post-process DOM for headings and alt lines
         marked.setOptions({
-            renderer: renderer,
             breaks: false,
             gfm: true
         });
@@ -732,6 +681,19 @@
             const html = marked.parse(content);
             document.getElementById('content').innerHTML = html;
 
+            // Add IDs to headings
+            document.querySelectorAll('#content h1, #content h2, #content h3, #content h4').forEach(h => {
+                h.id = slugify(h.textContent);
+            });
+
+            // Syntax highlight code blocks
+            document.querySelectorAll('pre code').forEach(block => {
+                hljs.highlightElement(block);
+            });
+
+            // Process # alt: lines in code blocks for wget/curl toggle
+            processAltLines();
+
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.tab === tabName);
@@ -742,6 +704,43 @@
             addHeadingLinks();
             buildSearchIndex();
             updateStats();
+        }
+
+        // Post-process code blocks: extract # alt: lines and store wget/curl variants
+        function processAltLines() {
+            document.querySelectorAll('#content pre code').forEach(code => {
+                const rawText = code.textContent;
+                if (!rawText.includes('# alt:')) return;
+
+                const pre = code.parentElement;
+                const lines = rawText.split('\n');
+                const wgetLines = [];
+                const curlLines = [];
+
+                for (const line of lines) {
+                    if (line.trim().startsWith('# alt:')) {
+                        curlLines.push(line.replace(/^(\s*)# alt:\s*/, '$1'));
+                    } else {
+                        wgetLines.push(line);
+                        curlLines.push(line);
+                    }
+                }
+
+                const wgetText = wgetLines.join('\n');
+                const curlText = curlLines.join('\n');
+
+                pre.dataset.wget = wgetText;
+                pre.dataset.curl = curlText;
+                pre.dataset.hasAlt = 'true';
+
+                // Show active variant
+                const displayText = dlTool === 'curl' ? curlText : wgetText;
+                code.textContent = displayText;
+
+                // Re-highlight after changing content
+                const lang = (code.className.match(/language-(\w+)/) || [])[1];
+                if (lang) hljs.highlightElement(code);
+            });
         }
 
         async function init() {

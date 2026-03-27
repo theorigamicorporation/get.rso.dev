@@ -5,8 +5,9 @@ run-name: Deploy | ${{ github.run_number }} | by @${{ github.actor }} | ${{ gith
 # Version: 0.1.0
 #######################################################
 # NOTE:
-# This workflow builds the docs site and deploys to GitHub Pages.
-# Scripts are copied into docs/ with extensions stripped for clean URLs.
+# This workflow uploads/syncs the files to a remote FTP server
+# and purges the Cloudflare cache. The FTP server handles
+# extension stripping for clean URLs (e.g. get.rso.dev/sh/get-jq).
 #######################################################
 
 on:
@@ -16,8 +17,10 @@ on:
       - main
     paths-ignore:
       - '_templates/**'
+      - '.github/**'
       - 'tests/**'
       - '.gitignore'
+      - 'README.md'
       - 'LICENSE'
       - 'LICENSE.md'
       - 'CODEOWNERS'
@@ -25,53 +28,44 @@ on:
 
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  ftp-deploy:
     runs-on: ubuntu-latest
     steps:
+
       - name: Get Codebase
         uses: actions/checkout@v4
-
-      - name: Build docs site
-        run: |
-          mkdir -p docs/sh docs/ps
-          # Copy script catalog README
-          if [ -f docs/README.md ]; then
-            echo "docs/README.md already exists, keeping it"
-          fi
-          # Copy shell scripts without extensions for clean URLs
-          for f in sh/*.sh; do
-            [ -f "$f" ] || continue
-            cp "$f" "docs/sh/$(basename "$f" .sh)"
-          done
-          # Copy PowerShell scripts without extensions
-          for f in ps/*.ps1; do
-            [ -f "$f" ] || continue
-            cp "$f" "docs/ps/$(basename "$f" .ps1)"
-          done
-          echo "Build complete. Contents of docs/:"
-          find docs/ -type f | sort
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
         with:
-          path: 'docs'
+          fetch-depth: 0
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          protocol: ftp
+          local-dir: ./
+          server-dir: ./
+          state-name: .ftp-deploy-sync-state.json
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/_templates/
+            **/.github/
+            **/tests/
+            .gitkeep
+            .gitignore
+            README.md
+            LICENSE
+            CODEOWNERS
+            CONTRIBUTING.md
+
+      - name: Purge CF Cache
+        uses: jakejarvis/cloudflare-purge-action@v0.3.0
+        env:
+            CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+            CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}

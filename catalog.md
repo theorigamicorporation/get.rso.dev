@@ -1,4 +1,4 @@
-# Bash
+# Linux
 
 ## JSON & Data Tools
 
@@ -10,11 +10,8 @@ Lightweight command-line JSON processor.
 **Methods:** apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 
 ```bash
-curl -s https://get.rso.dev/sh/get-jq | sh
-```
-
-```bash
 wget -qO- https://get.rso.dev/sh/get-jq | sh
+# alt: curl -s https://get.rso.dev/sh/get-jq | sh
 ```
 
 **Options:**
@@ -29,10 +26,12 @@ wget -qO- https://get.rso.dev/sh/get-jq | sh
 
 ```bash
 # Install via specific method
-curl -s https://get.rso.dev/sh/get-jq | sh -s -- --method=github-release
+wget -qO- https://get.rso.dev/sh/get-jq | sh -s -- --method=github-release
+# alt: curl -s https://get.rso.dev/sh/get-jq | sh -s -- --method=github-release
 
 # Update existing install
-curl -s https://get.rso.dev/sh/get-jq | sh -s -- --update
+wget -qO- https://get.rso.dev/sh/get-jq | sh -s -- --update
+# alt: curl -s https://get.rso.dev/sh/get-jq | sh -s -- --update
 ```
 
 ### yq
@@ -43,11 +42,8 @@ Lightweight command-line YAML, JSON, and XML processor.
 **Methods:** apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
 
 ```bash
-curl -s https://get.rso.dev/sh/get-yq | sh
-```
-
-```bash
 wget -qO- https://get.rso.dev/sh/get-yq | sh
+# alt: curl -s https://get.rso.dev/sh/get-yq | sh
 ```
 
 **Options:**
@@ -62,10 +58,12 @@ wget -qO- https://get.rso.dev/sh/get-yq | sh
 
 ```bash
 # Install via specific method
-curl -s https://get.rso.dev/sh/get-yq | sh -s -- --method=github-release
+wget -qO- https://get.rso.dev/sh/get-yq | sh -s -- --method=github-release
+# alt: curl -s https://get.rso.dev/sh/get-yq | sh -s -- --method=github-release
 
 # Update existing install
-curl -s https://get.rso.dev/sh/get-yq | sh -s -- --update
+wget -qO- https://get.rso.dev/sh/get-yq | sh -s -- --update
+# alt: curl -s https://get.rso.dev/sh/get-yq | sh -s -- --update
 ```
 
 ## System Utilities
@@ -75,14 +73,11 @@ curl -s https://get.rso.dev/sh/get-yq | sh -s -- --update
 Display machine information including hostname, user, and system details.
 
 ```bash
-curl -s https://get.rso.dev/sh/get-pc-info | bash
-```
-
-```bash
 wget -qO- https://get.rso.dev/sh/get-pc-info | bash
+# alt: curl -s https://get.rso.dev/sh/get-pc-info | bash
 ```
 
-# PowerShell
+# Windows
 
 ## System Utilities
 

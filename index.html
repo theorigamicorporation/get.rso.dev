@@ -359,6 +359,39 @@
         .copy-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
         .copy-btn.copied { background: var(--success); border-color: var(--success); color: var(--bg); }
 
+        /* Download tool toggle */
+        .dl-toggle {
+            position: absolute;
+            top: 0.7rem;
+            right: 4.5rem;
+            display: inline-flex;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            line-height: 1;
+        }
+
+        .dl-toggle-btn {
+            padding: 0.3rem 0.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .dl-toggle-btn.active {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .dl-toggle-btn:hover:not(.active) {
+            color: var(--text);
+        }
+
         /* Tables */
         table {
             width: 100%;
@@ -536,8 +569,8 @@
                 </div>
             </div>
             <div class="tabs-container">
-                <button class="tab-btn active" data-tab="bash">Bash</button>
-                <button class="tab-btn" data-tab="powershell">PowerShell</button>
+                <button class="tab-btn active" data-tab="linux">Linux</button>
+                <button class="tab-btn" data-tab="windows">Windows</button>
             </div>
             <div class="search-container">
                 <div class="search-wrapper">
@@ -573,7 +606,7 @@
         }
 
         let sidebar, backdrop, mobileToggle;
-        let activeTab = 'bash';
+        let activeTab = 'linux';
         let allSections = {}; // { bash: [...], powershell: [...] }
         let fullMarkdown = '';
 
@@ -621,10 +654,10 @@
                 const title = lines[0].trim().toLowerCase();
                 const content = lines.slice(1).join('\n');
 
-                if (title === 'bash') {
-                    sections.bash = content;
-                } else if (title === 'powershell') {
-                    sections.powershell = content;
+                if (title === 'linux') {
+                    sections.linux = content;
+                } else if (title === 'windows') {
+                    sections.windows = content;
                 }
             });
 
@@ -660,7 +693,7 @@
                 fullMarkdown = await response.text();
 
                 allSections = parseTabs(fullMarkdown);
-                renderTab('bash');
+                renderTab('linux');
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'flex';
@@ -711,21 +744,77 @@
             });
         }
 
+        // Global preference for download tool
+        let dlTool = localStorage.getItem('get-rso-dl-tool') || 'wget';
+
         function addCopyButtons() {
             document.querySelectorAll('pre').forEach(pre => {
                 const code = pre.querySelector('code');
-                if (code) {
-                    const classes = code.className.split(' ');
-                    const langClass = classes.find(c => c.startsWith('language-'));
-                    if (langClass) {
-                        const lang = langClass.replace('language-', '');
-                        const badge = document.createElement('span');
-                        badge.className = 'code-lang';
-                        badge.textContent = lang;
-                        pre.appendChild(badge);
-                    }
+                if (!code) return;
+
+                // Language badge
+                const classes = code.className.split(' ');
+                const langClass = classes.find(c => c.startsWith('language-'));
+                if (langClass) {
+                    const lang = langClass.replace('language-', '');
+                    const badge = document.createElement('span');
+                    badge.className = 'code-lang';
+                    badge.textContent = lang;
+                    pre.appendChild(badge);
                 }
 
+                // Parse wget/curl alternatives from "# alt:" comments
+                const rawText = code.textContent;
+                const hasAlt = rawText.includes('# alt:');
+
+                if (hasAlt) {
+                    const lines = rawText.split('\n');
+                    const wgetLines = [];
+                    const curlLines = [];
+
+                    for (let i = 0; i < lines.length; i++) {
+                        const line = lines[i];
+                        if (line.trim().startsWith('# alt:')) {
+                            // This is the curl alternative for the previous line
+                            curlLines.push(line.replace(/^(\s*)# alt:\s*/, '$1'));
+                        } else {
+                            wgetLines.push(line);
+                            curlLines.push(line);
+                        }
+                    }
+
+                    const wgetText = wgetLines.join('\n').replace(/\n+$/, '');
+                    const curlText = curlLines.join('\n').replace(/\n+$/, '');
+
+                    // Store both versions
+                    pre.dataset.wget = wgetText;
+                    pre.dataset.curl = curlText;
+
+                    // Apply current preference
+                    code.textContent = dlTool === 'curl' ? curlText : wgetText;
+                    hljs.highlightElement(code);
+
+                    // Add toggle
+                    const toggle = document.createElement('div');
+                    toggle.className = 'dl-toggle';
+
+                    const wgetBtn = document.createElement('button');
+                    wgetBtn.className = 'dl-toggle-btn' + (dlTool === 'wget' ? ' active' : '');
+                    wgetBtn.textContent = 'wget';
+
+                    const curlBtn = document.createElement('button');
+                    curlBtn.className = 'dl-toggle-btn' + (dlTool === 'curl' ? ' active' : '');
+                    curlBtn.textContent = 'curl';
+
+                    wgetBtn.onclick = () => switchDlTool('wget');
+                    curlBtn.onclick = () => switchDlTool('curl');
+
+                    toggle.appendChild(wgetBtn);
+                    toggle.appendChild(curlBtn);
+                    pre.appendChild(toggle);
+                }
+
+                // Copy button
                 const btn = document.createElement('button');
                 btn.className = 'copy-btn';
                 btn.textContent = 'Copy';
@@ -740,6 +829,23 @@
                     }, 2000);
                 };
                 pre.appendChild(btn);
+            });
+        }
+
+        function switchDlTool(tool) {
+            dlTool = tool;
+            localStorage.setItem('get-rso-dl-tool', tool);
+
+            // Update all code blocks with alternatives
+            document.querySelectorAll('pre[data-wget]').forEach(pre => {
+                const code = pre.querySelector('code');
+                code.textContent = tool === 'curl' ? pre.dataset.curl : pre.dataset.wget;
+                hljs.highlightElement(code);
+            });
+
+            // Update all toggle buttons
+            document.querySelectorAll('.dl-toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent === tool);
             });
         }
 

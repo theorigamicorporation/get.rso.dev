@@ -11,8 +11,6 @@
 #   sh tests/test-installer.sh --help-only              # Quick: only test --help
 #   sh tests/test-installer.sh --all-methods             # Test every method per script
 # =============================================================================
-set -e
-
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SCRIPT_DIR="${REPO_ROOT}/sh"
 PASSED=0
@@ -62,6 +60,15 @@ get_script_verify() {
     grep -m1 '@verify' "$1" 2>/dev/null | sed 's/.*@verify[[:space:]]*//' || true
 }
 
+# Detect interpreter from shebang (sh or bash)
+get_script_shell() {
+    _shebang=$(head -1 "$1" 2>/dev/null)
+    case "$_shebang" in
+        *bash*) printf 'bash' ;;
+        *)      printf 'sh' ;;
+    esac
+}
+
 # Get tool command name from script filename
 get_tool_cmd() {
     basename "$1" | sed 's/^get-//; s/\.sh$//'
@@ -94,24 +101,29 @@ run_container() {
 
 # Test: --help exits 0
 test_help() {
-    _image="$1"; _script="$2"
+    _image="$1"; _script="$2"; _shell="${3:-sh}"
     _name="${_image} | ${_script} | --help"
     log "Testing: $_name"
-    if run_container "$_image" "sh /scripts/${_script} --help" >/dev/null 2>&1; then
+    if run_container "$_image" "${_shell} /scripts/${_script} --help" >/dev/null 2>&1; then
         pass "$_name"
     else
         fail "$_name"
     fi
 }
 
-# Test: default install (auto-detect method)
+# Test: run script (and optionally verify with @verify command)
 test_default_install() {
-    _image="$1"; _script="$2"; _tool="$3"; _verify="$4"
-    _name="${_image} | ${_script} | default install"
-    _verify_cmd="${_verify:-command -v ${_tool}}"
+    _image="$1"; _script="$2"; _tool="$3"; _verify="$4"; _shell="${5:-sh}"
+    _name="${_image} | ${_script} | run"
+    [ -n "$_verify" ] && _name="${_image} | ${_script} | run + verify"
     log "Testing: $_name"
-    _output=$(run_container "$_image" "sh /scripts/${_script} && ${_verify_cmd}" 2>&1) || true
-    if [ $? -eq 0 ] && [ -n "$_output" ]; then
+
+    _cmd="${_shell} /scripts/${_script}"
+    [ -n "$_verify" ] && _cmd="${_cmd} && ${_verify}"
+
+    _output=$(run_container "$_image" "$_cmd" 2>&1)
+    _exit=$?
+    if [ $_exit -eq 0 ]; then
         pass "$_name"
     else
         fail "$_name"
@@ -122,7 +134,7 @@ test_default_install() {
 
 # Test: install with specific --method
 test_method_install() {
-    _image="$1"; _script="$2"; _tool="$3"; _method="$4"; _verify="$5"
+    _image="$1"; _script="$2"; _tool="$3"; _method="$4"; _verify="$5"; _shell="${6:-sh}"
     _name="${_image} | ${_script} | --method=${_method}"
     _verify_cmd="${_verify:-command -v ${_tool}}"
     log "Testing: $_name"
@@ -134,7 +146,7 @@ test_method_install() {
             _prereqs="command -v curl >/dev/null 2>&1 || { command -v apt-get >/dev/null 2>&1 && apt-get update -qq && apt-get install -y -qq curl; command -v dnf >/dev/null 2>&1 && dnf install -y -q curl; command -v yum >/dev/null 2>&1 && yum install -y -q curl; } 2>/dev/null; " ;;
     esac
 
-    _output=$(run_container "$_image" "${_prereqs}sh /scripts/${_script} --method=${_method} && ${_verify_cmd}" 2>&1) || true
+    _output=$(run_container "$_image" "${_prereqs}${_shell} /scripts/${_script} --method=${_method} && ${_verify_cmd}" 2>&1) || true
     if [ $? -eq 0 ] && printf '%s' "$_output" | grep -qiv "not available\|not found\|No such"; then
         pass "$_name"
     else
@@ -149,12 +161,21 @@ test_method_install() {
 }
 
 # Test: custom assert script
-# Assert scripts receive: $1=script_name $2=image $3=method (or "default")
+# Environment variables available to assert scripts:
+#   TEST_SCRIPT  — script being tested (always set)
+#   TEST_IMAGE   — container image (always set)
+#   TEST_METHOD  — install method (only set for installer scripts with --method)
 test_asserts() {
-    _image="$1"; _script="$2"; _assert_name="$3"; _method="${4:-default}"
-    _name="${_image} | ${_script} | asserts (${_method})"
-    _install_cmd="sh /scripts/${_script}"
-    [ "$_method" != "default" ] && _install_cmd="sh /scripts/${_script} --method=${_method}"
+    _image="$1"; _script="$2"; _assert_name="$3"; _method="$4"; _shell="${5:-sh}"
+    _label="asserts"
+    [ -n "$_method" ] && _label="asserts (${_method})"
+    _name="${_image} | ${_script} | ${_label}"
+
+    # Build the run command
+    _install_cmd="${_shell} /scripts/${_script}"
+    if [ -n "$_method" ]; then
+        _install_cmd="${_shell} /scripts/${_script} --method=${_method}"
+    fi
 
     # Prereqs for methods that need them
     _prereqs=""
@@ -163,8 +184,12 @@ test_asserts() {
             _prereqs="command -v curl >/dev/null 2>&1 || { command -v apt-get >/dev/null 2>&1 && apt-get update -qq && apt-get install -y -qq curl; command -v dnf >/dev/null 2>&1 && dnf install -y -q curl; command -v yum >/dev/null 2>&1 && yum install -y -q curl; } 2>/dev/null; " ;;
     esac
 
+    # Build env vars — only set TEST_METHOD if a method was specified
+    _env="export TEST_SCRIPT='${_script}' TEST_IMAGE='${_image}';"
+    [ -n "$_method" ] && _env="export TEST_SCRIPT='${_script}' TEST_IMAGE='${_image}' TEST_METHOD='${_method}';"
+
     log "Testing: $_name"
-    _output=$(run_container "$_image" "export TEST_SCRIPT='${_script}' TEST_IMAGE='${_image}' TEST_METHOD='${_method}'; ${_prereqs}${_install_cmd} && sh /asserts/${_assert_name}" 2>&1) || true
+    _output=$(run_container "$_image" "${_env} ${_prereqs}${_install_cmd} && sh /asserts/${_assert_name}" 2>&1) || true
     if printf '%s' "$_output" | grep -qi "assertions passed\|All.*passed"; then
         pass "$_name"
     else
@@ -176,10 +201,10 @@ test_asserts() {
 
 # Test: --update when already up to date
 test_update_noop() {
-    _image="$1"; _script="$2"; _tool="$3"
+    _image="$1"; _script="$2"; _tool="$3"; _shell="${4:-sh}"
     _name="${_image} | ${_script} | --update (already up to date)"
     log "Testing: $_name"
-    _output=$(run_container "$_image" "sh /scripts/${_script} && sh /scripts/${_script} --update" 2>&1) || true
+    _output=$(run_container "$_image" "${_shell} /scripts/${_script} && ${_shell} /scripts/${_script} --update" 2>&1) || true
     if printf '%s' "$_output" | grep -qi "up to date\|already installed"; then
         pass "$_name"
     else
@@ -191,10 +216,10 @@ test_update_noop() {
 
 # Test: --force reinstall
 test_force_reinstall() {
-    _image="$1"; _script="$2"; _tool="$3"
+    _image="$1"; _script="$2"; _tool="$3"; _shell="${4:-sh}"
     _name="${_image} | ${_script} | --force reinstall"
     log "Testing: $_name"
-    _output=$(run_container "$_image" "sh /scripts/${_script} && sh /scripts/${_script} --force && ${_tool} --version" 2>&1) || true
+    _output=$(run_container "$_image" "${_shell} /scripts/${_script} && ${_shell} /scripts/${_script} --force && ${_tool} --version" 2>&1) || true
     if printf '%s' "$_output" | grep -qi "version\|${_tool}"; then
         pass "$_name"
     else
@@ -283,12 +308,15 @@ for image in $IMAGES; do
         tool_cmd=$(get_tool_cmd "$script")
         script_path="${SCRIPT_DIR}/${script}"
         verify_cmd=$(get_script_verify "$script_path")
+        shell_cmd=$(get_script_shell "$script_path")
         assert_script=$(get_assert_script "$script")
         assert_name=""
         [ -n "$assert_script" ] && assert_name=$(basename "$assert_script")
 
-        # Always test --help
-        test_help "$image" "$script"
+        # Test --help only if the script supports it
+        if grep -q '\-\-help\|usage()' "$script_path" 2>/dev/null; then
+            test_help "$image" "$script" "$shell_cmd"
+        fi
 
         [ "$HELP_ONLY" = true ] && continue
 
@@ -297,28 +325,26 @@ for image in $IMAGES; do
         is_installer=false
         [ -n "$methods" ] && is_installer=true
 
-        if [ -n "$FILTER_METHOD" ]; then
-            test_method_install "$image" "$script" "$tool_cmd" "$FILTER_METHOD" "$verify_cmd"
+        if [ -n "$FILTER_METHOD" ] && [ "$is_installer" = true ]; then
+            test_method_install "$image" "$script" "$tool_cmd" "$FILTER_METHOD" "$verify_cmd" "$shell_cmd"
         elif [ "$ALL_METHODS" = true ] && [ "$is_installer" = true ]; then
             for method in $methods; do
-                test_method_install "$image" "$script" "$tool_cmd" "$method" "$verify_cmd"
+                test_method_install "$image" "$script" "$tool_cmd" "$method" "$verify_cmd" "$shell_cmd"
             done
         elif [ "$is_installer" = true ]; then
-            # Installer scripts: test install, update, force
-            test_default_install "$image" "$script" "$tool_cmd" "$verify_cmd"
-            test_update_noop "$image" "$script" "$tool_cmd"
-            test_force_reinstall "$image" "$script" "$tool_cmd"
+            test_default_install "$image" "$script" "$tool_cmd" "$verify_cmd" "$shell_cmd"
+            test_update_noop "$image" "$script" "$tool_cmd" "$shell_cmd"
+            test_force_reinstall "$image" "$script" "$tool_cmd" "$shell_cmd"
         else
-            # Non-installer scripts: just run and verify
-            test_default_install "$image" "$script" "$tool_cmd" "$verify_cmd"
+            test_default_install "$image" "$script" "$tool_cmd" "$verify_cmd" "$shell_cmd"
         fi
 
         # Run custom asserts if they exist
         if [ -n "$assert_name" ] && [ "$HELP_ONLY" = false ]; then
-            if [ -n "$FILTER_METHOD" ]; then
-                test_asserts "$image" "$script" "$assert_name" "$FILTER_METHOD"
+            if [ -n "$FILTER_METHOD" ] && [ "$is_installer" = true ]; then
+                test_asserts "$image" "$script" "$assert_name" "$FILTER_METHOD" "$shell_cmd"
             else
-                test_asserts "$image" "$script" "$assert_name" "default"
+                test_asserts "$image" "$script" "$assert_name" "" "$shell_cmd"
             fi
         fi
     done

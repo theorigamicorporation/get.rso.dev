@@ -548,6 +548,29 @@
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        .build-footer {
+            position: fixed;
+            bottom: 0;
+            left: 320px;
+            right: 0;
+            padding: 0.3rem 1rem;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            text-align: right;
+            z-index: 40;
+            opacity: 0.6;
+        }
+
+        .build-footer a { color: var(--text-muted); }
+        .build-footer a:hover { color: var(--accent); }
+
+        @media (max-width: 1024px) {
+            .build-footer { left: 0; }
+        }
     </style>
 </head>
 <body>
@@ -590,6 +613,7 @@
     <button class="back-to-top" id="backToTop">&uarr;</button>
     <button class="mobile-toggle" id="mobileToggle">&#9776;</button>
     <div class="link-copied-toast" id="toast">Link copied to clipboard!</div>
+    <div class="build-footer">build <!-- BUILD_SHA --> &middot; <!-- BUILD_TIME --></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>

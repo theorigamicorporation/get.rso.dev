@@ -41,6 +41,14 @@ jobs:
       - name: Generate catalog from script metadata
         run: sh scripts/generate-catalog.sh
 
+      - name: Inject build info into index.html
+        run: |
+          SHA=$(git rev-parse --short HEAD)
+          TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
+          REPO_URL="https://github.com/${{ github.repository }}/commit/$(git rev-parse HEAD)"
+          sed -i "s|<!-- BUILD_SHA -->|<a href=\"${REPO_URL}\">${SHA}</a>|g" index.html
+          sed -i "s|<!-- BUILD_TIME -->|${TIME}|g" index.html
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
         with:

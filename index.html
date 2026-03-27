@@ -584,6 +584,89 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Script metadata block */
+        .script-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 0.75rem 0 1rem;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .script-meta-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .script-meta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            min-width: 4.5rem;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+
+        .script-meta-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .meta-pill {
+            display: inline-block;
+            padding: 0.12rem 0.45rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            border-radius: 3px;
+            line-height: 1.4;
+        }
+
+        .meta-pill.distro {
+            background: rgba(88, 166, 255, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, 0.15);
+        }
+
+        .meta-pill.method {
+            background: rgba(163, 113, 247, 0.08);
+            color: var(--purple);
+            border: 1px solid rgba(163, 113, 247, 0.15);
+        }
+
+        .meta-pill.tag {
+            background: rgba(139, 148, 158, 0.08);
+            color: var(--text-muted);
+            border: 1px solid rgba(139, 148, 158, 0.12);
+        }
+
+        .meta-pill.hash {
+            background: rgba(63, 185, 80, 0.06);
+            color: var(--success);
+            border: 1px solid rgba(63, 185, 80, 0.12);
+            opacity: 0.6;
+            font-size: 0.65rem;
+        }
+
+        @media (max-width: 768px) {
+            .script-meta-row {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            .script-meta-label {
+                min-width: unset;
+            }
+        }
+
         /* Test result badges */
         .test-badges {
             display: flex;
@@ -826,6 +909,9 @@
                 hljs.highlightElement(block);
             });
 
+            // Transform metadata paragraphs into styled pill badges
+            styleMetadata();
+
             // Process # alt: lines in code blocks for wget/curl toggle
             processAltLines();
 
@@ -851,6 +937,69 @@
         }
 
         // Post-process code blocks: extract # alt: lines and store wget/curl variants
+        // Transform metadata paragraphs (Supported/Methods/Tags/Hash) into styled pill badges
+        function styleMetadata() {
+            document.querySelectorAll('#content p').forEach(p => {
+                const text = p.textContent;
+                if (!text.includes('Supported:') && !text.includes('Methods:') &&
+                    !text.includes('Tags:') && !text.includes('Hash:')) return;
+
+                const meta = document.createElement('div');
+                meta.className = 'script-meta';
+
+                // Parse each metadata field from the <strong> elements
+                const fields = [
+                    { key: 'Supported:', label: 'distros', pillClass: 'distro' },
+                    { key: 'Methods:', label: 'methods', pillClass: 'method' },
+                    { key: 'Tags:', label: 'tags', pillClass: 'tag' },
+                    { key: 'Hash:', label: 'hash', pillClass: 'hash' }
+                ];
+
+                // Extract text between each <strong>Key:</strong> and the next <strong> or end
+                const html = p.innerHTML;
+
+                fields.forEach(field => {
+                    const regex = new RegExp('<strong>' + field.key.replace(':', ':') + '</strong>\\s*([^<]*?)(?=<strong>|<code>|$)');
+                    const codeRegex = new RegExp('<strong>' + field.key.replace(':', ':') + '</strong>\\s*<code>([^<]*?)</code>');
+
+                    let values = [];
+                    const codeMatch = html.match(codeRegex);
+                    const textMatch = html.match(regex);
+
+                    if (codeMatch) {
+                        values = [codeMatch[1].trim()];
+                    } else if (textMatch && textMatch[1].trim()) {
+                        values = textMatch[1].split(',').map(v => v.trim()).filter(Boolean);
+                    }
+
+                    if (values.length === 0) return;
+
+                    const row = document.createElement('div');
+                    row.className = 'script-meta-row';
+
+                    const label = document.createElement('span');
+                    label.className = 'script-meta-label';
+                    label.textContent = field.label;
+                    row.appendChild(label);
+
+                    const pills = document.createElement('span');
+                    pills.className = 'script-meta-pills';
+
+                    values.forEach(v => {
+                        const pill = document.createElement('span');
+                        pill.className = 'meta-pill ' + field.pillClass;
+                        pill.textContent = v;
+                        pills.appendChild(pill);
+                    });
+
+                    row.appendChild(pills);
+                    meta.appendChild(row);
+                });
+
+                p.parentNode.replaceChild(meta, p);
+            });
+        }
+
         function processAltLines() {
             document.querySelectorAll('#content pre code').forEach(code => {
                 const rawText = code.textContent;

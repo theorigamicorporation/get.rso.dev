@@ -195,7 +195,6 @@ jobs:
           cat catalog.md
 
       - name: Commit updated catalog
-        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -203,18 +202,11 @@ jobs:
           git add catalog.md
           if git diff --cached --quiet; then
             echo "No changes to catalog.md"
-            echo "changed=false" >> $GITHUB_OUTPUT
           else
-            # [skip ci] prevents lint/test from re-triggering (deploy triggered separately below)
-            git commit -m "ci: update test results in catalog.md [skip ci]"
-            # Pull + rebase to handle concurrent pushes, then push
+            # This push triggers deploy.yml (catalog.md is not in test.yml paths,
+            # so test.yml won't re-trigger; lint.yml also won't trigger since
+            # catalog.md is not in sh/**)
+            git commit -m "ci: update test results in catalog.md"
             git pull --rebase origin main 2>/dev/null || git pull --rebase origin master 2>/dev/null || true
             git push || { git pull --rebase && git push; }
-            echo "changed=true" >> $GITHUB_OUTPUT
           fi
-
-      - name: Trigger deploy
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run deploy.yml

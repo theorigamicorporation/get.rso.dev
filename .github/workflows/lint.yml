@@ -1,0 +1,88 @@
+name: Lint & Check
+run-name: Lint | ${{ github.run_number }} | by @${{ github.actor }}
+
+#######################################################
+# Version: 0.1.0
+#######################################################
+# NOTE:
+# Runs ShellCheck, checkbashisms, and dash syntax validation
+# on all shell scripts to ensure POSIX compatibility.
+#######################################################
+
+on:
+  push:
+    paths:
+      - 'sh/**'
+      - 'ps/**'
+      - '_templates/**'
+      - '.github/workflows/lint.yml'
+  pull_request:
+    paths:
+      - 'sh/**'
+      - 'ps/**'
+      - '_templates/**'
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ShellCheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: ShellCheck POSIX scripts (sh/)
+        run: |
+          if compgen -G "sh/*.sh" > /dev/null; then
+            shellcheck --shell=sh --severity=warning sh/*.sh
+          else
+            echo "No .sh files found in sh/"
+          fi
+
+      - name: ShellCheck Bash templates (_templates/)
+        run: |
+          if compgen -G "_templates/*.sh" > /dev/null; then
+            shellcheck --shell=bash --severity=warning _templates/*.sh
+          else
+            echo "No .sh files found in _templates/"
+          fi
+
+  posix-check:
+    name: POSIX Compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install checkbashisms
+        run: sudo apt-get install -y devscripts
+
+      - name: Check for bashisms in sh/ scripts
+        run: |
+          if compgen -G "sh/*.sh" > /dev/null; then
+            checkbashisms sh/*.sh
+          else
+            echo "No .sh files found in sh/"
+          fi
+
+  syntax-check:
+    name: Dash Syntax Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify scripts parse under dash
+        run: |
+          failed=0
+          for f in sh/*.sh; do
+            [ -f "$f" ] || continue
+            echo "Checking: $f"
+            if ! dash -n "$f"; then
+              echo "FAIL: $f"
+              failed=1
+            fi
+          done
+          exit $failed

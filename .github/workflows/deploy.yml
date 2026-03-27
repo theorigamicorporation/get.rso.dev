@@ -2,12 +2,11 @@ name: Deploy | get.rso.dev
 run-name: Deploy | ${{ github.run_number }} | by @${{ github.actor }} | ${{ github.event_name}}
 
 #######################################################
-# Version: 0.1.0
+# Version: 0.2.0
 #######################################################
 # NOTE:
-# This workflow uploads/syncs the files to a remote FTP server
-# and purges the Cloudflare cache. The FTP server handles
-# extension stripping for clean URLs (e.g. get.rso.dev/sh/get-jq).
+# This workflow runs lint checks first, then deploys to FTP.
+# On workflow_dispatch it skips lint and deploys immediately.
 #######################################################
 
 on:
@@ -29,10 +28,42 @@ on:
   workflow_dispatch:
 
 jobs:
-  ftp-deploy:
+  lint:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
 
+      - name: Install ShellCheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: ShellCheck scripts
+        run: |
+          failed=0
+          for f in sh/*.sh; do
+            [ -f "$f" ] || continue
+            if head -1 "$f" | grep -q 'env sh' || head -1 "$f" | grep -q 'bin/sh'; then
+              shellcheck --shell=sh --severity=warning "$f" || failed=1
+            else
+              shellcheck --shell=bash --severity=warning "$f" || failed=1
+            fi
+          done
+          exit $failed
+
+      - name: Dash syntax check
+        run: |
+          for f in sh/*.sh; do
+            [ -f "$f" ] || continue
+            if head -1 "$f" | grep -q 'env sh' || head -1 "$f" | grep -q 'bin/sh'; then
+              dash -n "$f" || exit 1
+            fi
+          done
+
+  deploy:
+    needs: [lint]
+    if: always() && (needs.lint.result == 'success' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    steps:
       - name: Get Codebase
         uses: actions/checkout@v4
         with:

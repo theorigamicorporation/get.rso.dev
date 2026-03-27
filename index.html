@@ -979,21 +979,25 @@
 
                 details.appendChild(inner);
 
-                // Insert after: method-picker > pre (code block) > metadata paragraphs
-                let insertAfter = h3.nextElementSibling;
-                while (insertAfter) {
-                    const next = insertAfter.nextElementSibling;
-                    // Keep going past paragraphs, code blocks, and method pickers
-                    if (next && (next.tagName === 'P' || next.tagName === 'PRE' ||
-                        (next.classList && next.classList.contains('method-picker')))) {
-                        insertAfter = next;
-                    } else {
+                // Insert after method-picker if it exists, otherwise after the first <pre>
+                let insertAfter = null;
+
+                // Walk siblings of h3 to find the right spot
+                let el = h3.nextElementSibling;
+                while (el && !['H2', 'H3'].includes(el.tagName)) {
+                    if (el.classList && el.classList.contains('method-picker')) {
+                        insertAfter = el;
                         break;
                     }
+                    if (el.tagName === 'PRE' && !insertAfter) {
+                        insertAfter = el; // first pre, keep looking for method-picker
+                    }
+                    el = el.nextElementSibling;
                 }
-                if (insertAfter) {
-                    insertAfter.parentNode.insertBefore(details, insertAfter.nextSibling);
-                }
+
+                if (!insertAfter) insertAfter = h3; // fallback
+
+                insertAfter.parentNode.insertBefore(details, insertAfter.nextSibling);
             });
         }
 

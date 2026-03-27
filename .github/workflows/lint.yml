@@ -95,15 +95,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Verify scripts parse under dash
+      - name: Verify POSIX scripts parse under dash
         run: |
           failed=0
           for f in sh/*.sh; do
             [ -f "$f" ] || continue
-            echo "Checking: $f"
-            if ! dash -n "$f"; then
-              echo "FAIL: $f"
-              failed=1
+            # Only check POSIX sh scripts
+            if head -1 "$f" | grep -q 'env sh' || head -1 "$f" | grep -q 'bin/sh'; then
+              echo "Checking: $f"
+              if ! dash -n "$f"; then
+                echo "FAIL: $f"
+                failed=1
+              fi
+            else
+              echo "Skipping (bash script): $f"
             fi
           done
           exit $failed

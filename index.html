@@ -870,14 +870,13 @@
                 const methods = methodsMatch[1].split(',').map(m => m.trim()).filter(Boolean);
                 if (methods.length === 0) return;
 
-                // Find the first code block BEFORE the Methods line (the main install command)
-                // Walk backwards from methodsP
+                // Find the first code block AFTER the Methods line (the main install command)
                 let codeBlock = null;
-                let el = methodsP.previousElementSibling;
+                let el = methodsP.nextElementSibling;
                 while (el) {
                     if (el.tagName === 'PRE') { codeBlock = el; break; }
                     if (el.tagName === 'H3' || el.tagName === 'H2') break;
-                    el = el.previousElementSibling;
+                    el = el.nextElementSibling;
                 }
 
                 if (!codeBlock) return;

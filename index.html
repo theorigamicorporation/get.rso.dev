@@ -392,6 +392,41 @@
             color: var(--text);
         }
 
+        /* Method picker */
+        .method-picker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin: 0.5rem 0 0.25rem;
+        }
+
+        .method-picker-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .method-picker select {
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.15s ease;
+        }
+
+        .method-picker select:hover { border-color: var(--text-muted); }
+        .method-picker select:focus { border-color: var(--accent); }
+
+        .method-picker select option {
+            background: var(--bg-secondary);
+            color: var(--text);
+        }
+
         /* Tables */
         table {
             width: 100%;
@@ -746,6 +781,9 @@
             // Process # alt: lines in code blocks for wget/curl toggle
             processAltLines();
 
+            // Add method pickers to installer script blocks
+            addMethodPickers();
+
             // Wrap Options and Examples in collapsible details
             wrapCollapsibles();
 
@@ -811,6 +849,107 @@
                 // Re-highlight
                 if (lang && hljs.getLanguage(lang)) hljs.highlightElement(code);
             });
+        }
+
+        // Add method picker dropdowns to installer script code blocks
+        function addMethodPickers() {
+            const content = document.getElementById('content');
+
+            // Find all "Methods:" lines and associate them with the next code block
+            content.querySelectorAll('strong').forEach(strong => {
+                if (!strong.textContent.trim().startsWith('Methods:')) return;
+
+                const methodsP = strong.closest('p');
+                if (!methodsP) return;
+
+                // Extract method list from the text after "Methods:"
+                const fullText = methodsP.textContent;
+                const methodsMatch = fullText.match(/Methods:\s*(.+)/);
+                if (!methodsMatch) return;
+
+                const methods = methodsMatch[1].split(',').map(m => m.trim()).filter(Boolean);
+                if (methods.length === 0) return;
+
+                // Find the first code block BEFORE the Methods line (the main install command)
+                // Walk backwards from methodsP
+                let codeBlock = null;
+                let el = methodsP.previousElementSibling;
+                while (el) {
+                    if (el.tagName === 'PRE') { codeBlock = el; break; }
+                    if (el.tagName === 'H3' || el.tagName === 'H2') break;
+                    el = el.previousElementSibling;
+                }
+
+                if (!codeBlock) return;
+
+                // Store the base command (without --method)
+                const code = codeBlock.querySelector('code');
+                if (!code) return;
+
+                codeBlock.dataset.baseWget = codeBlock.dataset.primary || code.textContent;
+                codeBlock.dataset.baseCurl = codeBlock.dataset.alt || '';
+                codeBlock.dataset.methods = methods.join(',');
+
+                // Create picker
+                const picker = document.createElement('div');
+                picker.className = 'method-picker';
+
+                const label = document.createElement('span');
+                label.className = 'method-picker-label';
+                label.textContent = 'Method:';
+
+                const select = document.createElement('select');
+
+                const autoOpt = document.createElement('option');
+                autoOpt.value = '';
+                autoOpt.textContent = 'auto (default)';
+                select.appendChild(autoOpt);
+
+                methods.forEach(m => {
+                    const opt = document.createElement('option');
+                    opt.value = m;
+                    opt.textContent = m;
+                    select.appendChild(opt);
+                });
+
+                select.onchange = () => {
+                    updateMethodCommand(codeBlock, select.value);
+                };
+
+                picker.appendChild(label);
+                picker.appendChild(select);
+
+                // Insert picker after the code block
+                codeBlock.parentNode.insertBefore(picker, codeBlock.nextSibling);
+            });
+        }
+
+        function updateMethodCommand(pre, method) {
+            const code = pre.querySelector('code');
+            const lang = (code.className.match(/language-(\w+)/) || [])[1] || '';
+            const hasAlt = pre.dataset.hasAlt === 'true';
+
+            let primaryBase = pre.dataset.baseWget || '';
+            let altBase = pre.dataset.baseCurl || '';
+
+            let primaryCmd, altCmd;
+            if (method) {
+                // Append --method arg: "| sh" becomes "| sh -s -- --method=X"
+                primaryCmd = primaryBase.replace(/\|\s*sh\s*$/, '| sh -s -- --method=' + method);
+                altCmd = altBase.replace(/\|\s*sh\s*$/, '| sh -s -- --method=' + method);
+            } else {
+                primaryCmd = primaryBase;
+                altCmd = altBase;
+            }
+
+            // Update stored data for toggle switching
+            pre.dataset.primary = primaryCmd;
+            if (altCmd) pre.dataset.alt = altCmd;
+
+            // Display the active variant
+            const displayText = (dlPref === 'alt' && altCmd) ? altCmd : primaryCmd;
+            code.textContent = displayText;
+            if (lang && hljs.getLanguage(lang)) hljs.highlightElement(code);
         }
 
         // Wrap "Options:" tables and example code blocks in collapsible <details>

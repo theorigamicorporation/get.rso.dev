@@ -12,7 +12,7 @@ Google Chrome web browser
 **Tags:** browser, chrome, google, web
 **Hash:** `0ad565fabee4`
 
-<!-- tests:get-google-chrome hash:0ad565fabee4 amazonlinux-2023:pass debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-google-chrome hash:0ad565fabee4 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-google-chrome | sh
@@ -52,7 +52,7 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
 **Hash:** `e7140a5ba964`
 
-<!-- tests:get-rustup hash:e7140a5ba964 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-rustup hash:e7140a5ba964 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-rustup | sh
@@ -165,7 +165,7 @@ Lightweight command-line YAML, JSON, and XML processor
 **Tags:** yaml, json, xml, parser, cli
 **Hash:** `7106ac93e19d`
 
-<!-- tests:get-yq hash:7106ac93e19d amazonlinux-2023:pass debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-yq hash:7106ac93e19d amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-yq | sh
@@ -204,7 +204,7 @@ Accelerated apt package manager wrapper using aria2
 **Tags:** apt, fast, aria2, package-manager, accelerator
 **Hash:** `d6301194a189`
 
-<!-- tests:get-apt-fast hash:d6301194a189 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-apt-fast hash:d6301194a189 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-apt-fast | sh
@@ -257,7 +257,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `480f70c4786b`
 
-<!-- tests:get-pc-info hash:480f70c4786b -->
+<!-- tests:get-pc-info hash:1fecbac694f6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

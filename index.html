@@ -585,10 +585,40 @@
         @keyframes spin { to { transform: rotate(360deg); } }
 
         /* Filter bar */
-        .filter-bar {
-            padding: 0 1.25rem;
-            margin-bottom: 0.75rem;
+        .filter-details {
+            margin: 0 1.25rem 0.75rem;
         }
+
+        .filter-summary {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.35rem 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.15s ease;
+        }
+
+        .filter-summary::-webkit-details-marker { display: none; }
+
+        .filter-summary::before {
+            content: '\25B8';
+            font-size: 0.6rem;
+            transition: transform 0.2s ease;
+        }
+
+        .filter-details[open] .filter-summary::before { transform: rotate(90deg); }
+        .filter-summary:hover { color: var(--text); }
+
+        .filter-details .filter-bar {
+            padding: 0.4rem 0 0;
+        }
+
+        .filter-bar {
 
         .filter-group {
             margin-bottom: 0.5rem;
@@ -905,7 +935,10 @@
                 </div>
             </div>
             <div class="search-results hidden" id="searchResults"></div>
-            <div class="filter-bar" id="filterBar"></div>
+            <details class="filter-details" id="filterDetails">
+                <summary class="filter-summary">Filters</summary>
+                <div class="filter-bar" id="filterBar"></div>
+            </details>
             <nav class="toc" id="toc"></nav>
         </aside>
 
@@ -1099,7 +1132,14 @@
         }
 
         function applyFilters() {
-            const hasFilters = activeFilters.tags.size + activeFilters.methods.size + activeFilters.distros.size > 0;
+            const totalActive = activeFilters.tags.size + activeFilters.methods.size + activeFilters.distros.size;
+            const hasFilters = totalActive > 0;
+
+            // Update summary text
+            const summary = document.querySelector('.filter-summary');
+            if (summary) {
+                summary.textContent = totalActive > 0 ? 'Filters (' + totalActive + ' active)' : 'Filters';
+            }
 
             document.querySelectorAll('#content h3').forEach(h3 => {
                 if (!hasFilters) {

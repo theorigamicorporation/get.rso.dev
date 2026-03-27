@@ -12,6 +12,7 @@
 # @tags TODO: comma, separated, tags
 # @supported TODO: Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 # @methods apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
+# @verify TOOLNAME --version
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET TOOLNAME"

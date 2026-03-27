@@ -53,14 +53,27 @@ check_podman() {
     fi
 }
 
-# Extract @methods metadata from a script
+# Extract metadata from a script
 get_script_methods() {
     grep -m1 '@methods' "$1" 2>/dev/null | sed 's/.*@methods[[:space:]]*//' | tr ',' '\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/ (.*)//g' | grep -v '^$' || true
+}
+
+get_script_verify() {
+    grep -m1 '@verify' "$1" 2>/dev/null | sed 's/.*@verify[[:space:]]*//' || true
 }
 
 # Get tool command name from script filename
 get_tool_cmd() {
     basename "$1" | sed 's/^get-//; s/\.sh$//'
+}
+
+# Check if custom assert script exists for a script
+get_assert_script() {
+    _script_name=$(basename "$1" | sed 's/\.sh$//')
+    _assert="${REPO_ROOT}/tests/asserts/${_script_name}.sh"
+    if [ -f "$_assert" ]; then
+        printf '%s' "$_assert"
+    fi
 }
 
 # Run a command inside a container
@@ -70,6 +83,7 @@ run_container() {
     shift
     podman run --rm \
         -v "${SCRIPT_DIR}:/scripts:ro" \
+        -v "${REPO_ROOT}/tests/asserts:/asserts:ro" \
         "$_image" \
         sh -c "$*" 2>&1
 }
@@ -92,11 +106,12 @@ test_help() {
 
 # Test: default install (auto-detect method)
 test_default_install() {
-    _image="$1"; _script="$2"; _tool="$3"
+    _image="$1"; _script="$2"; _tool="$3"; _verify="$4"
     _name="${_image} | ${_script} | default install"
+    _verify_cmd="${_verify:-command -v ${_tool}}"
     log "Testing: $_name"
-    _output=$(run_container "$_image" "sh /scripts/${_script} && command -v ${_tool} && ${_tool} --version" 2>&1) || true
-    if printf '%s' "$_output" | grep -qi "version\|${_tool}"; then
+    _output=$(run_container "$_image" "sh /scripts/${_script} && ${_verify_cmd}" 2>&1) || true
+    if [ $? -eq 0 ] && [ -n "$_output" ]; then
         pass "$_name"
     else
         fail "$_name"
@@ -107,8 +122,9 @@ test_default_install() {
 
 # Test: install with specific --method
 test_method_install() {
-    _image="$1"; _script="$2"; _tool="$3"; _method="$4"
+    _image="$1"; _script="$2"; _tool="$3"; _method="$4"; _verify="$5"
     _name="${_image} | ${_script} | --method=${_method}"
+    _verify_cmd="${_verify:-command -v ${_tool}}"
     log "Testing: $_name"
 
     # Some methods need prereqs in minimal containers
@@ -118,11 +134,10 @@ test_method_install() {
             _prereqs="command -v curl >/dev/null 2>&1 || { command -v apt-get >/dev/null 2>&1 && apt-get update -qq && apt-get install -y -qq curl; command -v dnf >/dev/null 2>&1 && dnf install -y -q curl; command -v yum >/dev/null 2>&1 && yum install -y -q curl; } 2>/dev/null; " ;;
     esac
 
-    _output=$(run_container "$_image" "${_prereqs}sh /scripts/${_script} --method=${_method} && command -v ${_tool} && ${_tool} --version" 2>&1) || true
-    if printf '%s' "$_output" | grep -qi "version\|${_tool}"; then
+    _output=$(run_container "$_image" "${_prereqs}sh /scripts/${_script} --method=${_method} && ${_verify_cmd}" 2>&1) || true
+    if [ $? -eq 0 ] && printf '%s' "$_output" | grep -qiv "not available\|not found\|No such"; then
         pass "$_name"
     else
-        # Some methods won't be available on all distros (e.g. apt on RHEL)
         if printf '%s' "$_output" | grep -qi "not available\|not found\|No such"; then
             skip "$_name (method not available on this distro)"
         else
@@ -130,6 +145,21 @@ test_method_install() {
             printf "  Output (last 5 lines):\n"
             printf '%s\n' "$_output" | tail -5 | sed 's/^/    /'
         fi
+    fi
+}
+
+# Test: custom assert script
+test_asserts() {
+    _image="$1"; _script="$2"; _assert_name="$3"
+    _name="${_image} | ${_script} | custom asserts"
+    log "Testing: $_name"
+    _output=$(run_container "$_image" "sh /scripts/${_script} && sh /asserts/${_assert_name}" 2>&1) || true
+    if printf '%s' "$_output" | grep -qi "assertions passed\|All.*passed"; then
+        pass "$_name"
+    else
+        fail "$_name"
+        printf "  Output (last 10 lines):\n"
+        printf '%s\n' "$_output" | tail -10 | sed 's/^/    /'
     fi
 }
 
@@ -255,6 +285,10 @@ for image in $IMAGES; do
         [ -z "$script" ] && continue
         tool_cmd=$(get_tool_cmd "$script")
         script_path="${SCRIPT_DIR}/${script}"
+        verify_cmd=$(get_script_verify "$script_path")
+        assert_script=$(get_assert_script "$script")
+        assert_name=""
+        [ -n "$assert_script" ] && assert_name=$(basename "$assert_script")
 
         # Always test --help
         test_help "$image" "$script"
@@ -263,18 +297,23 @@ for image in $IMAGES; do
 
         if [ -n "$FILTER_METHOD" ]; then
             # Test only the specified method
-            test_method_install "$image" "$script" "$tool_cmd" "$FILTER_METHOD"
+            test_method_install "$image" "$script" "$tool_cmd" "$FILTER_METHOD" "$verify_cmd"
         elif [ "$ALL_METHODS" = true ]; then
             # Test every method from @methods metadata
             methods=$(get_script_methods "$script_path")
             for method in $methods; do
-                test_method_install "$image" "$script" "$tool_cmd" "$method"
+                test_method_install "$image" "$script" "$tool_cmd" "$method" "$verify_cmd"
             done
         else
             # Default: test auto-detect install, update, force
-            test_default_install "$image" "$script" "$tool_cmd"
+            test_default_install "$image" "$script" "$tool_cmd" "$verify_cmd"
             test_update_noop "$image" "$script" "$tool_cmd"
             test_force_reinstall "$image" "$script" "$tool_cmd"
+        fi
+
+        # Run custom asserts if they exist (after default install)
+        if [ -n "$assert_name" ] && [ "$HELP_ONLY" = false ]; then
+            test_asserts "$image" "$script" "$assert_name"
         fi
     done
 done

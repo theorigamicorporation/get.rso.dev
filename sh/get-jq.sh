@@ -12,6 +12,7 @@
 # @tags json, parser, filter, cli
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 # @methods apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
+# @verify jq --version
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET JQ"

@@ -23,7 +23,7 @@ help: ## Show this help
 	@printf "\033[1mDistros:\033[0m %s\n" "$(IMAGES)"
 
 ##@ Testing
-.PHONY: test test-quick test-all-methods test-method test-script test-image
+.PHONY: test test-quick test-all-methods test-method test-script test-image test-asserts
 
 test: ## Run default test suite (all scripts, all distros)
 	@sh $(TEST_RUNNER) $(if $(SCRIPT),--script=$(SCRIPT)) $(if $(IMAGE),--image=$(IMAGE))
@@ -45,6 +45,9 @@ ifndef SCRIPT
 	$(error SCRIPT is required. Usage: make test-script SCRIPT=get-jq.sh)
 endif
 	@sh $(TEST_RUNNER) --script=$(SCRIPT) $(if $(IMAGE),--image=$(IMAGE))
+
+test-asserts: ## Run only custom assert scripts (tests/asserts/*.sh)
+	@sh $(TEST_RUNNER) $(if $(SCRIPT),--script=$(SCRIPT)) $(if $(IMAGE),--image=$(IMAGE))
 
 test-image: ## Test on a specific distro (requires IMAGE=<image>)
 ifndef IMAGE

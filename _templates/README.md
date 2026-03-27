@@ -30,6 +30,30 @@ All scripts must include metadata tags as comments for the auto-generated catalo
 # @tags comma, separated, search tags
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 # @methods apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
+# @verify tool --version
 ```
 
 For PowerShell, place them inside the `<# ... #>` comment block.
+
+## Custom Test Assertions
+
+For scripts that need more than a simple `@verify` check, add a custom assert script:
+
+```bash
+# Create tests/asserts/get-mytool.sh (filename must match the script name)
+cat > tests/asserts/get-mytool.sh << 'EOF'
+#!/usr/bin/env sh
+set -e
+
+echo "Assert: mytool binary exists"
+command -v mytool
+
+echo "Assert: mytool can do X"
+result=$(mytool some-command)
+[ "$result" = "expected" ]
+
+echo "All mytool assertions passed"
+EOF
+```
+
+Assert scripts run inside the test container after the installer completes. Exit 0 = pass, non-zero = fail. The test runner auto-discovers them by matching `tests/asserts/<script-name>.sh`.

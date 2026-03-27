@@ -2,16 +2,17 @@
 # =============================================================================
 # Custom assertions for get-yq.sh
 # Runs inside the test container AFTER the installer has completed.
-# Arguments: $1=script_name  $2=image  $3=method (or "default")
+#
+# Environment variables set by test runner:
+#   TEST_SCRIPT  — script being tested (e.g. get-yq.sh)
+#   TEST_IMAGE   — container image (e.g. docker.io/library/ubuntu:24.04)
+#   TEST_METHOD  — install method used (e.g. apt, github-release, or "default")
+#
 # Exit 0 = all assertions pass, non-zero = failure.
 # =============================================================================
 set -e
 
-SCRIPT_NAME="${1:-get-yq.sh}"
-IMAGE="${2:-unknown}"
-METHOD="${3:-default}"
-
-echo "Running assertions for ${SCRIPT_NAME} on ${IMAGE} (method: ${METHOD})"
+echo "Running assertions for ${TEST_SCRIPT} on ${TEST_IMAGE} (method: ${TEST_METHOD})"
 
 echo "Assert: yq binary exists"
 command -v yq

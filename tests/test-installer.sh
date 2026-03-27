@@ -164,7 +164,7 @@ test_asserts() {
     esac
 
     log "Testing: $_name"
-    _output=$(run_container "$_image" "${_prereqs}${_install_cmd} && sh /asserts/${_assert_name} ${_script} ${_image} ${_method}" 2>&1) || true
+    _output=$(run_container "$_image" "export TEST_SCRIPT='${_script}' TEST_IMAGE='${_image}' TEST_METHOD='${_method}'; ${_prereqs}${_install_cmd} && sh /asserts/${_assert_name}" 2>&1) || true
     if printf '%s' "$_output" | grep -qi "assertions passed\|All.*passed"; then
         pass "$_name"
     else

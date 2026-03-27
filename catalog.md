@@ -102,7 +102,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `480f70c4786b`
 
-<!-- tests:get-pc-info hash:1fecbac694f6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pc-info hash:480f70c4786b -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

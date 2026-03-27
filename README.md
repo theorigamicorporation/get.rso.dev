@@ -86,6 +86,7 @@ Every script must have metadata tags at the top. These drive the landing page ca
 | `@methods` | No | Available install methods (installer scripts only) |
 | `@verify` | No | Command to verify successful install (used by test runner) |
 | `@prereqs` | No | Required tools (e.g. `curl\|wget, gpg`). Script should error if missing, asserts install them |
+| `@noroot` | No | Set to `true` if the script must not run as root (e.g. rustup) |
 
 ### 3. Implement the install methods
 

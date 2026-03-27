@@ -14,6 +14,7 @@
 # @methods official
 # @verify rustup --version
 # @prereqs curl|wget
+# @noroot true
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET RUSTUP"

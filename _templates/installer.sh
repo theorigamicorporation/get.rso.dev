@@ -14,6 +14,7 @@
 # @methods apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 # @verify TOOLNAME --version
 # @prereqs curl|wget
+# @noroot false
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET TOOLNAME"

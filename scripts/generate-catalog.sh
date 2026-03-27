@@ -98,8 +98,13 @@ generate_platform() {
         printf '### %s\n\n' "$_name"
         printf '%s\n\n' "$_desc"
 
+        _prereqs=$(get_meta "$_script" "prereqs")
+        _noroot=$(get_meta "$_script" "noroot")
+
         [ -n "$_supported" ] && printf '**Supported:** %s\n' "$_supported"
         [ -n "$_methods" ] && printf '**Methods:** %s\n' "$_methods"
+        [ -n "$_prereqs" ] && printf '**Prereqs:** %s\n' "$_prereqs"
+        [ -n "$_noroot" ] && printf '**Requires:** non-root user\n'
         [ -n "$_tags" ] && printf '**Tags:** %s\n' "$_tags"
         printf '**Hash:** `%s`\n' "$_hash"
         [ -n "$_supported" ] || [ -n "$_methods" ] || [ -n "$_tags" ] && printf '\n'

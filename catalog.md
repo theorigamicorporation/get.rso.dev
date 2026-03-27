@@ -8,6 +8,7 @@ Google Chrome web browser
 
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
 **Methods:** apt, dnf, flatpak
+**Prereqs:** curl|wget, gpg
 **Tags:** browser, chrome, google, web
 **Hash:** `722d394bad06`
 
@@ -46,10 +47,12 @@ Rust toolchain installer (rustup, cargo, rustc)
 
 **Supported:** All Linux distributions
 **Methods:** official
+**Prereqs:** curl|wget
+**Requires:** non-root user
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
-**Hash:** `7cd7f61a0f35`
+**Hash:** `8bfc856bd99f`
 
-<!-- tests:get-rustup hash:7cd7f61a0f35 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-rustup hash:8bfc856bd99f -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-rustup | sh
@@ -82,6 +85,7 @@ Visual Studio Code editor
 
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
 **Methods:** apt, dnf, snap, flatpak
+**Prereqs:** curl|wget, gpg
 **Tags:** editor, ide, vscode, microsoft, code
 **Hash:** `cf34834fb4b1`
 
@@ -120,6 +124,7 @@ Lightweight command-line JSON processor
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
+**Prereqs:** curl|wget (for github-release method)
 **Tags:** json, parser, filter, query, cli
 **Hash:** `e43b85e514c8`
 
@@ -156,6 +161,7 @@ Lightweight command-line YAML, JSON, and XML processor
 
 **Supported:** Ubuntu 24.04+, Debian, Mint, RHEL (EPEL), Rocky, Amazon Linux
 **Methods:** apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
+**Prereqs:** curl|wget (for github-release method)
 **Tags:** yaml, json, xml, parser, cli
 **Hash:** `7106ac93e19d`
 
@@ -194,6 +200,7 @@ Accelerated apt package manager wrapper using aria2
 
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt
+**Prereqs:** software-properties-common
 **Tags:** apt, fast, aria2, package-manager, accelerator
 **Hash:** `18c3b35b5a7c`
 

@@ -1,7 +1,11 @@
 DirectoryIndex index.html
 
-# Remove .sh extension for clean URLs
 RewriteEngine On
+
+# Force index.html over index.php
+RewriteRule ^index\.php$ /index.html [L,R=301]
+
+# Remove .sh extension for clean URLs
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.sh -f

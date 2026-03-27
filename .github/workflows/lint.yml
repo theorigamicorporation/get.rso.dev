@@ -65,7 +65,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install checkbashisms
-        run: sudo apt-get install -y devscripts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y devscripts || {
+            # Fallback: download checkbashisms script directly
+            curl -fsSL "https://salsa.debian.org/debian/devscripts/-/raw/main/scripts/checkbashisms.pl" -o /usr/local/bin/checkbashisms
+            chmod +x /usr/local/bin/checkbashisms
+          }
 
       - name: Check for bashisms in POSIX sh scripts
         run: |

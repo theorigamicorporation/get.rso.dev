@@ -584,6 +584,92 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Filter bar */
+        .filter-bar {
+            padding: 0 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .filter-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .filter-group-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            opacity: 0.5;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+        }
+
+        .filter-pill {
+            padding: 0.1rem 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            border-radius: 3px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            transition: all 0.15s ease;
+            line-height: 1.4;
+        }
+
+        .filter-pill:hover {
+            border-color: var(--text-muted);
+            color: var(--text);
+        }
+
+        .filter-pill.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(88, 166, 255, 0.08);
+        }
+
+        .filter-pill.active.method-filter {
+            border-color: var(--purple);
+            color: var(--purple);
+            background: rgba(163, 113, 247, 0.08);
+        }
+
+        .filter-pill.active.distro-filter {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(88, 166, 255, 0.08);
+        }
+
+        .filter-clear {
+            padding: 0.1rem 0.35rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            border-radius: 3px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            opacity: 0.4;
+            transition: all 0.15s ease;
+        }
+
+        .filter-clear:hover {
+            opacity: 1;
+            color: #f85149;
+        }
+
+        .script-filtered-out {
+            display: none !important;
+        }
+
         /* Script metadata block */
         .script-meta {
             display: flex;
@@ -819,6 +905,7 @@
                 </div>
             </div>
             <div class="search-results hidden" id="searchResults"></div>
+            <div class="filter-bar" id="filterBar"></div>
             <nav class="toc" id="toc"></nav>
         </aside>
 
@@ -912,6 +999,9 @@
             // Transform metadata paragraphs into styled pill badges
             styleMetadata();
 
+            // Build filter bar from metadata
+            buildFilters();
+
             // Process # alt: lines in code blocks for wget/curl toggle
             processAltLines();
 
@@ -937,6 +1027,138 @@
         }
 
         // Post-process code blocks: extract # alt: lines and store wget/curl variants
+        // Active filters
+        let activeFilters = { tags: new Set(), methods: new Set(), distros: new Set() };
+
+        // Build filter bar from metadata pills in the content
+        function buildFilters() {
+            const filterBar = document.getElementById('filterBar');
+            filterBar.innerHTML = '';
+
+            const allTags = new Set();
+            const allMethods = new Set();
+            const allDistros = new Set();
+
+            // Collect all unique values from metadata pills
+            document.querySelectorAll('#content .meta-pill.tag').forEach(p => allTags.add(p.textContent));
+            document.querySelectorAll('#content .meta-pill.method').forEach(p => allMethods.add(p.textContent));
+            document.querySelectorAll('#content .meta-pill.distro').forEach(p => allDistros.add(p.textContent));
+
+            function createGroup(label, values, filterType, cssClass) {
+                if (values.size === 0) return;
+                const group = document.createElement('div');
+                group.className = 'filter-group';
+
+                const lbl = document.createElement('span');
+                lbl.className = 'filter-group-label';
+                lbl.textContent = label;
+                group.appendChild(lbl);
+
+                const pills = document.createElement('div');
+                pills.className = 'filter-pills';
+
+                Array.from(values).sort().forEach(value => {
+                    const pill = document.createElement('button');
+                    pill.className = 'filter-pill ' + cssClass;
+                    if (activeFilters[filterType].has(value)) pill.classList.add('active');
+                    pill.textContent = value;
+                    pill.onclick = () => {
+                        if (activeFilters[filterType].has(value)) {
+                            activeFilters[filterType].delete(value);
+                            pill.classList.remove('active');
+                        } else {
+                            activeFilters[filterType].add(value);
+                            pill.classList.add('active');
+                        }
+                        applyFilters();
+                    };
+                    pills.appendChild(pill);
+                });
+
+                group.appendChild(pills);
+                filterBar.appendChild(group);
+            }
+
+            createGroup('distros', allDistros, 'distros', 'distro-filter');
+            createGroup('methods', allMethods, 'methods', 'method-filter');
+            createGroup('tags', allTags, 'tags', 'tag-filter');
+
+            // Clear all button
+            const hasAny = allTags.size + allMethods.size + allDistros.size > 0;
+            if (hasAny) {
+                const clearBtn = document.createElement('button');
+                clearBtn.className = 'filter-clear';
+                clearBtn.textContent = 'clear filters';
+                clearBtn.onclick = () => {
+                    activeFilters = { tags: new Set(), methods: new Set(), distros: new Set() };
+                    filterBar.querySelectorAll('.filter-pill.active').forEach(p => p.classList.remove('active'));
+                    applyFilters();
+                };
+                filterBar.appendChild(clearBtn);
+            }
+        }
+
+        function applyFilters() {
+            const hasFilters = activeFilters.tags.size + activeFilters.methods.size + activeFilters.distros.size > 0;
+
+            document.querySelectorAll('#content h3').forEach(h3 => {
+                if (!hasFilters) {
+                    showScript(h3, true);
+                    return;
+                }
+
+                // Find the script-meta block for this h3
+                let meta = null;
+                let el = h3.nextElementSibling;
+                while (el && !['H2', 'H3'].includes(el.tagName)) {
+                    if (el.classList && el.classList.contains('script-meta')) { meta = el; break; }
+                    el = el.nextElementSibling;
+                }
+
+                if (!meta) { showScript(h3, false); return; }
+
+                // Get this script's values
+                const scriptTags = new Set();
+                const scriptMethods = new Set();
+                const scriptDistros = new Set();
+                meta.querySelectorAll('.meta-pill.tag').forEach(p => scriptTags.add(p.textContent));
+                meta.querySelectorAll('.meta-pill.method').forEach(p => scriptMethods.add(p.textContent));
+                meta.querySelectorAll('.meta-pill.distro').forEach(p => scriptDistros.add(p.textContent));
+
+                // Script matches if it has ALL active filters (AND logic)
+                let match = true;
+                activeFilters.tags.forEach(t => { if (!scriptTags.has(t)) match = false; });
+                activeFilters.methods.forEach(m => { if (!scriptMethods.has(m)) match = false; });
+                activeFilters.distros.forEach(d => { if (!scriptDistros.has(d)) match = false; });
+
+                showScript(h3, match);
+            });
+
+            // Hide empty section headings (h2 with no visible h3s after them)
+            document.querySelectorAll('#content h2').forEach(h2 => {
+                let hasVisible = false;
+                let el = h2.nextElementSibling;
+                while (el && el.tagName !== 'H2') {
+                    if (el.tagName === 'H3' && !el.classList.contains('script-filtered-out')) {
+                        hasVisible = true;
+                        break;
+                    }
+                    el = el.nextElementSibling;
+                }
+                h2.classList.toggle('script-filtered-out', !hasVisible);
+            });
+        }
+
+        function showScript(h3, visible) {
+            h3.classList.toggle('script-filtered-out', !visible);
+            // Toggle all siblings until next h2/h3
+            let el = h3.nextElementSibling;
+            while (el && !['H2', 'H3'].includes(el.tagName)) {
+                el.classList.toggle('script-filtered-out', !visible);
+                el = el.nextElementSibling;
+            }
+        }
+
         // Transform metadata paragraphs (Supported/Methods/Tags/Hash) into styled pill badges
         function styleMetadata() {
             document.querySelectorAll('#content p').forEach(p => {

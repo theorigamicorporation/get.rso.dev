@@ -82,10 +82,10 @@ generate_platform() {
         _hash=$(sha256sum "$_script" 2>/dev/null | cut -c1-12)
         [ -z "$_hash" ] && _hash=$(shasum -a 256 "$_script" 2>/dev/null | cut -c1-12)
 
-        # Preserve existing test results from current catalog if hash matches
+        # Preserve existing test results if hash matches
         _test_results=""
-        if [ -f "$OUTPUT" ]; then
-            _existing=$(grep "<!-- tests:${_name} " "$OUTPUT" 2>/dev/null | head -1 || true)
+        if [ -f "$_SAVED_RESULTS" ]; then
+            _existing=$(grep "<!-- tests:${_name} " "$_SAVED_RESULTS" 2>/dev/null | head -1 || true)
             if [ -n "$_existing" ]; then
                 _existing_hash=$(printf '%s' "$_existing" | grep -o 'hash:[a-f0-9]*' | cut -d: -f2)
                 if [ "$_existing_hash" = "$_hash" ]; then
@@ -148,10 +148,19 @@ generate_platform() {
     done
 }
 
+# Save existing test results before regenerating
+_SAVED_RESULTS=$(mktemp)
+if [ -f "$OUTPUT" ]; then
+    grep '<!-- tests:' "$OUTPUT" > "$_SAVED_RESULTS" 2>/dev/null || true
+fi
+export _SAVED_RESULTS
+
 # Generate catalog
 {
     generate_platform "Linux" "sh" "sh" "bash" "sh"
     generate_platform "Windows" "ps" "ps1" "powershell" ""
 } > "$OUTPUT"
+
+rm -f "$_SAVED_RESULTS"
 
 printf 'Generated %s\n' "$OUTPUT"

@@ -149,11 +149,22 @@ test_method_install() {
 }
 
 # Test: custom assert script
+# Assert scripts receive: $1=script_name $2=image $3=method (or "default")
 test_asserts() {
-    _image="$1"; _script="$2"; _assert_name="$3"
-    _name="${_image} | ${_script} | custom asserts"
+    _image="$1"; _script="$2"; _assert_name="$3"; _method="${4:-default}"
+    _name="${_image} | ${_script} | asserts (${_method})"
+    _install_cmd="sh /scripts/${_script}"
+    [ "$_method" != "default" ] && _install_cmd="sh /scripts/${_script} --method=${_method}"
+
+    # Prereqs for methods that need them
+    _prereqs=""
+    case "$_method" in
+        github-release)
+            _prereqs="command -v curl >/dev/null 2>&1 || { command -v apt-get >/dev/null 2>&1 && apt-get update -qq && apt-get install -y -qq curl; command -v dnf >/dev/null 2>&1 && dnf install -y -q curl; command -v yum >/dev/null 2>&1 && yum install -y -q curl; } 2>/dev/null; " ;;
+    esac
+
     log "Testing: $_name"
-    _output=$(run_container "$_image" "sh /scripts/${_script} && sh /asserts/${_assert_name}" 2>&1) || true
+    _output=$(run_container "$_image" "${_prereqs}${_install_cmd} && sh /asserts/${_assert_name} ${_script} ${_image} ${_method}" 2>&1) || true
     if printf '%s' "$_output" | grep -qi "assertions passed\|All.*passed"; then
         pass "$_name"
     else
@@ -242,25 +253,11 @@ SCRIPTS=""
 for f in "${SCRIPT_DIR}"/get-*.sh; do
     [ -f "$f" ] || continue
     _base=$(basename "$f")
-    # Filter
     if [ -n "$FILTER_SCRIPT" ]; then
         case "$_base" in *"$FILTER_SCRIPT"*) ;; *) continue ;; esac
     fi
-    # Only test installer scripts (those with @methods)
-    if [ -z "$(get_script_methods "$f")" ] && [ "$HELP_ONLY" = false ]; then
-        continue
-    fi
     SCRIPTS="${SCRIPTS} ${_base}"
 done
-
-# If help-only, also include non-installer scripts
-if [ "$HELP_ONLY" = true ] && [ -z "$FILTER_SCRIPT" ]; then
-    for f in "${SCRIPT_DIR}"/get-*.sh; do
-        [ -f "$f" ] || continue
-        _base=$(basename "$f")
-        case "$SCRIPTS" in *"$_base"*) ;; *) SCRIPTS="${SCRIPTS} ${_base}" ;; esac
-    done
-fi
 
 printf "\n${BLUE}========================================${NC}\n"
 printf "${BLUE} get.rso.dev Installer Test Suite${NC}\n"
@@ -295,25 +292,34 @@ for image in $IMAGES; do
 
         [ "$HELP_ONLY" = true ] && continue
 
+        # Check if this is an installer script (has @methods)
+        methods=$(get_script_methods "$script_path")
+        is_installer=false
+        [ -n "$methods" ] && is_installer=true
+
         if [ -n "$FILTER_METHOD" ]; then
-            # Test only the specified method
             test_method_install "$image" "$script" "$tool_cmd" "$FILTER_METHOD" "$verify_cmd"
-        elif [ "$ALL_METHODS" = true ]; then
-            # Test every method from @methods metadata
-            methods=$(get_script_methods "$script_path")
+        elif [ "$ALL_METHODS" = true ] && [ "$is_installer" = true ]; then
             for method in $methods; do
                 test_method_install "$image" "$script" "$tool_cmd" "$method" "$verify_cmd"
             done
-        else
-            # Default: test auto-detect install, update, force
+        elif [ "$is_installer" = true ]; then
+            # Installer scripts: test install, update, force
             test_default_install "$image" "$script" "$tool_cmd" "$verify_cmd"
             test_update_noop "$image" "$script" "$tool_cmd"
             test_force_reinstall "$image" "$script" "$tool_cmd"
+        else
+            # Non-installer scripts: just run and verify
+            test_default_install "$image" "$script" "$tool_cmd" "$verify_cmd"
         fi
 
-        # Run custom asserts if they exist (after default install)
+        # Run custom asserts if they exist
         if [ -n "$assert_name" ] && [ "$HELP_ONLY" = false ]; then
-            test_asserts "$image" "$script" "$assert_name"
+            if [ -n "$FILTER_METHOD" ]; then
+                test_asserts "$image" "$script" "$assert_name" "$FILTER_METHOD"
+            else
+                test_asserts "$image" "$script" "$assert_name" "default"
+            fi
         fi
     done
 done

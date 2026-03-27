@@ -11,7 +11,7 @@ Lightweight command-line JSON processor
 **Tags:** json, parser, filter, cli
 **Hash:** `a604342335f3`
 
-<!-- tests:get-jq hash:a604342335f3 -->
+<!-- tests:get-jq hash:a604342335f3 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-jq | sh

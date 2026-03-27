@@ -218,6 +218,7 @@ check_existing_install() {
     if [ "$OPT_UPDATE" = true ]; then
         log "Updating Rust stable toolchain via rustup..." "INFO"
         rustup update stable
+        verify_install
         exit 0
     fi
 
@@ -344,13 +345,27 @@ install_via_official() {
         exit 1
     fi
 
-    # Add cargo env to .bashrc if not already present
+    # Add cargo env to shell profile
     _cargo_env_line='. "$HOME/.cargo/env"'
-    if ! grep -qF "$_cargo_env_line" "$HOME/.bashrc" 2>/dev/null; then
-        printf '\n%s\n' "$_cargo_env_line" >> "$HOME/.bashrc"
-        log "Added cargo env sourcing to \$HOME/.bashrc" "INFO"
-    else
-        log "Cargo env sourcing already present in \$HOME/.bashrc" "INFO"
+    _profile_updated=false
+
+    # Try each common shell profile
+    for _rc in "$HOME/.bashrc" "$HOME/.zshrc" "$HOME/.profile"; do
+        if [ -f "$_rc" ]; then
+            if ! grep -qF "$_cargo_env_line" "$_rc" 2>/dev/null; then
+                printf '\n%s\n' "$_cargo_env_line" >> "$_rc"
+                log "Added cargo env sourcing to $_rc" "INFO"
+            else
+                log "Cargo env sourcing already present in $_rc" "INFO"
+            fi
+            _profile_updated=true
+        fi
+    done
+
+    if [ "$_profile_updated" = false ]; then
+        # Fallback: create .profile
+        printf '\n%s\n' "$_cargo_env_line" >> "$HOME/.profile"
+        log "Added cargo env sourcing to \$HOME/.profile (created)" "INFO"
     fi
 
     # Source cargo env for the remainder of this script

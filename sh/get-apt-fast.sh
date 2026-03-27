@@ -23,8 +23,6 @@ SCRIPT_NAME="GET APT-FAST"
 TOOL_NAME="apt-fast"
 TOOL_CMD="apt-fast"
 GITHUB_REPO=""
-INSTALL_DIR="/usr/local/bin"
-FALLBACK_DIR="${HOME}/.local/bin"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""

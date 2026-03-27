@@ -379,7 +379,7 @@ install_via_apt() {
         | $_SUDO_CMD tee /usr/share/keyrings/microsoft-vscode.gpg >/dev/null
 
     # Add Microsoft VS Code repository
-    printf 'deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-vscode.gpg] https://packages.microsoft.com/repos/code stable main\n' \
+    printf 'deb [arch=%s signed-by=/usr/share/keyrings/microsoft-vscode.gpg] https://packages.microsoft.com/repos/code stable main\n' "$_ARCH" \
         | $_SUDO_CMD tee /etc/apt/sources.list.d/vscode.list >/dev/null
 
     $_SUDO_CMD apt-get update -qq
@@ -408,20 +408,30 @@ install_via_snap() {
 
 install_via_flatpak() {
     log "Installing $TOOL_NAME via flatpak..." "INFO"
-    ensure_sudo
-    $_SUDO_CMD flatpak install -y flathub com.visualstudio.code 2>/dev/null || {
+    flatpak install -y flathub com.visualstudio.code 2>/dev/null || {
         log "Could not install Visual Studio Code via flatpak. Ensure flathub is configured." "ERR"
         exit 1
     }
 }
 
 verify_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
-        log "$TOOL_NAME installation could not be verified. Check your PATH." "ERR"
-        exit 1
+    # Check for binary in PATH first (apt/dnf/snap install)
+    if command -v "$TOOL_CMD" >/dev/null 2>&1; then
+        _installed_version=$("$TOOL_CMD" --version 2>/dev/null || true)
+        log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
+        return
     fi
-    _installed_version=$("$TOOL_CMD" --version 2>/dev/null || true)
-    log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
+
+    # Check for flatpak install
+    if command -v flatpak >/dev/null 2>&1; then
+        if flatpak info com.visualstudio.code >/dev/null 2>&1; then
+            log "$TOOL_NAME installed successfully via flatpak (run with: flatpak run com.visualstudio.code)" "INFO"
+            return
+        fi
+    fi
+
+    log "$TOOL_NAME installation could not be verified. Check your PATH." "ERR"
+    exit 1
 }
 
 ###########################

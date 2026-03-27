@@ -23,8 +23,6 @@ SCRIPT_NAME="GET GOOGLE-CHROME"
 TOOL_NAME="google-chrome-stable"
 TOOL_CMD="google-chrome-stable"
 GITHUB_REPO=""
-INSTALL_DIR="/usr/local/bin"
-FALLBACK_DIR="${HOME}/.local/bin"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -249,18 +247,22 @@ detect_available_methods() {
     _AVAILABLE_METHODS=""
     _count=0
 
-    # Native package managers
-    if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1; then
-        _count=$(( _count + 1 ))
-        _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt (Google's official repo)
-"
-    fi
-    if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
-        if command -v dnf >/dev/null 2>&1; then
+    # Chrome is only available for amd64 via native repos
+    if [ "$_ARCH" = "amd64" ]; then
+        if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1; then
             _count=$(( _count + 1 ))
-            _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf (Google's official repo)
+            _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt (Google's official repo)
 "
         fi
+        if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
+            if command -v dnf >/dev/null 2>&1; then
+                _count=$(( _count + 1 ))
+                _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf (Google's official repo)
+"
+            fi
+        fi
+    else
+        log "Google Chrome native packages only available for amd64. Use flatpak for other architectures." "WARN"
     fi
 
     # Flatpak
@@ -369,10 +371,10 @@ install_via_apt() {
     log "Adding Google's signing key..." "INFO"
     if command -v curl >/dev/null 2>&1; then
         curl -fsSL https://dl.google.com/linux/linux_signing_key.pub \
-            | $_SUDO_CMD gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
+            | $_SUDO_CMD gpg --batch --yes --dearmor -o /usr/share/keyrings/google-chrome.gpg
     elif command -v wget >/dev/null 2>&1; then
         wget -qO- https://dl.google.com/linux/linux_signing_key.pub \
-            | $_SUDO_CMD gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg
+            | $_SUDO_CMD gpg --batch --yes --dearmor -o /usr/share/keyrings/google-chrome.gpg
     else
         log "Neither curl nor wget available. Cannot download signing key." "ERR"
         exit 1
@@ -414,12 +416,23 @@ install_via_flatpak() {
 }
 
 verify_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
-        log "$TOOL_NAME installation could not be verified. Check your PATH." "ERR"
-        exit 1
+    # Check for binary in PATH first (apt/dnf install)
+    if command -v "$TOOL_CMD" >/dev/null 2>&1; then
+        _installed_version=$("$TOOL_CMD" --version 2>/dev/null || true)
+        log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
+        return
     fi
-    _installed_version=$("$TOOL_CMD" --version 2>/dev/null || true)
-    log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
+
+    # Check for flatpak install
+    if command -v flatpak >/dev/null 2>&1; then
+        if flatpak info com.google.Chrome >/dev/null 2>&1; then
+            log "$TOOL_NAME installed successfully via flatpak (run with: flatpak run com.google.Chrome)" "INFO"
+            return
+        fi
+    fi
+
+    log "$TOOL_NAME installation could not be verified. Check your PATH." "ERR"
+    exit 1
 }
 
 ###########################

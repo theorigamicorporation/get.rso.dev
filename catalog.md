@@ -83,9 +83,9 @@ Visual Studio Code editor
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
 **Methods:** apt, dnf, snap, flatpak
 **Tags:** editor, ide, vscode, microsoft, code
-**Hash:** `4f263444ba3e`
+**Hash:** `8071a6045c09`
 
-<!-- tests:get-vscode hash:4f263444ba3e amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-vscode hash:8071a6045c09 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-vscode | sh

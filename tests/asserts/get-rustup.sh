@@ -9,14 +9,17 @@ set -e
 
 echo "Running assertions for ${TEST_SCRIPT} on ${TEST_IMAGE} (method: ${TEST_METHOD:-default})"
 
-# Install prereqs that the script expects to exist
-echo "Installing prereqs: curl, ca-certificates..."
-if command -v apt-get >/dev/null 2>&1; then
-    apt-get update -qq && apt-get install -y -qq curl ca-certificates >/dev/null 2>&1
-elif command -v dnf >/dev/null 2>&1; then
-    dnf install -y -q curl ca-certificates >/dev/null 2>&1
-elif command -v yum >/dev/null 2>&1; then
-    yum install -y -q curl ca-certificates >/dev/null 2>&1
+# Install prereqs that the script expects to exist (only if running as root)
+# For @noroot scripts, the test runner installs prereqs as root before switching users
+if [ "$(id -u)" -eq 0 ]; then
+    echo "Installing prereqs: curl, ca-certificates..."
+    if command -v apt-get >/dev/null 2>&1; then
+        apt-get update -qq && apt-get install -y -qq curl ca-certificates >/dev/null 2>&1
+    elif command -v dnf >/dev/null 2>&1; then
+        dnf install -y -q curl ca-certificates >/dev/null 2>&1
+    elif command -v yum >/dev/null 2>&1; then
+        yum install -y -q curl ca-certificates >/dev/null 2>&1
+    fi
 fi
 
 # Source cargo env (may not be in PATH yet in the container)

@@ -549,6 +549,56 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Collapsible details/spoiler */
+        details.script-details {
+            margin: 0.5rem 0 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        details.script-details summary {
+            padding: 0.6rem 1rem;
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.15s ease;
+        }
+
+        details.script-details summary::-webkit-details-marker { display: none; }
+
+        details.script-details summary::before {
+            content: '\25B8';
+            font-size: 0.7rem;
+            transition: transform 0.2s ease;
+        }
+
+        details.script-details[open] summary::before { transform: rotate(90deg); }
+
+        details.script-details summary:hover { color: var(--text); background: var(--bg-tertiary); }
+
+        details.script-details .details-content {
+            padding: 0.75rem 1rem;
+        }
+
+        details.script-details .details-content pre {
+            margin: 0.5rem 0;
+        }
+
+        details.script-details .details-content table {
+            margin: 0.5rem 0;
+        }
+
+        details.script-details .details-content p {
+            margin-bottom: 0.5rem;
+        }
+
         .build-footer {
             position: fixed;
             bottom: 0;
@@ -696,6 +746,9 @@
             // Process # alt: lines in code blocks for wget/curl toggle
             processAltLines();
 
+            // Wrap Options and Examples in collapsible details
+            wrapCollapsibles();
+
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.tab === tabName);
@@ -757,6 +810,74 @@
 
                 // Re-highlight
                 if (lang && hljs.getLanguage(lang)) hljs.highlightElement(code);
+            });
+        }
+
+        // Wrap "Options:" tables and example code blocks in collapsible <details>
+        function wrapCollapsibles() {
+            const content = document.getElementById('content');
+
+            // Find all <strong>Options:</strong> or <p><strong>Options:</strong></p>
+            content.querySelectorAll('strong').forEach(strong => {
+                if (!strong.textContent.trim().startsWith('Options:')) return;
+
+                const optionsP = strong.closest('p') || strong;
+
+                // Collect: the Options paragraph, the table, and the next code block (examples)
+                const optionsElements = [];
+                const examplesElements = [];
+
+                let el = optionsP.nextElementSibling;
+
+                // Collect table
+                while (el && (el.tagName === 'TABLE' || el.tagName === 'P')) {
+                    optionsElements.push(el);
+                    if (el.tagName === 'TABLE') { el = el.nextElementSibling; break; }
+                    el = el.nextElementSibling;
+                }
+
+                // Collect example code blocks (everything until next h2/h3 or another Options)
+                while (el && !['H2', 'H3'].includes(el.tagName)) {
+                    const hasOptions = el.querySelector && el.querySelector('strong') &&
+                        el.querySelector('strong').textContent.trim().startsWith('Options:');
+                    if (hasOptions) break;
+                    examplesElements.push(el);
+                    el = el.nextElementSibling;
+                }
+
+                // Wrap Options table in <details>
+                if (optionsElements.length > 0) {
+                    const details = document.createElement('details');
+                    details.className = 'script-details';
+                    const summary = document.createElement('summary');
+                    summary.textContent = 'Options';
+                    details.appendChild(summary);
+                    const inner = document.createElement('div');
+                    inner.className = 'details-content';
+                    optionsElements.forEach(e => inner.appendChild(e));
+                    details.appendChild(inner);
+                    optionsP.parentNode.insertBefore(details, optionsP.nextSibling);
+                }
+
+                // Wrap Examples in <details>
+                if (examplesElements.length > 0) {
+                    const details = document.createElement('details');
+                    details.className = 'script-details';
+                    const summary = document.createElement('summary');
+                    summary.textContent = 'Examples';
+                    details.appendChild(summary);
+                    const inner = document.createElement('div');
+                    inner.className = 'details-content';
+                    examplesElements.forEach(e => inner.appendChild(e));
+                    details.appendChild(inner);
+
+                    // Insert after the Options details (or after optionsP if no options details)
+                    const insertAfter = optionsP.nextElementSibling || optionsP;
+                    insertAfter.parentNode.insertBefore(details, insertAfter.nextSibling);
+                }
+
+                // Remove the "Options:" paragraph itself
+                optionsP.remove();
             });
         }
 

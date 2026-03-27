@@ -47,7 +47,7 @@ Lightweight command-line YAML, JSON, and XML processor
 **Tags:** yaml, json, xml, parser, cli
 **Hash:** `1504b3ab3a2b`
 
-<!-- tests:get-yq hash:1504b3ab3a2b -->
+<!-- tests:get-yq hash:1504b3ab3a2b amazonlinux-2023:pass debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-yq | sh
@@ -84,7 +84,7 @@ Display machine information including hostname, user, and system details
 **Tags:** system, info, hostname, uname
 **Hash:** `1fecbac694f6`
 
-<!-- tests:get-pc-info hash:1fecbac694f6 -->
+<!-- tests:get-pc-info hash:1fecbac694f6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-pc-info | sh
@@ -102,7 +102,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `480f70c4786b`
 
-<!-- tests:get-pc-info hash:480f70c4786b -->
+<!-- tests:get-pc-info hash:1fecbac694f6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

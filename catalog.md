@@ -52,7 +52,7 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
 **Hash:** `e7140a5ba964`
 
-<!-- tests:get-rustup hash:e7140a5ba964 amazonlinux-2023:skip debian-12:skip debian-13:skip rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:skip ubuntu-24.04:skip ubuntu-25.04:skip -->
+<!-- tests:get-rustup hash:e7140a5ba964 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-rustup | sh
@@ -204,7 +204,7 @@ Accelerated apt package manager wrapper using aria2
 **Tags:** apt, fast, aria2, package-manager, accelerator
 **Hash:** `380bc36c913f`
 
-<!-- tests:get-apt-fast hash:380bc36c913f -->
+<!-- tests:get-apt-fast hash:380bc36c913f amazonlinux-2023:skip debian-12:skip debian-13:skip rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-apt-fast | sh

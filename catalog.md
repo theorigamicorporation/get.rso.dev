@@ -87,9 +87,9 @@ Visual Studio Code editor
 **Methods:** apt, dnf, snap, flatpak
 **Prereqs:** curl|wget, gpg
 **Tags:** editor, ide, vscode, microsoft, code
-**Hash:** `70783dc4fee5`
+**Hash:** `8d8452ab1a4e`
 
-<!-- tests:get-vscode hash:70783dc4fee5 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-vscode hash:8d8452ab1a4e -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-vscode | sh
@@ -163,9 +163,9 @@ Lightweight command-line YAML, JSON, and XML processor
 **Methods:** apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Prereqs:** curl|wget (for github-release method)
 **Tags:** yaml, json, xml, parser, cli
-**Hash:** `7106ac93e19d`
+**Hash:** `ecc6e4d96016`
 
-<!-- tests:get-yq hash:7106ac93e19d amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-yq hash:ecc6e4d96016 -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-yq | sh
@@ -235,11 +235,12 @@ wget -qO- get.rso.dev/sh/get-apt-fast | sh -s -- --update
 
 Display machine information including hostname, user, and system details
 
-**Supported:** All Linux distributions
+**Supported:** Ubuntu, Debian, RHEL, Rocky, Amazon Linux
+**Prereqs:** hostname
 **Tags:** system, info, hostname, uname
-**Hash:** `1fecbac694f6`
+**Hash:** `e4171ef19cdd`
 
-<!-- tests:get-pc-info hash:1fecbac694f6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pc-info hash:e4171ef19cdd -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-pc-info | bash
@@ -257,7 +258,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `480f70c4786b`
 
-<!-- tests:get-pc-info hash:1fecbac694f6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pc-info hash:e4171ef19cdd -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

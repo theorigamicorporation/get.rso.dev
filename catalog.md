@@ -198,13 +198,13 @@ wget -qO- get.rso.dev/sh/get-yq | sh -s -- --update
 
 Accelerated apt package manager wrapper using aria2
 
-**Supported:** Ubuntu, Debian, Mint
+**Supported:** Ubuntu, Mint
 **Methods:** apt
 **Prereqs:** software-properties-common
 **Tags:** apt, fast, aria2, package-manager, accelerator
-**Hash:** `d6301194a189`
+**Hash:** `380bc36c913f`
 
-<!-- tests:get-apt-fast hash:d6301194a189 amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-apt-fast hash:380bc36c913f -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-apt-fast | sh
@@ -258,7 +258,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `480f70c4786b`
 
-<!-- tests:get-pc-info hash:e4171ef19cdd amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pc-info hash:480f70c4786b -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

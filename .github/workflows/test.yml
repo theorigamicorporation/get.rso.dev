@@ -105,6 +105,25 @@ jobs:
             VERIFY=$(grep -m1 '@verify' "sh/$script" 2>/dev/null | sed 's/.*@verify[[:space:]]*//' || true)
             NOROOT=$(grep -m1 '@noroot' "sh/$script" 2>/dev/null | sed 's/.*@noroot[[:space:]]*//' || true)
             PREREQS_RAW=$(grep -m1 '@prereqs' "sh/$script" 2>/dev/null | sed 's/.*@prereqs[[:space:]]*//; s/ (.*)//' || true)
+            SUPPORTED=$(grep -m1 '@supported' "sh/$script" 2>/dev/null | sed 's/.*@supported[[:space:]]*//' || true)
+
+            # Skip script if @supported doesn't match this distro
+            if [ -n "$SUPPORTED" ]; then
+              IMAGE_LOWER=$(echo "${{ matrix.image }}" | tr '[:upper:]' '[:lower:]')
+              MATCH=false
+              # Map image name to distro keywords
+              case "$IMAGE_LOWER" in
+                *ubuntu*)  echo "$SUPPORTED" | grep -qi "ubuntu" && MATCH=true ;;
+                *debian*)  echo "$SUPPORTED" | grep -qi "debian" && MATCH=true ;;
+                *rocky*)   echo "$SUPPORTED" | grep -qi "rocky\|rhel" && MATCH=true ;;
+                *amazon*)  echo "$SUPPORTED" | grep -qi "amazon" && MATCH=true ;;
+              esac
+              if [ "$MATCH" = "false" ]; then
+                echo "$script: skip (unsupported distro)"
+                RESULTS="${RESULTS}${script}=skip "
+                continue
+              fi
+            fi
 
             # Build prereqs install command
             PREREQS_CMD=""

@@ -291,16 +291,24 @@ detect_available_methods() {
         fi
     fi
 
-    # dnf/yum — yq available via EPEL
+    # dnf/yum — yq available via EPEL (check if actually in repos)
     if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
         if command -v dnf >/dev/null 2>&1; then
-            _count=$(( _count + 1 ))
-            _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf (may require EPEL)
+            if dnf list yq >/dev/null 2>&1; then
+                _count=$(( _count + 1 ))
+                _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf (EPEL)
 "
+            else
+                log "yq not available in dnf repos (may need EPEL enabled)" "INFO"
+            fi
         elif command -v yum >/dev/null 2>&1; then
-            _count=$(( _count + 1 ))
-            _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum (may require EPEL)
+            if yum list yq >/dev/null 2>&1; then
+                _count=$(( _count + 1 ))
+                _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum (EPEL)
 "
+            else
+                log "yq not available in yum repos (may need EPEL enabled)" "INFO"
+            fi
         fi
     fi
 

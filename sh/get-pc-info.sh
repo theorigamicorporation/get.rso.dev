@@ -3,7 +3,8 @@
 # @description Display machine information including hostname, user, and system details
 # @category System Utilities
 # @tags system, info, hostname, uname
-# @supported All Linux distributions
+# @supported Ubuntu, Debian, RHEL, Rocky, Amazon Linux
+# @prereqs hostname
 # @verify hostname
 _SCRIPT_VERSION="0.1"
 _SCRIPT_NAME="GET MACHINE INFO"

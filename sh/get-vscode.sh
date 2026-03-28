@@ -12,7 +12,7 @@
 # @tags editor, ide, vscode, microsoft, code
 # @supported Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
 # @methods apt, dnf, snap, flatpak
-# @verify code --version
+# @verify command -v code
 # @prereqs curl|wget, gpg
 # =============================================================================
 SCRIPT_VERSION="0.1"

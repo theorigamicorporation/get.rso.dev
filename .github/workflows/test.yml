@@ -109,19 +109,21 @@ jobs:
 
             # Skip script if @supported doesn't match this distro
             if [ -n "$SUPPORTED" ]; then
-              IMAGE_LOWER=$(echo "${{ matrix.image }}" | tr '[:upper:]' '[:lower:]')
-              MATCH=false
-              # Map image name to distro keywords
-              case "$IMAGE_LOWER" in
-                *ubuntu*)  echo "$SUPPORTED" | grep -qi "ubuntu" && MATCH=true ;;
-                *debian*)  echo "$SUPPORTED" | grep -qi "debian" && MATCH=true ;;
-                *rocky*)   echo "$SUPPORTED" | grep -qi "rocky\|rhel" && MATCH=true ;;
-                *amazon*)  echo "$SUPPORTED" | grep -qi "amazon" && MATCH=true ;;
-              esac
-              if [ "$MATCH" = "false" ]; then
-                echo "$script: skip (unsupported distro)"
-                RESULTS="${RESULTS}${script}=skip "
-                continue
+              # "All" means run everywhere
+              if ! echo "$SUPPORTED" | grep -qi "all"; then
+                IMAGE_LOWER=$(echo "${{ matrix.image }}" | tr '[:upper:]' '[:lower:]')
+                MATCH=false
+                case "$IMAGE_LOWER" in
+                  *ubuntu*)  echo "$SUPPORTED" | grep -qi "ubuntu" && MATCH=true ;;
+                  *debian*)  echo "$SUPPORTED" | grep -qi "debian" && MATCH=true ;;
+                  *rocky*)   echo "$SUPPORTED" | grep -qi "rocky\|rhel" && MATCH=true ;;
+                  *amazon*)  echo "$SUPPORTED" | grep -qi "amazon" && MATCH=true ;;
+                esac
+                if [ "$MATCH" = "false" ]; then
+                  echo "$script: skip (unsupported distro)"
+                  RESULTS="${RESULTS}${script}=skip "
+                  continue
+                fi
               fi
             fi
 

@@ -10,7 +10,7 @@
 # @description Accelerated apt package manager wrapper using aria2
 # @category System Utilities
 # @tags apt, fast, aria2, package-manager, accelerator
-# @supported Ubuntu, Debian, Mint
+# @supported Ubuntu, Mint
 # @methods apt
 # @verify command -v apt-fast
 # @prereqs software-properties-common

@@ -41,6 +41,43 @@ wget -qO- get.rso.dev/sh/get-google-chrome | sh -s -- --update
 
 ## Development Tools
 
+### get-claude-code
+
+Anthropic's official CLI for Claude — AI-powered coding assistant
+
+**Supported:** All Linux distributions
+**Methods:** npm, snap
+**Prereqs:** npm|snap
+**Tags:** ai, claude, anthropic, cli, coding, assistant, llm
+**Hash:** `b509d8efca11`
+
+<!-- tests:get-claude-code hash:b509d8efca11 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/sh/get-claude-code | sh
+# alt: curl -s get.rso.dev/sh/get-claude-code | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/sh/get-claude-code | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-claude-code | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/sh/get-claude-code | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-claude-code | sh -s -- --update
+```
+
 ### get-rustup
 
 Rust toolchain installer (rustup, cargo, rustc)

@@ -229,6 +229,44 @@ wget -qO- get.rso.dev/sh/get-yq | sh -s -- --update
 # alt: curl -s get.rso.dev/sh/get-yq | sh -s -- --update
 ```
 
+## System & Networking
+
+### get-openssh-server
+
+OpenSSH server — secure remote access via SSH
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Methods:** apt, dnf, yum
+**Tags:** ssh, remote, server, network, openssh, sshd
+**Hash:** `f624eceefe23`
+
+<!-- tests:get-openssh-server hash:f624eceefe23 amazonlinux-2023:fail debian-12:fail debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/sh/get-openssh-server | sh
+# alt: curl -s get.rso.dev/sh/get-openssh-server | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/sh/get-openssh-server | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-openssh-server | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/sh/get-openssh-server | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-openssh-server | sh -s -- --update
+```
+
 ## System Utilities
 
 ### get-apt-fast

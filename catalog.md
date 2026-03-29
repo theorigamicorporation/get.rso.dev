@@ -45,13 +45,13 @@ wget -qO- get.rso.dev/sh/get-google-chrome | sh -s -- --update
 
 Anthropic's official CLI for Claude — AI-powered coding assistant
 
-**Supported:** All Linux distributions
+**Supported:** Ubuntu, Debian, Rocky, Amazon Linux
 **Methods:** npm, snap
 **Prereqs:** npm|snap
 **Tags:** ai, claude, anthropic, cli, coding, assistant, llm
-**Hash:** `b509d8efca11`
+**Hash:** `fea191fc50b4`
 
-<!-- tests:get-claude-code hash:b509d8efca11 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-claude-code hash:fea191fc50b4 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-claude-code | sh
@@ -238,9 +238,9 @@ OpenSSH server — secure remote access via SSH
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** ssh, remote, server, network, openssh, sshd
-**Hash:** `f624eceefe23`
+**Hash:** `768e7e2cfeae`
 
-<!-- tests:get-openssh-server hash:f624eceefe23 amazonlinux-2023:fail debian-12:fail debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:pass -->
+<!-- tests:get-openssh-server hash:768e7e2cfeae amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-openssh-server | sh

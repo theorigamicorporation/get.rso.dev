@@ -338,25 +338,28 @@ enable_and_start_sshd() {
     log "Enabling sshd to start on boot..." "INFO"
     ensure_sudo
 
-    if command -v systemctl >/dev/null 2>&1; then
+    # Always generate host keys if missing (containers often lack them)
+    if [ ! -f /etc/ssh/ssh_host_rsa_key ] && [ ! -f /etc/ssh/ssh_host_ed25519_key ]; then
+        log "Generating SSH host keys..." "INFO"
+        $_SUDO_CMD ssh-keygen -A 2>/dev/null || true
+    fi
+
+    if command -v systemctl >/dev/null 2>&1 && systemctl is-system-running >/dev/null 2>&1; then
         $_SUDO_CMD systemctl enable sshd 2>/dev/null || $_SUDO_CMD systemctl enable ssh 2>/dev/null || true
         $_SUDO_CMD systemctl start sshd 2>/dev/null || $_SUDO_CMD systemctl start ssh 2>/dev/null || true
-        # Verify it's running
         if systemctl is-active sshd >/dev/null 2>&1 || systemctl is-active ssh >/dev/null 2>&1; then
             log "sshd is running and enabled on boot" "INFO"
         else
-            log "sshd installed but could not be started (container or no systemd?)" "WARN"
+            log "sshd enabled but could not be started via systemctl" "WARN"
         fi
     elif command -v service >/dev/null 2>&1; then
         $_SUDO_CMD service sshd start 2>/dev/null || $_SUDO_CMD service ssh start 2>/dev/null || true
         log "sshd started via service (enable on boot may require manual config)" "INFO"
     elif [ -x /usr/sbin/sshd ]; then
-        # Fallback: generate host keys and start directly
-        $_SUDO_CMD ssh-keygen -A 2>/dev/null || true
-        $_SUDO_CMD /usr/sbin/sshd
+        $_SUDO_CMD /usr/sbin/sshd 2>/dev/null || true
         log "sshd started directly (no init system detected)" "INFO"
     else
-        log "Could not start sshd — no init system found" "WARN"
+        log "sshd installed but no init system available to start it (container?)" "WARN"
     fi
 }
 

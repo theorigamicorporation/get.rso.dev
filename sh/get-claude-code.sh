@@ -10,7 +10,7 @@
 # @description Anthropic's official CLI for Claude — AI-powered coding assistant
 # @category Development Tools
 # @tags ai, claude, anthropic, cli, coding, assistant, llm
-# @supported All Linux distributions
+# @supported Ubuntu, Debian, Rocky, Amazon Linux
 # @methods npm, snap
 # @verify claude --version
 # @prereqs npm|snap

@@ -912,6 +912,204 @@
         @media (max-width: 1024px) {
             .build-footer { left: 0; }
         }
+
+        /* Script Builder Drawer */
+        .builder-toggle {
+            position: fixed;
+            bottom: 5rem;
+            right: 4.5rem;
+            width: 44px;
+            height: 44px;
+            background: var(--purple);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(163, 113, 247, 0.3);
+            transition: all 0.2s ease;
+        }
+        .builder-toggle:hover { transform: scale(1.1); box-shadow: 0 4px 20px rgba(163, 113, 247, 0.5); }
+        .builder-toggle .builder-count {
+            position: absolute;
+            top: -4px; right: -4px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .builder-toggle .builder-count:empty { display: none; }
+
+        .builder-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .builder-backdrop.show { display: block; opacity: 1; }
+
+        .builder-drawer {
+            position: fixed;
+            top: 0; right: 0;
+            width: 420px;
+            max-width: 90vw;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border);
+            z-index: 201;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .builder-drawer.open { transform: translateX(0); }
+
+        .builder-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .builder-header h3 {
+            margin: 0; font-size: 1rem; color: var(--purple);
+            display: flex; align-items: center; gap: 0.5rem;
+            animation: none;
+        }
+        .builder-close {
+            background: none; border: none; color: var(--text-muted);
+            font-size: 1.2rem; cursor: pointer; padding: 0.25rem;
+            transition: color 0.15s;
+        }
+        .builder-close:hover { color: var(--text); }
+
+        .builder-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem 1rem;
+        }
+        .builder-empty {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 3rem 1rem;
+            line-height: 1.8;
+        }
+        .builder-empty code { font-size: 0.8rem; }
+
+        .builder-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text);
+            animation: fadeInUp 0.2s ease;
+        }
+        .builder-item-name { flex: 1; }
+        .builder-item-remove {
+            background: none; border: none;
+            color: var(--text-muted); cursor: pointer;
+            font-size: 0.9rem; padding: 0 0.25rem;
+            transition: color 0.15s;
+        }
+        .builder-item-remove:hover { color: #f85149; }
+
+        .builder-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .builder-actions {
+            display: flex; gap: 0.5rem;
+        }
+        .builder-btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .builder-btn-primary {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple);
+        }
+        .builder-btn-primary:hover { opacity: 0.9; }
+        .builder-btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text);
+        }
+        .builder-btn-secondary:hover { border-color: var(--text-muted); }
+        .builder-btn-danger {
+            background: transparent;
+            color: var(--text-muted);
+            border-color: transparent;
+            font-size: 0.75rem;
+        }
+        .builder-btn-danger:hover { color: #f85149; }
+
+        .builder-preview {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.75rem;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: pre;
+            line-height: 1.5;
+            display: none;
+        }
+        .builder-preview.show { display: block; }
+
+        /* Add-to-builder button on code blocks */
+        .add-builder-btn {
+            position: absolute;
+            top: 0.7rem;
+            right: 8.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--purple);
+            padding: 0.35rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.15s ease;
+            line-height: 1;
+        }
+        .add-builder-btn:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+        .add-builder-btn.added { background: var(--purple); color: #fff; border-color: var(--purple); }
+
+        @media (max-width: 1024px) {
+            .builder-toggle { bottom: 5rem; right: 1.5rem; }
+            .builder-drawer { width: 100%; max-width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -958,6 +1156,29 @@
     <button class="back-to-top" id="backToTop">&uarr;</button>
     <button class="mobile-toggle" id="mobileToggle">&#9776;</button>
     <div class="link-copied-toast" id="toast">Link copied to clipboard!</div>
+    <button class="builder-toggle" id="builderToggle" title="Script Builder">
+        +
+        <span class="builder-count" id="builderCount"></span>
+    </button>
+    <div class="builder-backdrop" id="builderBackdrop"></div>
+    <div class="builder-drawer" id="builderDrawer">
+        <div class="builder-header">
+            <h3>Script Builder</h3>
+            <button class="builder-close" id="builderClose">&times;</button>
+        </div>
+        <div class="builder-list" id="builderList">
+            <div class="builder-empty">Click <code>+ Add</code> on any script<br>to build a combined installer</div>
+        </div>
+        <div class="builder-preview" id="builderPreview"></div>
+        <div class="builder-footer" id="builderFooter" style="display:none">
+            <div class="builder-actions">
+                <button class="builder-btn builder-btn-primary" id="builderCopy">Copy Script</button>
+                <button class="builder-btn builder-btn-secondary" id="builderDownload">Download .sh</button>
+            </div>
+            <button class="builder-btn builder-btn-secondary" id="builderPreviewToggle">Preview</button>
+            <button class="builder-btn builder-btn-danger" id="builderClear">Clear all</button>
+        </div>
+    </div>
     <div class="build-footer">build <!-- BUILD_SHA --> &middot; <!-- BUILD_TIME --></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
@@ -1063,9 +1284,11 @@
 
             buildTOC();
             addCopyButtons();
+            addBuilderButtons();
             addHeadingLinks();
             buildSearchIndex();
             updateStats();
+            renderBuilder();
         }
 
         // Post-process code blocks: extract # alt: lines and store wget/curl variants
@@ -1923,6 +2146,174 @@
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.onclick = () => renderTab(btn.dataset.tab);
             });
+        });
+
+        // =============================================
+        // Script Builder
+        // =============================================
+        let builderScripts = JSON.parse(localStorage.getItem('get-rso-builder') || '[]');
+
+        function openBuilder() {
+            document.getElementById('builderDrawer').classList.add('open');
+            document.getElementById('builderBackdrop').classList.add('show');
+        }
+        function closeBuilder() {
+            document.getElementById('builderDrawer').classList.remove('open');
+            document.getElementById('builderBackdrop').classList.remove('show');
+        }
+        function toggleBuilder() {
+            document.getElementById('builderDrawer').classList.contains('open') ? closeBuilder() : openBuilder();
+        }
+
+        function saveBuilder() {
+            localStorage.setItem('get-rso-builder', JSON.stringify(builderScripts));
+            renderBuilder();
+        }
+
+        function addToBuilder(scriptName, cmd) {
+            if (builderScripts.find(s => s.name === scriptName)) return;
+            builderScripts.push({ name: scriptName, cmd: cmd });
+            saveBuilder();
+            openBuilder();
+        }
+
+        function removeFromBuilder(scriptName) {
+            builderScripts = builderScripts.filter(s => s.name !== scriptName);
+            saveBuilder();
+            updateAddButtons();
+        }
+
+        function clearBuilder() {
+            builderScripts = [];
+            saveBuilder();
+            updateAddButtons();
+        }
+
+        function renderBuilder() {
+            const list = document.getElementById('builderList');
+            const footer = document.getElementById('builderFooter');
+            const count = document.getElementById('builderCount');
+            const preview = document.getElementById('builderPreview');
+
+            count.textContent = builderScripts.length || '';
+
+            if (builderScripts.length === 0) {
+                list.innerHTML = '<div class="builder-empty">Click <code>+ Add</code> on any script<br>to build a combined installer</div>';
+                footer.style.display = 'none';
+                preview.classList.remove('show');
+                return;
+            }
+
+            footer.style.display = '';
+            list.innerHTML = builderScripts.map(s =>
+                '<div class="builder-item">' +
+                    '<span class="builder-item-name">' + s.name + '</span>' +
+                    '<button class="builder-item-remove" onclick="removeFromBuilder(\'' + s.name.replace(/'/g, "\\'") + '\')" title="Remove">&times;</button>' +
+                '</div>'
+            ).join('');
+
+            // Update preview
+            preview.textContent = generateBuilderScript();
+            updateAddButtons();
+        }
+
+        function generateBuilderScript() {
+            const dlTool = dlPref === 'alt' ? 'curl' : 'wget';
+            const baseUrl = 'get.rso.dev/sh/';
+            let lines = [
+                '#!/usr/bin/env sh',
+                '# Combined installer generated by get.rso.dev',
+                '# Scripts: ' + builderScripts.map(s => s.name).join(', '),
+                '# Generated: ' + new Date().toISOString().split('T')[0],
+                'set -e',
+                ''
+            ];
+
+            builderScripts.forEach(s => {
+                const scriptSlug = s.name;
+                lines.push('echo ">>> Installing ' + scriptSlug + '..."');
+                if (dlTool === 'curl') {
+                    lines.push('curl -fsSL ' + baseUrl + scriptSlug + ' | sh');
+                } else {
+                    lines.push('wget -qO- ' + baseUrl + scriptSlug + ' | sh');
+                }
+                lines.push('');
+            });
+
+            lines.push('echo "Done! All ' + builderScripts.length + ' scripts installed."');
+            return lines.join('\n');
+        }
+
+        function copyBuilderScript() {
+            const script = generateBuilderScript();
+            navigator.clipboard.writeText(script).then(() => {
+                const btn = document.getElementById('builderCopy');
+                btn.textContent = 'Copied!';
+                setTimeout(() => { btn.textContent = 'Copy Script'; }, 2000);
+            });
+        }
+
+        function downloadBuilderScript() {
+            const script = generateBuilderScript();
+            const blob = new Blob([script], { type: 'text/x-shellscript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'install-bundle.sh';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Add "+" buttons to script code blocks
+        function addBuilderButtons() {
+            document.querySelectorAll('#content h3').forEach(h3 => {
+                const scriptName = h3.textContent.trim();
+                // Find the first code block for this script
+                let el = h3.nextElementSibling;
+                while (el && !['H2', 'H3'].includes(el.tagName)) {
+                    if (el.tagName === 'PRE') {
+                        const btn = document.createElement('button');
+                        btn.className = 'add-builder-btn';
+                        btn.dataset.script = scriptName;
+                        const isAdded = builderScripts.find(s => s.name === scriptName);
+                        btn.textContent = isAdded ? 'Added' : '+ Add';
+                        if (isAdded) btn.classList.add('added');
+                        btn.onclick = () => {
+                            if (builderScripts.find(s => s.name === scriptName)) {
+                                removeFromBuilder(scriptName);
+                            } else {
+                                addToBuilder(scriptName, '');
+                            }
+                            updateAddButtons();
+                        };
+                        el.appendChild(btn);
+                        break;
+                    }
+                    el = el.nextElementSibling;
+                }
+            });
+        }
+
+        function updateAddButtons() {
+            document.querySelectorAll('.add-builder-btn').forEach(btn => {
+                const name = btn.dataset.script;
+                const isAdded = builderScripts.find(s => s.name === name);
+                btn.textContent = isAdded ? 'Added' : '+ Add';
+                btn.classList.toggle('added', !!isAdded);
+            });
+        }
+
+        // Wire up builder UI events
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('builderToggle').onclick = toggleBuilder;
+            document.getElementById('builderBackdrop').onclick = closeBuilder;
+            document.getElementById('builderClose').onclick = closeBuilder;
+            document.getElementById('builderCopy').onclick = copyBuilderScript;
+            document.getElementById('builderDownload').onclick = downloadBuilderScript;
+            document.getElementById('builderClear').onclick = clearBuilder;
+            document.getElementById('builderPreviewToggle').onclick = () => {
+                document.getElementById('builderPreview').classList.toggle('show');
+            };
         });
 
         init();

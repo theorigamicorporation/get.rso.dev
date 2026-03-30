@@ -2172,9 +2172,10 @@
 
         function addToBuilder(scriptName, cmd) {
             if (builderScripts.find(s => s.name === scriptName)) return;
+            const isFirst = builderScripts.length === 0;
             builderScripts.push({ name: scriptName, cmd: cmd });
             saveBuilder();
-            openBuilder();
+            if (isFirst) openBuilder();
         }
 
         function removeFromBuilder(scriptName) {

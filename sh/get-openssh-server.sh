@@ -21,7 +21,6 @@ SCRIPT_NAME="GET OPENSSH-SERVER"
 # Configuration
 ###########################
 TOOL_NAME="openssh-server"
-TOOL_CMD="sshd"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""

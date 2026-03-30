@@ -2170,10 +2170,10 @@
             renderBuilder();
         }
 
-        function addToBuilder(scriptName, cmd) {
+        function addToBuilder(scriptName, dlTool) {
             if (builderScripts.find(s => s.name === scriptName)) return;
             const isFirst = builderScripts.length === 0;
-            builderScripts.push({ name: scriptName, cmd: cmd });
+            builderScripts.push({ name: scriptName, dl: dlTool });
             saveBuilder();
             if (isFirst) openBuilder();
         }
@@ -2219,7 +2219,6 @@
         }
 
         function generateBuilderScript() {
-            const dlTool = dlPref === 'alt' ? 'curl' : 'wget';
             const baseUrl = 'get.rso.dev/sh/';
             let lines = [
                 '#!/usr/bin/env sh',
@@ -2230,7 +2229,7 @@
             ];
 
             builderScripts.forEach(s => {
-                if (dlTool === 'curl') {
+                if (s.dl === 'curl') {
                     lines.push('curl -fsSL ' + baseUrl + s.name + ' | sh');
                 } else {
                     lines.push('wget -qO- ' + baseUrl + s.name + ' | sh');
@@ -2277,7 +2276,7 @@
                             if (builderScripts.find(s => s.name === scriptName)) {
                                 removeFromBuilder(scriptName);
                             } else {
-                                addToBuilder(scriptName, '');
+                                addToBuilder(scriptName, dlPref === 'alt' ? 'curl' : 'wget');
                             }
                             updateAddButtons();
                         };

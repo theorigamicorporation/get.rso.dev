@@ -916,8 +916,8 @@
         /* Script Builder Drawer */
         .builder-toggle {
             position: fixed;
-            bottom: 5rem;
-            right: 4.5rem;
+            bottom: 1.5rem;
+            right: 5rem;
             width: 44px;
             height: 44px;
             background: var(--purple);
@@ -926,7 +926,7 @@
             color: #fff;
             font-size: 1.1rem;
             cursor: pointer;
-            z-index: 100;
+            z-index: 150;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1087,27 +1087,31 @@
         }
         .builder-preview.show { display: block; }
 
-        /* Add-to-builder button on code blocks */
+        /* Add-to-builder button — rendered below the code block, not absolute */
+        .add-builder-wrap {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -0.75rem;
+            margin-bottom: 1rem;
+        }
         .add-builder-btn {
-            position: absolute;
-            top: 0.7rem;
-            left: 3.5rem;
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             color: var(--purple);
-            padding: 0.35rem 0.5rem;
+            padding: 0.4rem 0.75rem;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-family: 'Space Grotesk', sans-serif;
             transition: all 0.15s ease;
             line-height: 1;
+            -webkit-tap-highlight-color: transparent;
         }
         .add-builder-btn:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
         .add-builder-btn.added { background: var(--purple); color: #fff; border-color: var(--purple); }
 
         @media (max-width: 1024px) {
-            .builder-toggle { bottom: 5rem; right: 1.5rem; }
+            .builder-toggle { bottom: 7rem; right: 1.5rem; z-index: 150; }
             .builder-drawer { width: 100%; max-width: 100%; }
         }
     </style>
@@ -2258,19 +2262,20 @@
             URL.revokeObjectURL(url);
         }
 
-        // Add "+" buttons to script code blocks
+        // Add "+" buttons below script code blocks
         function addBuilderButtons() {
             document.querySelectorAll('#content h3').forEach(h3 => {
                 const scriptName = h3.textContent.trim();
-                // Find the first code block for this script
                 let el = h3.nextElementSibling;
                 while (el && !['H2', 'H3'].includes(el.tagName)) {
                     if (el.tagName === 'PRE') {
+                        const wrap = document.createElement('div');
+                        wrap.className = 'add-builder-wrap';
                         const btn = document.createElement('button');
                         btn.className = 'add-builder-btn';
                         btn.dataset.script = scriptName;
                         const isAdded = builderScripts.find(s => s.name === scriptName);
-                        btn.textContent = isAdded ? 'Added' : '+ Add';
+                        btn.textContent = isAdded ? 'Added' : '+ Add to bundle';
                         if (isAdded) btn.classList.add('added');
                         btn.onclick = () => {
                             if (builderScripts.find(s => s.name === scriptName)) {
@@ -2280,7 +2285,8 @@
                             }
                             updateAddButtons();
                         };
-                        el.appendChild(btn);
+                        wrap.appendChild(btn);
+                        el.parentNode.insertBefore(wrap, el.nextSibling);
                         break;
                     }
                     el = el.nextElementSibling;
@@ -2292,7 +2298,7 @@
             document.querySelectorAll('.add-builder-btn').forEach(btn => {
                 const name = btn.dataset.script;
                 const isAdded = builderScripts.find(s => s.name === name);
-                btn.textContent = isAdded ? 'Added' : '+ Add';
+                btn.textContent = isAdded ? 'Added' : '+ Add to bundle';
                 btn.classList.toggle('added', !!isAdded);
             });
         }

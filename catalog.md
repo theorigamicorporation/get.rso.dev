@@ -2627,9 +2627,9 @@ OpenSSH server — secure remote access via SSH
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** ssh, remote, server, network, openssh, sshd
-**Hash:** `768e7e2cfeae`
+**Hash:** `edfe5bf8ac5e`
 
-<!-- tests:get-openssh-server hash:768e7e2cfeae amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-openssh-server hash:edfe5bf8ac5e amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-openssh-server | sh

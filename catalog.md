@@ -194,11 +194,12 @@ wget -qO- get.rso.dev/sh/get-nextcloud-client | sh -s -- --update
 Open-source team messaging and collaboration platform
 
 **Supported:** Ubuntu, Debian, Mint
-**Methods:** apt, dnf, yum
+**Methods:** apt, github-release
+**Prereqs:** curl|wget, gpg
 **Tags:** chat, messaging, team, collaboration, slack-alternative
-**Hash:** `28a57b392968`
+**Hash:** `e3c716cdf73d`
 
-<!-- tests:get-mattermost hash:28a57b392968 -->
+<!-- tests:get-mattermost hash:e3c716cdf73d amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-mattermost | sh
@@ -567,9 +568,9 @@ Clone all repos from a GitHub/GitLab/Bitbucket org
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** git, clone, github, gitlab, organization, backup
-**Hash:** `3780f6cac19a`
+**Hash:** `84b9d8ec3531`
 
-<!-- tests:get-ghorg hash:3780f6cac19a -->
+<!-- tests:get-ghorg hash:84b9d8ec3531 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-ghorg | sh

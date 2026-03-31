@@ -149,7 +149,7 @@ check_existing_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
         log "$TOOL_NAME is not currently installed" "INFO"; return 0
     fi
-    _current_version=$("$TOOL_CMD" --version 2>/dev/null | head -1 || true)
+    _current_version=$("$TOOL_CMD" version 2>/dev/null | head -1 || true)
     log "$TOOL_NAME is already installed: $_current_version" "INFO"
     if [ "$OPT_FORCE" = true ]; then log "Force flag set, proceeding with reinstall" "INFO"; return 0; fi
     if [ "$OPT_UPDATE" = true ]; then log "Update flag set, proceeding" "INFO"; return 0; fi
@@ -245,7 +245,7 @@ verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
         log "$TOOL_NAME installation could not be verified." "ERR"; exit 1
     fi
-    _installed_version=$("$TOOL_CMD" --version 2>/dev/null | head -1 || true)
+    _installed_version=$("$TOOL_CMD" version 2>/dev/null | head -1 || true)
     log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
 }
 

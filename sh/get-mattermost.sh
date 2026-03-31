@@ -10,8 +10,9 @@
 # @category Communication Tools
 # @tags chat, messaging, team, collaboration, slack-alternative
 # @supported Ubuntu, Debian, Mint
-# @methods apt, dnf, yum
+# @methods apt, github-release
 # @verify command -v mattermost-desktop
+# @prereqs curl|wget, gpg
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET MATTERMOST-DESKTOP"
@@ -19,7 +20,7 @@ SCRIPT_NAME="GET MATTERMOST-DESKTOP"
 TOOL_NAME="mattermost-desktop"
 TOOL_CMD="mattermost-desktop"
 APT_PKG="mattermost-desktop"
-DNF_PKG="mattermost-desktop"
+GITHUB_REPO="mattermost/desktop"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -109,18 +110,25 @@ check_existing_install() {
     log "$TOOL_NAME already installed (use --update or --force)" "INFO"; exit 0
 }
 
+get_latest_version() {
+    _api_url="https://api.github.com/repos/${GITHUB_REPO}/releases/latest"
+    if command -v curl >/dev/null 2>&1; then
+        _latest=$(curl -fsSL "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+    elif command -v wget >/dev/null 2>&1; then
+        _latest=$(wget -qO- "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+    else _latest=""; fi
+    printf '%s' "$_latest"
+}
+
 detect_available_methods() {
     _AVAILABLE_METHODS=""; _count=0
     if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1; then
-        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt
+        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt (official repo)
 "
     fi
-    if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
-        if command -v dnf >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf
+    if command -v curl >/dev/null 2>&1 || command -v wget >/dev/null 2>&1; then
+        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:github-release:Download .deb from GitHub releases
 "
-        elif command -v yum >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum
-"
-        fi
     fi
     if [ -z "$_AVAILABLE_METHODS" ]; then log "No install methods available." "ERR"; exit 1; fi
 }
@@ -131,9 +139,44 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
+install_via_apt() {
+    log "Installing $TOOL_NAME via apt..." "INFO"
+    ensure_sudo
+    log "Adding Mattermost apt repository..." "INFO"
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL https://deb.packages.mattermost.com/pubkey.gpg | $_SUDO_CMD gpg --dearmor -o /usr/share/keyrings/mattermost-archive-keyring.gpg
+    elif command -v wget >/dev/null 2>&1; then
+        wget -qO- https://deb.packages.mattermost.com/pubkey.gpg | $_SUDO_CMD gpg --dearmor -o /usr/share/keyrings/mattermost-archive-keyring.gpg
+    else
+        log "Neither curl nor wget available" "ERR"; exit 1
+    fi
+    printf 'deb [signed-by=/usr/share/keyrings/mattermost-archive-keyring.gpg] https://deb.packages.mattermost.com stable main\n' | $_SUDO_CMD tee /etc/apt/sources.list.d/mattermost.list >/dev/null
+    $_SUDO_CMD apt-get update -qq
+    $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
+}
+install_via_github_release() {
+    log "Installing $TOOL_NAME from GitHub release..." "INFO"
+    _version=$(get_latest_version)
+    [ -z "$_version" ] && { log "Could not determine latest version" "ERR"; exit 1; }
+    _version_num=$(printf '%s' "$_version" | sed 's/^v//')
+    case "$_ARCH" in
+        amd64) _asset="mattermost-desktop_${_version_num}-1_amd64.deb" ;;
+        arm64) _asset="mattermost-desktop_${_version_num}-1_arm64.deb" ;;
+        *)     log "Unsupported arch for github-release: $_ARCH" "ERR"; exit 1 ;;
+    esac
+    _download_url="https://github.com/${GITHUB_REPO}/releases/download/${_version}/${_asset}"
+    log "Downloading ${_asset} (${_version})..." "INFO"
+    _tmp_file=$(mktemp)
+    trap 'rm -f "$_tmp_file"' EXIT
+    if command -v curl >/dev/null 2>&1; then
+        curl -fSL -o "$_tmp_file" "$_download_url"
+    elif command -v wget >/dev/null 2>&1; then
+        wget -q -O "$_tmp_file" "$_download_url"
+    fi
+    ensure_sudo
+    $_SUDO_CMD dpkg -i "$_tmp_file" || $_SUDO_CMD apt-get install -f -y -qq
+    trap - EXIT; rm -f "$_tmp_file"
+}
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
@@ -150,7 +193,7 @@ main() {
     elif [ "$OPT_INTERACTIVE" = true ]; then _method=$(run_menu)
     else _method=$(get_default_method); fi
     log "Using install method: $_method" "INFO"
-    case "$_method" in apt) install_via_apt ;; dnf) install_via_dnf ;; yum) install_via_yum ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
+    case "$_method" in apt) install_via_apt ;; github-release) install_via_github_release ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
     verify_install
 }
 

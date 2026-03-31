@@ -1896,9 +1896,9 @@ Real-time network traffic and bandwidth monitor
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, bandwidth, monitor, traffic, nload
-**Hash:** `8bcc73912bc1`
+**Hash:** `6b16bddac194`
 
-<!-- tests:get-nload hash:8bcc73912bc1 -->
+<!-- tests:get-nload hash:6b16bddac194 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-nload | sh

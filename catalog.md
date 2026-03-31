@@ -597,42 +597,6 @@ wget -qO- get.rso.dev/sh/get-ghorg | sh -s -- --update
 # alt: curl -s get.rso.dev/sh/get-ghorg | sh -s -- --update
 ```
 
-### get-git
-
-Distributed version control system
-
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
-**Methods:** apt, dnf, yum
-**Tags:** git, vcs, version-control, scm
-**Hash:** `1e2d443f1399`
-
-<!-- tests:get-git hash:1e2d443f1399 -->
-
-```bash
-wget -qO- get.rso.dev/sh/get-git | sh
-# alt: curl -s get.rso.dev/sh/get-git | sh
-```
-
-**Options:**
-
-| Flag | Description |
-|------|-------------|
-| `-i`, `--interactive` | Show interactive menu to pick install method |
-| `-m`, `--method=METHOD` | Use a specific install method |
-| `-u`, `--update` | Update to latest version if already installed |
-| `-f`, `--force` | Force reinstall regardless of current version |
-| `-h`, `--help` | Show help message |
-
-```bash
-# Install via specific method
-wget -qO- get.rso.dev/sh/get-git | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/sh/get-git | sh -s -- --method=github-release
-
-# Update existing install
-wget -qO- get.rso.dev/sh/get-git | sh -s -- --update
-# alt: curl -s get.rso.dev/sh/get-git | sh -s -- --update
-```
-
 ### get-gitlab-cli
 
 Official command-line tool for GitLab
@@ -668,6 +632,42 @@ wget -qO- get.rso.dev/sh/get-gitlab-cli | sh -s -- --method=github-release
 # Update existing install
 wget -qO- get.rso.dev/sh/get-gitlab-cli | sh -s -- --update
 # alt: curl -s get.rso.dev/sh/get-gitlab-cli | sh -s -- --update
+```
+
+### get-git
+
+Distributed version control system
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Methods:** apt, dnf, yum
+**Tags:** git, vcs, version-control, scm
+**Hash:** `1e2d443f1399`
+
+<!-- tests:get-git hash:1e2d443f1399 -->
+
+```bash
+wget -qO- get.rso.dev/sh/get-git | sh
+# alt: curl -s get.rso.dev/sh/get-git | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/sh/get-git | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/sh/get-git | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/sh/get-git | sh -s -- --update
+# alt: curl -s get.rso.dev/sh/get-git | sh -s -- --update
 ```
 
 ### get-golang

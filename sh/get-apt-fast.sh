@@ -354,7 +354,7 @@ install_via_apt() {
     $_SUDO_CMD apt-get install -y -qq software-properties-common
     $_SUDO_CMD add-apt-repository -y ppa:apt-fast/stable
     $_SUDO_CMD apt-get update -qq
-    DEBIAN_FRONTEND=noninteractive $_SUDO_CMD apt-get install -y apt-fast
+    $_SUDO_CMD env DEBIAN_FRONTEND=noninteractive apt-get install -y apt-fast
 }
 
 verify_install() {

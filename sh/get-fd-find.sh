@@ -145,7 +145,14 @@ get_latest_version() {
     printf '%s' "$_latest"
 }
 
+resolve_tool_cmd() {
+    if command -v fd >/dev/null 2>&1; then TOOL_CMD="fd"
+    elif command -v fdfind >/dev/null 2>&1; then TOOL_CMD="fdfind"
+    fi
+}
+
 check_existing_install() {
+    resolve_tool_cmd
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
         log "$TOOL_NAME is not currently installed" "INFO"; return 0
     fi
@@ -277,6 +284,7 @@ install_via_github_release() {
 }
 
 verify_install() {
+    resolve_tool_cmd
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
         log "$TOOL_NAME installation could not be verified." "ERR"; exit 1
     fi

@@ -139,8 +139,15 @@ ensure_sudo() {
     log "Root privileges required but sudo is not available." "ERR"; exit 1
 }
 
+resolve_tool_cmd() {
+    if command -v easyrsa >/dev/null 2>&1; then TOOL_CMD="easyrsa"
+    elif [ -x /usr/share/easy-rsa/easyrsa ]; then TOOL_CMD="/usr/share/easy-rsa/easyrsa"
+    fi
+}
+
 check_existing_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
+    resolve_tool_cmd
+    if ! command -v "$TOOL_CMD" >/dev/null 2>&1 && ! [ -x "$TOOL_CMD" ]; then
         log "$TOOL_NAME is not currently installed" "INFO"; return 0
     fi
     _current_version=$("$TOOL_CMD" --version 2>/dev/null | head -1 || true)
@@ -234,7 +241,8 @@ install_via_yum() {
 }
 
 verify_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
+    resolve_tool_cmd
+    if ! command -v "$TOOL_CMD" >/dev/null 2>&1 && ! [ -x "$TOOL_CMD" ]; then
         log "$TOOL_NAME installation could not be verified. Check your PATH." "ERR"; exit 1
     fi
     _installed_version=$("$TOOL_CMD" --version 2>/dev/null | head -1 || true)

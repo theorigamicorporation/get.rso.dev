@@ -2225,9 +2225,9 @@ Simple, fast alternative to find
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** find, search, files, fast, fd, modern
-**Hash:** `7b35992f7142`
+**Hash:** `9aeff7719d31`
 
-<!-- tests:get-fd-find hash:7b35992f7142 -->
+<!-- tests:get-fd-find hash:9aeff7719d31 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-fd-find | sh
@@ -2445,9 +2445,9 @@ CLI utility to build and manage a PKI CA
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** pki, ca, certificates, vpn, openvpn, easy-rsa
-**Hash:** `58cd731993d7`
+**Hash:** `f2967a84db02`
 
-<!-- tests:get-easy-rsa hash:58cd731993d7 -->
+<!-- tests:get-easy-rsa hash:f2967a84db02 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-easy-rsa | sh
@@ -3066,9 +3066,9 @@ Accelerated apt package manager wrapper using aria2
 **Methods:** apt
 **Prereqs:** software-properties-common
 **Tags:** apt, fast, aria2, package-manager, accelerator
-**Hash:** `380bc36c913f`
+**Hash:** `9590f6046075`
 
-<!-- tests:get-apt-fast hash:380bc36c913f amazonlinux-2023:skip debian-12:skip debian-13:skip rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-apt-fast hash:9590f6046075 amazonlinux-2023:skip debian-12:skip debian-13:skip rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-apt-fast | sh
@@ -3157,9 +3157,9 @@ Cat clone with syntax highlighting and git integration
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** cat, syntax, highlight, git, pager, modern
-**Hash:** `6cf86505c4b7`
+**Hash:** `5c113653f85f`
 
-<!-- tests:get-bat hash:6cf86505c4b7 -->
+<!-- tests:get-bat hash:5c113653f85f amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/sh/get-bat | sh

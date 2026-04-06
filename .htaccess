@@ -5,13 +5,19 @@ RewriteEngine On
 # Force index.html over index.php
 RewriteRule ^index\.php$ /index.html [L,R=301]
 
-# Remove .sh extension for clean URLs
+# Redirect old /sh/<name> URLs to /<name> (backwards compat)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}.sh -f
-RewriteRule ^(.+)$ $1.sh [L]
+RewriteRule ^sh/(.+)$ /$1 [R=301,L]
 
-# Remove .ps1 extension for clean URLs
+# Serve shell scripts from sh/ directory without /sh/ in the URL
+# e.g. /get-jq → sh/get-jq.sh
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/sh/%{REQUEST_URI}.sh -f
+RewriteRule ^(.+)$ sh/$1.sh [L]
+
+# Remove .ps1 extension for clean URLs (keep /ps/ prefix)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.ps1 -f

@@ -12,19 +12,19 @@ Browse all scripts at [get.rso.dev](https://get.rso.dev).
 
 ```bash
 # Install jq
-wget -qO- get.rso.dev/sh/get-jq | sh
+wget -qO- get.rso.dev/get-jq | sh
 
 # Install yq
-wget -qO- get.rso.dev/sh/get-yq | sh
+wget -qO- get.rso.dev/get-yq | sh
 
 # Pick install method interactively
 sh get-jq.sh --interactive
 
 # Force a specific method
-wget -qO- get.rso.dev/sh/get-jq | sh -s -- --method=github-release
+wget -qO- get.rso.dev/get-jq | sh -s -- --method=github-release
 
 # Update an existing install
-wget -qO- get.rso.dev/sh/get-jq | sh -s -- --update
+wget -qO- get.rso.dev/get-jq | sh -s -- --update
 ```
 
 ## Repository Structure
@@ -170,7 +170,7 @@ Your script will appear on the landing page under the `@category` you specified,
       exit 1
   fi
   ```
-- Clean URLs via `.htaccess` rewriting: `get.rso.dev/sh/get-jq` serves `get-jq.sh`
+- Clean URLs via `.htaccess` rewriting: `get.rso.dev/get-jq` serves `get-jq.sh`
 - `catalog.md` is auto-generated — edit scripts or `scripts/generate-catalog.sh`, not the catalog directly
 
 ## CI/CD

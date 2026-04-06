@@ -20,13 +20,18 @@ script_display_name() {
 }
 
 # Get URL path from filename
+# Shell scripts serve from root (get.rso.dev/get-jq), PowerShell keeps /ps/ prefix
 script_url_path() {
     _file="$1"
     _base=$(basename "$_file")
     _dir=$(basename "$(dirname "$_file")")
     # Strip extension for clean URL
     _name=$(echo "$_base" | sed 's/\.sh$//; s/\.ps1$//')
-    printf '%s/%s' "$_dir" "$_name"
+    if [ "$_dir" = "sh" ]; then
+        printf '%s' "$_name"
+    else
+        printf '%s/%s' "$_dir" "$_name"
+    fi
 }
 
 # Detect if script is an installer (has --method or install functions)

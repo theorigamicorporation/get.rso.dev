@@ -3111,6 +3111,21 @@ wget -qO- get.rso.dev/get-pc-info | bash
 # alt: curl -s get.rso.dev/get-pc-info | bash
 ```
 
+### remove-snap
+
+Fully remove snapd and prevent reinstallation (idempotent)
+
+**Supported:** Ubuntu, Kubuntu, Lubuntu, Xubuntu, Debian
+**Tags:** snap, snapd, ubuntu, kubuntu, lubuntu, remove, purge, cleanup
+**Hash:** `eed2cf811634`
+
+<!-- tests:remove-snap hash:eed2cf811634 -->
+
+```bash
+wget -qO- get.rso.dev/remove-snap | bash
+# alt: curl -s get.rso.dev/remove-snap | bash
+```
+
 ## Terminal Tools
 
 ### get-bash-completion

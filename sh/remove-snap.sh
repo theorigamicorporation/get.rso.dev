@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
-###############################################################################
+# =============================================================================
 # remove-snap.sh — Fully remove snapd from Ubuntu / Kubuntu / Lubuntu / etc.
-#
-# Idempotent: safe to run multiple times. Every step checks current state
-# before acting, so re-runs are no-ops once snap is gone.
-#
-# Usage:  sudo bash remove-snap.sh
-###############################################################################
+# Usage: wget -qO- get.rso.dev/remove-snap | bash
+#        sudo bash remove-snap.sh
+# =============================================================================
+# @description Fully remove snapd and prevent reinstallation (idempotent)
+# @category System Utilities
+# @tags snap, snapd, ubuntu, kubuntu, lubuntu, remove, purge, cleanup
+# @supported Ubuntu, Kubuntu, Lubuntu, Xubuntu, Debian
+# @verify test ! -d /var/lib/snapd && test -f /etc/apt/preferences.d/no-snapd
+# =============================================================================
 set -euo pipefail
 
 # --------------------------------------------------------------------------- #

@@ -1,26 +1,26 @@
 #!/usr/bin/env sh
 #shellcheck shell=sh
 # =============================================================================
-# get-terraform.sh — Install terraform across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-terraform | sh
-#        sh get-terraform.sh [--method=github-release]
-#        sh get-terraform.sh --interactive
-#        sh get-terraform.sh --update
+# get-terragrunt.sh — Install terragrunt across Linux distributions
+# Usage: curl -s get.rso.dev/sh/get-terragrunt | sh
+#        sh get-terragrunt.sh [--method=github-release]
+#        sh get-terragrunt.sh --interactive
+#        sh get-terragrunt.sh --update
 # =============================================================================
-# @description Infrastructure as Code tool for provisioning cloud resources
+# @description Thin wrapper for Terraform that provides extra tools for working with multiple modules
 # @category Infrastructure Tools
-# @tags iac, terraform, cloud, provisioning, hashicorp
+# @tags iac, terraform, terragrunt, cloud, provisioning, gruntwork
 # @supported All Linux distributions
 # @methods asdf, github-release
-# @verify terraform version
-# @prereqs curl|wget, unzip
+# @verify terragrunt --version
+# @prereqs curl|wget
 # =============================================================================
 SCRIPT_VERSION="0.1"
-SCRIPT_NAME="GET TERRAFORM"
+SCRIPT_NAME="GET TERRAGRUNT"
 
-TOOL_NAME="terraform"
-TOOL_CMD="terraform"
-GITHUB_REPO="hashicorp/terraform"
+TOOL_NAME="terragrunt"
+TOOL_CMD="terragrunt"
+GITHUB_REPO="gruntwork-io/terragrunt"
 INSTALL_DIR="/usr/local/bin"
 FALLBACK_DIR="${HOME}/.local/bin"
 
@@ -48,9 +48,9 @@ log() {
 
 usage() {
     cat <<'USAGE'
-Usage: get-terraform.sh [OPTIONS]
+Usage: get-terragrunt.sh [OPTIONS]
 
-Install terraform across Linux distributions with automatic distro detection.
+Install terragrunt across Linux distributions with automatic distro detection.
 
 Options:
   -i, --interactive       Show interactive menu to pick install method
@@ -62,10 +62,10 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-terraform | sh
-  sh get-terraform.sh --method=github-release
-  sh get-terraform.sh --interactive
-  sh get-terraform.sh --update
+  curl -s get.rso.dev/sh/get-terragrunt | sh
+  sh get-terragrunt.sh --method=github-release
+  sh get-terragrunt.sh --interactive
+  sh get-terragrunt.sh --update
 USAGE
 }
 
@@ -161,10 +161,6 @@ check_prereqs() {
         log "Missing prerequisite: curl or wget" "ERR"
         log "Install curl or wget first" "ERR"; exit 1
     fi
-    if ! command -v unzip >/dev/null 2>&1; then
-        log "Missing prerequisite: unzip" "ERR"
-        log "Install unzip first" "ERR"; exit 1
-    fi
 }
 
 detect_available_methods() {
@@ -220,42 +216,37 @@ install_via_github_release() {
     log "Installing $TOOL_NAME via GitHub release..." "INFO"
     _version=$(get_latest_version)
     [ -z "$_version" ] && { log "Could not determine latest version" "ERR"; exit 1; }
-    _version_num=$(printf '%s' "$_version" | sed 's/^v//')
 
     case "$_ARCH" in
-        amd64) _asset="terraform_${_version_num}_linux_amd64.zip" ;;
-        arm64) _asset="terraform_${_version_num}_linux_arm64.zip" ;;
+        amd64) _asset="terragrunt_linux_amd64" ;;
+        arm64) _asset="terragrunt_linux_arm64" ;;
         *)     log "Unsupported arch for github-release: $_ARCH" "ERR"; exit 1 ;;
     esac
 
-    _download_url="https://releases.hashicorp.com/terraform/${_version_num}/${_asset}"
+    _download_url="https://github.com/${GITHUB_REPO}/releases/download/${_version}/${_asset}"
     log "Downloading ${_asset} (${_version})..." "INFO"
 
-    _tmp_dir=$(mktemp -d)
-    trap 'rm -rf "$_tmp_dir"' EXIT
+    _tmp_file=$(mktemp)
+    trap 'rm -f "$_tmp_file"' EXIT
 
     if command -v curl >/dev/null 2>&1; then
-        curl -fSL -o "${_tmp_dir}/${_asset}" "$_download_url"
+        curl -fSL -o "$_tmp_file" "$_download_url"
     elif command -v wget >/dev/null 2>&1; then
-        wget -q -O "${_tmp_dir}/${_asset}" "$_download_url"
+        wget -q -O "$_tmp_file" "$_download_url"
     fi
 
-    if ! command -v unzip >/dev/null 2>&1; then log "unzip is required" "ERR"; exit 1; fi
-    unzip -o "${_tmp_dir}/${_asset}" -d "$_tmp_dir"
-    _binary=$(find "$_tmp_dir" -name "terraform" -type f | head -1)
-    [ -z "$_binary" ] && { log "Binary not found in archive" "ERR"; exit 1; }
-    chmod +x "$_binary"
+    chmod +x "$_tmp_file"
 
     if [ "$(id -u)" -eq 0 ]; then
-        mv "$_binary" "${INSTALL_DIR}/${TOOL_CMD}"
+        mv "$_tmp_file" "${INSTALL_DIR}/${TOOL_CMD}"
     elif command -v sudo >/dev/null 2>&1; then
-        sudo mv "$_binary" "${INSTALL_DIR}/${TOOL_CMD}"
+        sudo mv "$_tmp_file" "${INSTALL_DIR}/${TOOL_CMD}"
     else
         mkdir -p "$FALLBACK_DIR"
-        mv "$_binary" "${FALLBACK_DIR}/${TOOL_CMD}"
+        mv "$_tmp_file" "${FALLBACK_DIR}/${TOOL_CMD}"
         log "Installed to ${FALLBACK_DIR}/${TOOL_CMD}" "WARN"
     fi
-    trap - EXIT; rm -rf "$_tmp_dir"
+    trap - EXIT
 }
 
 verify_install() {

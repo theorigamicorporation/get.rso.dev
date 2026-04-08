@@ -1,26 +1,26 @@
 #!/usr/bin/env sh
 #shellcheck shell=sh
 # =============================================================================
-# get-terraform.sh — Install terraform across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-terraform | sh
-#        sh get-terraform.sh [--method=github-release]
-#        sh get-terraform.sh --interactive
-#        sh get-terraform.sh --update
+# get-just.sh — Install just across Linux distributions
+# Usage: curl -s get.rso.dev/sh/get-just | sh
+#        sh get-just.sh [--method=github-release]
+#        sh get-just.sh --interactive
+#        sh get-just.sh --update
 # =============================================================================
-# @description Infrastructure as Code tool for provisioning cloud resources
-# @category Infrastructure Tools
-# @tags iac, terraform, cloud, provisioning, hashicorp
+# @description Command runner for project-specific tasks (justfile)
+# @category Development Tools
+# @tags just, justfile, task-runner, command-runner, make
 # @supported All Linux distributions
 # @methods asdf, github-release
-# @verify terraform version
-# @prereqs curl|wget, unzip
+# @verify just --version
+# @prereqs curl|wget
 # =============================================================================
 SCRIPT_VERSION="0.1"
-SCRIPT_NAME="GET TERRAFORM"
+SCRIPT_NAME="GET JUST"
 
-TOOL_NAME="terraform"
-TOOL_CMD="terraform"
-GITHUB_REPO="hashicorp/terraform"
+TOOL_NAME="just"
+TOOL_CMD="just"
+GITHUB_REPO="casey/just"
 INSTALL_DIR="/usr/local/bin"
 FALLBACK_DIR="${HOME}/.local/bin"
 
@@ -48,9 +48,9 @@ log() {
 
 usage() {
     cat <<'USAGE'
-Usage: get-terraform.sh [OPTIONS]
+Usage: get-just.sh [OPTIONS]
 
-Install terraform across Linux distributions with automatic distro detection.
+Install just across Linux distributions with automatic distro detection.
 
 Options:
   -i, --interactive       Show interactive menu to pick install method
@@ -62,10 +62,10 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-terraform | sh
-  sh get-terraform.sh --method=github-release
-  sh get-terraform.sh --interactive
-  sh get-terraform.sh --update
+  curl -s get.rso.dev/sh/get-just | sh
+  sh get-just.sh --method=github-release
+  sh get-just.sh --interactive
+  sh get-just.sh --update
 USAGE
 }
 
@@ -107,9 +107,8 @@ detect_distro() {
 detect_arch() {
     _raw_arch=$(uname -m)
     case "$_raw_arch" in
-        x86_64)  _ARCH="amd64" ;;
-        aarch64) _ARCH="arm64" ;;
-        armv7l)  _ARCH="armhf" ;;
+        x86_64)  _ARCH="x86_64" ;;
+        aarch64) _ARCH="aarch64" ;;
         *)       log "Unsupported architecture: $_raw_arch" "ERR"; exit 1 ;;
     esac
     log "Detected architecture: $_ARCH" "INFO"
@@ -160,10 +159,6 @@ check_prereqs() {
     if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
         log "Missing prerequisite: curl or wget" "ERR"
         log "Install curl or wget first" "ERR"; exit 1
-    fi
-    if ! command -v unzip >/dev/null 2>&1; then
-        log "Missing prerequisite: unzip" "ERR"
-        log "Install unzip first" "ERR"; exit 1
     fi
 }
 
@@ -220,15 +215,9 @@ install_via_github_release() {
     log "Installing $TOOL_NAME via GitHub release..." "INFO"
     _version=$(get_latest_version)
     [ -z "$_version" ] && { log "Could not determine latest version" "ERR"; exit 1; }
-    _version_num=$(printf '%s' "$_version" | sed 's/^v//')
 
-    case "$_ARCH" in
-        amd64) _asset="terraform_${_version_num}_linux_amd64.zip" ;;
-        arm64) _asset="terraform_${_version_num}_linux_arm64.zip" ;;
-        *)     log "Unsupported arch for github-release: $_ARCH" "ERR"; exit 1 ;;
-    esac
-
-    _download_url="https://releases.hashicorp.com/terraform/${_version_num}/${_asset}"
+    _asset="just-${_version}-${_ARCH}-unknown-linux-musl.tar.gz"
+    _download_url="https://github.com/${GITHUB_REPO}/releases/download/${_version}/${_asset}"
     log "Downloading ${_asset} (${_version})..." "INFO"
 
     _tmp_dir=$(mktemp -d)
@@ -240,9 +229,8 @@ install_via_github_release() {
         wget -q -O "${_tmp_dir}/${_asset}" "$_download_url"
     fi
 
-    if ! command -v unzip >/dev/null 2>&1; then log "unzip is required" "ERR"; exit 1; fi
-    unzip -o "${_tmp_dir}/${_asset}" -d "$_tmp_dir"
-    _binary=$(find "$_tmp_dir" -name "terraform" -type f | head -1)
+    tar -xzf "${_tmp_dir}/${_asset}" -C "$_tmp_dir"
+    _binary=$(find "$_tmp_dir" -name "just" -type f | head -1)
     [ -z "$_binary" ] && { log "Binary not found in archive" "ERR"; exit 1; }
     chmod +x "$_binary"
 

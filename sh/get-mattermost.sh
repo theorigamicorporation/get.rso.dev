@@ -111,12 +111,21 @@ check_existing_install() {
 }
 
 get_latest_version() {
-    _api_url="https://api.github.com/repos/${GITHUB_REPO}/releases/latest"
+    _releases_url="https://github.com/${GITHUB_REPO}/releases/latest"
+    _latest=""
     if command -v curl >/dev/null 2>&1; then
-        _latest=$(curl -fsSL "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+        _latest=$(curl -sI "$_releases_url" 2>/dev/null | grep -i '^location:' | sed 's|.*/tag/||; s/[[:space:]]*$//')
     elif command -v wget >/dev/null 2>&1; then
-        _latest=$(wget -qO- "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
-    else _latest=""; fi
+        _latest=$(wget --spider -S "$_releases_url" 2>&1 | grep -i '^ *Location:' | tail -1 | sed 's|.*/tag/||; s/[[:space:]]*$//')
+    fi
+    if [ -z "$_latest" ]; then
+        _api_url="https://api.github.com/repos/${GITHUB_REPO}/releases/latest"
+        if command -v curl >/dev/null 2>&1; then
+            _latest=$(curl -fsSL "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+        elif command -v wget >/dev/null 2>&1; then
+            _latest=$(wget -qO- "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+        fi
+    fi
     printf '%s' "$_latest"
 }
 

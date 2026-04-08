@@ -597,6 +597,42 @@ wget -qO- get.rso.dev/get-ghorg | sh -s -- --update
 # alt: curl -s get.rso.dev/get-ghorg | sh -s -- --update
 ```
 
+### get-git
+
+Distributed version control system
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Methods:** apt, dnf, yum
+**Tags:** git, vcs, version-control, scm
+**Hash:** `1e2d443f1399`
+
+<!-- tests:get-git hash:1e2d443f1399 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/get-git | sh
+# alt: curl -s get.rso.dev/get-git | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-git | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/get-git | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-git | sh -s -- --update
+# alt: curl -s get.rso.dev/get-git | sh -s -- --update
+```
+
 ### get-gitlab-cli
 
 Official command-line tool for GitLab
@@ -634,42 +670,6 @@ wget -qO- get.rso.dev/get-gitlab-cli | sh -s -- --update
 # alt: curl -s get.rso.dev/get-gitlab-cli | sh -s -- --update
 ```
 
-### get-git
-
-Distributed version control system
-
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
-**Methods:** apt, dnf, yum
-**Tags:** git, vcs, version-control, scm
-**Hash:** `1e2d443f1399`
-
-<!-- tests:get-git hash:1e2d443f1399 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
-
-```bash
-wget -qO- get.rso.dev/get-git | sh
-# alt: curl -s get.rso.dev/get-git | sh
-```
-
-**Options:**
-
-| Flag | Description |
-|------|-------------|
-| `-i`, `--interactive` | Show interactive menu to pick install method |
-| `-m`, `--method=METHOD` | Use a specific install method |
-| `-u`, `--update` | Update to latest version if already installed |
-| `-f`, `--force` | Force reinstall regardless of current version |
-| `-h`, `--help` | Show help message |
-
-```bash
-# Install via specific method
-wget -qO- get.rso.dev/get-git | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-git | sh -s -- --method=github-release
-
-# Update existing install
-wget -qO- get.rso.dev/get-git | sh -s -- --update
-# alt: curl -s get.rso.dev/get-git | sh -s -- --update
-```
-
 ### get-golang
 
 Fast statically typed compiled language by Google
@@ -704,6 +704,43 @@ wget -qO- get.rso.dev/get-golang | sh -s -- --method=github-release
 # Update existing install
 wget -qO- get.rso.dev/get-golang | sh -s -- --update
 # alt: curl -s get.rso.dev/get-golang | sh -s -- --update
+```
+
+### get-just
+
+Command runner for project-specific tasks (justfile)
+
+**Supported:** All Linux distributions
+**Methods:** asdf, github-release
+**Prereqs:** curl|wget
+**Tags:** just, justfile, task-runner, command-runner, make
+**Hash:** `df30fb1d64a1`
+
+<!-- tests:get-just hash:df30fb1d64a1 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/get-just | sh
+# alt: curl -s get.rso.dev/get-just | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-just | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/get-just | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-just | sh -s -- --update
+# alt: curl -s get.rso.dev/get-just | sh -s -- --update
 ```
 
 ### get-rustup
@@ -1083,12 +1120,12 @@ wget -qO- get.rso.dev/get-packer | sh -s -- --update
 Infrastructure as Code tool for provisioning cloud resources
 
 **Supported:** All Linux distributions
-**Methods:** github-release
-**Prereqs:** curl|wget
+**Methods:** asdf, github-release
+**Prereqs:** curl|wget, unzip
 **Tags:** iac, terraform, cloud, provisioning, hashicorp
-**Hash:** `226e652a148a`
+**Hash:** `5ecc4ea018d4`
 
-<!-- tests:get-terraform hash:226e652a148a amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-terraform hash:5ecc4ea018d4 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-terraform | sh
@@ -1113,6 +1150,43 @@ wget -qO- get.rso.dev/get-terraform | sh -s -- --method=github-release
 # Update existing install
 wget -qO- get.rso.dev/get-terraform | sh -s -- --update
 # alt: curl -s get.rso.dev/get-terraform | sh -s -- --update
+```
+
+### get-terragrunt
+
+Thin wrapper for Terraform that provides extra tools for working with multiple modules
+
+**Supported:** All Linux distributions
+**Methods:** asdf, github-release
+**Prereqs:** curl|wget
+**Tags:** iac, terraform, terragrunt, cloud, provisioning, gruntwork
+**Hash:** `cb1bba81213d`
+
+<!-- tests:get-terragrunt hash:cb1bba81213d amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/get-terragrunt | sh
+# alt: curl -s get.rso.dev/get-terragrunt | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-terragrunt | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/get-terragrunt | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-terragrunt | sh -s -- --update
+# alt: curl -s get.rso.dev/get-terragrunt | sh -s -- --update
 ```
 
 ### get-vagrant

@@ -712,11 +712,11 @@ Command runner for project-specific tasks (justfile)
 
 **Supported:** All Linux distributions
 **Methods:** asdf, github-release
-**Prereqs:** curl|wget
+**Prereqs:** curl|wget, tar, gzip
 **Tags:** just, justfile, task-runner, command-runner, make
-**Hash:** `73ec4b09a44b`
+**Hash:** `5e03a3fc5758`
 
-<!-- tests:get-just hash:73ec4b09a44b amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-just hash:5e03a3fc5758 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-just | sh
@@ -1123,9 +1123,9 @@ Infrastructure as Code tool for provisioning cloud resources
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget, unzip
 **Tags:** iac, terraform, cloud, provisioning, hashicorp
-**Hash:** `69c717cf4834`
+**Hash:** `4b600c3195b5`
 
-<!-- tests:get-terraform hash:69c717cf4834 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-terraform hash:4b600c3195b5 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-terraform | sh

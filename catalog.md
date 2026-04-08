@@ -197,9 +197,9 @@ Open-source team messaging and collaboration platform
 **Methods:** apt, github-release
 **Prereqs:** curl|wget, gpg
 **Tags:** chat, messaging, team, collaboration, slack-alternative
-**Hash:** `e3c716cdf73d`
+**Hash:** `4d276016a8c7`
 
-<!-- tests:get-mattermost hash:e3c716cdf73d amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-mattermost hash:4d276016a8c7 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-mattermost | sh
@@ -420,9 +420,9 @@ Open-source remote desktop with self-hosted server option
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** remote, desktop, rustdesk, self-hosted, screen-sharing
-**Hash:** `4a576c3cfbf6`
+**Hash:** `6ec1f2383dee`
 
-<!-- tests:get-rustdesk hash:4a576c3cfbf6 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-rustdesk hash:6ec1f2383dee amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-rustdesk | sh
@@ -568,9 +568,9 @@ Clone all repos from a GitHub/GitLab/Bitbucket org
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** git, clone, github, gitlab, organization, backup
-**Hash:** `84b9d8ec3531`
+**Hash:** `74dab2a41261`
 
-<!-- tests:get-ghorg hash:84b9d8ec3531 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-ghorg hash:74dab2a41261 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-ghorg | sh
@@ -641,9 +641,9 @@ Official command-line tool for GitLab
 **Methods:** apt, snap, github-release
 **Prereqs:** curl|wget
 **Tags:** gitlab, git, cli, merge-request, pipeline, glab
-**Hash:** `694947563a2f`
+**Hash:** `739bc2e62e04`
 
-<!-- tests:get-gitlab-cli hash:694947563a2f amazonlinux-2023:fail debian-12:fail debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-gitlab-cli hash:739bc2e62e04 amazonlinux-2023:fail debian-12:fail debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-gitlab-cli | sh
@@ -714,9 +714,9 @@ Command runner for project-specific tasks (justfile)
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget
 **Tags:** just, justfile, task-runner, command-runner, make
-**Hash:** `df30fb1d64a1`
+**Hash:** `73ec4b09a44b`
 
-<!-- tests:get-just hash:df30fb1d64a1 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-just hash:73ec4b09a44b amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-just | sh
@@ -828,9 +828,9 @@ Modern and intuitive terminal-based text editor
 **Methods:** apt, snap, github-release
 **Prereqs:** curl|wget
 **Tags:** editor, text, terminal, modern, micro
-**Hash:** `0f8f7172c453`
+**Hash:** `9dd96ff11e57`
 
-<!-- tests:get-micro hash:0f8f7172c453 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-micro hash:9dd96ff11e57 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-micro | sh
@@ -975,9 +975,9 @@ Sync files to and from cloud storage
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** cloud, sync, storage, s3, gdrive, backup, rclone
-**Hash:** `a552b98a7ee9`
+**Hash:** `8ddc320024cb`
 
-<!-- tests:get-rclone hash:a552b98a7ee9 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-rclone hash:8ddc320024cb amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-rclone | sh
@@ -1086,9 +1086,9 @@ Build automated machine images for multiple platforms
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** packer, images, ami, hashicorp, automation
-**Hash:** `077251dfcde1`
+**Hash:** `e0f575ab3b1e`
 
-<!-- tests:get-packer hash:077251dfcde1 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-packer hash:e0f575ab3b1e amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-packer | sh
@@ -1123,9 +1123,9 @@ Infrastructure as Code tool for provisioning cloud resources
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget, unzip
 **Tags:** iac, terraform, cloud, provisioning, hashicorp
-**Hash:** `5ecc4ea018d4`
+**Hash:** `69c717cf4834`
 
-<!-- tests:get-terraform hash:5ecc4ea018d4 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-terraform hash:69c717cf4834 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-terraform | sh
@@ -1160,9 +1160,9 @@ Thin wrapper for Terraform that provides extra tools for working with multiple m
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget
 **Tags:** iac, terraform, terragrunt, cloud, provisioning, gruntwork
-**Hash:** `cb1bba81213d`
+**Hash:** `f787d63b75af`
 
-<!-- tests:get-terragrunt hash:cb1bba81213d amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-terragrunt hash:f787d63b75af amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-terragrunt | sh
@@ -1235,9 +1235,9 @@ Lightweight command-line JSON processor
 **Methods:** apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Prereqs:** curl|wget (for github-release method)
 **Tags:** json, parser, filter, query, cli
-**Hash:** `e43b85e514c8`
+**Hash:** `b236640e0db9`
 
-<!-- tests:get-jq hash:e43b85e514c8 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-jq hash:b236640e0db9 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-jq | sh
@@ -1272,9 +1272,9 @@ Lightweight command-line YAML, JSON, and XML processor
 **Methods:** apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Prereqs:** curl|wget (for github-release method)
 **Tags:** yaml, json, xml, parser, cli
-**Hash:** `ecc6e4d96016`
+**Hash:** `18db7f749bf1`
 
-<!-- tests:get-yq hash:ecc6e4d96016 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-yq hash:18db7f749bf1 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-yq | sh
@@ -1311,9 +1311,9 @@ CLI for Argo CD GitOps continuous delivery
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, argocd, gitops, cd
-**Hash:** `5112b07c5072`
+**Hash:** `4a337ee106e2`
 
-<!-- tests:get-argocd-cli hash:5112b07c5072 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-argocd-cli hash:4a337ee106e2 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-argocd-cli | sh
@@ -1348,9 +1348,9 @@ CLI for installing and managing Cilium in Kubernetes
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, cilium, networking, ebpf, cni
-**Hash:** `85857efb3cdb`
+**Hash:** `14e6b313b54b`
 
-<!-- tests:get-cilium-cli hash:85857efb3cdb amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-cilium-cli hash:14e6b313b54b amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-cilium-cli | sh
@@ -1385,9 +1385,9 @@ Official CLI for Amazon EKS cluster management
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, aws, eks, cluster, eksctl
-**Hash:** `634eea10b517`
+**Hash:** `12d923276d0b`
 
-<!-- tests:get-eksctl hash:634eea10b517 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-eksctl hash:12d923276d0b amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-eksctl | sh
@@ -1422,9 +1422,9 @@ GitOps toolkit for Kubernetes continuous delivery
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, gitops, flux, cd
-**Hash:** `6f24b9ca9ab4`
+**Hash:** `866e11277f5b`
 
-<!-- tests:get-flux hash:6f24b9ca9ab4 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-flux hash:866e11277f5b amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-flux | sh
@@ -1459,9 +1459,9 @@ The package manager for Kubernetes
 **Methods:** snap, github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, helm, charts, package-manager
-**Hash:** `20b75b0ec2c0`
+**Hash:** `5c3a6dba0268`
 
-<!-- tests:get-helm hash:20b75b0ec2c0 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-helm hash:5c3a6dba0268 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-helm | sh
@@ -1496,9 +1496,9 @@ CLI for Hubble network observability in Kubernetes
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, hubble, observability, networking
-**Hash:** `de97b2167996`
+**Hash:** `988d3644e199`
 
-<!-- tests:get-hubble-cli hash:de97b2167996 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-hubble-cli hash:988d3644e199 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-hubble-cli | sh
@@ -1533,9 +1533,9 @@ Plugin manager for kubectl
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, kubectl, plugins, krew
-**Hash:** `fce2174121cc`
+**Hash:** `2f38893a02a8`
 
-<!-- tests:get-krew hash:fce2174121cc amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-krew hash:2f38893a02a8 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-krew | sh
@@ -1570,9 +1570,9 @@ CLI for Sealed Secrets encryption in Kubernetes
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, secrets, encryption, sealed-secrets
-**Hash:** `f176c703941c`
+**Hash:** `7486e67246e0`
 
-<!-- tests:get-kubeseal hash:f176c703941c amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-kubeseal hash:7486e67246e0 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-kubeseal | sh
@@ -2299,9 +2299,9 @@ Simple, fast alternative to find
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** find, search, files, fast, fd, modern
-**Hash:** `9aeff7719d31`
+**Hash:** `5097336d0504`
 
-<!-- tests:get-fd-find hash:9aeff7719d31 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-fd-find hash:5097336d0504 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-fd-find | sh
@@ -2336,9 +2336,9 @@ General-purpose command-line fuzzy finder
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** fuzzy, search, filter, finder, interactive, fzf
-**Hash:** `a07c2c4a54a6`
+**Hash:** `a5b8503f5c8e`
 
-<!-- tests:get-fzf hash:a07c2c4a54a6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-fzf hash:a5b8503f5c8e amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-fzf | sh
@@ -2373,9 +2373,9 @@ Extremely fast recursive text search tool
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** grep, search, regex, fast, recursive, rg
-**Hash:** `eb05be215057`
+**Hash:** `d8307a2390a7`
 
-<!-- tests:get-ripgrep hash:eb05be215057 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-ripgrep hash:d8307a2390a7 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-ripgrep | sh
@@ -2664,9 +2664,9 @@ Simple and flexible tool for managing encrypted secrets
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** secrets, encryption, yaml, json, sops, mozilla
-**Hash:** `c2d232e6b747`
+**Hash:** `2aa8408a0248`
 
-<!-- tests:get-sops hash:c2d232e6b747 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-sops hash:2aa8408a0248 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-sops | sh
@@ -2777,9 +2777,9 @@ Resource monitor with advanced CPU, memory, and process stats
 **Methods:** apt, dnf, yum, snap, github-release
 **Prereqs:** curl|wget
 **Tags:** monitor, cpu, memory, process, system, btop
-**Hash:** `9ac1e96dd2da`
+**Hash:** `f7c3bf148074`
 
-<!-- tests:get-btop hash:9ac1e96dd2da amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-btop hash:f7c3bf148074 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-btop | sh
@@ -3246,9 +3246,9 @@ Cat clone with syntax highlighting and git integration
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** cat, syntax, highlight, git, pager, modern
-**Hash:** `5c113653f85f`
+**Hash:** `645d8bfc882d`
 
-<!-- tests:get-bat hash:5c113653f85f amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-bat hash:645d8bfc882d amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-bat | sh
@@ -3283,9 +3283,9 @@ Modern ls replacement with colors and icons
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** ls, files, directory, colors, icons, modern
-**Hash:** `1053c8493dfe`
+**Hash:** `8ae73cc290f4`
 
-<!-- tests:get-lsd hash:1053c8493dfe amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-lsd hash:8ae73cc290f4 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-lsd | sh
@@ -3392,9 +3392,9 @@ Instant terminal sharing via SSH
 **Methods:** apt, snap, github-release
 **Prereqs:** curl|wget
 **Tags:** terminal, sharing, ssh, tmux, pair-programming
-**Hash:** `7c5757d9b930`
+**Hash:** `2e706b61c502`
 
-<!-- tests:get-tmate hash:7c5757d9b930 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-tmate hash:2e706b61c502 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-tmate | sh

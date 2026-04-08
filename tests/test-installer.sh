@@ -106,12 +106,9 @@ prereqs_install_cmd() {
         _item=$(printf '%s' "$_item" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/ (.*)//g')
         [ -z "$_item" ] && continue
 
-        # Handle OR (pipe): "curl|wget" — install first available or first option
+        # Handle OR (pipe): "curl|wget" — skip entirely, container already has one
         case "$_item" in
             *"|"*)
-                _first=$(printf '%s' "$_item" | cut -d'|' -f1)
-                _apt_pkgs="${_apt_pkgs} ${_first}"
-                _dnf_pkgs="${_dnf_pkgs} ${_first}"
                 ;;
             "gpg")
                 _apt_pkgs="${_apt_pkgs} gpg"

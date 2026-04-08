@@ -13,7 +13,7 @@
 # @supported All Linux distributions
 # @methods asdf, github-release
 # @verify just --version
-# @prereqs curl|wget
+# @prereqs curl|wget, tar, gzip
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET JUST"
@@ -169,6 +169,14 @@ check_prereqs() {
         log "Missing prerequisite: curl or wget" "ERR"
         log "Install curl or wget first" "ERR"; exit 1
     fi
+    if ! command -v tar >/dev/null 2>&1; then
+        log "Missing prerequisite: tar" "ERR"
+        log "Install tar first" "ERR"; exit 1
+    fi
+    if ! command -v gzip >/dev/null 2>&1; then
+        log "Missing prerequisite: gzip" "ERR"
+        log "Install gzip first" "ERR"; exit 1
+    fi
 }
 
 detect_available_methods() {
@@ -239,7 +247,7 @@ install_via_github_release() {
     fi
 
     tar -xzf "${_tmp_dir}/${_asset}" -C "$_tmp_dir"
-    _binary=$(find "$_tmp_dir" -name "just" -type f | head -1)
+    _binary="${_tmp_dir}/just"
     [ -z "$_binary" ] && { log "Binary not found in archive" "ERR"; exit 1; }
     chmod +x "$_binary"
 

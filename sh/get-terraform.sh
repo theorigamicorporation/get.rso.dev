@@ -251,7 +251,7 @@ install_via_github_release() {
 
     if ! command -v unzip >/dev/null 2>&1; then log "unzip is required" "ERR"; exit 1; fi
     unzip -o "${_tmp_dir}/${_asset}" -d "$_tmp_dir"
-    _binary=$(find "$_tmp_dir" -name "terraform" -type f | head -1)
+    _binary="${_tmp_dir}/terraform"
     [ -z "$_binary" ] && { log "Binary not found in archive" "ERR"; exit 1; }
     chmod +x "$_binary"
 

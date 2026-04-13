@@ -789,9 +789,9 @@ Visual Studio Code editor
 **Methods:** apt, dnf, snap, flatpak
 **Prereqs:** curl|wget, gpg
 **Tags:** editor, ide, vscode, microsoft, code
-**Hash:** `8d8452ab1a4e`
+**Hash:** `5755563af416`
 
-<!-- tests:get-vscode hash:8d8452ab1a4e amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-vscode hash:5755563af416 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-vscode | sh

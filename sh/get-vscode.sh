@@ -387,6 +387,12 @@ install_via_apt() {
         exit 1
     fi
 
+    # Remove any conflicting existing source entries for VS Code before writing ours
+    $_SUDO_CMD rm -f /etc/apt/sources.list.d/vscode.list
+    for _f in $(grep -rl 'packages.microsoft.com/repos/code' /etc/apt/sources.list.d/ 2>/dev/null || true); do
+        $_SUDO_CMD rm -f "$_f"
+    done
+
     # Add Microsoft VS Code repository
     printf 'deb [arch=%s signed-by=/usr/share/keyrings/microsoft-vscode.gpg] https://packages.microsoft.com/repos/code stable main\n' "$_ARCH" \
         | $_SUDO_CMD tee /etc/apt/sources.list.d/vscode.list >/dev/null

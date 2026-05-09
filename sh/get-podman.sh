@@ -233,12 +233,25 @@ install_via_yum() {
     $_SUDO_CMD yum install -y -q "$DNF_PKG"
 }
 
+add_user_to_group() {
+    _actual_user=""
+    if [ -n "$TARGET_USER" ]; then _actual_user="$TARGET_USER"
+    elif [ -n "$SUDO_USER" ]; then _actual_user="$SUDO_USER"
+    elif [ "$(id -u)" -ne 0 ]; then _actual_user="$(id -un)"
+    else _actual_user=$(getent passwd | awk -F: '$3>=1000 && $3<65534 {print $1; exit}'); fi
+    if [ -n "$_actual_user" ]; then
+        $_SUDO_CMD usermod -aG podman "$_actual_user" 2>/dev/null || true
+        log "Added $_actual_user to group 'podman'. Run 'newgrp podman' or re-login for it to take effect." "WARN"
+    fi
+}
+
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
         log "$TOOL_NAME installation could not be verified. Check your PATH." "ERR"; exit 1
     fi
     _installed_version=$("$TOOL_CMD" --version 2>/dev/null | head -1 || true)
     log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
+    add_user_to_group
 }
 
 ###########################

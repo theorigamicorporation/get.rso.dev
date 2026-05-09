@@ -3,6 +3,7 @@
 # =============================================================================
 # get-vagrant.sh — Install vagrant across Linux distributions
 # Usage: curl -s get.rso.dev/sh/get-vagrant | sh
+#        sh get-vagrant.sh [--method=asdf|apt|dnf|yum]
 #        sh get-vagrant.sh --interactive
 #        sh get-vagrant.sh --update
 # =============================================================================
@@ -10,10 +11,10 @@
 # @category Infrastructure Tools
 # @tags vagrant, vm, development, hashicorp
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky
-# @methods apt, dnf, yum
+# @methods asdf, apt, dnf, yum
 # @verify vagrant --version
 # =============================================================================
-SCRIPT_VERSION="0.1"
+SCRIPT_VERSION="0.2"
 SCRIPT_NAME="GET VAGRANT"
 
 TOOL_NAME="vagrant"
@@ -48,14 +49,22 @@ usage() {
 Usage: get-vagrant.sh [OPTIONS]
 
 Install vagrant across Linux distributions with automatic distro detection.
+Uses native package managers; adds HashiCorp apt repo when vagrant is not
+in standard repos (e.g. Linux Mint).
 
 Options:
   -i, --interactive       Show interactive menu to pick install method
-  -m, --method=METHOD     Use specific install method
+  -m, --method=METHOD     Use specific install method: asdf, apt, dnf, yum
   -u, --update            Update to latest version if already installed
   -f, --force             Force reinstall regardless of current version
   -h, --help              Show this help message
   -v, --version           Show script version
+
+Examples:
+  curl -s get.rso.dev/sh/get-vagrant | sh
+  sh get-vagrant.sh --method=asdf
+  sh get-vagrant.sh --interactive
+  sh get-vagrant.sh --update
 USAGE
 }
 
@@ -103,7 +112,8 @@ ensure_sudo() {
 
 check_existing_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME is not currently installed" "INFO"; return 0; fi
-    log "$TOOL_NAME is already installed" "INFO"
+    _current_version=$(vagrant --version 2>/dev/null | head -1 || true)
+    log "$TOOL_NAME is already installed: $_current_version" "INFO"
     if [ "$OPT_FORCE" = true ]; then log "Force reinstall" "INFO"; return 0; fi
     if [ "$OPT_UPDATE" = true ]; then log "Updating..." "INFO"; return 0; fi
     log "$TOOL_NAME already installed (use --update or --force)" "INFO"; exit 0
@@ -111,14 +121,24 @@ check_existing_install() {
 
 detect_available_methods() {
     _AVAILABLE_METHODS=""; _count=0
+    if command -v asdf >/dev/null 2>&1; then
+        _count=$(( _count + 1 ))
+        _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:asdf:Install via asdf version manager
+"
+    fi
     if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1; then
-        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt
+        _count=$(( _count + 1 ))
+        _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt (adds HashiCorp repo if needed)
 "
     fi
     if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
-        if command -v dnf >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf
+        if command -v dnf >/dev/null 2>&1; then
+            _count=$(( _count + 1 ))
+            _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf
 "
-        elif command -v yum >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum
+        elif command -v yum >/dev/null 2>&1; then
+            _count=$(( _count + 1 ))
+            _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum
 "
         fi
     fi
@@ -131,13 +151,57 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
+install_via_asdf() {
+    log "Installing $TOOL_NAME via asdf..." "INFO"
+    asdf plugin add vagrant https://github.com/ben0x4a/asdf-vagrant.git 2>/dev/null || true
+    _latest=$(asdf list-all vagrant | tail -1)
+    [ -z "$_latest" ] && { log "Could not determine latest vagrant version via asdf" "ERR"; exit 1; }
+    asdf install vagrant "$_latest"
+    asdf global vagrant "$_latest"
+}
+
+install_via_apt() {
+    log "Installing $TOOL_NAME via apt..." "INFO"
+    ensure_sudo
+    $_SUDO_CMD apt-get update -qq
+
+    # If vagrant is in standard repos, use it directly
+    if apt-cache show vagrant >/dev/null 2>&1; then
+        $_SUDO_CMD apt-get install -y -qq vagrant
+        return
+    fi
+
+    # Otherwise add HashiCorp's apt repository
+    log "vagrant not in standard repos, adding HashiCorp apt repository..." "INFO"
+    if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+        log "curl or wget required to add HashiCorp apt repository" "ERR"; exit 1
+    fi
+    $_SUDO_CMD apt-get install -y -qq gnupg ca-certificates
+
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL https://apt.releases.hashicorp.com/gpg | \
+            $_SUDO_CMD gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    else
+        wget -qO- https://apt.releases.hashicorp.com/gpg | \
+            $_SUDO_CMD gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    fi
+
+    # Use UBUNTU_CODENAME on Mint (e.g. noble), VERSION_CODENAME elsewhere
+    _codename=$(. /etc/os-release && printf '%s' "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+    printf 'deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com %s main\n' \
+        "$_codename" | $_SUDO_CMD tee /etc/apt/sources.list.d/hashicorp.list > /dev/null
+
+    $_SUDO_CMD apt-get update -qq
+    $_SUDO_CMD apt-get install -y -qq vagrant
+}
+
 install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
 install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
-    log "$TOOL_NAME installed successfully" "INFO"
+    _installed_version=$(vagrant --version 2>/dev/null | head -1 || true)
+    log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
 }
 
 set -e
@@ -150,7 +214,13 @@ main() {
     elif [ "$OPT_INTERACTIVE" = true ]; then _method=$(run_menu)
     else _method=$(get_default_method); fi
     log "Using install method: $_method" "INFO"
-    case "$_method" in apt) install_via_apt ;; dnf) install_via_dnf ;; yum) install_via_yum ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
+    case "$_method" in
+        asdf) install_via_asdf ;;
+        apt)  install_via_apt ;;
+        dnf)  install_via_dnf ;;
+        yum)  install_via_yum ;;
+        *) log "Unknown method: $_method" "ERR"; exit 1 ;;
+    esac
     verify_install
 }
 

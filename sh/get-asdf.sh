@@ -10,16 +10,17 @@
 # @category Development Tools
 # @tags version-manager, asdf, runtime, node, python, ruby
 # @supported All Linux distributions
-# @methods apt, dnf, yum
+# @methods git
 # @verify asdf --version
+# @prereqs git
+# @noroot true
 # =============================================================================
-SCRIPT_VERSION="0.1"
+SCRIPT_VERSION="0.2"
 SCRIPT_NAME="GET ASDF"
 
 TOOL_NAME="asdf"
 TOOL_CMD="asdf"
-APT_PKG="asdf"
-DNF_PKG="asdf"
+ASDF_DIR="${HOME}/.asdf"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -29,7 +30,6 @@ _DISTRO_FAMILY=""
 _DISTRO_ID=""
 _ARCH=""
 _AVAILABLE_METHODS=""
-_SUDO_CMD=""
 
 log() {
     _log_message="$1"; _log_level="$2"
@@ -47,15 +47,20 @@ usage() {
     cat <<'USAGE'
 Usage: get-asdf.sh [OPTIONS]
 
-Install asdf across Linux distributions with automatic distro detection.
+Install asdf version manager via git clone. Must be run as the target user
+(not root) since asdf installs to ~/.asdf.
 
 Options:
   -i, --interactive       Show interactive menu to pick install method
-  -m, --method=METHOD     Use specific install method
+  -m, --method=METHOD     Use specific install method: git
   -u, --update            Update to latest version if already installed
   -f, --force             Force reinstall regardless of current version
   -h, --help              Show this help message
   -v, --version           Show script version
+
+Examples:
+  curl -s get.rso.dev/sh/get-asdf | sh
+  sh get-asdf.sh --update
 USAGE
 }
 
@@ -84,7 +89,10 @@ detect_distro() {
         ubuntu|debian|linuxmint) _DISTRO_FAMILY="debian" ;;
         rhel|centos|fedora|rocky|almalinux) _DISTRO_FAMILY="rhel" ;;
         amzn) _DISTRO_FAMILY="amazon" ;;
-        *) case "$ID_LIKE" in *debian*|*ubuntu*) _DISTRO_FAMILY="debian" ;; *rhel*|*fedora*) _DISTRO_FAMILY="rhel" ;; *) _DISTRO_FAMILY="unknown" ;; esac ;;
+        *) case "$ID_LIKE" in
+            *debian*|*ubuntu*) _DISTRO_FAMILY="debian" ;;
+            *rhel*|*fedora*|*centos*) _DISTRO_FAMILY="rhel" ;;
+            *) _DISTRO_FAMILY="unknown" ;; esac ;;
     esac
     log "Detected distro: $_DISTRO_ID (family: $_DISTRO_FAMILY)" "INFO"
 }
@@ -95,34 +103,39 @@ detect_arch() {
     log "Detected architecture: $_ARCH" "INFO"
 }
 
-ensure_sudo() {
-    if [ "$(id -u)" -eq 0 ]; then _SUDO_CMD=""; return; fi
-    if command -v sudo >/dev/null 2>&1; then _SUDO_CMD="sudo"; return; fi
-    log "Root privileges required but sudo is not available." "ERR"; exit 1
+check_not_root() {
+    if [ "$(id -u)" -eq 0 ]; then
+        log "This script must not be run as root — asdf installs to ~/.asdf for the current user." "ERR"
+        exit 1
+    fi
+}
+
+check_prereqs() {
+    if ! command -v git >/dev/null 2>&1; then
+        log "Missing prerequisite: git" "ERR"
+        log "Install git first (e.g. apt install git)" "ERR"
+        exit 1
+    fi
 }
 
 check_existing_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME is not currently installed" "INFO"; return 0; fi
-    log "$TOOL_NAME is already installed" "INFO"
+    [ -f "${ASDF_DIR}/asdf.sh" ] && . "${ASDF_DIR}/asdf.sh"
+    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "asdf is not currently installed" "INFO"; return 0; fi
+    _current_version=$(asdf --version 2>/dev/null | head -1 || true)
+    log "asdf is already installed: $_current_version" "INFO"
     if [ "$OPT_FORCE" = true ]; then log "Force reinstall" "INFO"; return 0; fi
     if [ "$OPT_UPDATE" = true ]; then log "Updating..." "INFO"; return 0; fi
-    log "$TOOL_NAME already installed (use --update or --force)" "INFO"; exit 0
+    log "asdf already installed (use --update or --force)" "INFO"; exit 0
 }
 
 detect_available_methods() {
     _AVAILABLE_METHODS=""; _count=0
-    if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1; then
-        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt
+    if command -v git >/dev/null 2>&1; then
+        _count=$(( _count + 1 ))
+        _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:git:Clone from GitHub to ~/.asdf
 "
     fi
-    if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
-        if command -v dnf >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf
-"
-        elif command -v yum >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum
-"
-        fi
-    fi
-    if [ -z "$_AVAILABLE_METHODS" ]; then log "No install methods available." "ERR"; exit 1; fi
+    if [ -z "$_AVAILABLE_METHODS" ]; then log "No install methods available — git is required." "ERR"; exit 1; fi
 }
 
 get_method_by_number() { printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _num _method _desc; do [ "$_num" = "$1" ] && printf '%s' "$_method" && return; done; }
@@ -131,26 +144,49 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
+install_via_git() {
+    log "Installing asdf via git clone to ${ASDF_DIR}..." "INFO"
+    if [ -d "${ASDF_DIR}/.git" ]; then
+        log "asdf directory exists, pulling latest..." "INFO"
+        git -C "$ASDF_DIR" pull --quiet
+    else
+        # v0.14.x is the last pure-shell release; v0.16+ requires building a Go binary
+        git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.14.1 --quiet
+    fi
+    for _profile in "$HOME/.bashrc" "$HOME/.profile" "$HOME/.bash_profile"; do
+        [ -f "$_profile" ] || continue
+        if ! grep -q 'asdf/asdf.sh' "$_profile" 2>/dev/null; then
+            printf '\n# asdf version manager\n. "$HOME/.asdf/asdf.sh"\n' >> "$_profile"
+            log "Added asdf init to ${_profile}" "INFO"
+        fi
+        if [ -f "${ASDF_DIR}/completions/asdf.bash" ] && ! grep -q 'completions/asdf.bash' "$_profile" 2>/dev/null; then
+            printf '. "$HOME/.asdf/completions/asdf.bash"\n' >> "$_profile"
+        fi
+    done
+}
 
 verify_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
-    log "$TOOL_NAME installed successfully" "INFO"
+    [ -f "${ASDF_DIR}/asdf.sh" ] && . "${ASDF_DIR}/asdf.sh"
+    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "asdf could not be verified" "ERR"; exit 1; fi
+    log "asdf installed successfully: $(asdf --version)" "INFO"
+    log "Restart your shell or run: . ~/.asdf/asdf.sh" "WARN"
 }
 
 set -e
 
 main() {
     parse_args "$@"; log "Starting $SCRIPT_NAME v$SCRIPT_VERSION" "INFO"
-    detect_distro; detect_arch; check_existing_install; detect_available_methods
+    check_not_root
+    detect_distro; detect_arch; check_prereqs; check_existing_install; detect_available_methods
     _method=""
     if [ -n "$OPT_METHOD" ]; then validate_method "$OPT_METHOD"; _method="$OPT_METHOD"
     elif [ "$OPT_INTERACTIVE" = true ]; then _method=$(run_menu)
     else _method=$(get_default_method); fi
     log "Using install method: $_method" "INFO"
-    case "$_method" in apt) install_via_apt ;; dnf) install_via_dnf ;; yum) install_via_yum ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
+    case "$_method" in
+        git) install_via_git ;;
+        *) log "Unknown method: $_method" "ERR"; exit 1 ;;
+    esac
     verify_install
 }
 

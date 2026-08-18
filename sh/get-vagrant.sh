@@ -166,8 +166,8 @@ install_via_apt() {
     $_SUDO_CMD apt-get update -qq
 
     # If vagrant is in standard repos, use it directly
-    if apt-cache show vagrant >/dev/null 2>&1; then
-        $_SUDO_CMD apt-get install -y -qq vagrant
+    if apt-cache show "$APT_PKG" >/dev/null 2>&1; then
+        $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
         return
     fi
 
@@ -192,7 +192,7 @@ install_via_apt() {
         "$_codename" | $_SUDO_CMD tee /etc/apt/sources.list.d/hashicorp.list > /dev/null
 
     $_SUDO_CMD apt-get update -qq
-    $_SUDO_CMD apt-get install -y -qq vagrant
+    $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
 }
 
 install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }

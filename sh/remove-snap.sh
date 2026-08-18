@@ -192,7 +192,7 @@ PINEOF
 remove_snap_sources() {
     info "Checking for snap-related apt sources …"
     local found=0
-    for f in /etc/apt/sources.list.d/*snap* 2>/dev/null; do
+    for f in /etc/apt/sources.list.d/*snap*; do
         [[ -e "$f" ]] || continue
         rm -f "$f"
         info "  Removed $f"

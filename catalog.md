@@ -274,9 +274,9 @@ Daemonless container engine compatible with Docker
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** container, docker, podman, oci, rootless
-**Hash:** `44651fbb2b91`
+**Hash:** `ea0097099111`
 
-<!-- tests:get-podman hash:44651fbb2b91 -->
+<!-- tests:get-podman hash:ea0097099111 amazonlinux-2023:fail debian-12:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-podman | sh
@@ -301,6 +301,45 @@ wget -qO- get.rso.dev/get-podman | sh -s -- --method=github-release
 # Update existing install
 wget -qO- get.rso.dev/get-podman | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-podman | sh -s -- --update
+```
+
+## Containers & Virtualisation
+
+### get-docker
+
+Container platform for building and running applications
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Methods:** apt, dnf, yum
+**Prereqs:** curl|wget, gpg
+**Tags:** docker, containers, oci, devops
+**Hash:** `cc56a304dd0a`
+
+<!-- tests:get-docker hash:cc56a304dd0a amazonlinux-2023:fail debian-12:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+
+```bash
+wget -qO- get.rso.dev/get-docker | sh
+# alt: curl -s get.rso.dev/get-docker | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-docker | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/get-docker | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-docker | sh -s -- --update
+# alt: curl -s get.rso.dev/get-docker | sh -s -- --update
 ```
 
 ## Database Tools
@@ -535,9 +574,9 @@ Extendable version manager for multiple runtimes
 **Prereqs:** git
 **Requires:** non-root user
 **Tags:** version-manager, asdf, runtime, node, python, ruby
-**Hash:** `2a7e08fa8e4d`
+**Hash:** `14b574e4c835`
 
-<!-- tests:get-asdf hash:2a7e08fa8e4d -->
+<!-- tests:get-asdf hash:14b574e4c835 amazonlinux-2023:fail debian-12:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-asdf | sh
@@ -1127,9 +1166,9 @@ Build automated machine images for multiple platforms
 **Methods:** github-release
 **Prereqs:** curl|wget, unzip
 **Tags:** packer, images, ami, hashicorp, automation
-**Hash:** `154d3523ceee`
+**Hash:** `873efb1c9c83`
 
-<!-- tests:get-packer hash:154d3523ceee -->
+<!-- tests:get-packer hash:873efb1c9c83 amazonlinux-2023:fail debian-12:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-packer | sh
@@ -1237,9 +1276,9 @@ Build and manage virtualized development environments
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** asdf, apt, dnf, yum
 **Tags:** vagrant, vm, development, hashicorp
-**Hash:** `d54a676e3cd4`
+**Hash:** `58e3bca572d4`
 
-<!-- tests:get-vagrant hash:d54a676e3cd4 -->
+<!-- tests:get-vagrant hash:58e3bca572d4 amazonlinux-2023:skip debian-12:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-vagrant | sh
@@ -1379,6 +1418,45 @@ wget -qO- get.rso.dev/get-kubectl | sh -s -- --method=github-release
 # Update existing install
 wget -qO- get.rso.dev/get-kubectl | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-kubectl | sh -s -- --update
+```
+
+## Kubernetes & Cloud
+
+### get-kubectl
+
+Kubernetes command-line tool for managing clusters
+
+**Supported:** All Linux distributions
+**Methods:** apt, github-release, asdf
+**Prereqs:** curl|wget
+**Tags:** kubectl, kubernetes, k8s, cluster, devops
+**Hash:** `62d27381fdc2`
+
+<!-- tests:get-kubectl hash:62d27381fdc2 amazonlinux-2023:pass debian-12:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/get-kubectl | sh
+# alt: curl -s get.rso.dev/get-kubectl | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-kubectl | sh -s -- --method=github-release
+# alt: curl -s get.rso.dev/get-kubectl | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-kubectl | sh -s -- --update
+# alt: curl -s get.rso.dev/get-kubectl | sh -s -- --update
 ```
 
 ## Kubernetes Tools

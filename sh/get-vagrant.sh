@@ -165,8 +165,11 @@ install_via_apt() {
     ensure_sudo
     $_SUDO_CMD apt-get update -qq
 
-    # If vagrant is in standard repos, use it directly
-    if apt-cache show "$APT_PKG" >/dev/null 2>&1; then
+    # If vagrant is in standard repos, use it directly. apt-cache show succeeds
+    # for a package that is merely referenced by the index, so check for a real
+    # installation candidate instead.
+    if apt-cache policy "$APT_PKG" 2>/dev/null | grep -q 'Candidate:' &&
+       ! apt-cache policy "$APT_PKG" 2>/dev/null | grep -q 'Candidate: (none)'; then
         $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
         return
     fi
@@ -195,8 +198,39 @@ install_via_apt() {
     $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
 }
 
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
+ensure_epel() {
+    # EL ships only a subset of packages; the rest live in EPEL. Add the repo
+    # only when the package is genuinely missing from the enabled repos, and
+    # never on Amazon Linux, which does not use EPEL.
+    [ "$_DISTRO_FAMILY" = "rhel" ] || return 0
+    _epel_pkg="$1"
+    _epel_mgr="yum"
+    command -v dnf >/dev/null 2>&1 && _epel_mgr="dnf"
+    $_epel_mgr list --available "$_epel_pkg" >/dev/null 2>&1 && return 0
+    $_epel_mgr list --installed "$_epel_pkg" >/dev/null 2>&1 && return 0
+    log "$_epel_pkg not found in enabled repos, enabling EPEL..." "INFO"
+    $_SUDO_CMD $_epel_mgr install -y -q epel-release >/dev/null 2>&1 || \
+        log "Could not enable EPEL, continuing anyway" "WARN"
+}
+
+ensure_hashicorp_repo() {
+    # vagrant is not in the EL repos or EPEL; HashiCorp ships its own.
+    [ -f /etc/yum.repos.d/hashicorp.repo ] && return 0
+    log "Adding HashiCorp yum repository..." "INFO"
+    _mgr="yum"
+    command -v dnf >/dev/null 2>&1 && _mgr="dnf"
+    $_SUDO_CMD $_mgr install -y -q dnf-plugins-core >/dev/null 2>&1 || \
+        $_SUDO_CMD $_mgr install -y -q yum-utils >/dev/null 2>&1 || true
+    if command -v dnf >/dev/null 2>&1; then
+        $_SUDO_CMD dnf config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo >/dev/null 2>&1
+    else
+        $_SUDO_CMD yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo >/dev/null 2>&1
+    fi
+    [ -f /etc/yum.repos.d/hashicorp.repo ] || log "Could not add HashiCorp repository" "WARN"
+}
+
+install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_hashicorp_repo; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
+install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_hashicorp_repo; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi

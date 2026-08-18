@@ -132,8 +132,43 @@ get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
 install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
+ensure_epel() {
+    # EL ships only a subset of packages; the rest live in EPEL. Add the repo
+    # only when the package is genuinely missing from the enabled repos, and
+    # never on Amazon Linux, which does not use EPEL.
+    [ "$_DISTRO_FAMILY" = "rhel" ] || return 0
+    _epel_pkg="$1"
+    _epel_mgr="yum"
+    command -v dnf >/dev/null 2>&1 && _epel_mgr="dnf"
+    $_epel_mgr list --available "$_epel_pkg" >/dev/null 2>&1 && return 0
+    $_epel_mgr list --installed "$_epel_pkg" >/dev/null 2>&1 && return 0
+    log "$_epel_pkg not found in enabled repos, enabling EPEL..." "INFO"
+    $_SUDO_CMD $_epel_mgr install -y -q epel-release >/dev/null 2>&1 || \
+        log "Could not enable EPEL, continuing anyway" "WARN"
+}
+
+ensure_virtualbox_repo() {
+    # VirtualBox is not in the EL repos or EPEL; Oracle ships its own.
+    [ -f /etc/yum.repos.d/virtualbox.repo ] && return 0
+    _el_ver=$(. /etc/os-release && printf '%s' "${VERSION_ID%%.*}")
+    log "Adding Oracle VirtualBox repository for el${_el_ver}..." "INFO"
+    printf '[virtualbox]\nname=Oracle VirtualBox\nbaseurl=https://download.virtualbox.org/virtualbox/rpm/el/%s/$basearch\nenabled=1\ngpgcheck=1\ngpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc\n' \
+        "$_el_ver" | $_SUDO_CMD tee /etc/yum.repos.d/virtualbox.repo > /dev/null
+}
+
+resolve_vbox_pkg() {
+    # Oracle's repo ships version-numbered packages (VirtualBox-7.2), not a
+    # plain "virtualbox", so pick the highest one the repo offers.
+    _mgr="yum"
+    command -v dnf >/dev/null 2>&1 && _mgr="dnf"
+    _found=$($_mgr list --available 'VirtualBox-*' 2>/dev/null \
+        | grep -oE '^VirtualBox-[0-9]+\.[0-9]+' | sort -V | tail -1)
+    [ -n "$_found" ] && DNF_PKG="$_found"
+    return 0
+}
+
+install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_virtualbox_repo; resolve_vbox_pkg; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
+install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_virtualbox_repo; resolve_vbox_pkg; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi

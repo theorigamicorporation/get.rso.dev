@@ -132,8 +132,23 @@ get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
 install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
+ensure_epel() {
+    # EL ships only a subset of packages; the rest live in EPEL. Add the repo
+    # only when the package is genuinely missing from the enabled repos, and
+    # never on Amazon Linux, which does not use EPEL.
+    [ "$_DISTRO_FAMILY" = "rhel" ] || return 0
+    _epel_pkg="$1"
+    _epel_mgr="yum"
+    command -v dnf >/dev/null 2>&1 && _epel_mgr="dnf"
+    $_epel_mgr list --available "$_epel_pkg" >/dev/null 2>&1 && return 0
+    $_epel_mgr list --installed "$_epel_pkg" >/dev/null 2>&1 && return 0
+    log "$_epel_pkg not found in enabled repos, enabling EPEL..." "INFO"
+    $_SUDO_CMD $_epel_mgr install -y -q epel-release >/dev/null 2>&1 || \
+        log "Could not enable EPEL, continuing anyway" "WARN"
+}
+
+install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
+install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi

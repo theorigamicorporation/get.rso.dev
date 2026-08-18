@@ -143,6 +143,12 @@ get_latest_version() {
     elif command -v wget >/dev/null 2>&1; then
         _latest=$(wget --spider -S "$_releases_url" 2>&1 | grep -i '^ *Location:' | tail -1 | sed 's|.*/tag/||; s/[[:space:]]*$//')
     fi
+    # A renamed repo redirects to /releases/latest with no /tag/ component, leaving
+    # the whole header line behind. Discard anything that is not tag-shaped so the
+    # API fallback below still runs.
+    case "$_latest" in
+        *[!A-Za-z0-9._+-]*) _latest="" ;;
+    esac
     if [ -z "$_latest" ]; then
         _api_url="https://api.github.com/repos/${GITHUB_REPO}/releases/latest"
         if command -v curl >/dev/null 2>&1; then
@@ -255,6 +261,21 @@ install_via_github_release() {
     elif command -v wget >/dev/null 2>&1; then
         wget -q -O "${_tmp_dir}/${_asset}" "$_download_url"
     fi
+
+    # tmate ships .tar.xz and tar shells out to the xz binary, which minimal
+    # images (Rocky, Amazon Linux) do not include.
+    if ! command -v xz >/dev/null 2>&1; then
+        log "xz not found, installing it first..." "INFO"
+        ensure_sudo
+        if command -v apt-get >/dev/null 2>&1; then
+            $_SUDO_CMD apt-get update -qq && $_SUDO_CMD apt-get install -y -qq xz-utils
+        elif command -v dnf >/dev/null 2>&1; then
+            $_SUDO_CMD dnf install -y -q xz
+        elif command -v yum >/dev/null 2>&1; then
+            $_SUDO_CMD yum install -y -q xz
+        fi
+    fi
+    command -v xz >/dev/null 2>&1 || { log "xz is required to extract $_asset" "ERR"; exit 1; }
 
     tar -xJf "${_tmp_dir}/${_asset}" -C "$_tmp_dir"
     _binary=$(find "$_tmp_dir" -name "tmate" -type f | head -1)

@@ -140,9 +140,14 @@ ensure_sudo() {
 }
 
 resolve_tool_cmd() {
-    if command -v easyrsa >/dev/null 2>&1; then TOOL_CMD="easyrsa"
-    elif [ -x /usr/share/easy-rsa/easyrsa ]; then TOOL_CMD="/usr/share/easy-rsa/easyrsa"
-    fi
+    if command -v easyrsa >/dev/null 2>&1; then TOOL_CMD="easyrsa"; return; fi
+    if [ -x /usr/share/easy-rsa/easyrsa ]; then TOOL_CMD="/usr/share/easy-rsa/easyrsa"; return; fi
+    # EL installs into a version-numbered directory, e.g.
+    # /usr/share/easy-rsa/3.2.5/easyrsa
+    for _candidate in /usr/share/easy-rsa/*/easyrsa; do
+        [ -x "$_candidate" ] && { TOOL_CMD="$_candidate"; return 0; }
+    done
+    return 0
 }
 
 check_existing_install() {
@@ -228,15 +233,32 @@ install_via_apt() {
     $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
 }
 
+ensure_epel() {
+    # EL ships only a subset of packages; the rest live in EPEL. Add the repo
+    # only when the package is genuinely missing from the enabled repos, and
+    # never on Amazon Linux, which does not use EPEL.
+    [ "$_DISTRO_FAMILY" = "rhel" ] || return 0
+    _epel_pkg="$1"
+    _epel_mgr="yum"
+    command -v dnf >/dev/null 2>&1 && _epel_mgr="dnf"
+    $_epel_mgr list --available "$_epel_pkg" >/dev/null 2>&1 && return 0
+    $_epel_mgr list --installed "$_epel_pkg" >/dev/null 2>&1 && return 0
+    log "$_epel_pkg not found in enabled repos, enabling EPEL..." "INFO"
+    $_SUDO_CMD $_epel_mgr install -y -q epel-release >/dev/null 2>&1 || \
+        log "Could not enable EPEL, continuing anyway" "WARN"
+}
+
 install_via_dnf() {
     log "Installing $TOOL_NAME via dnf..." "INFO"
     ensure_sudo
+    ensure_epel "$DNF_PKG"
     $_SUDO_CMD dnf install -y -q "$DNF_PKG"
 }
 
 install_via_yum() {
     log "Installing $TOOL_NAME via yum..." "INFO"
     ensure_sudo
+    ensure_epel "$DNF_PKG"
     $_SUDO_CMD yum install -y -q "$DNF_PKG"
 }
 

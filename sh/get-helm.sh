@@ -143,6 +143,12 @@ get_latest_version() {
     elif command -v wget >/dev/null 2>&1; then
         _latest=$(wget --spider -S "$_releases_url" 2>&1 | grep -i '^ *Location:' | tail -1 | sed 's|.*/tag/||; s/[[:space:]]*$//')
     fi
+    # A renamed repo redirects to /releases/latest with no /tag/ component, leaving
+    # the whole header line behind. Discard anything that is not tag-shaped so the
+    # API fallback below still runs.
+    case "$_latest" in
+        *[!A-Za-z0-9._+-]*) _latest="" ;;
+    esac
     if [ -z "$_latest" ]; then
         _api_url="https://api.github.com/repos/${GITHUB_REPO}/releases/latest"
         if command -v curl >/dev/null 2>&1; then
@@ -232,7 +238,9 @@ install_via_github_release() {
         *)     log "Unsupported arch for github-release: $_ARCH" "ERR"; exit 1 ;;
     esac
 
-    _download_url="https://github.com/${GITHUB_REPO}/releases/download/${_version}/${_asset}"
+    # helm does not attach binaries to its GitHub releases; they are published
+    # to get.helm.sh, so the tag lookup stays on GitHub but the download does not.
+    _download_url="https://get.helm.sh/${_asset}"
     log "Downloading ${_asset} (${_version})..." "INFO"
 
     _tmp_dir=$(mktemp -d)

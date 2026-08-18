@@ -459,9 +459,9 @@ Open-source remote desktop with self-hosted server option
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** remote, desktop, rustdesk, self-hosted, screen-sharing
-**Hash:** `b598b9ea1e3b`
+**Hash:** `f52be04dd6ce`
 
-<!-- tests:get-rustdesk hash:b598b9ea1e3b amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-rustdesk hash:f52be04dd6ce -->
 
 ```bash
 wget -qO- get.rso.dev/get-rustdesk | sh

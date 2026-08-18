@@ -21,8 +21,6 @@ SCRIPT_NAME="GET RUSTDESK"
 TOOL_NAME="rustdesk"
 TOOL_CMD="rustdesk"
 GITHUB_REPO="rustdesk/rustdesk"
-INSTALL_DIR="/usr/local/bin"
-FALLBACK_DIR="${HOME}/.local/bin"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -221,43 +219,75 @@ install_via_github_release() {
     [ -z "$_version" ] && { log "Could not determine latest version" "ERR"; exit 1; }
     _version_num=$(printf '%s' "$_version" | sed 's/^v//')
 
-    case "$_ARCH" in
-        amd64) _asset="rustdesk-${_version_num}-x86_64.deb" ;;
-        arm64) _asset="rustdesk-${_version_num}-aarch64.deb" ;;
-        *)     log "Unsupported arch for github-release: $_ARCH" "ERR"; exit 1 ;;
+    # RustDesk ships packages, not a bare binary: a .deb for Debian-family and a .rpm for
+    # RHEL-family. Pick the one the machine's package manager can actually install.
+    # Note the differing shapes: rustdesk-1.4.9-x86_64.deb but rustdesk-1.4.9-0.x86_64.rpm.
+    case "$_DISTRO_FAMILY" in
+        debian)
+            case "$_ARCH" in
+                amd64) _asset="rustdesk-${_version_num}-x86_64.deb" ;;
+                arm64) _asset="rustdesk-${_version_num}-aarch64.deb" ;;
+                *)     log "Unsupported arch for github-release: $_ARCH" "ERR"; exit 1 ;;
+            esac ;;
+        rhel)
+            case "$_ARCH" in
+                amd64) _asset="rustdesk-${_version_num}-0.x86_64.rpm" ;;
+                arm64) _asset="rustdesk-${_version_num}-0.aarch64.rpm" ;;
+                *)     log "Unsupported arch for github-release: $_ARCH" "ERR"; exit 1 ;;
+            esac ;;
+        *)
+            log "Unsupported distro family for github-release: $_DISTRO_FAMILY" "ERR"; exit 1 ;;
     esac
 
     _download_url="https://github.com/${GITHUB_REPO}/releases/download/${_version}/${_asset}"
     log "Downloading ${_asset} (${_version})..." "INFO"
 
-    _tmp_dir=$(mktemp -d)
-    trap 'rm -rf "$_tmp_dir"' EXIT
+    _tmp_file=$(mktemp)
+    trap 'rm -f "$_tmp_file"' EXIT
 
     if command -v curl >/dev/null 2>&1; then
-        curl -fSL -o "${_tmp_dir}/${_asset}" "$_download_url"
+        curl -fSL -o "$_tmp_file" "$_download_url"
     elif command -v wget >/dev/null 2>&1; then
-        wget -q -O "${_tmp_dir}/${_asset}" "$_download_url"
-    fi
-
-    _binary="${_tmp_dir}/${_asset}"
-    chmod +x "$_binary"
-
-    if [ "$(id -u)" -eq 0 ]; then
-        mv "$_binary" "${INSTALL_DIR}/${TOOL_CMD}"
-    elif command -v sudo >/dev/null 2>&1; then
-        sudo mv "$_binary" "${INSTALL_DIR}/${TOOL_CMD}"
+        wget -q -O "$_tmp_file" "$_download_url"
     else
-        mkdir -p "$FALLBACK_DIR"
-        mv "$_binary" "${FALLBACK_DIR}/${TOOL_CMD}"
-        log "Installed to ${FALLBACK_DIR}/${TOOL_CMD}" "WARN"
+        log "Neither curl nor wget available" "ERR"; exit 1
     fi
-    trap - EXIT; rm -rf "$_tmp_dir"
+
+    ensure_sudo
+
+    # Hand the package to the package manager. Installing it as though it were a binary
+    # (mv to /usr/local/bin) leaves an archive on $PATH that `command -v` is happy with and
+    # that cannot run -- which is what this used to do.
+    case "$_DISTRO_FAMILY" in
+        debian)
+            $_SUDO_CMD dpkg -i "$_tmp_file" || $_SUDO_CMD apt-get install -f -y -qq ;;
+        rhel)
+            if command -v dnf >/dev/null 2>&1; then
+                $_SUDO_CMD dnf install -y -q "$_tmp_file"
+            else
+                $_SUDO_CMD yum install -y -q "$_tmp_file"
+            fi ;;
+    esac
+
+    trap - EXIT; rm -f "$_tmp_file"
 }
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
         log "$TOOL_NAME installation could not be verified." "ERR"; exit 1
     fi
+
+    # `command -v` only proves a file is there and executable, which a downloaded package
+    # dropped on $PATH would also satisfy. Confirm the package manager actually registered
+    # an installation.
+    if command -v dpkg >/dev/null 2>&1; then
+        dpkg -s "$TOOL_NAME" >/dev/null 2>&1 || {
+            log "$TOOL_NAME is on PATH but no package is installed" "ERR"; exit 1; }
+    elif command -v rpm >/dev/null 2>&1; then
+        rpm -q "$TOOL_NAME" >/dev/null 2>&1 || {
+            log "$TOOL_NAME is on PATH but no package is installed" "ERR"; exit 1; }
+    fi
+
     _installed_version=$("$TOOL_CMD" --version 2>/dev/null | head -1 || true)
     log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
 }

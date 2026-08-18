@@ -9,17 +9,31 @@
 # @description Open-source note-taking and to-do application
 # @category Productivity Tools
 # @tags notes, todo, markdown, sync, joplin
-# @supported Ubuntu, Debian, Mint
-# @methods apt, dnf, yum
+# @supported Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
+# @methods script
 # @verify command -v joplin-desktop
+# @prereqs curl|wget, bash
+# =============================================================================
+#
+# Joplin publishes no apt or dnf package -- upstream ships an AppImage and an
+# install script. This script used to `apt-get install joplin`, which fails on
+# every supported distro because no such package exists in their repositories.
+#
+# The official installer is per-user by design: it drops the AppImage in
+# ~/.joplin and a desktop entry in ~/.local/share/applications, so running it as
+# root would install Joplin for root and nobody else. When run as root here it is
+# pointed at /opt/joplin instead and given a system-wide desktop entry and
+# launcher, so one install serves every user on the machine -- which is what a
+# managed workstation needs. Run as an ordinary user, it keeps upstream's
+# per-user behaviour.
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET JOPLIN"
 
 TOOL_NAME="joplin"
 TOOL_CMD="joplin-desktop"
-APT_PKG="joplin"
-DNF_PKG="joplin"
+UPSTREAM_INSTALLER="https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh"
+SYSTEM_INSTALL_DIR="/opt/joplin"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -111,16 +125,9 @@ check_existing_install() {
 
 detect_available_methods() {
     _AVAILABLE_METHODS=""; _count=0
-    if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1; then
-        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt
+    if command -v curl >/dev/null 2>&1 || command -v wget >/dev/null 2>&1; then
+        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:script:Install via the official Joplin installer (AppImage)
 "
-    fi
-    if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
-        if command -v dnf >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf
-"
-        elif command -v yum >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum
-"
-        fi
     fi
     if [ -z "$_AVAILABLE_METHODS" ]; then log "No install methods available." "ERR"; exit 1; fi
 }
@@ -131,28 +138,127 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
-ensure_epel() {
-    # EL ships only a subset of packages; the rest live in EPEL. Add the repo
-    # only when the package is genuinely missing from the enabled repos, and
-    # never on Amazon Linux, which does not use EPEL.
-    [ "$_DISTRO_FAMILY" = "rhel" ] || return 0
-    _epel_pkg="$1"
-    _epel_mgr="yum"
-    command -v dnf >/dev/null 2>&1 && _epel_mgr="dnf"
-    $_epel_mgr list --available "$_epel_pkg" >/dev/null 2>&1 && return 0
-    $_epel_mgr list --installed "$_epel_pkg" >/dev/null 2>&1 && return 0
-    log "$_epel_pkg not found in enabled repos, enabling EPEL..." "INFO"
-    $_SUDO_CMD $_epel_mgr install -y -q epel-release >/dev/null 2>&1 || \
-        log "Could not enable EPEL, continuing anyway" "WARN"
+# The AppImage needs FUSE to run. Absent it the install still succeeds and the
+# application fails to start later, which is a miserable thing to debug, so make a
+# best effort here and warn rather than fail.
+ensure_appimage_runtime() {
+    [ "$_DISTRO_FAMILY" = "debian" ] || return 0
+    command -v apt-get >/dev/null 2>&1 || return 0
+    if [ -e /usr/lib/x86_64-linux-gnu/libfuse.so.2 ] || [ -e /usr/lib/aarch64-linux-gnu/libfuse.so.2 ]; then
+        return 0
+    fi
+    log "Installing FUSE, needed to run AppImages..." "INFO"
+    $_SUDO_CMD apt-get update -qq >/dev/null 2>&1 || true
+    $_SUDO_CMD apt-get install -y -qq libfuse2t64 >/dev/null 2>&1 \
+        || $_SUDO_CMD apt-get install -y -qq libfuse2 >/dev/null 2>&1 \
+        || log "Could not install FUSE; Joplin may not start until it is present" "WARN"
 }
 
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
+fetch_upstream_installer() {
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL "$UPSTREAM_INSTALLER"
+    elif command -v wget >/dev/null 2>&1; then
+        wget -qO- "$UPSTREAM_INSTALLER"
+    else
+        log "Neither curl nor wget available" "ERR"; exit 1
+    fi
+}
+
+# Upstream writes a launcher and icon under the invoking user's home. For a
+# system-wide install those have to be recreated somewhere every user can see.
+install_system_wide_launcher() {
+    log "Creating system-wide launcher and desktop entry..." "INFO"
+
+    $_SUDO_CMD chmod -R a+rX "$SYSTEM_INSTALL_DIR"
+
+    _wrapper=/usr/local/bin/joplin-desktop
+    printf '%s\n' '#!/bin/sh' \
+        'exec env APPIMAGELAUNCHER_DISABLE=TRUE /opt/joplin/Joplin.AppImage --no-sandbox "$@"' \
+        | $_SUDO_CMD tee "$_wrapper" >/dev/null
+    $_SUDO_CMD chmod 0755 "$_wrapper"
+
+    # Upstream downloads the icon into the installing user's home; move it somewhere
+    # shared if it is there, and carry on without it if it is not.
+    if [ -f "${HOME}/.local/share/icons/hicolor/512x512/apps/joplin.png" ]; then
+        $_SUDO_CMD mkdir -p /usr/share/icons/hicolor/512x512/apps
+        $_SUDO_CMD cp "${HOME}/.local/share/icons/hicolor/512x512/apps/joplin.png" \
+            /usr/share/icons/hicolor/512x512/apps/joplin.png
+    fi
+
+    $_SUDO_CMD mkdir -p /usr/share/applications
+    printf '%s\n' \
+        '[Desktop Entry]' \
+        'Encoding=UTF-8' \
+        'Name=Joplin' \
+        'Comment=Joplin for Desktop' \
+        'Exec=/usr/local/bin/joplin-desktop %u' \
+        'Icon=joplin' \
+        'StartupWMClass=Joplin' \
+        'Type=Application' \
+        'Categories=Office;' \
+        'MimeType=x-scheme-handler/joplin;' \
+        | $_SUDO_CMD tee /usr/share/applications/joplin.desktop >/dev/null
+
+    command -v update-desktop-database >/dev/null 2>&1 \
+        && $_SUDO_CMD update-desktop-database /usr/share/applications >/dev/null 2>&1 || true
+}
+
+# A per-user install leaves nothing called joplin-desktop on PATH, so give the
+# user one for parity with the system-wide install.
+install_user_launcher() {
+    _bin_dir="${HOME}/.local/bin"
+    mkdir -p "$_bin_dir"
+    printf '%s\n' '#!/bin/sh' \
+        "exec env APPIMAGELAUNCHER_DISABLE=TRUE \"${HOME}/.joplin/Joplin.AppImage\" --no-sandbox \"\$@\"" \
+        > "${_bin_dir}/joplin-desktop"
+    chmod 0755 "${_bin_dir}/joplin-desktop"
+    case ":${PATH}:" in
+        *":${_bin_dir}:"*) ;;
+        *) log "${_bin_dir} is not on PATH; add it to run joplin-desktop by name" "WARN" ;;
+    esac
+}
+
+install_via_script() {
+    log "Installing $TOOL_NAME via the official installer..." "INFO"
+    command -v bash >/dev/null 2>&1 || { log "bash is required by the official installer" "ERR"; exit 1; }
+
+    ensure_sudo
+    ensure_appimage_runtime
+
+    _args="--silent"
+    [ "$OPT_FORCE" = true ] && _args="$_args --force"
+
+    if [ "$(id -u)" -eq 0 ]; then
+        # Root: install once, for everyone, outside any home directory.
+        log "Running as root: installing system-wide into $SYSTEM_INSTALL_DIR" "INFO"
+        # NOTE: upstream parses long options with getopts, so the value must be
+        # attached with `=`. Passed as a separate word it is silently ignored and the
+        # AppImage lands in / instead.
+        fetch_upstream_installer | bash -s -- $_args --allow-root --install-dir="$SYSTEM_INSTALL_DIR"
+        install_system_wide_launcher
+    else
+        log "Installing for the current user only (~/.joplin)" "INFO"
+        fetch_upstream_installer | bash -s -- $_args
+        install_user_launcher
+    fi
+}
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
-    log "$TOOL_NAME installed successfully" "INFO"
+
+    # The launcher is a wrapper, so check the AppImage it points at is really there
+    # rather than trusting that a file exists on PATH.
+    if [ "$(id -u)" -eq 0 ]; then
+        [ -x "${SYSTEM_INSTALL_DIR}/Joplin.AppImage" ] || {
+            log "joplin-desktop exists but ${SYSTEM_INSTALL_DIR}/Joplin.AppImage does not" "ERR"; exit 1; }
+        _installed_version=$(cat "${SYSTEM_INSTALL_DIR}/VERSION" 2>/dev/null || true)
+    else
+        [ -x "${HOME}/.joplin/Joplin.AppImage" ] || {
+            log "joplin-desktop exists but ${HOME}/.joplin/Joplin.AppImage does not" "ERR"; exit 1; }
+        _installed_version=$(cat "${HOME}/.joplin/VERSION" 2>/dev/null || true)
+    fi
+
+    log "$TOOL_NAME installed successfully: ${_installed_version:-unknown version}" "INFO"
 }
 
 set -e
@@ -165,7 +271,7 @@ main() {
     elif [ "$OPT_INTERACTIVE" = true ]; then _method=$(run_menu)
     else _method=$(get_default_method); fi
     log "Using install method: $_method" "INFO"
-    case "$_method" in apt) install_via_apt ;; dnf) install_via_dnf ;; yum) install_via_yum ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
+    case "$_method" in script) install_via_script ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
     verify_install
 }
 

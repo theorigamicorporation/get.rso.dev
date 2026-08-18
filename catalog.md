@@ -11,7 +11,7 @@ High-compression file archiver supporting multiple formats
 **Tags:** archive, compression, 7zip, 7z, zip, rar
 **Hash:** `6c655d3cd982`
 
-<!-- tests:get-7zip hash:6c655d3cd982 -->
+<!-- tests:get-7zip hash:6c655d3cd982 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-7zip | sh
@@ -47,7 +47,7 @@ High-quality block-sorting file compressor
 **Tags:** compression, archive, bzip2, bz2
 **Hash:** `b396586547f5`
 
-<!-- tests:get-bzip2 hash:b396586547f5 -->
+<!-- tests:get-bzip2 hash:b396586547f5 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-bzip2 | sh
@@ -83,7 +83,7 @@ Extraction utility for ZIP archives
 **Tags:** archive, zip, extract, decompress
 **Hash:** `4bcc3a30596f`
 
-<!-- tests:get-unzip hash:4bcc3a30596f -->
+<!-- tests:get-unzip hash:4bcc3a30596f rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-unzip | sh
@@ -122,7 +122,7 @@ Google Chrome web browser
 **Tags:** browser, chrome, google, web
 **Hash:** `d4680b85f676`
 
-<!-- tests:get-google-chrome hash:d4680b85f676 -->
+<!-- tests:get-google-chrome hash:d4680b85f676 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-google-chrome | sh
@@ -160,7 +160,7 @@ Sync client for Nextcloud self-hosted cloud storage
 **Tags:** cloud, sync, storage, nextcloud, self-hosted
 **Hash:** `4f18e9b416bd`
 
-<!-- tests:get-nextcloud-client hash:4f18e9b416bd -->
+<!-- tests:get-nextcloud-client hash:4f18e9b416bd rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-nextcloud-client | sh
@@ -199,7 +199,7 @@ Open-source team messaging and collaboration platform
 **Tags:** chat, messaging, team, collaboration, slack-alternative
 **Hash:** `f096ba18bfc2`
 
-<!-- tests:get-mattermost hash:f096ba18bfc2 -->
+<!-- tests:get-mattermost hash:f096ba18bfc2 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-mattermost | sh
@@ -226,45 +226,6 @@ wget -qO- get.rso.dev/get-mattermost | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-mattermost | sh -s -- --update
 ```
 
-## Containers & Virtualisation
-
-### get-docker
-
-Container platform for building and running applications
-
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
-**Methods:** apt, dnf, yum
-**Prereqs:** curl|wget, gpg
-**Tags:** docker, containers, oci, devops
-**Hash:** `b745115acb3e`
-
-<!-- tests:get-docker hash:b745115acb3e -->
-
-```bash
-wget -qO- get.rso.dev/get-docker | sh
-# alt: curl -sL get.rso.dev/get-docker | sh
-```
-
-**Options:**
-
-| Flag | Description |
-|------|-------------|
-| `-i`, `--interactive` | Show interactive menu to pick install method |
-| `-m`, `--method=METHOD` | Use a specific install method |
-| `-u`, `--update` | Update to latest version if already installed |
-| `-f`, `--force` | Force reinstall regardless of current version |
-| `-h`, `--help` | Show help message |
-
-```bash
-# Install via specific method
-wget -qO- get.rso.dev/get-docker | sh -s -- --method=github-release
-# alt: curl -sL get.rso.dev/get-docker | sh -s -- --method=github-release
-
-# Update existing install
-wget -qO- get.rso.dev/get-docker | sh -s -- --update
-# alt: curl -sL get.rso.dev/get-docker | sh -s -- --update
-```
-
 ## Container Tools
 
 ### get-podman
@@ -276,7 +237,7 @@ Daemonless container engine compatible with Docker
 **Tags:** container, docker, podman, oci, rootless
 **Hash:** `ea0097099111`
 
-<!-- tests:get-podman hash:ea0097099111 amazonlinux-2023:fail debian-12:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-podman hash:44651fbb2b91 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-podman | sh
@@ -313,13 +274,13 @@ Container platform for building and running applications
 **Methods:** apt, dnf, yum
 **Prereqs:** curl|wget, gpg
 **Tags:** docker, containers, oci, devops
-**Hash:** `cc56a304dd0a`
+**Hash:** `b745115acb3e`
 
-<!-- tests:get-docker hash:cc56a304dd0a amazonlinux-2023:fail debian-12:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-docker hash:b745115acb3e rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-docker | sh
-# alt: curl -s get.rso.dev/get-docker | sh
+# alt: curl -sL get.rso.dev/get-docker | sh
 ```
 
 **Options:**
@@ -335,11 +296,11 @@ wget -qO- get.rso.dev/get-docker | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-docker | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-docker | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-docker | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-docker | sh -s -- --update
-# alt: curl -s get.rso.dev/get-docker | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-docker | sh -s -- --update
 ```
 
 ## Database Tools
@@ -353,7 +314,7 @@ Lightweight embedded SQL database engine
 **Tags:** database, sql, sqlite, embedded, cli
 **Hash:** `77e00b6a5e07`
 
-<!-- tests:get-sqlite3 hash:77e00b6a5e07 -->
+<!-- tests:get-sqlite3 hash:77e00b6a5e07 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-sqlite3 | sh
@@ -391,7 +352,7 @@ Advanced clipboard manager with editing and scripting
 **Tags:** clipboard, copy, paste, manager, copyq
 **Hash:** `538469e4a465`
 
-<!-- tests:get-copyq hash:538469e4a465 -->
+<!-- tests:get-copyq hash:538469e4a465 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-copyq | sh
@@ -427,7 +388,7 @@ Powerful screenshot tool with annotation support
 **Tags:** screenshot, capture, annotation, screen, flameshot
 **Hash:** `7bf472878980`
 
-<!-- tests:get-flameshot hash:7bf472878980 -->
+<!-- tests:get-flameshot hash:7bf472878980 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-flameshot | sh
@@ -463,7 +424,7 @@ Remote desktop client supporting RDP, VNC, SSH
 **Tags:** remote, desktop, rdp, vnc, ssh, remmina
 **Hash:** `c3f87759b8bd`
 
-<!-- tests:get-remmina hash:c3f87759b8bd -->
+<!-- tests:get-remmina hash:c3f87759b8bd rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-remmina | sh
@@ -500,7 +461,7 @@ Open-source remote desktop with self-hosted server option
 **Tags:** remote, desktop, rustdesk, self-hosted, screen-sharing
 **Hash:** `5f1ac627705e`
 
-<!-- tests:get-rustdesk hash:5f1ac627705e -->
+<!-- tests:get-rustdesk hash:5f1ac627705e rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-rustdesk | sh
@@ -536,7 +497,7 @@ Command-line clipboard utility for X11
 **Tags:** clipboard, copy, paste, x11, xclip
 **Hash:** `db0407fa4bd7`
 
-<!-- tests:get-xclip hash:db0407fa4bd7 -->
+<!-- tests:get-xclip hash:db0407fa4bd7 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-xclip | sh
@@ -576,7 +537,7 @@ Extendable version manager for multiple runtimes
 **Tags:** version-manager, asdf, runtime, node, python, ruby
 **Hash:** `14b574e4c835`
 
-<!-- tests:get-asdf hash:14b574e4c835 amazonlinux-2023:fail debian-12:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-asdf hash:2a7e08fa8e4d rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-asdf | sh
@@ -613,7 +574,7 @@ Anthropic's official CLI for Claude — AI-powered coding assistant
 **Tags:** ai, claude, anthropic, cli, coding, assistant, llm
 **Hash:** `3bf2ef7e5ead`
 
-<!-- tests:get-claude-code hash:3bf2ef7e5ead -->
+<!-- tests:get-claude-code hash:3bf2ef7e5ead rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-claude-code | sh
@@ -650,7 +611,7 @@ Clone all repos from a GitHub/GitLab/Bitbucket org
 **Tags:** git, clone, github, gitlab, organization, backup
 **Hash:** `4fa804c5634f`
 
-<!-- tests:get-ghorg hash:4fa804c5634f -->
+<!-- tests:get-ghorg hash:4fa804c5634f rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-ghorg | sh
@@ -677,43 +638,6 @@ wget -qO- get.rso.dev/get-ghorg | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-ghorg | sh -s -- --update
 ```
 
-### get-gitlab-cli
-
-Official command-line tool for GitLab
-
-**Supported:** All Linux distributions
-**Methods:** apt, snap, github-release
-**Prereqs:** curl|wget
-**Tags:** gitlab, git, cli, merge-request, pipeline, glab
-**Hash:** `56865ab2566d`
-
-<!-- tests:get-gitlab-cli hash:56865ab2566d -->
-
-```bash
-wget -qO- get.rso.dev/get-gitlab-cli | sh
-# alt: curl -sL get.rso.dev/get-gitlab-cli | sh
-```
-
-**Options:**
-
-| Flag | Description |
-|------|-------------|
-| `-i`, `--interactive` | Show interactive menu to pick install method |
-| `-m`, `--method=METHOD` | Use a specific install method |
-| `-u`, `--update` | Update to latest version if already installed |
-| `-f`, `--force` | Force reinstall regardless of current version |
-| `-h`, `--help` | Show help message |
-
-```bash
-# Install via specific method
-wget -qO- get.rso.dev/get-gitlab-cli | sh -s -- --method=github-release
-# alt: curl -sL get.rso.dev/get-gitlab-cli | sh -s -- --method=github-release
-
-# Update existing install
-wget -qO- get.rso.dev/get-gitlab-cli | sh -s -- --update
-# alt: curl -sL get.rso.dev/get-gitlab-cli | sh -s -- --update
-```
-
 ### get-git
 
 Distributed version control system
@@ -723,7 +647,7 @@ Distributed version control system
 **Tags:** git, vcs, version-control, scm
 **Hash:** `1b6afb69988c`
 
-<!-- tests:get-git hash:1b6afb69988c -->
+<!-- tests:get-git hash:1b6afb69988c rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-git | sh
@@ -750,6 +674,43 @@ wget -qO- get.rso.dev/get-git | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-git | sh -s -- --update
 ```
 
+### get-gitlab-cli
+
+Official command-line tool for GitLab
+
+**Supported:** All Linux distributions
+**Methods:** apt, snap, github-release
+**Prereqs:** curl|wget
+**Tags:** gitlab, git, cli, merge-request, pipeline, glab
+**Hash:** `56865ab2566d`
+
+<!-- tests:get-gitlab-cli hash:56865ab2566d rockylinux-rockylinux-10:fail -->
+
+```bash
+wget -qO- get.rso.dev/get-gitlab-cli | sh
+# alt: curl -sL get.rso.dev/get-gitlab-cli | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-gitlab-cli | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-gitlab-cli | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-gitlab-cli | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-gitlab-cli | sh -s -- --update
+```
+
 ### get-golang
 
 Fast statically typed compiled language by Google
@@ -759,7 +720,7 @@ Fast statically typed compiled language by Google
 **Tags:** go, golang, programming, language, compiler
 **Hash:** `f177acac4968`
 
-<!-- tests:get-golang hash:f177acac4968 -->
+<!-- tests:get-golang hash:f177acac4968 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-golang | sh
@@ -796,7 +757,7 @@ Command runner for project-specific tasks (justfile)
 **Tags:** just, justfile, task-runner, command-runner, make
 **Hash:** `5881a451939b`
 
-<!-- tests:get-just hash:5881a451939b -->
+<!-- tests:get-just hash:5881a451939b rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-just | sh
@@ -834,7 +795,7 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
 **Hash:** `f666707c485e`
 
-<!-- tests:get-rustup hash:f666707c485e -->
+<!-- tests:get-rustup hash:f666707c485e rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-rustup | sh
@@ -871,7 +832,7 @@ Visual Studio Code editor
 **Tags:** editor, ide, vscode, microsoft, code
 **Hash:** `a5b31014864f`
 
-<!-- tests:get-vscode hash:a5b31014864f -->
+<!-- tests:get-vscode hash:a5b31014864f rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-vscode | sh
@@ -910,7 +871,7 @@ Modern and intuitive terminal-based text editor
 **Tags:** editor, text, terminal, modern, micro
 **Hash:** `78d3509350d3`
 
-<!-- tests:get-micro hash:78d3509350d3 -->
+<!-- tests:get-micro hash:78d3509350d3 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-micro | sh
@@ -946,7 +907,7 @@ Simple and easy terminal text editor
 **Tags:** editor, text, terminal, nano
 **Hash:** `4d7daec16cd0`
 
-<!-- tests:get-nano hash:4d7daec16cd0 -->
+<!-- tests:get-nano hash:4d7daec16cd0 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-nano | sh
@@ -984,7 +945,7 @@ exFAT filesystem support for Linux
 **Tags:** filesystem, exfat, usb, sdcard, mount
 **Hash:** `77ed6ca39cb4`
 
-<!-- tests:get-exfat hash:77ed6ca39cb4 -->
+<!-- tests:get-exfat hash:77ed6ca39cb4 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-exfat | sh
@@ -1020,7 +981,7 @@ NFS client support for mounting remote filesystems
 **Tags:** nfs, mount, network, filesystem, share
 **Hash:** `2416dbeb17aa`
 
-<!-- tests:get-nfs-common hash:2416dbeb17aa -->
+<!-- tests:get-nfs-common hash:2416dbeb17aa rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-nfs-common | sh
@@ -1057,7 +1018,7 @@ Sync files to and from cloud storage
 **Tags:** cloud, sync, storage, s3, gdrive, backup, rclone
 **Hash:** `009bc1fc1b2e`
 
-<!-- tests:get-rclone hash:009bc1fc1b2e -->
+<!-- tests:get-rclone hash:009bc1fc1b2e rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-rclone | sh
@@ -1093,7 +1054,7 @@ Fast and versatile file synchronization tool
 **Tags:** sync, copy, backup, transfer, rsync
 **Hash:** `3faec2a1cda1`
 
-<!-- tests:get-rsync hash:3faec2a1cda1 -->
+<!-- tests:get-rsync hash:3faec2a1cda1 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-rsync | sh
@@ -1131,7 +1092,7 @@ Agentless IT automation and configuration management
 **Tags:** ansible, automation, configuration, devops, iac
 **Hash:** `57c13cd4c1ab`
 
-<!-- tests:get-ansible hash:57c13cd4c1ab -->
+<!-- tests:get-ansible hash:57c13cd4c1ab rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-ansible | sh
@@ -1168,7 +1129,7 @@ Build automated machine images for multiple platforms
 **Tags:** packer, images, ami, hashicorp, automation
 **Hash:** `873efb1c9c83`
 
-<!-- tests:get-packer hash:873efb1c9c83 amazonlinux-2023:fail debian-12:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-packer hash:154d3523ceee rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-packer | sh
@@ -1205,7 +1166,7 @@ Infrastructure as Code tool for provisioning cloud resources
 **Tags:** iac, terraform, cloud, provisioning, hashicorp
 **Hash:** `e80114161e2c`
 
-<!-- tests:get-terraform hash:e80114161e2c -->
+<!-- tests:get-terraform hash:e80114161e2c rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-terraform | sh
@@ -1242,7 +1203,7 @@ Thin wrapper for Terraform that provides extra tools for working with multiple m
 **Tags:** iac, terraform, terragrunt, cloud, provisioning, gruntwork
 **Hash:** `6195f22105eb`
 
-<!-- tests:get-terragrunt hash:6195f22105eb -->
+<!-- tests:get-terragrunt hash:6195f22105eb rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-terragrunt | sh
@@ -1278,7 +1239,7 @@ Build and manage virtualized development environments
 **Tags:** vagrant, vm, development, hashicorp
 **Hash:** `58e3bca572d4`
 
-<!-- tests:get-vagrant hash:58e3bca572d4 amazonlinux-2023:skip debian-12:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-vagrant hash:d54a676e3cd4 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-vagrant | sh
@@ -1317,7 +1278,7 @@ Lightweight command-line JSON processor
 **Tags:** json, parser, filter, query, cli
 **Hash:** `0dbc69deb104`
 
-<!-- tests:get-jq hash:0dbc69deb104 -->
+<!-- tests:get-jq hash:0dbc69deb104 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-jq | sh
@@ -1354,7 +1315,7 @@ Lightweight command-line YAML, JSON, and XML processor
 **Tags:** yaml, json, xml, parser, cli
 **Hash:** `2d71f7587353`
 
-<!-- tests:get-yq hash:2d71f7587353 -->
+<!-- tests:get-yq hash:2d71f7587353 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-yq | sh
@@ -1393,7 +1354,7 @@ Kubernetes command-line tool for managing clusters
 **Tags:** kubectl, kubernetes, k8s, cluster, devops
 **Hash:** `5f25e28143d3`
 
-<!-- tests:get-kubectl hash:5f25e28143d3 -->
+<!-- tests:get-kubectl hash:5f25e28143d3 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-kubectl | sh
@@ -1471,7 +1432,7 @@ CLI for Argo CD GitOps continuous delivery
 **Tags:** kubernetes, k8s, argocd, gitops, cd
 **Hash:** `8ea977d63b7e`
 
-<!-- tests:get-argocd-cli hash:8ea977d63b7e -->
+<!-- tests:get-argocd-cli hash:8ea977d63b7e rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-argocd-cli | sh
@@ -1508,7 +1469,7 @@ CLI for installing and managing Cilium in Kubernetes
 **Tags:** kubernetes, k8s, cilium, networking, ebpf, cni
 **Hash:** `3a73b8b63158`
 
-<!-- tests:get-cilium-cli hash:3a73b8b63158 -->
+<!-- tests:get-cilium-cli hash:3a73b8b63158 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-cilium-cli | sh
@@ -1545,7 +1506,7 @@ Official CLI for Amazon EKS cluster management
 **Tags:** kubernetes, k8s, aws, eks, cluster, eksctl
 **Hash:** `4dbaf2cb4eb2`
 
-<!-- tests:get-eksctl hash:4dbaf2cb4eb2 -->
+<!-- tests:get-eksctl hash:4dbaf2cb4eb2 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-eksctl | sh
@@ -1582,7 +1543,7 @@ GitOps toolkit for Kubernetes continuous delivery
 **Tags:** kubernetes, k8s, gitops, flux, cd
 **Hash:** `11223e814df1`
 
-<!-- tests:get-flux hash:11223e814df1 -->
+<!-- tests:get-flux hash:11223e814df1 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-flux | sh
@@ -1619,7 +1580,7 @@ The package manager for Kubernetes
 **Tags:** kubernetes, k8s, helm, charts, package-manager
 **Hash:** `e5943a4e71e1`
 
-<!-- tests:get-helm hash:e5943a4e71e1 -->
+<!-- tests:get-helm hash:e5943a4e71e1 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-helm | sh
@@ -1656,7 +1617,7 @@ CLI for Hubble network observability in Kubernetes
 **Tags:** kubernetes, k8s, hubble, observability, networking
 **Hash:** `ba87da4fb667`
 
-<!-- tests:get-hubble-cli hash:ba87da4fb667 -->
+<!-- tests:get-hubble-cli hash:ba87da4fb667 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-hubble-cli | sh
@@ -1693,7 +1654,7 @@ Plugin manager for kubectl
 **Tags:** kubernetes, k8s, kubectl, plugins, krew
 **Hash:** `e0200df3ea93`
 
-<!-- tests:get-krew hash:e0200df3ea93 -->
+<!-- tests:get-krew hash:e0200df3ea93 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-krew | sh
@@ -1730,7 +1691,7 @@ CLI for Sealed Secrets encryption in Kubernetes
 **Tags:** kubernetes, k8s, secrets, encryption, sealed-secrets
 **Hash:** `98e33922e6d5`
 
-<!-- tests:get-kubeseal hash:98e33922e6d5 -->
+<!-- tests:get-kubeseal hash:98e33922e6d5 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-kubeseal | sh
@@ -1766,7 +1727,7 @@ Kubernetes IDE for managing clusters
 **Tags:** kubernetes, k8s, lens, ide, cluster, dashboard
 **Hash:** `bcff21b67bb2`
 
-<!-- tests:get-lens hash:bcff21b67bb2 -->
+<!-- tests:get-lens hash:bcff21b67bb2 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-lens | sh
@@ -1804,7 +1765,7 @@ Free and open-source streaming and recording software
 **Tags:** streaming, recording, obs, video, broadcast
 **Hash:** `29d770f93a07`
 
-<!-- tests:get-obs hash:29d770f93a07 -->
+<!-- tests:get-obs hash:29d770f93a07 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-obs | sh
@@ -1840,7 +1801,7 @@ Free and open-source cross-platform multimedia player
 **Tags:** video, audio, media, player, vlc, multimedia
 **Hash:** `575ae3f4ddfb`
 
-<!-- tests:get-vlc hash:575ae3f4ddfb -->
+<!-- tests:get-vlc hash:575ae3f4ddfb rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-vlc | sh
@@ -1878,7 +1839,7 @@ Automatically restart SSH sessions and tunnels
 **Tags:** ssh, tunnel, persistent, autossh
 **Hash:** `348bd2877a2d`
 
-<!-- tests:get-autossh hash:348bd2877a2d -->
+<!-- tests:get-autossh hash:348bd2877a2d rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-autossh | sh
@@ -1914,7 +1875,7 @@ Command-line tool for transferring data with URLs
 **Tags:** http, api, download, transfer, curl
 **Hash:** `3d9c0c04bdfb`
 
-<!-- tests:get-curl hash:3d9c0c04bdfb -->
+<!-- tests:get-curl hash:3d9c0c04bdfb rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-curl | sh
@@ -1950,7 +1911,7 @@ Query and control network device driver and hardware settings
 **Tags:** network, ethernet, driver, hardware, ethtool
 **Hash:** `a2c218abc5b1`
 
-<!-- tests:get-ethtool hash:a2c218abc5b1 -->
+<!-- tests:get-ethtool hash:a2c218abc5b1 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-ethtool | sh
@@ -1986,7 +1947,7 @@ TCP/IP packet assembler and analyzer
 **Tags:** network, packet, tcp, scan, hping
 **Hash:** `5ac31ba6ff3a`
 
-<!-- tests:get-hping3 hash:5ac31ba6ff3a -->
+<!-- tests:get-hping3 hash:5ac31ba6ff3a rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-hping3 | sh
@@ -2022,7 +1983,7 @@ Network reachability testing utility
 **Tags:** network, ping, icmp, diagnostic
 **Hash:** `726275c6ee76`
 
-<!-- tests:get-iputils-ping hash:726275c6ee76 -->
+<!-- tests:get-iputils-ping hash:726275c6ee76 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-iputils-ping | sh
@@ -2058,7 +2019,7 @@ Network diagnostic tool combining traceroute and ping
 **Tags:** network, traceroute, ping, diagnostic, mtr
 **Hash:** `4cc17d086fc6`
 
-<!-- tests:get-mtr hash:4cc17d086fc6 -->
+<!-- tests:get-mtr hash:4cc17d086fc6 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-mtr | sh
@@ -2094,7 +2055,7 @@ Classic networking utilities (ifconfig, netstat, route)
 **Tags:** network, ifconfig, netstat, route, arp
 **Hash:** `a32ed7eb3899`
 
-<!-- tests:get-net-tools hash:a32ed7eb3899 -->
+<!-- tests:get-net-tools hash:a32ed7eb3899 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-net-tools | sh
@@ -2130,7 +2091,7 @@ Real-time network traffic and bandwidth monitor
 **Tags:** network, bandwidth, monitor, traffic, nload
 **Hash:** `9a9e7550dfe5`
 
-<!-- tests:get-nload hash:9a9e7550dfe5 -->
+<!-- tests:get-nload hash:9a9e7550dfe5 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-nload | sh
@@ -2166,7 +2127,7 @@ Multipurpose relay for bidirectional data transfer
 **Tags:** relay, socket, proxy, tunnel, socat
 **Hash:** `522771deccad`
 
-<!-- tests:get-socat hash:522771deccad -->
+<!-- tests:get-socat hash:522771deccad rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-socat | sh
@@ -2202,7 +2163,7 @@ Command-line internet speed test
 **Tags:** speed, bandwidth, test, internet, network
 **Hash:** `3387f969e9d6`
 
-<!-- tests:get-speedtest-cli hash:3387f969e9d6 -->
+<!-- tests:get-speedtest-cli hash:3387f969e9d6 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-speedtest-cli | sh
@@ -2238,7 +2199,7 @@ Non-interactive SSH password authentication
 **Tags:** ssh, password, automation, sshpass
 **Hash:** `741b169dac3b`
 
-<!-- tests:get-sshpass hash:741b169dac3b -->
+<!-- tests:get-sshpass hash:741b169dac3b rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-sshpass | sh
@@ -2274,7 +2235,7 @@ Command-line packet analyzer for network traffic
 **Tags:** network, packet, capture, sniff, tcpdump
 **Hash:** `93d7cc6c0a5e`
 
-<!-- tests:get-tcpdump hash:93d7cc6c0a5e -->
+<!-- tests:get-tcpdump hash:93d7cc6c0a5e rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-tcpdump | sh
@@ -2310,7 +2271,7 @@ User interface to the TELNET protocol
 **Tags:** network, telnet, remote, protocol
 **Hash:** `f2ec8b3cdffc`
 
-<!-- tests:get-telnet hash:f2ec8b3cdffc -->
+<!-- tests:get-telnet hash:f2ec8b3cdffc rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-telnet | sh
@@ -2346,7 +2307,7 @@ Network file retriever via HTTP/HTTPS/FTP
 **Tags:** download, http, ftp, wget, transfer
 **Hash:** `93431746f991`
 
-<!-- tests:get-wget hash:93431746f991 -->
+<!-- tests:get-wget hash:93431746f991 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-wget | sh
@@ -2384,7 +2345,7 @@ Open-source note-taking and to-do application
 **Tags:** notes, todo, markdown, sync, joplin
 **Hash:** `bb43cedd50b9`
 
-<!-- tests:get-joplin hash:bb43cedd50b9 -->
+<!-- tests:get-joplin hash:bb43cedd50b9 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-joplin | sh
@@ -2420,7 +2381,7 @@ Free office suite compatible with Microsoft Office
 **Tags:** office, documents, spreadsheet, onlyoffice
 **Hash:** `f98294750ea6`
 
-<!-- tests:get-onlyoffice hash:f98294750ea6 -->
+<!-- tests:get-onlyoffice hash:f98294750ea6 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-onlyoffice | sh
@@ -2459,7 +2420,7 @@ Simple, fast alternative to find
 **Tags:** find, search, files, fast, fd, modern
 **Hash:** `da545fefa65b`
 
-<!-- tests:get-fd-find hash:da545fefa65b -->
+<!-- tests:get-fd-find hash:da545fefa65b rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-fd-find | sh
@@ -2496,7 +2457,7 @@ General-purpose command-line fuzzy finder
 **Tags:** fuzzy, search, filter, finder, interactive, fzf
 **Hash:** `df640aaa0ac9`
 
-<!-- tests:get-fzf hash:df640aaa0ac9 -->
+<!-- tests:get-fzf hash:df640aaa0ac9 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-fzf | sh
@@ -2533,7 +2494,7 @@ Extremely fast recursive text search tool
 **Tags:** grep, search, regex, fast, recursive, rg
 **Hash:** `157a1ee9c813`
 
-<!-- tests:get-ripgrep hash:157a1ee9c813 -->
+<!-- tests:get-ripgrep hash:157a1ee9c813 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-ripgrep | sh
@@ -2571,7 +2532,7 @@ Secure password manager and digital vault
 **Tags:** password, manager, security, vault, 1password
 **Hash:** `cf1022d5332e`
 
-<!-- tests:get-1password hash:cf1022d5332e -->
+<!-- tests:get-1password hash:cf1022d5332e rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-1password | sh
@@ -2607,7 +2568,7 @@ Open-source password manager
 **Tags:** password, manager, security, vault, bitwarden
 **Hash:** `50fc3011c706`
 
-<!-- tests:get-bitwarden hash:50fc3011c706 -->
+<!-- tests:get-bitwarden hash:50fc3011c706 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-bitwarden | sh
@@ -2643,7 +2604,7 @@ Common CA certificates for SSL/TLS verification
 **Tags:** ssl, tls, certificates, ca, trust
 **Hash:** `894d6655fa8c`
 
-<!-- tests:get-ca-certificates hash:894d6655fa8c -->
+<!-- tests:get-ca-certificates hash:894d6655fa8c rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-ca-certificates | sh
@@ -2679,7 +2640,7 @@ CLI utility to build and manage a PKI CA
 **Tags:** pki, ca, certificates, vpn, openvpn, easy-rsa
 **Hash:** `f72dbd83643c`
 
-<!-- tests:get-easy-rsa hash:f72dbd83643c -->
+<!-- tests:get-easy-rsa hash:f72dbd83643c rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-easy-rsa | sh
@@ -2715,7 +2676,7 @@ Transparent file encryption in Git repositories
 **Tags:** git, encryption, secrets, crypt, transparent
 **Hash:** `43f317457893`
 
-<!-- tests:get-git-crypt hash:43f317457893 -->
+<!-- tests:get-git-crypt hash:43f317457893 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-git-crypt | sh
@@ -2751,7 +2712,7 @@ GNU Privacy Guard for encryption and signing
 **Tags:** encryption, gpg, pgp, signing, privacy
 **Hash:** `8e0fd12e33da`
 
-<!-- tests:get-gnupg hash:8e0fd12e33da -->
+<!-- tests:get-gnupg hash:8e0fd12e33da rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-gnupg | sh
@@ -2787,7 +2748,7 @@ Cryptography toolkit for SSL/TLS protocols
 **Tags:** ssl, tls, crypto, certificates, encryption
 **Hash:** `f31787878d8c`
 
-<!-- tests:get-openssl hash:f31787878d8c -->
+<!-- tests:get-openssl hash:f31787878d8c rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-openssl | sh
@@ -2824,7 +2785,7 @@ Simple and flexible tool for managing encrypted secrets
 **Tags:** secrets, encryption, yaml, json, sops, mozilla
 **Hash:** `aea2b6412c1a`
 
-<!-- tests:get-sops hash:aea2b6412c1a -->
+<!-- tests:get-sops hash:aea2b6412c1a rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-sops | sh
@@ -2862,7 +2823,7 @@ OpenSSH server — secure remote access via SSH
 **Tags:** ssh, remote, server, network, openssh, sshd
 **Hash:** `0e9c6a21cd48`
 
-<!-- tests:get-openssh-server hash:0e9c6a21cd48 -->
+<!-- tests:get-openssh-server hash:0e9c6a21cd48 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-openssh-server | sh
@@ -2900,7 +2861,7 @@ HTTPS transport for APT package downloads
 **Tags:** apt, https, transport, security
 **Hash:** `a54c20ebd479`
 
-<!-- tests:get-apt-transport-https hash:a54c20ebd479 -->
+<!-- tests:get-apt-transport-https hash:a54c20ebd479 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-apt-transport-https | sh
@@ -2937,7 +2898,7 @@ Resource monitor with advanced CPU, memory, and process stats
 **Tags:** monitor, cpu, memory, process, system, btop
 **Hash:** `8f1ab4e59788`
 
-<!-- tests:get-btop hash:8f1ab4e59788 -->
+<!-- tests:get-btop hash:8f1ab4e59788 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-btop | sh
@@ -2973,7 +2934,7 @@ Interactive process viewer and system monitor
 **Tags:** monitor, process, system, top, htop
 **Hash:** `e56a56a27a61`
 
-<!-- tests:get-htop hash:e56a56a27a61 -->
+<!-- tests:get-htop hash:e56a56a27a61 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-htop | sh
@@ -3009,7 +2970,7 @@ I/O usage monitor for processes
 **Tags:** io, disk, monitor, process, iotop
 **Hash:** `5f88bfe6ea71`
 
-<!-- tests:get-iotop hash:5f88bfe6ea71 -->
+<!-- tests:get-iotop hash:5f88bfe6ea71 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-iotop | sh
@@ -3045,7 +3006,7 @@ FUSE library for AppImage and userspace filesystem support
 **Tags:** fuse, appimage, filesystem, userspace
 **Hash:** `574fe75affba`
 
-<!-- tests:get-libfuse2 hash:574fe75affba -->
+<!-- tests:get-libfuse2 hash:574fe75affba rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-libfuse2 | sh
@@ -3081,7 +3042,7 @@ System process monitoring utilities (ps, top, free, vmstat)
 **Tags:** process, monitor, ps, top, free, vmstat
 **Hash:** `b8601b31f685`
 
-<!-- tests:get-procps hash:b8601b31f685 -->
+<!-- tests:get-procps hash:b8601b31f685 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-procps | sh
@@ -3117,7 +3078,7 @@ Monitor the progress of data through a pipeline
 **Tags:** progress, pipe, monitor, transfer, pv
 **Hash:** `0ff1fe39959c`
 
-<!-- tests:get-pv hash:0ff1fe39959c -->
+<!-- tests:get-pv hash:0ff1fe39959c rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-pv | sh
@@ -3153,7 +3114,7 @@ PPA and repository management tools for APT
 **Tags:** apt, ppa, repository, add-apt-repository
 **Hash:** `ce7f07ca5939`
 
-<!-- tests:get-software-properties-common hash:ce7f07ca5939 -->
+<!-- tests:get-software-properties-common hash:ce7f07ca5939 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-software-properties-common | sh
@@ -3189,7 +3150,7 @@ System call tracer for debugging and diagnostics
 **Tags:** debug, trace, syscall, diagnostic, strace
 **Hash:** `816258cb5cfb`
 
-<!-- tests:get-strace hash:816258cb5cfb -->
+<!-- tests:get-strace hash:816258cb5cfb rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-strace | sh
@@ -3225,7 +3186,7 @@ Execute commands as another user securely
 **Tags:** sudo, root, privilege, security
 **Hash:** `ca48d78332c4`
 
-<!-- tests:get-sudo hash:ca48d78332c4 -->
+<!-- tests:get-sudo hash:ca48d78332c4 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-sudo | sh
@@ -3261,7 +3222,7 @@ UUID generation utilities
 **Tags:** uuid, generate, unique-id
 **Hash:** `bd11dcca53a3`
 
-<!-- tests:get-uuid-runtime hash:bd11dcca53a3 -->
+<!-- tests:get-uuid-runtime hash:bd11dcca53a3 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-uuid-runtime | sh
@@ -3300,7 +3261,7 @@ Accelerated apt package manager wrapper using aria2
 **Tags:** apt, fast, aria2, package-manager, accelerator
 **Hash:** `1a24f5949762`
 
-<!-- tests:get-apt-fast hash:1a24f5949762 -->
+<!-- tests:get-apt-fast hash:1a24f5949762 rockylinux-rockylinux-10:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-apt-fast | sh
@@ -3369,7 +3330,7 @@ Programmable completion functions for bash
 **Tags:** bash, completion, autocomplete, shell
 **Hash:** `79ef85d30124`
 
-<!-- tests:get-bash-completion hash:79ef85d30124 -->
+<!-- tests:get-bash-completion hash:79ef85d30124 rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-bash-completion | sh
@@ -3406,7 +3367,7 @@ Cat clone with syntax highlighting and git integration
 **Tags:** cat, syntax, highlight, git, pager, modern
 **Hash:** `1615ac216880`
 
-<!-- tests:get-bat hash:1615ac216880 -->
+<!-- tests:get-bat hash:1615ac216880 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-bat | sh
@@ -3443,7 +3404,7 @@ Modern ls replacement with colors and icons
 **Tags:** ls, files, directory, colors, icons, modern
 **Hash:** `915e98f04f1d`
 
-<!-- tests:get-lsd hash:915e98f04f1d -->
+<!-- tests:get-lsd hash:915e98f04f1d rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-lsd | sh
@@ -3479,7 +3440,7 @@ Terminal multiplexer for persistent sessions
 **Tags:** terminal, multiplexer, session, screen
 **Hash:** `840d24f938e0`
 
-<!-- tests:get-screen hash:840d24f938e0 -->
+<!-- tests:get-screen hash:840d24f938e0 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-screen | sh
@@ -3515,7 +3476,7 @@ Tiling terminal emulator for Linux
 **Tags:** terminal, tiling, emulator, tilix, split
 **Hash:** `e206d7d75265`
 
-<!-- tests:get-tilix hash:e206d7d75265 -->
+<!-- tests:get-tilix hash:e206d7d75265 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-tilix | sh
@@ -3552,7 +3513,7 @@ Instant terminal sharing via SSH
 **Tags:** terminal, sharing, ssh, tmux, pair-programming
 **Hash:** `02377aa6505f`
 
-<!-- tests:get-tmate hash:02377aa6505f -->
+<!-- tests:get-tmate hash:02377aa6505f rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-tmate | sh
@@ -3588,7 +3549,7 @@ Terminal multiplexer with window management
 **Tags:** terminal, multiplexer, session, tmux, window
 **Hash:** `72026fa0fa3d`
 
-<!-- tests:get-tmux hash:72026fa0fa3d -->
+<!-- tests:get-tmux hash:72026fa0fa3d rockylinux-rockylinux-10:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-tmux | sh
@@ -3626,7 +3587,7 @@ Powerful open-source x86 and AMD64 virtualization
 **Tags:** vm, virtualization, virtualbox, oracle, hypervisor
 **Hash:** `acee3a662393`
 
-<!-- tests:get-virtualbox hash:acee3a662393 -->
+<!-- tests:get-virtualbox hash:acee3a662393 rockylinux-rockylinux-10:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-virtualbox | sh

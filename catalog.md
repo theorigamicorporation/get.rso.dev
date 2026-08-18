@@ -2301,12 +2301,13 @@ wget -qO- get.rso.dev/get-wget | sh -s -- --update
 
 Open-source note-taking and to-do application
 
-**Supported:** Ubuntu, Debian, Mint
-**Methods:** apt, dnf, yum
+**Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
+**Methods:** script
+**Prereqs:** curl|wget, bash
 **Tags:** notes, todo, markdown, sync, joplin
-**Hash:** `7822eb2428d6`
+**Hash:** `67eea16d8a35`
 
-<!-- tests:get-joplin hash:7822eb2428d6 amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-joplin hash:67eea16d8a35 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-joplin | sh

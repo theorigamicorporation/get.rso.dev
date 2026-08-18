@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-openssh-server.sh — Install and enable OpenSSH server across Linux distros
-# Usage: curl -s get.rso.dev/sh/get-openssh-server | sh
+# Usage: curl -sL get.rso.dev/sh/get-openssh-server | sh
 #        sh get-openssh-server.sh [--method=apt|dnf|yum]
 #        sh get-openssh-server.sh --interactive
 #        sh get-openssh-server.sh --update
@@ -73,7 +73,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-openssh-server | sh
+  curl -sL get.rso.dev/sh/get-openssh-server | sh
   sh get-openssh-server.sh --method=apt
   sh get-openssh-server.sh --interactive
   sh get-openssh-server.sh --update

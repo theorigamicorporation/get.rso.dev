@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-gnupg.sh — Install gnupg across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-gnupg | sh
+# Usage: curl -sL get.rso.dev/sh/get-gnupg | sh
 #        sh get-gnupg.sh [--method=apt|dnf|yum]
 #        sh get-gnupg.sh --interactive
 #        sh get-gnupg.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-gnupg | sh
+  curl -sL get.rso.dev/sh/get-gnupg | sh
   sh get-gnupg.sh --method=apt
   sh get-gnupg.sh --interactive
   sh get-gnupg.sh --update

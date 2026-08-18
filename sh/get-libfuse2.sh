@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-libfuse2.sh — Install libfuse2 across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-libfuse2 | sh
+# Usage: curl -sL get.rso.dev/sh/get-libfuse2 | sh
 #        sh get-libfuse2.sh --interactive
 #        sh get-libfuse2.sh --update
 # =============================================================================

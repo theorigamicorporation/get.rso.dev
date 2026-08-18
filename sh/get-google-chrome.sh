@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-google-chrome.sh — Install Google Chrome across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-google-chrome | sh
+# Usage: curl -sL get.rso.dev/sh/get-google-chrome | sh
 #        sh get-google-chrome.sh [--method=apt|dnf|flatpak]
 #        sh get-google-chrome.sh --interactive
 #        sh get-google-chrome.sh --update
@@ -75,7 +75,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-google-chrome | sh
+  curl -sL get.rso.dev/sh/get-google-chrome | sh
   sh get-google-chrome.sh --method=apt
   sh get-google-chrome.sh --interactive
   sh get-google-chrome.sh --update

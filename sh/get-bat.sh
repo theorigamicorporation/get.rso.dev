@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-bat.sh — Install bat across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-bat | sh
+# Usage: curl -sL get.rso.dev/sh/get-bat | sh
 #        sh get-bat.sh [--method=apt, dnf, yum, github-release]
 #        sh get-bat.sh --interactive
 #        sh get-bat.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-bat | sh
+  curl -sL get.rso.dev/sh/get-bat | sh
   sh get-bat.sh --method=github-release
   sh get-bat.sh --interactive
   sh get-bat.sh --update

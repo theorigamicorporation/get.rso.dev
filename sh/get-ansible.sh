@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-ansible.sh — Install ansible across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-ansible | sh
+# Usage: curl -sL get.rso.dev/sh/get-ansible | sh
 #        sh get-ansible.sh [--method=apt|dnf|yum]
 #        sh get-ansible.sh --interactive
 #        sh get-ansible.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-ansible | sh
+  curl -sL get.rso.dev/sh/get-ansible | sh
   sh get-ansible.sh --method=apt
   sh get-ansible.sh --interactive
   sh get-ansible.sh --update

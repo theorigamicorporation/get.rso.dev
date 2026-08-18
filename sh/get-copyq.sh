@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-copyq.sh — Install copyq across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-copyq | sh
+# Usage: curl -sL get.rso.dev/sh/get-copyq | sh
 #        sh get-copyq.sh --interactive
 #        sh get-copyq.sh --update
 # =============================================================================

@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-rsync.sh — Install rsync across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-rsync | sh
+# Usage: curl -sL get.rso.dev/sh/get-rsync | sh
 #        sh get-rsync.sh [--method=apt|dnf|yum]
 #        sh get-rsync.sh --interactive
 #        sh get-rsync.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-rsync | sh
+  curl -sL get.rso.dev/sh/get-rsync | sh
   sh get-rsync.sh --method=apt
   sh get-rsync.sh --interactive
   sh get-rsync.sh --update

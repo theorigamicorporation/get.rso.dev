@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-lsd.sh — Install lsd across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-lsd | sh
+# Usage: curl -sL get.rso.dev/sh/get-lsd | sh
 #        sh get-lsd.sh [--method=apt, dnf, yum, github-release]
 #        sh get-lsd.sh --interactive
 #        sh get-lsd.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-lsd | sh
+  curl -sL get.rso.dev/sh/get-lsd | sh
   sh get-lsd.sh --method=github-release
   sh get-lsd.sh --interactive
   sh get-lsd.sh --update

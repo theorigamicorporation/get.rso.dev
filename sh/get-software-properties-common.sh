@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-software-properties-common.sh — Install software-properties-common across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-software-properties-common | sh
+# Usage: curl -sL get.rso.dev/sh/get-software-properties-common | sh
 #        sh get-software-properties-common.sh --interactive
 #        sh get-software-properties-common.sh --update
 # =============================================================================

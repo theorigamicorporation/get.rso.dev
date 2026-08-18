@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-nload.sh — Install nload across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-nload | sh
+# Usage: curl -sL get.rso.dev/sh/get-nload | sh
 #        sh get-nload.sh [--method=apt|dnf|yum]
 #        sh get-nload.sh --interactive
 #        sh get-nload.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-nload | sh
+  curl -sL get.rso.dev/sh/get-nload | sh
   sh get-nload.sh --method=apt
   sh get-nload.sh --interactive
   sh get-nload.sh --update

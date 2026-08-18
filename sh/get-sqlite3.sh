@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-sqlite3.sh — Install sqlite3 across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-sqlite3 | sh
+# Usage: curl -sL get.rso.dev/sh/get-sqlite3 | sh
 #        sh get-sqlite3.sh [--method=apt|dnf|yum]
 #        sh get-sqlite3.sh --interactive
 #        sh get-sqlite3.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-sqlite3 | sh
+  curl -sL get.rso.dev/sh/get-sqlite3 | sh
   sh get-sqlite3.sh --method=apt
   sh get-sqlite3.sh --interactive
   sh get-sqlite3.sh --update

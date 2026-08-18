@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-mattermost.sh — Install mattermost-desktop across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-mattermost | sh
+# Usage: curl -sL get.rso.dev/sh/get-mattermost | sh
 #        sh get-mattermost.sh --interactive
 #        sh get-mattermost.sh --update
 # =============================================================================

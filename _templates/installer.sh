@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-TOOLNAME.sh — Install TOOLNAME across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-TOOLNAME | sh
+# Usage: curl -sL get.rso.dev/sh/get-TOOLNAME | sh
 #        sh get-TOOLNAME.sh [--method=apt|dnf|yum|asdf|gitpak|flatpak|snap|github-release]
 #        sh get-TOOLNAME.sh --interactive
 #        sh get-TOOLNAME.sh --update
@@ -79,7 +79,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-TOOLNAME | sh
+  curl -sL get.rso.dev/sh/get-TOOLNAME | sh
   sh get-TOOLNAME.sh --method=github-release
   sh get-TOOLNAME.sh --interactive
   sh get-TOOLNAME.sh --update

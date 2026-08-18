@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-ripgrep.sh — Install ripgrep across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-ripgrep | sh
+# Usage: curl -sL get.rso.dev/sh/get-ripgrep | sh
 #        sh get-ripgrep.sh [--method=apt, dnf, yum, github-release]
 #        sh get-ripgrep.sh --interactive
 #        sh get-ripgrep.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-ripgrep | sh
+  curl -sL get.rso.dev/sh/get-ripgrep | sh
   sh get-ripgrep.sh --method=github-release
   sh get-ripgrep.sh --interactive
   sh get-ripgrep.sh --update

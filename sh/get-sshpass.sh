@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-sshpass.sh — Install sshpass across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-sshpass | sh
+# Usage: curl -sL get.rso.dev/sh/get-sshpass | sh
 #        sh get-sshpass.sh [--method=apt|dnf|yum]
 #        sh get-sshpass.sh --interactive
 #        sh get-sshpass.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-sshpass | sh
+  curl -sL get.rso.dev/sh/get-sshpass | sh
   sh get-sshpass.sh --method=apt
   sh get-sshpass.sh --interactive
   sh get-sshpass.sh --update

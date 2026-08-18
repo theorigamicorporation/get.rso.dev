@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-fzf.sh — Install fzf across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-fzf | sh
+# Usage: curl -sL get.rso.dev/sh/get-fzf | sh
 #        sh get-fzf.sh [--method=apt, dnf, yum, github-release]
 #        sh get-fzf.sh --interactive
 #        sh get-fzf.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-fzf | sh
+  curl -sL get.rso.dev/sh/get-fzf | sh
   sh get-fzf.sh --method=github-release
   sh get-fzf.sh --interactive
   sh get-fzf.sh --update

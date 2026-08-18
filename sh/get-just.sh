@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-just.sh — Install just across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-just | sh
+# Usage: curl -sL get.rso.dev/sh/get-just | sh
 #        sh get-just.sh [--method=github-release]
 #        sh get-just.sh --interactive
 #        sh get-just.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-just | sh
+  curl -sL get.rso.dev/sh/get-just | sh
   sh get-just.sh --method=github-release
   sh get-just.sh --interactive
   sh get-just.sh --update

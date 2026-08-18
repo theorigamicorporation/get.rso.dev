@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-nextcloud-client.sh — Install nextcloud-desktop across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-nextcloud-client | sh
+# Usage: curl -sL get.rso.dev/sh/get-nextcloud-client | sh
 #        sh get-nextcloud-client.sh --interactive
 #        sh get-nextcloud-client.sh --update
 # =============================================================================

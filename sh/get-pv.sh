@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-pv.sh — Install pv across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-pv | sh
+# Usage: curl -sL get.rso.dev/sh/get-pv | sh
 #        sh get-pv.sh [--method=apt|dnf|yum]
 #        sh get-pv.sh --interactive
 #        sh get-pv.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-pv | sh
+  curl -sL get.rso.dev/sh/get-pv | sh
   sh get-pv.sh --method=apt
   sh get-pv.sh --interactive
   sh get-pv.sh --update

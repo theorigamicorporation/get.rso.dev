@@ -2226,7 +2226,7 @@
 
             builderScripts.forEach(s => {
                 const dl = s.dl === 'curl'
-                    ? 'curl -fsSL ' + baseUrl + s.name + ' | sh'
+                    ? 'curl -sL ' + baseUrl + s.name + ' | sh'
                     : 'wget -qO- ' + baseUrl + s.name + ' | sh';
                 lines.push(dl + ' || { echo "FAILED: ' + s.name + '"; _fail="${_fail} ' + s.name + '"; }');
             });

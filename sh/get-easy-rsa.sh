@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-easy-rsa.sh — Install easy-rsa across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-easy-rsa | sh
+# Usage: curl -sL get.rso.dev/sh/get-easy-rsa | sh
 #        sh get-easy-rsa.sh [--method=apt|dnf|yum]
 #        sh get-easy-rsa.sh --interactive
 #        sh get-easy-rsa.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-easy-rsa | sh
+  curl -sL get.rso.dev/sh/get-easy-rsa | sh
   sh get-easy-rsa.sh --method=apt
   sh get-easy-rsa.sh --interactive
   sh get-easy-rsa.sh --update

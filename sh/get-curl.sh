@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-curl.sh — Install curl across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-curl | sh
+# Usage: curl -sL get.rso.dev/sh/get-curl | sh
 #        sh get-curl.sh [--method=apt|dnf|yum]
 #        sh get-curl.sh --interactive
 #        sh get-curl.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-curl | sh
+  curl -sL get.rso.dev/sh/get-curl | sh
   sh get-curl.sh --method=apt
   sh get-curl.sh --interactive
   sh get-curl.sh --update

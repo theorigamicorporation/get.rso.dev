@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-claude-code.sh — Install Claude Code CLI across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-claude-code | sh
+# Usage: curl -sL get.rso.dev/sh/get-claude-code | sh
 #        sh get-claude-code.sh [--method=npm|snap]
 #        sh get-claude-code.sh --interactive
 #        sh get-claude-code.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-claude-code | sh
+  curl -sL get.rso.dev/sh/get-claude-code | sh
   sh get-claude-code.sh --method=npm
   sh get-claude-code.sh --interactive
   sh get-claude-code.sh --update

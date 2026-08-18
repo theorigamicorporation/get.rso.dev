@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-vscode.sh — Install Visual Studio Code across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-vscode | sh
+# Usage: curl -sL get.rso.dev/sh/get-vscode | sh
 #        sh get-vscode.sh [--method=apt|dnf|snap|flatpak]
 #        sh get-vscode.sh --interactive
 #        sh get-vscode.sh --update
@@ -75,7 +75,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-vscode | sh
+  curl -sL get.rso.dev/sh/get-vscode | sh
   sh get-vscode.sh --method=apt
   sh get-vscode.sh --interactive
   sh get-vscode.sh --update

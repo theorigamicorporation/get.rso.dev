@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-1password.sh — Install 1password across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-1password | sh
+# Usage: curl -sL get.rso.dev/sh/get-1password | sh
 #        sh get-1password.sh --interactive
 #        sh get-1password.sh --update
 # =============================================================================

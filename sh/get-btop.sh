@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-btop.sh — Install btop across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-btop | sh
+# Usage: curl -sL get.rso.dev/sh/get-btop | sh
 #        sh get-btop.sh [--method=apt, dnf, yum, snap, github-release]
 #        sh get-btop.sh --interactive
 #        sh get-btop.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-btop | sh
+  curl -sL get.rso.dev/sh/get-btop | sh
   sh get-btop.sh --method=github-release
   sh get-btop.sh --interactive
   sh get-btop.sh --update

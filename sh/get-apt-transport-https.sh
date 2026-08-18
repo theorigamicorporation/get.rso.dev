@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-apt-transport-https.sh — Install apt-transport-https across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-apt-transport-https | sh
+# Usage: curl -sL get.rso.dev/sh/get-apt-transport-https | sh
 #        sh get-apt-transport-https.sh --interactive
 #        sh get-apt-transport-https.sh --update
 # =============================================================================

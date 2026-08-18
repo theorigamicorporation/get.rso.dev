@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-nfs-common.sh — Install nfs-common across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-nfs-common | sh
+# Usage: curl -sL get.rso.dev/sh/get-nfs-common | sh
 #        sh get-nfs-common.sh [--method=apt|dnf|yum]
 #        sh get-nfs-common.sh --interactive
 #        sh get-nfs-common.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-nfs-common | sh
+  curl -sL get.rso.dev/sh/get-nfs-common | sh
   sh get-nfs-common.sh --method=apt
   sh get-nfs-common.sh --interactive
   sh get-nfs-common.sh --update

@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-lens.sh — Install lens across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-lens | sh
+# Usage: curl -sL get.rso.dev/sh/get-lens | sh
 #        sh get-lens.sh --interactive
 #        sh get-lens.sh --update
 # =============================================================================

@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-uuid-runtime.sh — Install uuid-runtime across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-uuid-runtime | sh
+# Usage: curl -sL get.rso.dev/sh/get-uuid-runtime | sh
 #        sh get-uuid-runtime.sh [--method=apt|dnf|yum]
 #        sh get-uuid-runtime.sh --interactive
 #        sh get-uuid-runtime.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-uuid-runtime | sh
+  curl -sL get.rso.dev/sh/get-uuid-runtime | sh
   sh get-uuid-runtime.sh --method=apt
   sh get-uuid-runtime.sh --interactive
   sh get-uuid-runtime.sh --update

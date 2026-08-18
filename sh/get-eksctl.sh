@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-eksctl.sh — Install eksctl across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-eksctl | sh
+# Usage: curl -sL get.rso.dev/sh/get-eksctl | sh
 #        sh get-eksctl.sh [--method=github-release]
 #        sh get-eksctl.sh --interactive
 #        sh get-eksctl.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-eksctl | sh
+  curl -sL get.rso.dev/sh/get-eksctl | sh
   sh get-eksctl.sh --method=github-release
   sh get-eksctl.sh --interactive
   sh get-eksctl.sh --update

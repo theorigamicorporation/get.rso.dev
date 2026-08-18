@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-7zip.sh — Install 7zip across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-7zip | sh
+# Usage: curl -sL get.rso.dev/sh/get-7zip | sh
 #        sh get-7zip.sh --interactive
 #        sh get-7zip.sh --update
 # =============================================================================

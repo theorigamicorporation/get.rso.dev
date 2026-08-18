@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-podman.sh — Install podman across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-podman | sh
+# Usage: curl -sL get.rso.dev/sh/get-podman | sh
 #        sh get-podman.sh [--method=apt|dnf|yum]
 #        sh get-podman.sh --interactive
 #        sh get-podman.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-podman | sh
+  curl -sL get.rso.dev/sh/get-podman | sh
   sh get-podman.sh --method=apt
   sh get-podman.sh --interactive
   sh get-podman.sh --update

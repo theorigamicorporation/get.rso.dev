@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-joplin.sh — Install joplin across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-joplin | sh
+# Usage: curl -sL get.rso.dev/sh/get-joplin | sh
 #        sh get-joplin.sh --interactive
 #        sh get-joplin.sh --update
 # =============================================================================

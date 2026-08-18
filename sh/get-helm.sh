@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-helm.sh — Install helm across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-helm | sh
+# Usage: curl -sL get.rso.dev/sh/get-helm | sh
 #        sh get-helm.sh [--method=snap, github-release]
 #        sh get-helm.sh --interactive
 #        sh get-helm.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-helm | sh
+  curl -sL get.rso.dev/sh/get-helm | sh
   sh get-helm.sh --method=github-release
   sh get-helm.sh --interactive
   sh get-helm.sh --update

@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-krew.sh — Install krew across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-krew | sh
+# Usage: curl -sL get.rso.dev/sh/get-krew | sh
 #        sh get-krew.sh [--method=github-release]
 #        sh get-krew.sh --interactive
 #        sh get-krew.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-krew | sh
+  curl -sL get.rso.dev/sh/get-krew | sh
   sh get-krew.sh --method=github-release
   sh get-krew.sh --interactive
   sh get-krew.sh --update

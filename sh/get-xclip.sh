@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-xclip.sh — Install xclip across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-xclip | sh
+# Usage: curl -sL get.rso.dev/sh/get-xclip | sh
 #        sh get-xclip.sh [--method=apt|dnf|yum]
 #        sh get-xclip.sh --interactive
 #        sh get-xclip.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-xclip | sh
+  curl -sL get.rso.dev/sh/get-xclip | sh
   sh get-xclip.sh --method=apt
   sh get-xclip.sh --interactive
   sh get-xclip.sh --update

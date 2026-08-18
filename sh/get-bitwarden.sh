@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-bitwarden.sh — Install bitwarden across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-bitwarden | sh
+# Usage: curl -sL get.rso.dev/sh/get-bitwarden | sh
 #        sh get-bitwarden.sh --interactive
 #        sh get-bitwarden.sh --update
 # =============================================================================

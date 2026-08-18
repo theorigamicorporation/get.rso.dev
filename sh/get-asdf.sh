@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-asdf.sh — Install asdf across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-asdf | sh
+# Usage: curl -sL get.rso.dev/sh/get-asdf | sh
 #        sh get-asdf.sh --interactive
 #        sh get-asdf.sh --update
 # =============================================================================
@@ -59,7 +59,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-asdf | sh
+  curl -sL get.rso.dev/sh/get-asdf | sh
   sh get-asdf.sh --update
 USAGE
 }

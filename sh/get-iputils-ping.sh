@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-iputils-ping.sh — Install iputils-ping across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-iputils-ping | sh
+# Usage: curl -sL get.rso.dev/sh/get-iputils-ping | sh
 #        sh get-iputils-ping.sh [--method=apt|dnf|yum]
 #        sh get-iputils-ping.sh --interactive
 #        sh get-iputils-ping.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-iputils-ping | sh
+  curl -sL get.rso.dev/sh/get-iputils-ping | sh
   sh get-iputils-ping.sh --method=apt
   sh get-iputils-ping.sh --interactive
   sh get-iputils-ping.sh --update

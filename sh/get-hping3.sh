@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-hping3.sh — Install hping3 across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-hping3 | sh
+# Usage: curl -sL get.rso.dev/sh/get-hping3 | sh
 #        sh get-hping3.sh [--method=apt|dnf|yum]
 #        sh get-hping3.sh --interactive
 #        sh get-hping3.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-hping3 | sh
+  curl -sL get.rso.dev/sh/get-hping3 | sh
   sh get-hping3.sh --method=apt
   sh get-hping3.sh --interactive
   sh get-hping3.sh --update

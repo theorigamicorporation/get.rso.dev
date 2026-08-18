@@ -9,13 +9,13 @@ High-compression file archiver supporting multiple formats
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** archive, compression, 7zip, 7z, zip, rar
-**Hash:** `27340fa544f8`
+**Hash:** `6c655d3cd982`
 
-<!-- tests:get-7zip hash:27340fa544f8 amazonlinux-2023:pass debian-12:fail debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-7zip hash:6c655d3cd982 -->
 
 ```bash
 wget -qO- get.rso.dev/get-7zip | sh
-# alt: curl -s get.rso.dev/get-7zip | sh
+# alt: curl -sL get.rso.dev/get-7zip | sh
 ```
 
 **Options:**
@@ -31,11 +31,11 @@ wget -qO- get.rso.dev/get-7zip | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-7zip | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-7zip | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-7zip | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-7zip | sh -s -- --update
-# alt: curl -s get.rso.dev/get-7zip | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-7zip | sh -s -- --update
 ```
 
 ### get-bzip2
@@ -45,13 +45,13 @@ High-quality block-sorting file compressor
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** compression, archive, bzip2, bz2
-**Hash:** `5d6157525131`
+**Hash:** `b396586547f5`
 
-<!-- tests:get-bzip2 hash:5d6157525131 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-bzip2 hash:b396586547f5 -->
 
 ```bash
 wget -qO- get.rso.dev/get-bzip2 | sh
-# alt: curl -s get.rso.dev/get-bzip2 | sh
+# alt: curl -sL get.rso.dev/get-bzip2 | sh
 ```
 
 **Options:**
@@ -67,11 +67,11 @@ wget -qO- get.rso.dev/get-bzip2 | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-bzip2 | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-bzip2 | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-bzip2 | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-bzip2 | sh -s -- --update
-# alt: curl -s get.rso.dev/get-bzip2 | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-bzip2 | sh -s -- --update
 ```
 
 ### get-unzip
@@ -81,13 +81,13 @@ Extraction utility for ZIP archives
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** archive, zip, extract, decompress
-**Hash:** `0c19a2e56356`
+**Hash:** `4bcc3a30596f`
 
-<!-- tests:get-unzip hash:0c19a2e56356 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-unzip hash:4bcc3a30596f -->
 
 ```bash
 wget -qO- get.rso.dev/get-unzip | sh
-# alt: curl -s get.rso.dev/get-unzip | sh
+# alt: curl -sL get.rso.dev/get-unzip | sh
 ```
 
 **Options:**
@@ -103,11 +103,11 @@ wget -qO- get.rso.dev/get-unzip | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-unzip | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-unzip | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-unzip | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-unzip | sh -s -- --update
-# alt: curl -s get.rso.dev/get-unzip | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-unzip | sh -s -- --update
 ```
 
 ## Browsers
@@ -120,13 +120,13 @@ Google Chrome web browser
 **Methods:** apt, dnf, flatpak
 **Prereqs:** curl|wget, gpg
 **Tags:** browser, chrome, google, web
-**Hash:** `0ad565fabee4`
+**Hash:** `d4680b85f676`
 
-<!-- tests:get-google-chrome hash:0ad565fabee4 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-google-chrome hash:d4680b85f676 -->
 
 ```bash
 wget -qO- get.rso.dev/get-google-chrome | sh
-# alt: curl -s get.rso.dev/get-google-chrome | sh
+# alt: curl -sL get.rso.dev/get-google-chrome | sh
 ```
 
 **Options:**
@@ -142,11 +142,11 @@ wget -qO- get.rso.dev/get-google-chrome | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-google-chrome | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-google-chrome | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-google-chrome | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-google-chrome | sh -s -- --update
-# alt: curl -s get.rso.dev/get-google-chrome | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-google-chrome | sh -s -- --update
 ```
 
 ## Cloud Tools
@@ -158,13 +158,13 @@ Sync client for Nextcloud self-hosted cloud storage
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** cloud, sync, storage, nextcloud, self-hosted
-**Hash:** `cce929098b34`
+**Hash:** `4f18e9b416bd`
 
-<!-- tests:get-nextcloud-client hash:cce929098b34 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-nextcloud-client hash:4f18e9b416bd -->
 
 ```bash
 wget -qO- get.rso.dev/get-nextcloud-client | sh
-# alt: curl -s get.rso.dev/get-nextcloud-client | sh
+# alt: curl -sL get.rso.dev/get-nextcloud-client | sh
 ```
 
 **Options:**
@@ -180,11 +180,11 @@ wget -qO- get.rso.dev/get-nextcloud-client | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-nextcloud-client | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-nextcloud-client | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-nextcloud-client | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-nextcloud-client | sh -s -- --update
-# alt: curl -s get.rso.dev/get-nextcloud-client | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-nextcloud-client | sh -s -- --update
 ```
 
 ## Communication Tools
@@ -197,13 +197,13 @@ Open-source team messaging and collaboration platform
 **Methods:** apt, github-release
 **Prereqs:** curl|wget, gpg
 **Tags:** chat, messaging, team, collaboration, slack-alternative
-**Hash:** `4d276016a8c7`
+**Hash:** `f096ba18bfc2`
 
-<!-- tests:get-mattermost hash:4d276016a8c7 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-mattermost hash:f096ba18bfc2 -->
 
 ```bash
 wget -qO- get.rso.dev/get-mattermost | sh
-# alt: curl -s get.rso.dev/get-mattermost | sh
+# alt: curl -sL get.rso.dev/get-mattermost | sh
 ```
 
 **Options:**
@@ -219,11 +219,50 @@ wget -qO- get.rso.dev/get-mattermost | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-mattermost | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-mattermost | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-mattermost | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-mattermost | sh -s -- --update
-# alt: curl -s get.rso.dev/get-mattermost | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-mattermost | sh -s -- --update
+```
+
+## Containers & Virtualisation
+
+### get-docker
+
+Container platform for building and running applications
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Methods:** apt, dnf, yum
+**Prereqs:** curl|wget, gpg
+**Tags:** docker, containers, oci, devops
+**Hash:** `b745115acb3e`
+
+<!-- tests:get-docker hash:b745115acb3e -->
+
+```bash
+wget -qO- get.rso.dev/get-docker | sh
+# alt: curl -sL get.rso.dev/get-docker | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-docker | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-docker | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-docker | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-docker | sh -s -- --update
 ```
 
 ## Container Tools
@@ -235,13 +274,13 @@ Daemonless container engine compatible with Docker
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** container, docker, podman, oci, rootless
-**Hash:** `c0ac39d6e867`
+**Hash:** `44651fbb2b91`
 
-<!-- tests:get-podman hash:c0ac39d6e867 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-podman hash:44651fbb2b91 -->
 
 ```bash
 wget -qO- get.rso.dev/get-podman | sh
-# alt: curl -s get.rso.dev/get-podman | sh
+# alt: curl -sL get.rso.dev/get-podman | sh
 ```
 
 **Options:**
@@ -257,11 +296,11 @@ wget -qO- get.rso.dev/get-podman | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-podman | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-podman | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-podman | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-podman | sh -s -- --update
-# alt: curl -s get.rso.dev/get-podman | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-podman | sh -s -- --update
 ```
 
 ## Database Tools
@@ -273,13 +312,13 @@ Lightweight embedded SQL database engine
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** database, sql, sqlite, embedded, cli
-**Hash:** `657438129174`
+**Hash:** `77e00b6a5e07`
 
-<!-- tests:get-sqlite3 hash:657438129174 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-sqlite3 hash:77e00b6a5e07 -->
 
 ```bash
 wget -qO- get.rso.dev/get-sqlite3 | sh
-# alt: curl -s get.rso.dev/get-sqlite3 | sh
+# alt: curl -sL get.rso.dev/get-sqlite3 | sh
 ```
 
 **Options:**
@@ -295,11 +334,11 @@ wget -qO- get.rso.dev/get-sqlite3 | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-sqlite3 | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-sqlite3 | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-sqlite3 | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-sqlite3 | sh -s -- --update
-# alt: curl -s get.rso.dev/get-sqlite3 | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-sqlite3 | sh -s -- --update
 ```
 
 ## Desktop Tools
@@ -311,13 +350,13 @@ Advanced clipboard manager with editing and scripting
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** clipboard, copy, paste, manager, copyq
-**Hash:** `4d2376509e15`
+**Hash:** `538469e4a465`
 
-<!-- tests:get-copyq hash:4d2376509e15 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-copyq hash:538469e4a465 -->
 
 ```bash
 wget -qO- get.rso.dev/get-copyq | sh
-# alt: curl -s get.rso.dev/get-copyq | sh
+# alt: curl -sL get.rso.dev/get-copyq | sh
 ```
 
 **Options:**
@@ -333,11 +372,11 @@ wget -qO- get.rso.dev/get-copyq | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-copyq | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-copyq | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-copyq | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-copyq | sh -s -- --update
-# alt: curl -s get.rso.dev/get-copyq | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-copyq | sh -s -- --update
 ```
 
 ### get-flameshot
@@ -347,13 +386,13 @@ Powerful screenshot tool with annotation support
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** screenshot, capture, annotation, screen, flameshot
-**Hash:** `7185a9f1d9eb`
+**Hash:** `7bf472878980`
 
-<!-- tests:get-flameshot hash:7185a9f1d9eb amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-flameshot hash:7bf472878980 -->
 
 ```bash
 wget -qO- get.rso.dev/get-flameshot | sh
-# alt: curl -s get.rso.dev/get-flameshot | sh
+# alt: curl -sL get.rso.dev/get-flameshot | sh
 ```
 
 **Options:**
@@ -369,11 +408,11 @@ wget -qO- get.rso.dev/get-flameshot | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-flameshot | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-flameshot | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-flameshot | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-flameshot | sh -s -- --update
-# alt: curl -s get.rso.dev/get-flameshot | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-flameshot | sh -s -- --update
 ```
 
 ### get-remmina
@@ -383,13 +422,13 @@ Remote desktop client supporting RDP, VNC, SSH
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** remote, desktop, rdp, vnc, ssh, remmina
-**Hash:** `f7323e1a008d`
+**Hash:** `c3f87759b8bd`
 
-<!-- tests:get-remmina hash:f7323e1a008d amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-remmina hash:c3f87759b8bd -->
 
 ```bash
 wget -qO- get.rso.dev/get-remmina | sh
-# alt: curl -s get.rso.dev/get-remmina | sh
+# alt: curl -sL get.rso.dev/get-remmina | sh
 ```
 
 **Options:**
@@ -405,11 +444,11 @@ wget -qO- get.rso.dev/get-remmina | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-remmina | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-remmina | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-remmina | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-remmina | sh -s -- --update
-# alt: curl -s get.rso.dev/get-remmina | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-remmina | sh -s -- --update
 ```
 
 ### get-rustdesk
@@ -420,13 +459,13 @@ Open-source remote desktop with self-hosted server option
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** remote, desktop, rustdesk, self-hosted, screen-sharing
-**Hash:** `6ec1f2383dee`
+**Hash:** `5f1ac627705e`
 
-<!-- tests:get-rustdesk hash:6ec1f2383dee amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-rustdesk hash:5f1ac627705e -->
 
 ```bash
 wget -qO- get.rso.dev/get-rustdesk | sh
-# alt: curl -s get.rso.dev/get-rustdesk | sh
+# alt: curl -sL get.rso.dev/get-rustdesk | sh
 ```
 
 **Options:**
@@ -442,11 +481,11 @@ wget -qO- get.rso.dev/get-rustdesk | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-rustdesk | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-rustdesk | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-rustdesk | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-rustdesk | sh -s -- --update
-# alt: curl -s get.rso.dev/get-rustdesk | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-rustdesk | sh -s -- --update
 ```
 
 ### get-xclip
@@ -456,13 +495,13 @@ Command-line clipboard utility for X11
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** clipboard, copy, paste, x11, xclip
-**Hash:** `d4310bfc2ac8`
+**Hash:** `db0407fa4bd7`
 
-<!-- tests:get-xclip hash:d4310bfc2ac8 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-xclip hash:db0407fa4bd7 -->
 
 ```bash
 wget -qO- get.rso.dev/get-xclip | sh
-# alt: curl -s get.rso.dev/get-xclip | sh
+# alt: curl -sL get.rso.dev/get-xclip | sh
 ```
 
 **Options:**
@@ -478,11 +517,11 @@ wget -qO- get.rso.dev/get-xclip | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-xclip | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-xclip | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-xclip | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-xclip | sh -s -- --update
-# alt: curl -s get.rso.dev/get-xclip | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-xclip | sh -s -- --update
 ```
 
 ## Development Tools
@@ -492,15 +531,17 @@ wget -qO- get.rso.dev/get-xclip | sh -s -- --update
 Extendable version manager for multiple runtimes
 
 **Supported:** All Linux distributions
-**Methods:** apt, dnf, yum
+**Methods:** git
+**Prereqs:** git
+**Requires:** non-root user
 **Tags:** version-manager, asdf, runtime, node, python, ruby
-**Hash:** `48f16662d332`
+**Hash:** `2a7e08fa8e4d`
 
-<!-- tests:get-asdf hash:48f16662d332 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-asdf hash:2a7e08fa8e4d -->
 
 ```bash
 wget -qO- get.rso.dev/get-asdf | sh
-# alt: curl -s get.rso.dev/get-asdf | sh
+# alt: curl -sL get.rso.dev/get-asdf | sh
 ```
 
 **Options:**
@@ -516,11 +557,11 @@ wget -qO- get.rso.dev/get-asdf | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-asdf | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-asdf | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-asdf | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-asdf | sh -s -- --update
-# alt: curl -s get.rso.dev/get-asdf | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-asdf | sh -s -- --update
 ```
 
 ### get-claude-code
@@ -531,13 +572,13 @@ Anthropic's official CLI for Claude — AI-powered coding assistant
 **Methods:** npm, snap
 **Prereqs:** npm|snap
 **Tags:** ai, claude, anthropic, cli, coding, assistant, llm
-**Hash:** `fea191fc50b4`
+**Hash:** `3bf2ef7e5ead`
 
-<!-- tests:get-claude-code hash:fea191fc50b4 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-claude-code hash:3bf2ef7e5ead -->
 
 ```bash
 wget -qO- get.rso.dev/get-claude-code | sh
-# alt: curl -s get.rso.dev/get-claude-code | sh
+# alt: curl -sL get.rso.dev/get-claude-code | sh
 ```
 
 **Options:**
@@ -553,11 +594,11 @@ wget -qO- get.rso.dev/get-claude-code | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-claude-code | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-claude-code | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-claude-code | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-claude-code | sh -s -- --update
-# alt: curl -s get.rso.dev/get-claude-code | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-claude-code | sh -s -- --update
 ```
 
 ### get-ghorg
@@ -568,13 +609,13 @@ Clone all repos from a GitHub/GitLab/Bitbucket org
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** git, clone, github, gitlab, organization, backup
-**Hash:** `74dab2a41261`
+**Hash:** `4fa804c5634f`
 
-<!-- tests:get-ghorg hash:74dab2a41261 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-ghorg hash:4fa804c5634f -->
 
 ```bash
 wget -qO- get.rso.dev/get-ghorg | sh
-# alt: curl -s get.rso.dev/get-ghorg | sh
+# alt: curl -sL get.rso.dev/get-ghorg | sh
 ```
 
 **Options:**
@@ -590,47 +631,11 @@ wget -qO- get.rso.dev/get-ghorg | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-ghorg | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-ghorg | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-ghorg | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-ghorg | sh -s -- --update
-# alt: curl -s get.rso.dev/get-ghorg | sh -s -- --update
-```
-
-### get-git
-
-Distributed version control system
-
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
-**Methods:** apt, dnf, yum
-**Tags:** git, vcs, version-control, scm
-**Hash:** `1e2d443f1399`
-
-<!-- tests:get-git hash:1e2d443f1399 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
-
-```bash
-wget -qO- get.rso.dev/get-git | sh
-# alt: curl -s get.rso.dev/get-git | sh
-```
-
-**Options:**
-
-| Flag | Description |
-|------|-------------|
-| `-i`, `--interactive` | Show interactive menu to pick install method |
-| `-m`, `--method=METHOD` | Use a specific install method |
-| `-u`, `--update` | Update to latest version if already installed |
-| `-f`, `--force` | Force reinstall regardless of current version |
-| `-h`, `--help` | Show help message |
-
-```bash
-# Install via specific method
-wget -qO- get.rso.dev/get-git | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-git | sh -s -- --method=github-release
-
-# Update existing install
-wget -qO- get.rso.dev/get-git | sh -s -- --update
-# alt: curl -s get.rso.dev/get-git | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-ghorg | sh -s -- --update
 ```
 
 ### get-gitlab-cli
@@ -641,13 +646,13 @@ Official command-line tool for GitLab
 **Methods:** apt, snap, github-release
 **Prereqs:** curl|wget
 **Tags:** gitlab, git, cli, merge-request, pipeline, glab
-**Hash:** `739bc2e62e04`
+**Hash:** `56865ab2566d`
 
-<!-- tests:get-gitlab-cli hash:739bc2e62e04 amazonlinux-2023:fail debian-12:fail debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-gitlab-cli hash:56865ab2566d -->
 
 ```bash
 wget -qO- get.rso.dev/get-gitlab-cli | sh
-# alt: curl -s get.rso.dev/get-gitlab-cli | sh
+# alt: curl -sL get.rso.dev/get-gitlab-cli | sh
 ```
 
 **Options:**
@@ -663,11 +668,47 @@ wget -qO- get.rso.dev/get-gitlab-cli | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-gitlab-cli | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-gitlab-cli | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-gitlab-cli | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-gitlab-cli | sh -s -- --update
-# alt: curl -s get.rso.dev/get-gitlab-cli | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-gitlab-cli | sh -s -- --update
+```
+
+### get-git
+
+Distributed version control system
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Methods:** apt, dnf, yum
+**Tags:** git, vcs, version-control, scm
+**Hash:** `1b6afb69988c`
+
+<!-- tests:get-git hash:1b6afb69988c -->
+
+```bash
+wget -qO- get.rso.dev/get-git | sh
+# alt: curl -sL get.rso.dev/get-git | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-git | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-git | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-git | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-git | sh -s -- --update
 ```
 
 ### get-golang
@@ -677,13 +718,13 @@ Fast statically typed compiled language by Google
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** go, golang, programming, language, compiler
-**Hash:** `08d65beb9aab`
+**Hash:** `f177acac4968`
 
-<!-- tests:get-golang hash:08d65beb9aab amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-golang hash:f177acac4968 -->
 
 ```bash
 wget -qO- get.rso.dev/get-golang | sh
-# alt: curl -s get.rso.dev/get-golang | sh
+# alt: curl -sL get.rso.dev/get-golang | sh
 ```
 
 **Options:**
@@ -699,11 +740,11 @@ wget -qO- get.rso.dev/get-golang | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-golang | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-golang | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-golang | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-golang | sh -s -- --update
-# alt: curl -s get.rso.dev/get-golang | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-golang | sh -s -- --update
 ```
 
 ### get-just
@@ -714,13 +755,13 @@ Command runner for project-specific tasks (justfile)
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget, tar, gzip
 **Tags:** just, justfile, task-runner, command-runner, make
-**Hash:** `5e03a3fc5758`
+**Hash:** `5881a451939b`
 
-<!-- tests:get-just hash:5e03a3fc5758 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-just hash:5881a451939b -->
 
 ```bash
 wget -qO- get.rso.dev/get-just | sh
-# alt: curl -s get.rso.dev/get-just | sh
+# alt: curl -sL get.rso.dev/get-just | sh
 ```
 
 **Options:**
@@ -736,11 +777,11 @@ wget -qO- get.rso.dev/get-just | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-just | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-just | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-just | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-just | sh -s -- --update
-# alt: curl -s get.rso.dev/get-just | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-just | sh -s -- --update
 ```
 
 ### get-rustup
@@ -752,13 +793,13 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Prereqs:** curl|wget
 **Requires:** non-root user
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
-**Hash:** `e7140a5ba964`
+**Hash:** `f666707c485e`
 
-<!-- tests:get-rustup hash:e7140a5ba964 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-rustup hash:f666707c485e -->
 
 ```bash
 wget -qO- get.rso.dev/get-rustup | sh
-# alt: curl -s get.rso.dev/get-rustup | sh
+# alt: curl -sL get.rso.dev/get-rustup | sh
 ```
 
 **Options:**
@@ -774,11 +815,11 @@ wget -qO- get.rso.dev/get-rustup | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-rustup | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-rustup | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-rustup | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-rustup | sh -s -- --update
-# alt: curl -s get.rso.dev/get-rustup | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-rustup | sh -s -- --update
 ```
 
 ### get-vscode
@@ -789,13 +830,13 @@ Visual Studio Code editor
 **Methods:** apt, dnf, snap, flatpak
 **Prereqs:** curl|wget, gpg
 **Tags:** editor, ide, vscode, microsoft, code
-**Hash:** `5755563af416`
+**Hash:** `a5b31014864f`
 
-<!-- tests:get-vscode hash:5755563af416 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-vscode hash:a5b31014864f -->
 
 ```bash
 wget -qO- get.rso.dev/get-vscode | sh
-# alt: curl -s get.rso.dev/get-vscode | sh
+# alt: curl -sL get.rso.dev/get-vscode | sh
 ```
 
 **Options:**
@@ -811,11 +852,11 @@ wget -qO- get.rso.dev/get-vscode | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-vscode | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-vscode | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-vscode | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-vscode | sh -s -- --update
-# alt: curl -s get.rso.dev/get-vscode | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-vscode | sh -s -- --update
 ```
 
 ## Editors
@@ -828,13 +869,13 @@ Modern and intuitive terminal-based text editor
 **Methods:** apt, snap, github-release
 **Prereqs:** curl|wget
 **Tags:** editor, text, terminal, modern, micro
-**Hash:** `9dd96ff11e57`
+**Hash:** `78d3509350d3`
 
-<!-- tests:get-micro hash:9dd96ff11e57 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-micro hash:78d3509350d3 -->
 
 ```bash
 wget -qO- get.rso.dev/get-micro | sh
-# alt: curl -s get.rso.dev/get-micro | sh
+# alt: curl -sL get.rso.dev/get-micro | sh
 ```
 
 **Options:**
@@ -850,11 +891,11 @@ wget -qO- get.rso.dev/get-micro | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-micro | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-micro | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-micro | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-micro | sh -s -- --update
-# alt: curl -s get.rso.dev/get-micro | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-micro | sh -s -- --update
 ```
 
 ### get-nano
@@ -864,13 +905,13 @@ Simple and easy terminal text editor
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** editor, text, terminal, nano
-**Hash:** `2081ed70d8d5`
+**Hash:** `4d7daec16cd0`
 
-<!-- tests:get-nano hash:2081ed70d8d5 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-nano hash:4d7daec16cd0 -->
 
 ```bash
 wget -qO- get.rso.dev/get-nano | sh
-# alt: curl -s get.rso.dev/get-nano | sh
+# alt: curl -sL get.rso.dev/get-nano | sh
 ```
 
 **Options:**
@@ -886,11 +927,11 @@ wget -qO- get.rso.dev/get-nano | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-nano | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-nano | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-nano | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-nano | sh -s -- --update
-# alt: curl -s get.rso.dev/get-nano | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-nano | sh -s -- --update
 ```
 
 ## File Tools
@@ -902,13 +943,13 @@ exFAT filesystem support for Linux
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** filesystem, exfat, usb, sdcard, mount
-**Hash:** `daa54c4b9541`
+**Hash:** `77ed6ca39cb4`
 
-<!-- tests:get-exfat hash:daa54c4b9541 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-exfat hash:77ed6ca39cb4 -->
 
 ```bash
 wget -qO- get.rso.dev/get-exfat | sh
-# alt: curl -s get.rso.dev/get-exfat | sh
+# alt: curl -sL get.rso.dev/get-exfat | sh
 ```
 
 **Options:**
@@ -924,11 +965,11 @@ wget -qO- get.rso.dev/get-exfat | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-exfat | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-exfat | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-exfat | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-exfat | sh -s -- --update
-# alt: curl -s get.rso.dev/get-exfat | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-exfat | sh -s -- --update
 ```
 
 ### get-nfs-common
@@ -938,13 +979,13 @@ NFS client support for mounting remote filesystems
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** nfs, mount, network, filesystem, share
-**Hash:** `ce2fdfd4feda`
+**Hash:** `2416dbeb17aa`
 
-<!-- tests:get-nfs-common hash:ce2fdfd4feda amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-nfs-common hash:2416dbeb17aa -->
 
 ```bash
 wget -qO- get.rso.dev/get-nfs-common | sh
-# alt: curl -s get.rso.dev/get-nfs-common | sh
+# alt: curl -sL get.rso.dev/get-nfs-common | sh
 ```
 
 **Options:**
@@ -960,11 +1001,11 @@ wget -qO- get.rso.dev/get-nfs-common | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-nfs-common | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-nfs-common | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-nfs-common | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-nfs-common | sh -s -- --update
-# alt: curl -s get.rso.dev/get-nfs-common | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-nfs-common | sh -s -- --update
 ```
 
 ### get-rclone
@@ -975,13 +1016,13 @@ Sync files to and from cloud storage
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** cloud, sync, storage, s3, gdrive, backup, rclone
-**Hash:** `8ddc320024cb`
+**Hash:** `009bc1fc1b2e`
 
-<!-- tests:get-rclone hash:8ddc320024cb amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-rclone hash:009bc1fc1b2e -->
 
 ```bash
 wget -qO- get.rso.dev/get-rclone | sh
-# alt: curl -s get.rso.dev/get-rclone | sh
+# alt: curl -sL get.rso.dev/get-rclone | sh
 ```
 
 **Options:**
@@ -997,11 +1038,11 @@ wget -qO- get.rso.dev/get-rclone | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-rclone | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-rclone | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-rclone | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-rclone | sh -s -- --update
-# alt: curl -s get.rso.dev/get-rclone | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-rclone | sh -s -- --update
 ```
 
 ### get-rsync
@@ -1011,13 +1052,13 @@ Fast and versatile file synchronization tool
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** sync, copy, backup, transfer, rsync
-**Hash:** `55a41f2fa54e`
+**Hash:** `3faec2a1cda1`
 
-<!-- tests:get-rsync hash:55a41f2fa54e amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-rsync hash:3faec2a1cda1 -->
 
 ```bash
 wget -qO- get.rso.dev/get-rsync | sh
-# alt: curl -s get.rso.dev/get-rsync | sh
+# alt: curl -sL get.rso.dev/get-rsync | sh
 ```
 
 **Options:**
@@ -1033,11 +1074,11 @@ wget -qO- get.rso.dev/get-rsync | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-rsync | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-rsync | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-rsync | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-rsync | sh -s -- --update
-# alt: curl -s get.rso.dev/get-rsync | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-rsync | sh -s -- --update
 ```
 
 ## Infrastructure Tools
@@ -1049,13 +1090,13 @@ Agentless IT automation and configuration management
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** ansible, automation, configuration, devops, iac
-**Hash:** `0a359b084bcc`
+**Hash:** `57c13cd4c1ab`
 
-<!-- tests:get-ansible hash:0a359b084bcc amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-ansible hash:57c13cd4c1ab -->
 
 ```bash
 wget -qO- get.rso.dev/get-ansible | sh
-# alt: curl -s get.rso.dev/get-ansible | sh
+# alt: curl -sL get.rso.dev/get-ansible | sh
 ```
 
 **Options:**
@@ -1071,11 +1112,11 @@ wget -qO- get.rso.dev/get-ansible | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-ansible | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-ansible | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-ansible | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-ansible | sh -s -- --update
-# alt: curl -s get.rso.dev/get-ansible | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-ansible | sh -s -- --update
 ```
 
 ### get-packer
@@ -1084,15 +1125,15 @@ Build automated machine images for multiple platforms
 
 **Supported:** All Linux distributions
 **Methods:** github-release
-**Prereqs:** curl|wget
+**Prereqs:** curl|wget, unzip
 **Tags:** packer, images, ami, hashicorp, automation
-**Hash:** `e0f575ab3b1e`
+**Hash:** `154d3523ceee`
 
-<!-- tests:get-packer hash:e0f575ab3b1e amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-packer hash:154d3523ceee -->
 
 ```bash
 wget -qO- get.rso.dev/get-packer | sh
-# alt: curl -s get.rso.dev/get-packer | sh
+# alt: curl -sL get.rso.dev/get-packer | sh
 ```
 
 **Options:**
@@ -1108,11 +1149,11 @@ wget -qO- get.rso.dev/get-packer | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-packer | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-packer | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-packer | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-packer | sh -s -- --update
-# alt: curl -s get.rso.dev/get-packer | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-packer | sh -s -- --update
 ```
 
 ### get-terraform
@@ -1123,13 +1164,13 @@ Infrastructure as Code tool for provisioning cloud resources
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget, unzip
 **Tags:** iac, terraform, cloud, provisioning, hashicorp
-**Hash:** `4b600c3195b5`
+**Hash:** `e80114161e2c`
 
-<!-- tests:get-terraform hash:4b600c3195b5 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-terraform hash:e80114161e2c -->
 
 ```bash
 wget -qO- get.rso.dev/get-terraform | sh
-# alt: curl -s get.rso.dev/get-terraform | sh
+# alt: curl -sL get.rso.dev/get-terraform | sh
 ```
 
 **Options:**
@@ -1145,11 +1186,11 @@ wget -qO- get.rso.dev/get-terraform | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-terraform | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-terraform | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-terraform | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-terraform | sh -s -- --update
-# alt: curl -s get.rso.dev/get-terraform | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-terraform | sh -s -- --update
 ```
 
 ### get-terragrunt
@@ -1160,13 +1201,13 @@ Thin wrapper for Terraform that provides extra tools for working with multiple m
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget
 **Tags:** iac, terraform, terragrunt, cloud, provisioning, gruntwork
-**Hash:** `f787d63b75af`
+**Hash:** `6195f22105eb`
 
-<!-- tests:get-terragrunt hash:f787d63b75af amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-terragrunt hash:6195f22105eb -->
 
 ```bash
 wget -qO- get.rso.dev/get-terragrunt | sh
-# alt: curl -s get.rso.dev/get-terragrunt | sh
+# alt: curl -sL get.rso.dev/get-terragrunt | sh
 ```
 
 **Options:**
@@ -1182,11 +1223,11 @@ wget -qO- get.rso.dev/get-terragrunt | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-terragrunt | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-terragrunt | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-terragrunt | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-terragrunt | sh -s -- --update
-# alt: curl -s get.rso.dev/get-terragrunt | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-terragrunt | sh -s -- --update
 ```
 
 ### get-vagrant
@@ -1194,15 +1235,15 @@ wget -qO- get.rso.dev/get-terragrunt | sh -s -- --update
 Build and manage virtualized development environments
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
-**Methods:** apt, dnf, yum
+**Methods:** asdf, apt, dnf, yum
 **Tags:** vagrant, vm, development, hashicorp
-**Hash:** `0da9511e2d60`
+**Hash:** `d54a676e3cd4`
 
-<!-- tests:get-vagrant hash:0da9511e2d60 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-vagrant hash:d54a676e3cd4 -->
 
 ```bash
 wget -qO- get.rso.dev/get-vagrant | sh
-# alt: curl -s get.rso.dev/get-vagrant | sh
+# alt: curl -sL get.rso.dev/get-vagrant | sh
 ```
 
 **Options:**
@@ -1218,11 +1259,11 @@ wget -qO- get.rso.dev/get-vagrant | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-vagrant | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-vagrant | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-vagrant | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-vagrant | sh -s -- --update
-# alt: curl -s get.rso.dev/get-vagrant | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-vagrant | sh -s -- --update
 ```
 
 ## JSON & Data Tools
@@ -1235,13 +1276,13 @@ Lightweight command-line JSON processor
 **Methods:** apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Prereqs:** curl|wget (for github-release method)
 **Tags:** json, parser, filter, query, cli
-**Hash:** `b236640e0db9`
+**Hash:** `0dbc69deb104`
 
-<!-- tests:get-jq hash:b236640e0db9 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-jq hash:0dbc69deb104 -->
 
 ```bash
 wget -qO- get.rso.dev/get-jq | sh
-# alt: curl -s get.rso.dev/get-jq | sh
+# alt: curl -sL get.rso.dev/get-jq | sh
 ```
 
 **Options:**
@@ -1257,11 +1298,11 @@ wget -qO- get.rso.dev/get-jq | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-jq | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-jq | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-jq | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-jq | sh -s -- --update
-# alt: curl -s get.rso.dev/get-jq | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-jq | sh -s -- --update
 ```
 
 ### get-yq
@@ -1272,13 +1313,13 @@ Lightweight command-line YAML, JSON, and XML processor
 **Methods:** apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Prereqs:** curl|wget (for github-release method)
 **Tags:** yaml, json, xml, parser, cli
-**Hash:** `18db7f749bf1`
+**Hash:** `2d71f7587353`
 
-<!-- tests:get-yq hash:18db7f749bf1 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-yq hash:2d71f7587353 -->
 
 ```bash
 wget -qO- get.rso.dev/get-yq | sh
-# alt: curl -s get.rso.dev/get-yq | sh
+# alt: curl -sL get.rso.dev/get-yq | sh
 ```
 
 **Options:**
@@ -1294,11 +1335,50 @@ wget -qO- get.rso.dev/get-yq | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-yq | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-yq | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-yq | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-yq | sh -s -- --update
-# alt: curl -s get.rso.dev/get-yq | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-yq | sh -s -- --update
+```
+
+## Kubernetes & Cloud
+
+### get-kubectl
+
+Kubernetes command-line tool for managing clusters
+
+**Supported:** All Linux distributions
+**Methods:** apt, github-release, asdf
+**Prereqs:** curl|wget
+**Tags:** kubectl, kubernetes, k8s, cluster, devops
+**Hash:** `5f25e28143d3`
+
+<!-- tests:get-kubectl hash:5f25e28143d3 -->
+
+```bash
+wget -qO- get.rso.dev/get-kubectl | sh
+# alt: curl -sL get.rso.dev/get-kubectl | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-kubectl | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-kubectl | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-kubectl | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-kubectl | sh -s -- --update
 ```
 
 ## Kubernetes Tools
@@ -1311,13 +1391,13 @@ CLI for Argo CD GitOps continuous delivery
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, argocd, gitops, cd
-**Hash:** `4a337ee106e2`
+**Hash:** `8ea977d63b7e`
 
-<!-- tests:get-argocd-cli hash:4a337ee106e2 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-argocd-cli hash:8ea977d63b7e -->
 
 ```bash
 wget -qO- get.rso.dev/get-argocd-cli | sh
-# alt: curl -s get.rso.dev/get-argocd-cli | sh
+# alt: curl -sL get.rso.dev/get-argocd-cli | sh
 ```
 
 **Options:**
@@ -1333,11 +1413,11 @@ wget -qO- get.rso.dev/get-argocd-cli | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-argocd-cli | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-argocd-cli | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-argocd-cli | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-argocd-cli | sh -s -- --update
-# alt: curl -s get.rso.dev/get-argocd-cli | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-argocd-cli | sh -s -- --update
 ```
 
 ### get-cilium-cli
@@ -1348,13 +1428,13 @@ CLI for installing and managing Cilium in Kubernetes
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, cilium, networking, ebpf, cni
-**Hash:** `14e6b313b54b`
+**Hash:** `3a73b8b63158`
 
-<!-- tests:get-cilium-cli hash:14e6b313b54b amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-cilium-cli hash:3a73b8b63158 -->
 
 ```bash
 wget -qO- get.rso.dev/get-cilium-cli | sh
-# alt: curl -s get.rso.dev/get-cilium-cli | sh
+# alt: curl -sL get.rso.dev/get-cilium-cli | sh
 ```
 
 **Options:**
@@ -1370,11 +1450,11 @@ wget -qO- get.rso.dev/get-cilium-cli | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-cilium-cli | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-cilium-cli | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-cilium-cli | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-cilium-cli | sh -s -- --update
-# alt: curl -s get.rso.dev/get-cilium-cli | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-cilium-cli | sh -s -- --update
 ```
 
 ### get-eksctl
@@ -1385,13 +1465,13 @@ Official CLI for Amazon EKS cluster management
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, aws, eks, cluster, eksctl
-**Hash:** `12d923276d0b`
+**Hash:** `4dbaf2cb4eb2`
 
-<!-- tests:get-eksctl hash:12d923276d0b amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-eksctl hash:4dbaf2cb4eb2 -->
 
 ```bash
 wget -qO- get.rso.dev/get-eksctl | sh
-# alt: curl -s get.rso.dev/get-eksctl | sh
+# alt: curl -sL get.rso.dev/get-eksctl | sh
 ```
 
 **Options:**
@@ -1407,11 +1487,11 @@ wget -qO- get.rso.dev/get-eksctl | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-eksctl | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-eksctl | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-eksctl | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-eksctl | sh -s -- --update
-# alt: curl -s get.rso.dev/get-eksctl | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-eksctl | sh -s -- --update
 ```
 
 ### get-flux
@@ -1422,13 +1502,13 @@ GitOps toolkit for Kubernetes continuous delivery
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, gitops, flux, cd
-**Hash:** `866e11277f5b`
+**Hash:** `11223e814df1`
 
-<!-- tests:get-flux hash:866e11277f5b amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-flux hash:11223e814df1 -->
 
 ```bash
 wget -qO- get.rso.dev/get-flux | sh
-# alt: curl -s get.rso.dev/get-flux | sh
+# alt: curl -sL get.rso.dev/get-flux | sh
 ```
 
 **Options:**
@@ -1444,11 +1524,11 @@ wget -qO- get.rso.dev/get-flux | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-flux | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-flux | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-flux | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-flux | sh -s -- --update
-# alt: curl -s get.rso.dev/get-flux | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-flux | sh -s -- --update
 ```
 
 ### get-helm
@@ -1459,13 +1539,13 @@ The package manager for Kubernetes
 **Methods:** snap, github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, helm, charts, package-manager
-**Hash:** `5c3a6dba0268`
+**Hash:** `e5943a4e71e1`
 
-<!-- tests:get-helm hash:5c3a6dba0268 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-helm hash:e5943a4e71e1 -->
 
 ```bash
 wget -qO- get.rso.dev/get-helm | sh
-# alt: curl -s get.rso.dev/get-helm | sh
+# alt: curl -sL get.rso.dev/get-helm | sh
 ```
 
 **Options:**
@@ -1481,11 +1561,11 @@ wget -qO- get.rso.dev/get-helm | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-helm | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-helm | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-helm | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-helm | sh -s -- --update
-# alt: curl -s get.rso.dev/get-helm | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-helm | sh -s -- --update
 ```
 
 ### get-hubble-cli
@@ -1496,13 +1576,13 @@ CLI for Hubble network observability in Kubernetes
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, hubble, observability, networking
-**Hash:** `988d3644e199`
+**Hash:** `ba87da4fb667`
 
-<!-- tests:get-hubble-cli hash:988d3644e199 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-hubble-cli hash:ba87da4fb667 -->
 
 ```bash
 wget -qO- get.rso.dev/get-hubble-cli | sh
-# alt: curl -s get.rso.dev/get-hubble-cli | sh
+# alt: curl -sL get.rso.dev/get-hubble-cli | sh
 ```
 
 **Options:**
@@ -1518,11 +1598,11 @@ wget -qO- get.rso.dev/get-hubble-cli | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-hubble-cli | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-hubble-cli | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-hubble-cli | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-hubble-cli | sh -s -- --update
-# alt: curl -s get.rso.dev/get-hubble-cli | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-hubble-cli | sh -s -- --update
 ```
 
 ### get-krew
@@ -1533,13 +1613,13 @@ Plugin manager for kubectl
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, kubectl, plugins, krew
-**Hash:** `2f38893a02a8`
+**Hash:** `e0200df3ea93`
 
-<!-- tests:get-krew hash:2f38893a02a8 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-krew hash:e0200df3ea93 -->
 
 ```bash
 wget -qO- get.rso.dev/get-krew | sh
-# alt: curl -s get.rso.dev/get-krew | sh
+# alt: curl -sL get.rso.dev/get-krew | sh
 ```
 
 **Options:**
@@ -1555,11 +1635,11 @@ wget -qO- get.rso.dev/get-krew | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-krew | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-krew | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-krew | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-krew | sh -s -- --update
-# alt: curl -s get.rso.dev/get-krew | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-krew | sh -s -- --update
 ```
 
 ### get-kubeseal
@@ -1570,13 +1650,13 @@ CLI for Sealed Secrets encryption in Kubernetes
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** kubernetes, k8s, secrets, encryption, sealed-secrets
-**Hash:** `7486e67246e0`
+**Hash:** `98e33922e6d5`
 
-<!-- tests:get-kubeseal hash:7486e67246e0 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-kubeseal hash:98e33922e6d5 -->
 
 ```bash
 wget -qO- get.rso.dev/get-kubeseal | sh
-# alt: curl -s get.rso.dev/get-kubeseal | sh
+# alt: curl -sL get.rso.dev/get-kubeseal | sh
 ```
 
 **Options:**
@@ -1592,11 +1672,11 @@ wget -qO- get.rso.dev/get-kubeseal | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-kubeseal | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-kubeseal | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-kubeseal | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-kubeseal | sh -s -- --update
-# alt: curl -s get.rso.dev/get-kubeseal | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-kubeseal | sh -s -- --update
 ```
 
 ### get-lens
@@ -1606,13 +1686,13 @@ Kubernetes IDE for managing clusters
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** kubernetes, k8s, lens, ide, cluster, dashboard
-**Hash:** `ec19a962531c`
+**Hash:** `bcff21b67bb2`
 
-<!-- tests:get-lens hash:ec19a962531c amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-lens hash:bcff21b67bb2 -->
 
 ```bash
 wget -qO- get.rso.dev/get-lens | sh
-# alt: curl -s get.rso.dev/get-lens | sh
+# alt: curl -sL get.rso.dev/get-lens | sh
 ```
 
 **Options:**
@@ -1628,11 +1708,11 @@ wget -qO- get.rso.dev/get-lens | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-lens | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-lens | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-lens | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-lens | sh -s -- --update
-# alt: curl -s get.rso.dev/get-lens | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-lens | sh -s -- --update
 ```
 
 ## Media Tools
@@ -1644,13 +1724,13 @@ Free and open-source streaming and recording software
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** streaming, recording, obs, video, broadcast
-**Hash:** `22f339c3ec75`
+**Hash:** `29d770f93a07`
 
-<!-- tests:get-obs hash:22f339c3ec75 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-obs hash:29d770f93a07 -->
 
 ```bash
 wget -qO- get.rso.dev/get-obs | sh
-# alt: curl -s get.rso.dev/get-obs | sh
+# alt: curl -sL get.rso.dev/get-obs | sh
 ```
 
 **Options:**
@@ -1666,11 +1746,11 @@ wget -qO- get.rso.dev/get-obs | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-obs | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-obs | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-obs | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-obs | sh -s -- --update
-# alt: curl -s get.rso.dev/get-obs | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-obs | sh -s -- --update
 ```
 
 ### get-vlc
@@ -1680,13 +1760,13 @@ Free and open-source cross-platform multimedia player
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** video, audio, media, player, vlc, multimedia
-**Hash:** `2429d6224c09`
+**Hash:** `575ae3f4ddfb`
 
-<!-- tests:get-vlc hash:2429d6224c09 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-vlc hash:575ae3f4ddfb -->
 
 ```bash
 wget -qO- get.rso.dev/get-vlc | sh
-# alt: curl -s get.rso.dev/get-vlc | sh
+# alt: curl -sL get.rso.dev/get-vlc | sh
 ```
 
 **Options:**
@@ -1702,11 +1782,11 @@ wget -qO- get.rso.dev/get-vlc | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-vlc | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-vlc | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-vlc | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-vlc | sh -s -- --update
-# alt: curl -s get.rso.dev/get-vlc | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-vlc | sh -s -- --update
 ```
 
 ## Networking Tools
@@ -1718,13 +1798,13 @@ Automatically restart SSH sessions and tunnels
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** ssh, tunnel, persistent, autossh
-**Hash:** `a6a98aeb40e9`
+**Hash:** `348bd2877a2d`
 
-<!-- tests:get-autossh hash:a6a98aeb40e9 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-autossh hash:348bd2877a2d -->
 
 ```bash
 wget -qO- get.rso.dev/get-autossh | sh
-# alt: curl -s get.rso.dev/get-autossh | sh
+# alt: curl -sL get.rso.dev/get-autossh | sh
 ```
 
 **Options:**
@@ -1740,11 +1820,11 @@ wget -qO- get.rso.dev/get-autossh | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-autossh | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-autossh | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-autossh | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-autossh | sh -s -- --update
-# alt: curl -s get.rso.dev/get-autossh | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-autossh | sh -s -- --update
 ```
 
 ### get-curl
@@ -1754,13 +1834,13 @@ Command-line tool for transferring data with URLs
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** http, api, download, transfer, curl
-**Hash:** `857ff0ce6737`
+**Hash:** `3d9c0c04bdfb`
 
-<!-- tests:get-curl hash:857ff0ce6737 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-curl hash:3d9c0c04bdfb -->
 
 ```bash
 wget -qO- get.rso.dev/get-curl | sh
-# alt: curl -s get.rso.dev/get-curl | sh
+# alt: curl -sL get.rso.dev/get-curl | sh
 ```
 
 **Options:**
@@ -1776,11 +1856,11 @@ wget -qO- get.rso.dev/get-curl | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-curl | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-curl | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-curl | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-curl | sh -s -- --update
-# alt: curl -s get.rso.dev/get-curl | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-curl | sh -s -- --update
 ```
 
 ### get-ethtool
@@ -1790,13 +1870,13 @@ Query and control network device driver and hardware settings
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, ethernet, driver, hardware, ethtool
-**Hash:** `09f553c9deb2`
+**Hash:** `a2c218abc5b1`
 
-<!-- tests:get-ethtool hash:09f553c9deb2 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-ethtool hash:a2c218abc5b1 -->
 
 ```bash
 wget -qO- get.rso.dev/get-ethtool | sh
-# alt: curl -s get.rso.dev/get-ethtool | sh
+# alt: curl -sL get.rso.dev/get-ethtool | sh
 ```
 
 **Options:**
@@ -1812,11 +1892,11 @@ wget -qO- get.rso.dev/get-ethtool | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-ethtool | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-ethtool | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-ethtool | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-ethtool | sh -s -- --update
-# alt: curl -s get.rso.dev/get-ethtool | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-ethtool | sh -s -- --update
 ```
 
 ### get-hping3
@@ -1826,13 +1906,13 @@ TCP/IP packet assembler and analyzer
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, packet, tcp, scan, hping
-**Hash:** `4bd4b0fe73ad`
+**Hash:** `5ac31ba6ff3a`
 
-<!-- tests:get-hping3 hash:4bd4b0fe73ad amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-hping3 hash:5ac31ba6ff3a -->
 
 ```bash
 wget -qO- get.rso.dev/get-hping3 | sh
-# alt: curl -s get.rso.dev/get-hping3 | sh
+# alt: curl -sL get.rso.dev/get-hping3 | sh
 ```
 
 **Options:**
@@ -1848,11 +1928,11 @@ wget -qO- get.rso.dev/get-hping3 | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-hping3 | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-hping3 | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-hping3 | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-hping3 | sh -s -- --update
-# alt: curl -s get.rso.dev/get-hping3 | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-hping3 | sh -s -- --update
 ```
 
 ### get-iputils-ping
@@ -1862,13 +1942,13 @@ Network reachability testing utility
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, ping, icmp, diagnostic
-**Hash:** `ab2efadc4629`
+**Hash:** `726275c6ee76`
 
-<!-- tests:get-iputils-ping hash:ab2efadc4629 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-iputils-ping hash:726275c6ee76 -->
 
 ```bash
 wget -qO- get.rso.dev/get-iputils-ping | sh
-# alt: curl -s get.rso.dev/get-iputils-ping | sh
+# alt: curl -sL get.rso.dev/get-iputils-ping | sh
 ```
 
 **Options:**
@@ -1884,11 +1964,11 @@ wget -qO- get.rso.dev/get-iputils-ping | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-iputils-ping | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-iputils-ping | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-iputils-ping | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-iputils-ping | sh -s -- --update
-# alt: curl -s get.rso.dev/get-iputils-ping | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-iputils-ping | sh -s -- --update
 ```
 
 ### get-mtr
@@ -1898,13 +1978,13 @@ Network diagnostic tool combining traceroute and ping
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, traceroute, ping, diagnostic, mtr
-**Hash:** `e411c4715647`
+**Hash:** `4cc17d086fc6`
 
-<!-- tests:get-mtr hash:e411c4715647 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-mtr hash:4cc17d086fc6 -->
 
 ```bash
 wget -qO- get.rso.dev/get-mtr | sh
-# alt: curl -s get.rso.dev/get-mtr | sh
+# alt: curl -sL get.rso.dev/get-mtr | sh
 ```
 
 **Options:**
@@ -1920,11 +2000,11 @@ wget -qO- get.rso.dev/get-mtr | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-mtr | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-mtr | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-mtr | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-mtr | sh -s -- --update
-# alt: curl -s get.rso.dev/get-mtr | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-mtr | sh -s -- --update
 ```
 
 ### get-net-tools
@@ -1934,13 +2014,13 @@ Classic networking utilities (ifconfig, netstat, route)
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, ifconfig, netstat, route, arp
-**Hash:** `f6c4eda0f4a5`
+**Hash:** `a32ed7eb3899`
 
-<!-- tests:get-net-tools hash:f6c4eda0f4a5 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-net-tools hash:a32ed7eb3899 -->
 
 ```bash
 wget -qO- get.rso.dev/get-net-tools | sh
-# alt: curl -s get.rso.dev/get-net-tools | sh
+# alt: curl -sL get.rso.dev/get-net-tools | sh
 ```
 
 **Options:**
@@ -1956,11 +2036,11 @@ wget -qO- get.rso.dev/get-net-tools | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-net-tools | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-net-tools | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-net-tools | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-net-tools | sh -s -- --update
-# alt: curl -s get.rso.dev/get-net-tools | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-net-tools | sh -s -- --update
 ```
 
 ### get-nload
@@ -1970,13 +2050,13 @@ Real-time network traffic and bandwidth monitor
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, bandwidth, monitor, traffic, nload
-**Hash:** `6b16bddac194`
+**Hash:** `9a9e7550dfe5`
 
-<!-- tests:get-nload hash:6b16bddac194 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-nload hash:9a9e7550dfe5 -->
 
 ```bash
 wget -qO- get.rso.dev/get-nload | sh
-# alt: curl -s get.rso.dev/get-nload | sh
+# alt: curl -sL get.rso.dev/get-nload | sh
 ```
 
 **Options:**
@@ -1992,11 +2072,11 @@ wget -qO- get.rso.dev/get-nload | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-nload | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-nload | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-nload | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-nload | sh -s -- --update
-# alt: curl -s get.rso.dev/get-nload | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-nload | sh -s -- --update
 ```
 
 ### get-socat
@@ -2006,13 +2086,13 @@ Multipurpose relay for bidirectional data transfer
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** relay, socket, proxy, tunnel, socat
-**Hash:** `85c066d6bd56`
+**Hash:** `522771deccad`
 
-<!-- tests:get-socat hash:85c066d6bd56 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-socat hash:522771deccad -->
 
 ```bash
 wget -qO- get.rso.dev/get-socat | sh
-# alt: curl -s get.rso.dev/get-socat | sh
+# alt: curl -sL get.rso.dev/get-socat | sh
 ```
 
 **Options:**
@@ -2028,11 +2108,11 @@ wget -qO- get.rso.dev/get-socat | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-socat | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-socat | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-socat | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-socat | sh -s -- --update
-# alt: curl -s get.rso.dev/get-socat | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-socat | sh -s -- --update
 ```
 
 ### get-speedtest-cli
@@ -2042,13 +2122,13 @@ Command-line internet speed test
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** speed, bandwidth, test, internet, network
-**Hash:** `1c5409eaddfa`
+**Hash:** `3387f969e9d6`
 
-<!-- tests:get-speedtest-cli hash:1c5409eaddfa amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-speedtest-cli hash:3387f969e9d6 -->
 
 ```bash
 wget -qO- get.rso.dev/get-speedtest-cli | sh
-# alt: curl -s get.rso.dev/get-speedtest-cli | sh
+# alt: curl -sL get.rso.dev/get-speedtest-cli | sh
 ```
 
 **Options:**
@@ -2064,11 +2144,11 @@ wget -qO- get.rso.dev/get-speedtest-cli | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-speedtest-cli | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-speedtest-cli | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-speedtest-cli | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-speedtest-cli | sh -s -- --update
-# alt: curl -s get.rso.dev/get-speedtest-cli | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-speedtest-cli | sh -s -- --update
 ```
 
 ### get-sshpass
@@ -2078,13 +2158,13 @@ Non-interactive SSH password authentication
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** ssh, password, automation, sshpass
-**Hash:** `a0db6fb021a6`
+**Hash:** `741b169dac3b`
 
-<!-- tests:get-sshpass hash:a0db6fb021a6 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-sshpass hash:741b169dac3b -->
 
 ```bash
 wget -qO- get.rso.dev/get-sshpass | sh
-# alt: curl -s get.rso.dev/get-sshpass | sh
+# alt: curl -sL get.rso.dev/get-sshpass | sh
 ```
 
 **Options:**
@@ -2100,11 +2180,11 @@ wget -qO- get.rso.dev/get-sshpass | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-sshpass | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-sshpass | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-sshpass | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-sshpass | sh -s -- --update
-# alt: curl -s get.rso.dev/get-sshpass | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-sshpass | sh -s -- --update
 ```
 
 ### get-tcpdump
@@ -2114,13 +2194,13 @@ Command-line packet analyzer for network traffic
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, packet, capture, sniff, tcpdump
-**Hash:** `2dad5d71f06c`
+**Hash:** `93d7cc6c0a5e`
 
-<!-- tests:get-tcpdump hash:2dad5d71f06c amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-tcpdump hash:93d7cc6c0a5e -->
 
 ```bash
 wget -qO- get.rso.dev/get-tcpdump | sh
-# alt: curl -s get.rso.dev/get-tcpdump | sh
+# alt: curl -sL get.rso.dev/get-tcpdump | sh
 ```
 
 **Options:**
@@ -2136,11 +2216,11 @@ wget -qO- get.rso.dev/get-tcpdump | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-tcpdump | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-tcpdump | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-tcpdump | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-tcpdump | sh -s -- --update
-# alt: curl -s get.rso.dev/get-tcpdump | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-tcpdump | sh -s -- --update
 ```
 
 ### get-telnet
@@ -2150,13 +2230,13 @@ User interface to the TELNET protocol
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** network, telnet, remote, protocol
-**Hash:** `f84ff28ad832`
+**Hash:** `f2ec8b3cdffc`
 
-<!-- tests:get-telnet hash:f84ff28ad832 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-telnet hash:f2ec8b3cdffc -->
 
 ```bash
 wget -qO- get.rso.dev/get-telnet | sh
-# alt: curl -s get.rso.dev/get-telnet | sh
+# alt: curl -sL get.rso.dev/get-telnet | sh
 ```
 
 **Options:**
@@ -2172,11 +2252,11 @@ wget -qO- get.rso.dev/get-telnet | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-telnet | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-telnet | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-telnet | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-telnet | sh -s -- --update
-# alt: curl -s get.rso.dev/get-telnet | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-telnet | sh -s -- --update
 ```
 
 ### get-wget
@@ -2186,13 +2266,13 @@ Network file retriever via HTTP/HTTPS/FTP
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** download, http, ftp, wget, transfer
-**Hash:** `8041ca691d03`
+**Hash:** `93431746f991`
 
-<!-- tests:get-wget hash:8041ca691d03 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-wget hash:93431746f991 -->
 
 ```bash
 wget -qO- get.rso.dev/get-wget | sh
-# alt: curl -s get.rso.dev/get-wget | sh
+# alt: curl -sL get.rso.dev/get-wget | sh
 ```
 
 **Options:**
@@ -2208,11 +2288,11 @@ wget -qO- get.rso.dev/get-wget | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-wget | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-wget | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-wget | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-wget | sh -s -- --update
-# alt: curl -s get.rso.dev/get-wget | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-wget | sh -s -- --update
 ```
 
 ## Productivity Tools
@@ -2224,13 +2304,13 @@ Open-source note-taking and to-do application
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** notes, todo, markdown, sync, joplin
-**Hash:** `92d09a8ff624`
+**Hash:** `bb43cedd50b9`
 
-<!-- tests:get-joplin hash:92d09a8ff624 amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-joplin hash:bb43cedd50b9 -->
 
 ```bash
 wget -qO- get.rso.dev/get-joplin | sh
-# alt: curl -s get.rso.dev/get-joplin | sh
+# alt: curl -sL get.rso.dev/get-joplin | sh
 ```
 
 **Options:**
@@ -2246,11 +2326,11 @@ wget -qO- get.rso.dev/get-joplin | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-joplin | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-joplin | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-joplin | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-joplin | sh -s -- --update
-# alt: curl -s get.rso.dev/get-joplin | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-joplin | sh -s -- --update
 ```
 
 ### get-onlyoffice
@@ -2260,13 +2340,13 @@ Free office suite compatible with Microsoft Office
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** office, documents, spreadsheet, onlyoffice
-**Hash:** `20d5eb10641d`
+**Hash:** `f98294750ea6`
 
-<!-- tests:get-onlyoffice hash:20d5eb10641d amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-onlyoffice hash:f98294750ea6 -->
 
 ```bash
 wget -qO- get.rso.dev/get-onlyoffice | sh
-# alt: curl -s get.rso.dev/get-onlyoffice | sh
+# alt: curl -sL get.rso.dev/get-onlyoffice | sh
 ```
 
 **Options:**
@@ -2282,11 +2362,11 @@ wget -qO- get.rso.dev/get-onlyoffice | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-onlyoffice | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-onlyoffice | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --update
-# alt: curl -s get.rso.dev/get-onlyoffice | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-onlyoffice | sh -s -- --update
 ```
 
 ## Search Tools
@@ -2299,13 +2379,13 @@ Simple, fast alternative to find
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** find, search, files, fast, fd, modern
-**Hash:** `5097336d0504`
+**Hash:** `da545fefa65b`
 
-<!-- tests:get-fd-find hash:5097336d0504 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-fd-find hash:da545fefa65b -->
 
 ```bash
 wget -qO- get.rso.dev/get-fd-find | sh
-# alt: curl -s get.rso.dev/get-fd-find | sh
+# alt: curl -sL get.rso.dev/get-fd-find | sh
 ```
 
 **Options:**
@@ -2321,11 +2401,11 @@ wget -qO- get.rso.dev/get-fd-find | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-fd-find | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-fd-find | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-fd-find | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-fd-find | sh -s -- --update
-# alt: curl -s get.rso.dev/get-fd-find | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-fd-find | sh -s -- --update
 ```
 
 ### get-fzf
@@ -2336,13 +2416,13 @@ General-purpose command-line fuzzy finder
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** fuzzy, search, filter, finder, interactive, fzf
-**Hash:** `a5b8503f5c8e`
+**Hash:** `df640aaa0ac9`
 
-<!-- tests:get-fzf hash:a5b8503f5c8e amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-fzf hash:df640aaa0ac9 -->
 
 ```bash
 wget -qO- get.rso.dev/get-fzf | sh
-# alt: curl -s get.rso.dev/get-fzf | sh
+# alt: curl -sL get.rso.dev/get-fzf | sh
 ```
 
 **Options:**
@@ -2358,11 +2438,11 @@ wget -qO- get.rso.dev/get-fzf | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-fzf | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-fzf | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-fzf | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-fzf | sh -s -- --update
-# alt: curl -s get.rso.dev/get-fzf | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-fzf | sh -s -- --update
 ```
 
 ### get-ripgrep
@@ -2373,13 +2453,13 @@ Extremely fast recursive text search tool
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** grep, search, regex, fast, recursive, rg
-**Hash:** `d8307a2390a7`
+**Hash:** `157a1ee9c813`
 
-<!-- tests:get-ripgrep hash:d8307a2390a7 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-ripgrep hash:157a1ee9c813 -->
 
 ```bash
 wget -qO- get.rso.dev/get-ripgrep | sh
-# alt: curl -s get.rso.dev/get-ripgrep | sh
+# alt: curl -sL get.rso.dev/get-ripgrep | sh
 ```
 
 **Options:**
@@ -2395,11 +2475,11 @@ wget -qO- get.rso.dev/get-ripgrep | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-ripgrep | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-ripgrep | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-ripgrep | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-ripgrep | sh -s -- --update
-# alt: curl -s get.rso.dev/get-ripgrep | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-ripgrep | sh -s -- --update
 ```
 
 ## Security Tools
@@ -2411,13 +2491,13 @@ Secure password manager and digital vault
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** password, manager, security, vault, 1password
-**Hash:** `adac5ffabe71`
+**Hash:** `cf1022d5332e`
 
-<!-- tests:get-1password hash:adac5ffabe71 amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-1password hash:cf1022d5332e -->
 
 ```bash
 wget -qO- get.rso.dev/get-1password | sh
-# alt: curl -s get.rso.dev/get-1password | sh
+# alt: curl -sL get.rso.dev/get-1password | sh
 ```
 
 **Options:**
@@ -2433,11 +2513,11 @@ wget -qO- get.rso.dev/get-1password | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-1password | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-1password | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-1password | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-1password | sh -s -- --update
-# alt: curl -s get.rso.dev/get-1password | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-1password | sh -s -- --update
 ```
 
 ### get-bitwarden
@@ -2447,13 +2527,13 @@ Open-source password manager
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** password, manager, security, vault, bitwarden
-**Hash:** `d1f4f2829e9f`
+**Hash:** `50fc3011c706`
 
-<!-- tests:get-bitwarden hash:d1f4f2829e9f amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-bitwarden hash:50fc3011c706 -->
 
 ```bash
 wget -qO- get.rso.dev/get-bitwarden | sh
-# alt: curl -s get.rso.dev/get-bitwarden | sh
+# alt: curl -sL get.rso.dev/get-bitwarden | sh
 ```
 
 **Options:**
@@ -2469,11 +2549,11 @@ wget -qO- get.rso.dev/get-bitwarden | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-bitwarden | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-bitwarden | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-bitwarden | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-bitwarden | sh -s -- --update
-# alt: curl -s get.rso.dev/get-bitwarden | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-bitwarden | sh -s -- --update
 ```
 
 ### get-ca-certificates
@@ -2483,13 +2563,13 @@ Common CA certificates for SSL/TLS verification
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** ssl, tls, certificates, ca, trust
-**Hash:** `b5b3c0954449`
+**Hash:** `894d6655fa8c`
 
-<!-- tests:get-ca-certificates hash:b5b3c0954449 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-ca-certificates hash:894d6655fa8c -->
 
 ```bash
 wget -qO- get.rso.dev/get-ca-certificates | sh
-# alt: curl -s get.rso.dev/get-ca-certificates | sh
+# alt: curl -sL get.rso.dev/get-ca-certificates | sh
 ```
 
 **Options:**
@@ -2505,11 +2585,11 @@ wget -qO- get.rso.dev/get-ca-certificates | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-ca-certificates | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-ca-certificates | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-ca-certificates | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-ca-certificates | sh -s -- --update
-# alt: curl -s get.rso.dev/get-ca-certificates | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-ca-certificates | sh -s -- --update
 ```
 
 ### get-easy-rsa
@@ -2519,13 +2599,13 @@ CLI utility to build and manage a PKI CA
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** pki, ca, certificates, vpn, openvpn, easy-rsa
-**Hash:** `f2967a84db02`
+**Hash:** `f72dbd83643c`
 
-<!-- tests:get-easy-rsa hash:f2967a84db02 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-easy-rsa hash:f72dbd83643c -->
 
 ```bash
 wget -qO- get.rso.dev/get-easy-rsa | sh
-# alt: curl -s get.rso.dev/get-easy-rsa | sh
+# alt: curl -sL get.rso.dev/get-easy-rsa | sh
 ```
 
 **Options:**
@@ -2541,11 +2621,11 @@ wget -qO- get.rso.dev/get-easy-rsa | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-easy-rsa | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-easy-rsa | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-easy-rsa | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-easy-rsa | sh -s -- --update
-# alt: curl -s get.rso.dev/get-easy-rsa | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-easy-rsa | sh -s -- --update
 ```
 
 ### get-git-crypt
@@ -2555,13 +2635,13 @@ Transparent file encryption in Git repositories
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** git, encryption, secrets, crypt, transparent
-**Hash:** `eefd3d1eddc3`
+**Hash:** `43f317457893`
 
-<!-- tests:get-git-crypt hash:eefd3d1eddc3 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-git-crypt hash:43f317457893 -->
 
 ```bash
 wget -qO- get.rso.dev/get-git-crypt | sh
-# alt: curl -s get.rso.dev/get-git-crypt | sh
+# alt: curl -sL get.rso.dev/get-git-crypt | sh
 ```
 
 **Options:**
@@ -2577,11 +2657,11 @@ wget -qO- get.rso.dev/get-git-crypt | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-git-crypt | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-git-crypt | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-git-crypt | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-git-crypt | sh -s -- --update
-# alt: curl -s get.rso.dev/get-git-crypt | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-git-crypt | sh -s -- --update
 ```
 
 ### get-gnupg
@@ -2591,13 +2671,13 @@ GNU Privacy Guard for encryption and signing
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** encryption, gpg, pgp, signing, privacy
-**Hash:** `fb40e4baa44a`
+**Hash:** `8e0fd12e33da`
 
-<!-- tests:get-gnupg hash:fb40e4baa44a amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-gnupg hash:8e0fd12e33da -->
 
 ```bash
 wget -qO- get.rso.dev/get-gnupg | sh
-# alt: curl -s get.rso.dev/get-gnupg | sh
+# alt: curl -sL get.rso.dev/get-gnupg | sh
 ```
 
 **Options:**
@@ -2613,11 +2693,11 @@ wget -qO- get.rso.dev/get-gnupg | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-gnupg | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-gnupg | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-gnupg | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-gnupg | sh -s -- --update
-# alt: curl -s get.rso.dev/get-gnupg | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-gnupg | sh -s -- --update
 ```
 
 ### get-openssl
@@ -2627,13 +2707,13 @@ Cryptography toolkit for SSL/TLS protocols
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** ssl, tls, crypto, certificates, encryption
-**Hash:** `059a59f4b6f9`
+**Hash:** `f31787878d8c`
 
-<!-- tests:get-openssl hash:059a59f4b6f9 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-openssl hash:f31787878d8c -->
 
 ```bash
 wget -qO- get.rso.dev/get-openssl | sh
-# alt: curl -s get.rso.dev/get-openssl | sh
+# alt: curl -sL get.rso.dev/get-openssl | sh
 ```
 
 **Options:**
@@ -2649,11 +2729,11 @@ wget -qO- get.rso.dev/get-openssl | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-openssl | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-openssl | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-openssl | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-openssl | sh -s -- --update
-# alt: curl -s get.rso.dev/get-openssl | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-openssl | sh -s -- --update
 ```
 
 ### get-sops
@@ -2664,13 +2744,13 @@ Simple and flexible tool for managing encrypted secrets
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** secrets, encryption, yaml, json, sops, mozilla
-**Hash:** `2aa8408a0248`
+**Hash:** `aea2b6412c1a`
 
-<!-- tests:get-sops hash:2aa8408a0248 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-sops hash:aea2b6412c1a -->
 
 ```bash
 wget -qO- get.rso.dev/get-sops | sh
-# alt: curl -s get.rso.dev/get-sops | sh
+# alt: curl -sL get.rso.dev/get-sops | sh
 ```
 
 **Options:**
@@ -2686,11 +2766,11 @@ wget -qO- get.rso.dev/get-sops | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-sops | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-sops | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-sops | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-sops | sh -s -- --update
-# alt: curl -s get.rso.dev/get-sops | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-sops | sh -s -- --update
 ```
 
 ## System & Networking
@@ -2702,13 +2782,13 @@ OpenSSH server — secure remote access via SSH
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** ssh, remote, server, network, openssh, sshd
-**Hash:** `edfe5bf8ac5e`
+**Hash:** `0e9c6a21cd48`
 
-<!-- tests:get-openssh-server hash:edfe5bf8ac5e amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-openssh-server hash:0e9c6a21cd48 -->
 
 ```bash
 wget -qO- get.rso.dev/get-openssh-server | sh
-# alt: curl -s get.rso.dev/get-openssh-server | sh
+# alt: curl -sL get.rso.dev/get-openssh-server | sh
 ```
 
 **Options:**
@@ -2724,11 +2804,11 @@ wget -qO- get.rso.dev/get-openssh-server | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-openssh-server | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-openssh-server | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-openssh-server | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-openssh-server | sh -s -- --update
-# alt: curl -s get.rso.dev/get-openssh-server | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-openssh-server | sh -s -- --update
 ```
 
 ## System Tools
@@ -2740,13 +2820,13 @@ HTTPS transport for APT package downloads
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** apt, https, transport, security
-**Hash:** `4ca64e6493af`
+**Hash:** `a54c20ebd479`
 
-<!-- tests:get-apt-transport-https hash:4ca64e6493af amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-apt-transport-https hash:a54c20ebd479 -->
 
 ```bash
 wget -qO- get.rso.dev/get-apt-transport-https | sh
-# alt: curl -s get.rso.dev/get-apt-transport-https | sh
+# alt: curl -sL get.rso.dev/get-apt-transport-https | sh
 ```
 
 **Options:**
@@ -2762,11 +2842,11 @@ wget -qO- get.rso.dev/get-apt-transport-https | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-apt-transport-https | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-apt-transport-https | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-apt-transport-https | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-apt-transport-https | sh -s -- --update
-# alt: curl -s get.rso.dev/get-apt-transport-https | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-apt-transport-https | sh -s -- --update
 ```
 
 ### get-btop
@@ -2777,13 +2857,13 @@ Resource monitor with advanced CPU, memory, and process stats
 **Methods:** apt, dnf, yum, snap, github-release
 **Prereqs:** curl|wget
 **Tags:** monitor, cpu, memory, process, system, btop
-**Hash:** `f7c3bf148074`
+**Hash:** `8f1ab4e59788`
 
-<!-- tests:get-btop hash:f7c3bf148074 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-btop hash:8f1ab4e59788 -->
 
 ```bash
 wget -qO- get.rso.dev/get-btop | sh
-# alt: curl -s get.rso.dev/get-btop | sh
+# alt: curl -sL get.rso.dev/get-btop | sh
 ```
 
 **Options:**
@@ -2799,11 +2879,11 @@ wget -qO- get.rso.dev/get-btop | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-btop | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-btop | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-btop | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-btop | sh -s -- --update
-# alt: curl -s get.rso.dev/get-btop | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-btop | sh -s -- --update
 ```
 
 ### get-htop
@@ -2813,13 +2893,13 @@ Interactive process viewer and system monitor
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** monitor, process, system, top, htop
-**Hash:** `ccb753018342`
+**Hash:** `e56a56a27a61`
 
-<!-- tests:get-htop hash:ccb753018342 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-htop hash:e56a56a27a61 -->
 
 ```bash
 wget -qO- get.rso.dev/get-htop | sh
-# alt: curl -s get.rso.dev/get-htop | sh
+# alt: curl -sL get.rso.dev/get-htop | sh
 ```
 
 **Options:**
@@ -2835,11 +2915,11 @@ wget -qO- get.rso.dev/get-htop | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-htop | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-htop | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-htop | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-htop | sh -s -- --update
-# alt: curl -s get.rso.dev/get-htop | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-htop | sh -s -- --update
 ```
 
 ### get-iotop
@@ -2849,13 +2929,13 @@ I/O usage monitor for processes
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** io, disk, monitor, process, iotop
-**Hash:** `cb1dd3299fb0`
+**Hash:** `5f88bfe6ea71`
 
-<!-- tests:get-iotop hash:cb1dd3299fb0 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-iotop hash:5f88bfe6ea71 -->
 
 ```bash
 wget -qO- get.rso.dev/get-iotop | sh
-# alt: curl -s get.rso.dev/get-iotop | sh
+# alt: curl -sL get.rso.dev/get-iotop | sh
 ```
 
 **Options:**
@@ -2871,11 +2951,11 @@ wget -qO- get.rso.dev/get-iotop | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-iotop | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-iotop | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-iotop | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-iotop | sh -s -- --update
-# alt: curl -s get.rso.dev/get-iotop | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-iotop | sh -s -- --update
 ```
 
 ### get-libfuse2
@@ -2885,13 +2965,13 @@ FUSE library for AppImage and userspace filesystem support
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** fuse, appimage, filesystem, userspace
-**Hash:** `b26361959f39`
+**Hash:** `574fe75affba`
 
-<!-- tests:get-libfuse2 hash:b26361959f39 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-libfuse2 hash:574fe75affba -->
 
 ```bash
 wget -qO- get.rso.dev/get-libfuse2 | sh
-# alt: curl -s get.rso.dev/get-libfuse2 | sh
+# alt: curl -sL get.rso.dev/get-libfuse2 | sh
 ```
 
 **Options:**
@@ -2907,11 +2987,11 @@ wget -qO- get.rso.dev/get-libfuse2 | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-libfuse2 | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-libfuse2 | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-libfuse2 | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-libfuse2 | sh -s -- --update
-# alt: curl -s get.rso.dev/get-libfuse2 | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-libfuse2 | sh -s -- --update
 ```
 
 ### get-procps
@@ -2921,13 +3001,13 @@ System process monitoring utilities (ps, top, free, vmstat)
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** process, monitor, ps, top, free, vmstat
-**Hash:** `23d358e93f91`
+**Hash:** `b8601b31f685`
 
-<!-- tests:get-procps hash:23d358e93f91 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-procps hash:b8601b31f685 -->
 
 ```bash
 wget -qO- get.rso.dev/get-procps | sh
-# alt: curl -s get.rso.dev/get-procps | sh
+# alt: curl -sL get.rso.dev/get-procps | sh
 ```
 
 **Options:**
@@ -2943,11 +3023,11 @@ wget -qO- get.rso.dev/get-procps | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-procps | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-procps | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-procps | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-procps | sh -s -- --update
-# alt: curl -s get.rso.dev/get-procps | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-procps | sh -s -- --update
 ```
 
 ### get-pv
@@ -2957,13 +3037,13 @@ Monitor the progress of data through a pipeline
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** progress, pipe, monitor, transfer, pv
-**Hash:** `3ba15571349d`
+**Hash:** `0ff1fe39959c`
 
-<!-- tests:get-pv hash:3ba15571349d amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pv hash:0ff1fe39959c -->
 
 ```bash
 wget -qO- get.rso.dev/get-pv | sh
-# alt: curl -s get.rso.dev/get-pv | sh
+# alt: curl -sL get.rso.dev/get-pv | sh
 ```
 
 **Options:**
@@ -2979,11 +3059,11 @@ wget -qO- get.rso.dev/get-pv | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-pv | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-pv | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-pv | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-pv | sh -s -- --update
-# alt: curl -s get.rso.dev/get-pv | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-pv | sh -s -- --update
 ```
 
 ### get-software-properties-common
@@ -2993,13 +3073,13 @@ PPA and repository management tools for APT
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** apt, ppa, repository, add-apt-repository
-**Hash:** `2fef49086cbc`
+**Hash:** `ce7f07ca5939`
 
-<!-- tests:get-software-properties-common hash:2fef49086cbc amazonlinux-2023:skip debian-12:pass debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-software-properties-common hash:ce7f07ca5939 -->
 
 ```bash
 wget -qO- get.rso.dev/get-software-properties-common | sh
-# alt: curl -s get.rso.dev/get-software-properties-common | sh
+# alt: curl -sL get.rso.dev/get-software-properties-common | sh
 ```
 
 **Options:**
@@ -3015,11 +3095,11 @@ wget -qO- get.rso.dev/get-software-properties-common | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-software-properties-common | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-software-properties-common | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-software-properties-common | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-software-properties-common | sh -s -- --update
-# alt: curl -s get.rso.dev/get-software-properties-common | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-software-properties-common | sh -s -- --update
 ```
 
 ### get-strace
@@ -3029,13 +3109,13 @@ System call tracer for debugging and diagnostics
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** debug, trace, syscall, diagnostic, strace
-**Hash:** `3c7c569a6a80`
+**Hash:** `816258cb5cfb`
 
-<!-- tests:get-strace hash:3c7c569a6a80 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-strace hash:816258cb5cfb -->
 
 ```bash
 wget -qO- get.rso.dev/get-strace | sh
-# alt: curl -s get.rso.dev/get-strace | sh
+# alt: curl -sL get.rso.dev/get-strace | sh
 ```
 
 **Options:**
@@ -3051,11 +3131,11 @@ wget -qO- get.rso.dev/get-strace | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-strace | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-strace | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-strace | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-strace | sh -s -- --update
-# alt: curl -s get.rso.dev/get-strace | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-strace | sh -s -- --update
 ```
 
 ### get-sudo
@@ -3065,13 +3145,13 @@ Execute commands as another user securely
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** sudo, root, privilege, security
-**Hash:** `60546627ddb8`
+**Hash:** `ca48d78332c4`
 
-<!-- tests:get-sudo hash:60546627ddb8 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-sudo hash:ca48d78332c4 -->
 
 ```bash
 wget -qO- get.rso.dev/get-sudo | sh
-# alt: curl -s get.rso.dev/get-sudo | sh
+# alt: curl -sL get.rso.dev/get-sudo | sh
 ```
 
 **Options:**
@@ -3087,11 +3167,11 @@ wget -qO- get.rso.dev/get-sudo | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-sudo | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-sudo | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-sudo | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-sudo | sh -s -- --update
-# alt: curl -s get.rso.dev/get-sudo | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-sudo | sh -s -- --update
 ```
 
 ### get-uuid-runtime
@@ -3101,13 +3181,13 @@ UUID generation utilities
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** uuid, generate, unique-id
-**Hash:** `0df4717b739b`
+**Hash:** `bd11dcca53a3`
 
-<!-- tests:get-uuid-runtime hash:0df4717b739b amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-uuid-runtime hash:bd11dcca53a3 -->
 
 ```bash
 wget -qO- get.rso.dev/get-uuid-runtime | sh
-# alt: curl -s get.rso.dev/get-uuid-runtime | sh
+# alt: curl -sL get.rso.dev/get-uuid-runtime | sh
 ```
 
 **Options:**
@@ -3123,11 +3203,11 @@ wget -qO- get.rso.dev/get-uuid-runtime | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-uuid-runtime | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-uuid-runtime | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-uuid-runtime | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-uuid-runtime | sh -s -- --update
-# alt: curl -s get.rso.dev/get-uuid-runtime | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-uuid-runtime | sh -s -- --update
 ```
 
 ## System Utilities
@@ -3140,13 +3220,13 @@ Accelerated apt package manager wrapper using aria2
 **Methods:** apt
 **Prereqs:** software-properties-common
 **Tags:** apt, fast, aria2, package-manager, accelerator
-**Hash:** `9590f6046075`
+**Hash:** `1a24f5949762`
 
-<!-- tests:get-apt-fast hash:9590f6046075 amazonlinux-2023:skip debian-12:skip debian-13:skip rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-apt-fast hash:1a24f5949762 -->
 
 ```bash
 wget -qO- get.rso.dev/get-apt-fast | sh
-# alt: curl -s get.rso.dev/get-apt-fast | sh
+# alt: curl -sL get.rso.dev/get-apt-fast | sh
 ```
 
 **Options:**
@@ -3162,11 +3242,11 @@ wget -qO- get.rso.dev/get-apt-fast | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-apt-fast | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-apt-fast | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-apt-fast | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-apt-fast | sh -s -- --update
-# alt: curl -s get.rso.dev/get-apt-fast | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-apt-fast | sh -s -- --update
 ```
 
 ### get-pc-info
@@ -3182,7 +3262,7 @@ Display machine information including hostname, user, and system details
 
 ```bash
 wget -qO- get.rso.dev/get-pc-info | bash
-# alt: curl -s get.rso.dev/get-pc-info | bash
+# alt: curl -sL get.rso.dev/get-pc-info | bash
 ```
 
 ### remove-snap
@@ -3197,7 +3277,7 @@ Fully remove snapd and prevent reinstallation (idempotent)
 
 ```bash
 wget -qO- get.rso.dev/remove-snap | bash
-# alt: curl -s get.rso.dev/remove-snap | bash
+# alt: curl -sL get.rso.dev/remove-snap | bash
 ```
 
 ## Terminal Tools
@@ -3209,13 +3289,13 @@ Programmable completion functions for bash
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** bash, completion, autocomplete, shell
-**Hash:** `2efeef58c741`
+**Hash:** `79ef85d30124`
 
-<!-- tests:get-bash-completion hash:2efeef58c741 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-bash-completion hash:79ef85d30124 -->
 
 ```bash
 wget -qO- get.rso.dev/get-bash-completion | sh
-# alt: curl -s get.rso.dev/get-bash-completion | sh
+# alt: curl -sL get.rso.dev/get-bash-completion | sh
 ```
 
 **Options:**
@@ -3231,11 +3311,11 @@ wget -qO- get.rso.dev/get-bash-completion | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-bash-completion | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-bash-completion | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-bash-completion | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-bash-completion | sh -s -- --update
-# alt: curl -s get.rso.dev/get-bash-completion | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-bash-completion | sh -s -- --update
 ```
 
 ### get-bat
@@ -3246,13 +3326,13 @@ Cat clone with syntax highlighting and git integration
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** cat, syntax, highlight, git, pager, modern
-**Hash:** `645d8bfc882d`
+**Hash:** `1615ac216880`
 
-<!-- tests:get-bat hash:645d8bfc882d amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-bat hash:1615ac216880 -->
 
 ```bash
 wget -qO- get.rso.dev/get-bat | sh
-# alt: curl -s get.rso.dev/get-bat | sh
+# alt: curl -sL get.rso.dev/get-bat | sh
 ```
 
 **Options:**
@@ -3268,11 +3348,11 @@ wget -qO- get.rso.dev/get-bat | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-bat | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-bat | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-bat | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-bat | sh -s -- --update
-# alt: curl -s get.rso.dev/get-bat | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-bat | sh -s -- --update
 ```
 
 ### get-lsd
@@ -3283,13 +3363,13 @@ Modern ls replacement with colors and icons
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** ls, files, directory, colors, icons, modern
-**Hash:** `8ae73cc290f4`
+**Hash:** `915e98f04f1d`
 
-<!-- tests:get-lsd hash:8ae73cc290f4 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-lsd hash:915e98f04f1d -->
 
 ```bash
 wget -qO- get.rso.dev/get-lsd | sh
-# alt: curl -s get.rso.dev/get-lsd | sh
+# alt: curl -sL get.rso.dev/get-lsd | sh
 ```
 
 **Options:**
@@ -3305,11 +3385,11 @@ wget -qO- get.rso.dev/get-lsd | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-lsd | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-lsd | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-lsd | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-lsd | sh -s -- --update
-# alt: curl -s get.rso.dev/get-lsd | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-lsd | sh -s -- --update
 ```
 
 ### get-screen
@@ -3319,13 +3399,13 @@ Terminal multiplexer for persistent sessions
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** terminal, multiplexer, session, screen
-**Hash:** `f5fe3820466d`
+**Hash:** `840d24f938e0`
 
-<!-- tests:get-screen hash:f5fe3820466d amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-screen hash:840d24f938e0 -->
 
 ```bash
 wget -qO- get.rso.dev/get-screen | sh
-# alt: curl -s get.rso.dev/get-screen | sh
+# alt: curl -sL get.rso.dev/get-screen | sh
 ```
 
 **Options:**
@@ -3341,11 +3421,11 @@ wget -qO- get.rso.dev/get-screen | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-screen | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-screen | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-screen | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-screen | sh -s -- --update
-# alt: curl -s get.rso.dev/get-screen | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-screen | sh -s -- --update
 ```
 
 ### get-tilix
@@ -3355,13 +3435,13 @@ Tiling terminal emulator for Linux
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** terminal, tiling, emulator, tilix, split
-**Hash:** `2a3d1aefb09c`
+**Hash:** `e206d7d75265`
 
-<!-- tests:get-tilix hash:2a3d1aefb09c amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-tilix hash:e206d7d75265 -->
 
 ```bash
 wget -qO- get.rso.dev/get-tilix | sh
-# alt: curl -s get.rso.dev/get-tilix | sh
+# alt: curl -sL get.rso.dev/get-tilix | sh
 ```
 
 **Options:**
@@ -3377,11 +3457,11 @@ wget -qO- get.rso.dev/get-tilix | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-tilix | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-tilix | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-tilix | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-tilix | sh -s -- --update
-# alt: curl -s get.rso.dev/get-tilix | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-tilix | sh -s -- --update
 ```
 
 ### get-tmate
@@ -3392,13 +3472,13 @@ Instant terminal sharing via SSH
 **Methods:** apt, snap, github-release
 **Prereqs:** curl|wget
 **Tags:** terminal, sharing, ssh, tmux, pair-programming
-**Hash:** `2e706b61c502`
+**Hash:** `02377aa6505f`
 
-<!-- tests:get-tmate hash:2e706b61c502 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-tmate hash:02377aa6505f -->
 
 ```bash
 wget -qO- get.rso.dev/get-tmate | sh
-# alt: curl -s get.rso.dev/get-tmate | sh
+# alt: curl -sL get.rso.dev/get-tmate | sh
 ```
 
 **Options:**
@@ -3414,11 +3494,11 @@ wget -qO- get.rso.dev/get-tmate | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-tmate | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-tmate | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-tmate | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-tmate | sh -s -- --update
-# alt: curl -s get.rso.dev/get-tmate | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-tmate | sh -s -- --update
 ```
 
 ### get-tmux
@@ -3428,13 +3508,13 @@ Terminal multiplexer with window management
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** terminal, multiplexer, session, tmux, window
-**Hash:** `33ea7f2a46a7`
+**Hash:** `72026fa0fa3d`
 
-<!-- tests:get-tmux hash:33ea7f2a46a7 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-tmux hash:72026fa0fa3d -->
 
 ```bash
 wget -qO- get.rso.dev/get-tmux | sh
-# alt: curl -s get.rso.dev/get-tmux | sh
+# alt: curl -sL get.rso.dev/get-tmux | sh
 ```
 
 **Options:**
@@ -3450,11 +3530,11 @@ wget -qO- get.rso.dev/get-tmux | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-tmux | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-tmux | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-tmux | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-tmux | sh -s -- --update
-# alt: curl -s get.rso.dev/get-tmux | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-tmux | sh -s -- --update
 ```
 
 ## Virtualization Tools
@@ -3466,13 +3546,13 @@ Powerful open-source x86 and AMD64 virtualization
 **Supported:** Ubuntu, Debian, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** vm, virtualization, virtualbox, oracle, hypervisor
-**Hash:** `915f97fd56de`
+**Hash:** `acee3a662393`
 
-<!-- tests:get-virtualbox hash:915f97fd56de amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-virtualbox hash:acee3a662393 -->
 
 ```bash
 wget -qO- get.rso.dev/get-virtualbox | sh
-# alt: curl -s get.rso.dev/get-virtualbox | sh
+# alt: curl -sL get.rso.dev/get-virtualbox | sh
 ```
 
 **Options:**
@@ -3488,11 +3568,11 @@ wget -qO- get.rso.dev/get-virtualbox | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-virtualbox | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-virtualbox | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-virtualbox | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-virtualbox | sh -s -- --update
-# alt: curl -s get.rso.dev/get-virtualbox | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-virtualbox | sh -s -- --update
 ```
 
 # Windows

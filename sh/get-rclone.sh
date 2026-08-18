@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-rclone.sh — Install rclone across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-rclone | sh
+# Usage: curl -sL get.rso.dev/sh/get-rclone | sh
 #        sh get-rclone.sh [--method=apt, dnf, yum, github-release]
 #        sh get-rclone.sh --interactive
 #        sh get-rclone.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-rclone | sh
+  curl -sL get.rso.dev/sh/get-rclone | sh
   sh get-rclone.sh --method=github-release
   sh get-rclone.sh --interactive
   sh get-rclone.sh --update

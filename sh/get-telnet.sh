@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-telnet.sh — Install telnet across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-telnet | sh
+# Usage: curl -sL get.rso.dev/sh/get-telnet | sh
 #        sh get-telnet.sh [--method=apt|dnf|yum]
 #        sh get-telnet.sh --interactive
 #        sh get-telnet.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-telnet | sh
+  curl -sL get.rso.dev/sh/get-telnet | sh
   sh get-telnet.sh --method=apt
   sh get-telnet.sh --interactive
   sh get-telnet.sh --update

@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-virtualbox.sh — Install virtualbox across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-virtualbox | sh
+# Usage: curl -sL get.rso.dev/sh/get-virtualbox | sh
 #        sh get-virtualbox.sh --interactive
 #        sh get-virtualbox.sh --update
 # =============================================================================

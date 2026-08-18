@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-speedtest-cli.sh — Install speedtest-cli across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-speedtest-cli | sh
+# Usage: curl -sL get.rso.dev/sh/get-speedtest-cli | sh
 #        sh get-speedtest-cli.sh --interactive
 #        sh get-speedtest-cli.sh --update
 # =============================================================================

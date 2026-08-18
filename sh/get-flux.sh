@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-flux.sh — Install flux across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-flux | sh
+# Usage: curl -sL get.rso.dev/sh/get-flux | sh
 #        sh get-flux.sh [--method=github-release]
 #        sh get-flux.sh --interactive
 #        sh get-flux.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-flux | sh
+  curl -sL get.rso.dev/sh/get-flux | sh
   sh get-flux.sh --method=github-release
   sh get-flux.sh --interactive
   sh get-flux.sh --update

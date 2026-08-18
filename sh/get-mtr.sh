@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-mtr.sh — Install mtr across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-mtr | sh
+# Usage: curl -sL get.rso.dev/sh/get-mtr | sh
 #        sh get-mtr.sh [--method=apt|dnf|yum]
 #        sh get-mtr.sh --interactive
 #        sh get-mtr.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-mtr | sh
+  curl -sL get.rso.dev/sh/get-mtr | sh
   sh get-mtr.sh --method=apt
   sh get-mtr.sh --interactive
   sh get-mtr.sh --update

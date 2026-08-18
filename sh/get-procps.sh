@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-procps.sh — Install procps across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-procps | sh
+# Usage: curl -sL get.rso.dev/sh/get-procps | sh
 #        sh get-procps.sh [--method=apt|dnf|yum]
 #        sh get-procps.sh --interactive
 #        sh get-procps.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-procps | sh
+  curl -sL get.rso.dev/sh/get-procps | sh
   sh get-procps.sh --method=apt
   sh get-procps.sh --interactive
   sh get-procps.sh --update

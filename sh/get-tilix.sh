@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-tilix.sh — Install tilix across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-tilix | sh
+# Usage: curl -sL get.rso.dev/sh/get-tilix | sh
 #        sh get-tilix.sh [--method=apt|dnf|yum]
 #        sh get-tilix.sh --interactive
 #        sh get-tilix.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-tilix | sh
+  curl -sL get.rso.dev/sh/get-tilix | sh
   sh get-tilix.sh --method=apt
   sh get-tilix.sh --interactive
   sh get-tilix.sh --update

@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-bash-completion.sh — Install bash-completion across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-bash-completion | sh
+# Usage: curl -sL get.rso.dev/sh/get-bash-completion | sh
 #        sh get-bash-completion.sh [--method=apt|dnf|yum]
 #        sh get-bash-completion.sh --interactive
 #        sh get-bash-completion.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-bash-completion | sh
+  curl -sL get.rso.dev/sh/get-bash-completion | sh
   sh get-bash-completion.sh --method=apt
   sh get-bash-completion.sh --interactive
   sh get-bash-completion.sh --update

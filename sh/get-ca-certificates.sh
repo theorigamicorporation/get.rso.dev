@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-ca-certificates.sh — Install ca-certificates across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-ca-certificates | sh
+# Usage: curl -sL get.rso.dev/sh/get-ca-certificates | sh
 #        sh get-ca-certificates.sh [--method=apt|dnf|yum]
 #        sh get-ca-certificates.sh --interactive
 #        sh get-ca-certificates.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-ca-certificates | sh
+  curl -sL get.rso.dev/sh/get-ca-certificates | sh
   sh get-ca-certificates.sh --method=apt
   sh get-ca-certificates.sh --interactive
   sh get-ca-certificates.sh --update

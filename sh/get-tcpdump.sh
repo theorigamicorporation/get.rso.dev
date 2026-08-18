@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-tcpdump.sh — Install tcpdump across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-tcpdump | sh
+# Usage: curl -sL get.rso.dev/sh/get-tcpdump | sh
 #        sh get-tcpdump.sh [--method=apt|dnf|yum]
 #        sh get-tcpdump.sh --interactive
 #        sh get-tcpdump.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-tcpdump | sh
+  curl -sL get.rso.dev/sh/get-tcpdump | sh
   sh get-tcpdump.sh --method=apt
   sh get-tcpdump.sh --interactive
   sh get-tcpdump.sh --update

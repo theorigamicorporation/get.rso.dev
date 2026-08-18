@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-sops.sh — Install sops across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-sops | sh
+# Usage: curl -sL get.rso.dev/sh/get-sops | sh
 #        sh get-sops.sh [--method=github-release]
 #        sh get-sops.sh --interactive
 #        sh get-sops.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-sops | sh
+  curl -sL get.rso.dev/sh/get-sops | sh
   sh get-sops.sh --method=github-release
   sh get-sops.sh --interactive
   sh get-sops.sh --update

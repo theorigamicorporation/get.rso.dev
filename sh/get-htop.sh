@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-htop.sh — Install htop across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-htop | sh
+# Usage: curl -sL get.rso.dev/sh/get-htop | sh
 #        sh get-htop.sh [--method=apt|dnf|yum]
 #        sh get-htop.sh --interactive
 #        sh get-htop.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-htop | sh
+  curl -sL get.rso.dev/sh/get-htop | sh
   sh get-htop.sh --method=apt
   sh get-htop.sh --interactive
   sh get-htop.sh --update

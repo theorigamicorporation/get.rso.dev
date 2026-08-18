@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-autossh.sh — Install autossh across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-autossh | sh
+# Usage: curl -sL get.rso.dev/sh/get-autossh | sh
 #        sh get-autossh.sh [--method=apt|dnf|yum]
 #        sh get-autossh.sh --interactive
 #        sh get-autossh.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-autossh | sh
+  curl -sL get.rso.dev/sh/get-autossh | sh
   sh get-autossh.sh --method=apt
   sh get-autossh.sh --interactive
   sh get-autossh.sh --update

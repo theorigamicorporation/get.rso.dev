@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-packer.sh — Install packer across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-packer | sh
+# Usage: curl -sL get.rso.dev/sh/get-packer | sh
 #        sh get-packer.sh [--method=github-release]
 #        sh get-packer.sh --interactive
 #        sh get-packer.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-packer | sh
+  curl -sL get.rso.dev/sh/get-packer | sh
   sh get-packer.sh --method=github-release
   sh get-packer.sh --interactive
   sh get-packer.sh --update

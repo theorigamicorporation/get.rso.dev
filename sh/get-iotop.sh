@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-iotop.sh — Install iotop across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-iotop | sh
+# Usage: curl -sL get.rso.dev/sh/get-iotop | sh
 #        sh get-iotop.sh [--method=apt|dnf|yum]
 #        sh get-iotop.sh --interactive
 #        sh get-iotop.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-iotop | sh
+  curl -sL get.rso.dev/sh/get-iotop | sh
   sh get-iotop.sh --method=apt
   sh get-iotop.sh --interactive
   sh get-iotop.sh --update

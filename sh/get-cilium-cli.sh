@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-cilium-cli.sh — Install cilium across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-cilium-cli | sh
+# Usage: curl -sL get.rso.dev/sh/get-cilium-cli | sh
 #        sh get-cilium-cli.sh [--method=github-release]
 #        sh get-cilium-cli.sh --interactive
 #        sh get-cilium-cli.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-cilium-cli | sh
+  curl -sL get.rso.dev/sh/get-cilium-cli | sh
   sh get-cilium-cli.sh --method=github-release
   sh get-cilium-cli.sh --interactive
   sh get-cilium-cli.sh --update

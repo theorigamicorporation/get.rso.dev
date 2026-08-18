@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-tmate.sh — Install tmate across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-tmate | sh
+# Usage: curl -sL get.rso.dev/sh/get-tmate | sh
 #        sh get-tmate.sh [--method=apt, snap, github-release]
 #        sh get-tmate.sh --interactive
 #        sh get-tmate.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-tmate | sh
+  curl -sL get.rso.dev/sh/get-tmate | sh
   sh get-tmate.sh --method=github-release
   sh get-tmate.sh --interactive
   sh get-tmate.sh --update

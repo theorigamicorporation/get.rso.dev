@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-terraform.sh — Install terraform across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-terraform | sh
+# Usage: curl -sL get.rso.dev/sh/get-terraform | sh
 #        sh get-terraform.sh [--method=github-release]
 #        sh get-terraform.sh --interactive
 #        sh get-terraform.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-terraform | sh
+  curl -sL get.rso.dev/sh/get-terraform | sh
   sh get-terraform.sh --method=github-release
   sh get-terraform.sh --interactive
   sh get-terraform.sh --update

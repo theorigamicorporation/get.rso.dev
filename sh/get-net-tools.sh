@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-net-tools.sh — Install net-tools across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-net-tools | sh
+# Usage: curl -sL get.rso.dev/sh/get-net-tools | sh
 #        sh get-net-tools.sh [--method=apt|dnf|yum]
 #        sh get-net-tools.sh --interactive
 #        sh get-net-tools.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-net-tools | sh
+  curl -sL get.rso.dev/sh/get-net-tools | sh
   sh get-net-tools.sh --method=apt
   sh get-net-tools.sh --interactive
   sh get-net-tools.sh --update

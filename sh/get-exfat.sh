@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-exfat.sh — Install exfatprogs across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-exfat | sh
+# Usage: curl -sL get.rso.dev/sh/get-exfat | sh
 #        sh get-exfat.sh --interactive
 #        sh get-exfat.sh --update
 # =============================================================================

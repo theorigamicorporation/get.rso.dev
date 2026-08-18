@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-kubectl.sh — Install kubectl across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-kubectl | sh
+# Usage: curl -sL get.rso.dev/sh/get-kubectl | sh
 #        sh get-kubectl.sh [--method=apt|github-release|asdf]
 #        sh get-kubectl.sh --interactive
 #        sh get-kubectl.sh --update
@@ -61,7 +61,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-kubectl | sh
+  curl -sL get.rso.dev/sh/get-kubectl | sh
   sh get-kubectl.sh --method=github-release
   sh get-kubectl.sh --interactive
   sh get-kubectl.sh --update

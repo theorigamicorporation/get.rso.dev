@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-fd-find.sh — Install fd-find across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-fd-find | sh
+# Usage: curl -sL get.rso.dev/sh/get-fd-find | sh
 #        sh get-fd-find.sh [--method=apt, dnf, yum, github-release]
 #        sh get-fd-find.sh --interactive
 #        sh get-fd-find.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-fd-find | sh
+  curl -sL get.rso.dev/sh/get-fd-find | sh
   sh get-fd-find.sh --method=github-release
   sh get-fd-find.sh --interactive
   sh get-fd-find.sh --update

@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-terragrunt.sh — Install terragrunt across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-terragrunt | sh
+# Usage: curl -sL get.rso.dev/sh/get-terragrunt | sh
 #        sh get-terragrunt.sh [--method=github-release]
 #        sh get-terragrunt.sh --interactive
 #        sh get-terragrunt.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-terragrunt | sh
+  curl -sL get.rso.dev/sh/get-terragrunt | sh
   sh get-terragrunt.sh --method=github-release
   sh get-terragrunt.sh --interactive
   sh get-terragrunt.sh --update

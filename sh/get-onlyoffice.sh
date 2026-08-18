@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-onlyoffice.sh — Install onlyoffice-desktopeditors across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-onlyoffice | sh
+# Usage: curl -sL get.rso.dev/sh/get-onlyoffice | sh
 #        sh get-onlyoffice.sh --interactive
 #        sh get-onlyoffice.sh --update
 # =============================================================================

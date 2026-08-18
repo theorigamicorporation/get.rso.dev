@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-gitlab-cli.sh — Install glab across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-gitlab-cli | sh
+# Usage: curl -sL get.rso.dev/sh/get-gitlab-cli | sh
 #        sh get-gitlab-cli.sh [--method=apt, snap, github-release]
 #        sh get-gitlab-cli.sh --interactive
 #        sh get-gitlab-cli.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-gitlab-cli | sh
+  curl -sL get.rso.dev/sh/get-gitlab-cli | sh
   sh get-gitlab-cli.sh --method=github-release
   sh get-gitlab-cli.sh --interactive
   sh get-gitlab-cli.sh --update

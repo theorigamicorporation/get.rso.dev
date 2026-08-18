@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-yq.sh — Install yq across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-yq | sh
+# Usage: curl -sL get.rso.dev/sh/get-yq | sh
 #        sh get-yq.sh [--method=apt|dnf|yum|snap|asdf|gitpak|github-release]
 #        sh get-yq.sh --interactive
 #        sh get-yq.sh --update
@@ -78,7 +78,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-yq | sh
+  curl -sL get.rso.dev/sh/get-yq | sh
   sh get-yq.sh --method=github-release
   sh get-yq.sh --interactive
   sh get-yq.sh --update

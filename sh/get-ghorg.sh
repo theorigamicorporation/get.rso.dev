@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-ghorg.sh — Install ghorg across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-ghorg | sh
+# Usage: curl -sL get.rso.dev/sh/get-ghorg | sh
 #        sh get-ghorg.sh [--method=github-release]
 #        sh get-ghorg.sh --interactive
 #        sh get-ghorg.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-ghorg | sh
+  curl -sL get.rso.dev/sh/get-ghorg | sh
   sh get-ghorg.sh --method=github-release
   sh get-ghorg.sh --interactive
   sh get-ghorg.sh --update

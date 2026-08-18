@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-vagrant.sh — Install vagrant across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-vagrant | sh
+# Usage: curl -sL get.rso.dev/sh/get-vagrant | sh
 #        sh get-vagrant.sh [--method=asdf|apt|dnf|yum]
 #        sh get-vagrant.sh --interactive
 #        sh get-vagrant.sh --update
@@ -61,7 +61,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-vagrant | sh
+  curl -sL get.rso.dev/sh/get-vagrant | sh
   sh get-vagrant.sh --method=asdf
   sh get-vagrant.sh --interactive
   sh get-vagrant.sh --update

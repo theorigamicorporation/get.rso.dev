@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-tmux.sh — Install tmux across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-tmux | sh
+# Usage: curl -sL get.rso.dev/sh/get-tmux | sh
 #        sh get-tmux.sh [--method=apt|dnf|yum]
 #        sh get-tmux.sh --interactive
 #        sh get-tmux.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-tmux | sh
+  curl -sL get.rso.dev/sh/get-tmux | sh
   sh get-tmux.sh --method=apt
   sh get-tmux.sh --interactive
   sh get-tmux.sh --update

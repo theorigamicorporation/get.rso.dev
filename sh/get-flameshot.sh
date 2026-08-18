@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-flameshot.sh — Install flameshot across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-flameshot | sh
+# Usage: curl -sL get.rso.dev/sh/get-flameshot | sh
 #        sh get-flameshot.sh [--method=apt|dnf|yum]
 #        sh get-flameshot.sh --interactive
 #        sh get-flameshot.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-flameshot | sh
+  curl -sL get.rso.dev/sh/get-flameshot | sh
   sh get-flameshot.sh --method=apt
   sh get-flameshot.sh --interactive
   sh get-flameshot.sh --update

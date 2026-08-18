@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-argocd-cli.sh — Install argocd across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-argocd-cli | sh
+# Usage: curl -sL get.rso.dev/sh/get-argocd-cli | sh
 #        sh get-argocd-cli.sh [--method=github-release]
 #        sh get-argocd-cli.sh --interactive
 #        sh get-argocd-cli.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-argocd-cli | sh
+  curl -sL get.rso.dev/sh/get-argocd-cli | sh
   sh get-argocd-cli.sh --method=github-release
   sh get-argocd-cli.sh --interactive
   sh get-argocd-cli.sh --update

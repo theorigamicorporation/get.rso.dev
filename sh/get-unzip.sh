@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-unzip.sh — Install unzip across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-unzip | sh
+# Usage: curl -sL get.rso.dev/sh/get-unzip | sh
 #        sh get-unzip.sh [--method=apt|dnf|yum]
 #        sh get-unzip.sh --interactive
 #        sh get-unzip.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-unzip | sh
+  curl -sL get.rso.dev/sh/get-unzip | sh
   sh get-unzip.sh --method=apt
   sh get-unzip.sh --interactive
   sh get-unzip.sh --update

@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-golang.sh — Install golang across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-golang | sh
+# Usage: curl -sL get.rso.dev/sh/get-golang | sh
 #        sh get-golang.sh --interactive
 #        sh get-golang.sh --update
 # =============================================================================

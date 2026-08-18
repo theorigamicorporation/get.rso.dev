@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-nano.sh — Install nano across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-nano | sh
+# Usage: curl -sL get.rso.dev/sh/get-nano | sh
 #        sh get-nano.sh [--method=apt|dnf|yum]
 #        sh get-nano.sh --interactive
 #        sh get-nano.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-nano | sh
+  curl -sL get.rso.dev/sh/get-nano | sh
   sh get-nano.sh --method=apt
   sh get-nano.sh --interactive
   sh get-nano.sh --update

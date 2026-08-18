@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-ethtool.sh — Install ethtool across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-ethtool | sh
+# Usage: curl -sL get.rso.dev/sh/get-ethtool | sh
 #        sh get-ethtool.sh [--method=apt|dnf|yum]
 #        sh get-ethtool.sh --interactive
 #        sh get-ethtool.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-ethtool | sh
+  curl -sL get.rso.dev/sh/get-ethtool | sh
   sh get-ethtool.sh --method=apt
   sh get-ethtool.sh --interactive
   sh get-ethtool.sh --update

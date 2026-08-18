@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-apt-fast.sh — Install apt-fast on Debian-based Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-apt-fast | sh
+# Usage: curl -sL get.rso.dev/sh/get-apt-fast | sh
 #        sh get-apt-fast.sh [--method=apt]
 #        sh get-apt-fast.sh --interactive
 #        sh get-apt-fast.sh --update
@@ -75,7 +75,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-apt-fast | sh
+  curl -sL get.rso.dev/sh/get-apt-fast | sh
   sh get-apt-fast.sh --method=apt
   sh get-apt-fast.sh --interactive
   sh get-apt-fast.sh --update

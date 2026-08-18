@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-openssl.sh — Install openssl across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-openssl | sh
+# Usage: curl -sL get.rso.dev/sh/get-openssl | sh
 #        sh get-openssl.sh [--method=apt|dnf|yum]
 #        sh get-openssl.sh --interactive
 #        sh get-openssl.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-openssl | sh
+  curl -sL get.rso.dev/sh/get-openssl | sh
   sh get-openssl.sh --method=apt
   sh get-openssl.sh --interactive
   sh get-openssl.sh --update

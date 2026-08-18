@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-screen.sh — Install screen across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-screen | sh
+# Usage: curl -sL get.rso.dev/sh/get-screen | sh
 #        sh get-screen.sh [--method=apt|dnf|yum]
 #        sh get-screen.sh --interactive
 #        sh get-screen.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-screen | sh
+  curl -sL get.rso.dev/sh/get-screen | sh
   sh get-screen.sh --method=apt
   sh get-screen.sh --interactive
   sh get-screen.sh --update

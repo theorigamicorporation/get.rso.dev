@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-rustdesk.sh — Install rustdesk across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-rustdesk | sh
+# Usage: curl -sL get.rso.dev/sh/get-rustdesk | sh
 #        sh get-rustdesk.sh [--method=github-release]
 #        sh get-rustdesk.sh --interactive
 #        sh get-rustdesk.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-rustdesk | sh
+  curl -sL get.rso.dev/sh/get-rustdesk | sh
   sh get-rustdesk.sh --method=github-release
   sh get-rustdesk.sh --interactive
   sh get-rustdesk.sh --update

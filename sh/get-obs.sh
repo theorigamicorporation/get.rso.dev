@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-obs.sh — Install obs-studio across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-obs | sh
+# Usage: curl -sL get.rso.dev/sh/get-obs | sh
 #        sh get-obs.sh --interactive
 #        sh get-obs.sh --update
 # =============================================================================

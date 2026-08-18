@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-vlc.sh — Install vlc across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-vlc | sh
+# Usage: curl -sL get.rso.dev/sh/get-vlc | sh
 #        sh get-vlc.sh [--method=apt|dnf|yum]
 #        sh get-vlc.sh --interactive
 #        sh get-vlc.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-vlc | sh
+  curl -sL get.rso.dev/sh/get-vlc | sh
   sh get-vlc.sh --method=apt
   sh get-vlc.sh --interactive
   sh get-vlc.sh --update

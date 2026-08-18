@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-remmina.sh — Install remmina across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-remmina | sh
+# Usage: curl -sL get.rso.dev/sh/get-remmina | sh
 #        sh get-remmina.sh [--method=apt|dnf|yum]
 #        sh get-remmina.sh --interactive
 #        sh get-remmina.sh --update
@@ -76,7 +76,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-remmina | sh
+  curl -sL get.rso.dev/sh/get-remmina | sh
   sh get-remmina.sh --method=apt
   sh get-remmina.sh --interactive
   sh get-remmina.sh --update

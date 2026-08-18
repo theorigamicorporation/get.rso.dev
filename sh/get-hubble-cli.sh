@@ -2,7 +2,7 @@
 #shellcheck shell=sh
 # =============================================================================
 # get-hubble-cli.sh — Install hubble across Linux distributions
-# Usage: curl -s get.rso.dev/sh/get-hubble-cli | sh
+# Usage: curl -sL get.rso.dev/sh/get-hubble-cli | sh
 #        sh get-hubble-cli.sh [--method=github-release]
 #        sh get-hubble-cli.sh --interactive
 #        sh get-hubble-cli.sh --update
@@ -62,7 +62,7 @@ Options:
   -v, --version           Show script version
 
 Examples:
-  curl -s get.rso.dev/sh/get-hubble-cli | sh
+  curl -sL get.rso.dev/sh/get-hubble-cli | sh
   sh get-hubble-cli.sh --method=github-release
   sh get-hubble-cli.sh --interactive
   sh get-hubble-cli.sh --update

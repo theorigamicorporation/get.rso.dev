@@ -235,9 +235,9 @@ Daemonless container engine compatible with Docker
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** container, docker, podman, oci, rootless
-**Hash:** `ea0097099111`
+**Hash:** `44651fbb2b91`
 
-<!-- tests:get-podman hash:44651fbb2b91 rockylinux-rockylinux-10:pass -->
+<!-- tests:get-podman hash:44651fbb2b91 -->
 
 ```bash
 wget -qO- get.rso.dev/get-podman | sh
@@ -276,7 +276,7 @@ Container platform for building and running applications
 **Tags:** docker, containers, oci, devops
 **Hash:** `b745115acb3e`
 
-<!-- tests:get-docker hash:b745115acb3e rockylinux-rockylinux-10:fail -->
+<!-- tests:get-docker hash:b745115acb3e -->
 
 ```bash
 wget -qO- get.rso.dev/get-docker | sh
@@ -535,9 +535,9 @@ Extendable version manager for multiple runtimes
 **Prereqs:** git
 **Requires:** non-root user
 **Tags:** version-manager, asdf, runtime, node, python, ruby
-**Hash:** `14b574e4c835`
+**Hash:** `2a7e08fa8e4d`
 
-<!-- tests:get-asdf hash:2a7e08fa8e4d rockylinux-rockylinux-10:fail -->
+<!-- tests:get-asdf hash:2a7e08fa8e4d -->
 
 ```bash
 wget -qO- get.rso.dev/get-asdf | sh
@@ -647,7 +647,7 @@ Distributed version control system
 **Tags:** git, vcs, version-control, scm
 **Hash:** `1b6afb69988c`
 
-<!-- tests:get-git hash:1b6afb69988c rockylinux-rockylinux-10:pass -->
+<!-- tests:get-git hash:1b6afb69988c -->
 
 ```bash
 wget -qO- get.rso.dev/get-git | sh
@@ -684,7 +684,7 @@ Official command-line tool for GitLab
 **Tags:** gitlab, git, cli, merge-request, pipeline, glab
 **Hash:** `56865ab2566d`
 
-<!-- tests:get-gitlab-cli hash:56865ab2566d rockylinux-rockylinux-10:fail -->
+<!-- tests:get-gitlab-cli hash:56865ab2566d -->
 
 ```bash
 wget -qO- get.rso.dev/get-gitlab-cli | sh
@@ -1127,9 +1127,9 @@ Build automated machine images for multiple platforms
 **Methods:** github-release
 **Prereqs:** curl|wget, unzip
 **Tags:** packer, images, ami, hashicorp, automation
-**Hash:** `873efb1c9c83`
+**Hash:** `154d3523ceee`
 
-<!-- tests:get-packer hash:154d3523ceee rockylinux-rockylinux-10:pass -->
+<!-- tests:get-packer hash:154d3523ceee -->
 
 ```bash
 wget -qO- get.rso.dev/get-packer | sh
@@ -1237,9 +1237,9 @@ Build and manage virtualized development environments
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** asdf, apt, dnf, yum
 **Tags:** vagrant, vm, development, hashicorp
-**Hash:** `58e3bca572d4`
+**Hash:** `65b730ae64f1`
 
-<!-- tests:get-vagrant hash:d54a676e3cd4 rockylinux-rockylinux-10:fail -->
+<!-- tests:get-vagrant hash:65b730ae64f1 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-vagrant | sh
@@ -1355,45 +1355,6 @@ Kubernetes command-line tool for managing clusters
 **Hash:** `5f25e28143d3`
 
 <!-- tests:get-kubectl hash:5f25e28143d3 rockylinux-rockylinux-10:pass -->
-
-```bash
-wget -qO- get.rso.dev/get-kubectl | sh
-# alt: curl -sL get.rso.dev/get-kubectl | sh
-```
-
-**Options:**
-
-| Flag | Description |
-|------|-------------|
-| `-i`, `--interactive` | Show interactive menu to pick install method |
-| `-m`, `--method=METHOD` | Use a specific install method |
-| `-u`, `--update` | Update to latest version if already installed |
-| `-f`, `--force` | Force reinstall regardless of current version |
-| `-h`, `--help` | Show help message |
-
-```bash
-# Install via specific method
-wget -qO- get.rso.dev/get-kubectl | sh -s -- --method=github-release
-# alt: curl -sL get.rso.dev/get-kubectl | sh -s -- --method=github-release
-
-# Update existing install
-wget -qO- get.rso.dev/get-kubectl | sh -s -- --update
-# alt: curl -sL get.rso.dev/get-kubectl | sh -s -- --update
-```
-
-## Kubernetes & Cloud
-
-### get-kubectl
-
-Kubernetes command-line tool for managing clusters
-
-**Supported:** All Linux distributions
-**Methods:** apt, github-release, asdf
-**Prereqs:** curl|wget
-**Tags:** kubectl, kubernetes, k8s, cluster, devops
-**Hash:** `62d27381fdc2`
-
-<!-- tests:get-kubectl hash:62d27381fdc2 amazonlinux-2023:pass debian-12:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-kubectl | sh
@@ -3310,9 +3271,9 @@ Fully remove snapd and prevent reinstallation (idempotent)
 
 **Supported:** Ubuntu, Kubuntu, Lubuntu, Xubuntu, Debian
 **Tags:** snap, snapd, ubuntu, kubuntu, lubuntu, remove, purge, cleanup
-**Hash:** `eed2cf811634`
+**Hash:** `94e11e0dd2bc`
 
-<!-- tests:remove-snap hash:eed2cf811634 -->
+<!-- tests:remove-snap hash:94e11e0dd2bc -->
 
 ```bash
 wget -qO- get.rso.dev/remove-snap | bash

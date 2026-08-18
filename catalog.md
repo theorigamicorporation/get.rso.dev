@@ -1397,7 +1397,7 @@ Kubernetes command-line tool for managing clusters
 
 ```bash
 wget -qO- get.rso.dev/get-kubectl | sh
-# alt: curl -s get.rso.dev/get-kubectl | sh
+# alt: curl -sL get.rso.dev/get-kubectl | sh
 ```
 
 **Options:**
@@ -1413,11 +1413,11 @@ wget -qO- get.rso.dev/get-kubectl | sh
 ```bash
 # Install via specific method
 wget -qO- get.rso.dev/get-kubectl | sh -s -- --method=github-release
-# alt: curl -s get.rso.dev/get-kubectl | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-kubectl | sh -s -- --method=github-release
 
 # Update existing install
 wget -qO- get.rso.dev/get-kubectl | sh -s -- --update
-# alt: curl -s get.rso.dev/get-kubectl | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-kubectl | sh -s -- --update
 ```
 
 ## Kubernetes Tools

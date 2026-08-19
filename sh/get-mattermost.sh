@@ -165,6 +165,21 @@ install_via_apt() {
     else
         log "Neither curl nor wget available" "ERR"; exit 1
     fi
+    # Any other source file for this repo has to go first. apt refuses to read *every*
+    # source on the machine when one repository appears twice with different Signed-By
+    # values ("Conflicting values set for option Signed-By"), which breaks not just this
+    # install but apt entirely, security updates included. Mattermost's own documented
+    # setup writes mattermost_stable.list without a signed-by, so a machine that followed
+    # it and then runs this script ends up in exactly that state.
+    for _src in /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
+        [ -f "$_src" ] || continue
+        case "$_src" in */mattermost.list) continue ;; esac
+        if grep -q 'deb\.packages\.mattermost\.com' "$_src" 2>/dev/null; then
+            log "Disabling conflicting Mattermost source: $_src" "WARN"
+            $_SUDO_CMD mv "$_src" "${_src}.disabled-by-get-mattermost"
+        fi
+    done
+
     printf 'deb [signed-by=/usr/share/keyrings/mattermost-archive-keyring.gpg] https://deb.packages.mattermost.com stable main\n' | $_SUDO_CMD tee /etc/apt/sources.list.d/mattermost.list >/dev/null
     $_SUDO_CMD apt-get update -qq
     $_SUDO_CMD apt-get install -y -qq "$APT_PKG"

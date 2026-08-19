@@ -274,6 +274,14 @@ verify_install() {
 
 set -e
 
+run_install_method() {
+    case "$1" in
+        asdf)           install_via_asdf ;;
+        github-release) install_via_github_release ;;
+        *) log "Unknown method: $1" "ERR"; exit 1 ;;
+    esac
+}
+
 main() {
     parse_args "$@"
     log "Starting $SCRIPT_NAME v$SCRIPT_VERSION" "INFO"
@@ -283,11 +291,18 @@ main() {
     elif [ "$OPT_INTERACTIVE" = true ]; then _method=$(run_menu)
     else _method=$(get_default_method); fi
     log "Using install method: $_method" "INFO"
-    case "$_method" in
-        asdf)           install_via_asdf ;;
-        github-release) install_via_github_release ;;
-        *) log "Unknown method: $_method" "ERR"; exit 1 ;;
-    esac
+    if ! run_install_method "$_method"; then
+        # The default method is whichever comes first for the distro; if that
+        # package is not in the repos, the release tarball still works.
+        if [ -z "$OPT_METHOD" ] && [ "$_method" != "github-release" ] &&
+           printf '%s' "$_AVAILABLE_METHODS" | grep -q ':github-release:'; then
+            log "$_method failed, falling back to github-release" "WARN"
+            _method="github-release"
+            run_install_method "$_method"
+        else
+            exit 1
+        fi
+    fi
     verify_install
 }
 

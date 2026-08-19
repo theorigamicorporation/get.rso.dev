@@ -10,16 +10,20 @@
 # @category Security Tools
 # @tags password, manager, security, vault, bitwarden
 # @supported Ubuntu, Debian, Mint
-# @methods apt, dnf, yum
+# @methods official-deb
 # @verify command -v bitwarden
+# @prereqs curl|wget
+#
+# Bitwarden publishes no apt or dnf package -- there is no "bitwarden" in the Ubuntu,
+# Debian or Mint repositories. The desktop client ships as a .deb from Bitwarden's own
+# download endpoint, which redirects to the current GitHub release.
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET BITWARDEN"
 
 TOOL_NAME="bitwarden"
 TOOL_CMD="bitwarden"
-APT_PKG="bitwarden"
-DNF_PKG="bitwarden"
+DEB_URL="https://vault.bitwarden.com/download/?app=desktop&platform=linux&variant=deb"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -111,16 +115,9 @@ check_existing_install() {
 
 detect_available_methods() {
     _AVAILABLE_METHODS=""; _count=0
-    if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1; then
-        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt
+    if command -v curl >/dev/null 2>&1 || command -v wget >/dev/null 2>&1; then
+        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:official-deb:Install the .deb from Bitwarden
 "
-    fi
-    if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
-        if command -v dnf >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf
-"
-        elif command -v yum >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum
-"
-        fi
     fi
     if [ -z "$_AVAILABLE_METHODS" ]; then log "No install methods available." "ERR"; exit 1; fi
 }
@@ -131,28 +128,44 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
-ensure_epel() {
-    # EL ships only a subset of packages; the rest live in EPEL. Add the repo
-    # only when the package is genuinely missing from the enabled repos, and
-    # never on Amazon Linux, which does not use EPEL.
-    [ "$_DISTRO_FAMILY" = "rhel" ] || return 0
-    _epel_pkg="$1"
-    _epel_mgr="yum"
-    command -v dnf >/dev/null 2>&1 && _epel_mgr="dnf"
-    $_epel_mgr list --available "$_epel_pkg" >/dev/null 2>&1 && return 0
-    $_epel_mgr list --installed "$_epel_pkg" >/dev/null 2>&1 && return 0
-    log "$_epel_pkg not found in enabled repos, enabling EPEL..." "INFO"
-    $_SUDO_CMD $_epel_mgr install -y -q epel-release >/dev/null 2>&1 || \
-        log "Could not enable EPEL, continuing anyway" "WARN"
-}
+install_via_official_deb() {
+    log "Installing $TOOL_NAME from Bitwarden's official .deb..." "INFO"
 
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
+    case "$_ARCH" in
+        amd64) ;;
+        *) log "Bitwarden publishes the desktop .deb for amd64 only (this is $_ARCH)" "ERR"; exit 1 ;;
+    esac
+
+    ensure_sudo
+
+    _tmp_file=$(mktemp)
+    trap 'rm -f "$_tmp_file"' EXIT
+
+    # The endpoint 302s to the current GitHub release asset, so follow redirects.
+    if command -v curl >/dev/null 2>&1; then
+        curl -fSL -o "$_tmp_file" "$DEB_URL"
+    elif command -v wget >/dev/null 2>&1; then
+        wget -q -O "$_tmp_file" "$DEB_URL"
+    else
+        log "Neither curl nor wget available" "ERR"; exit 1
+    fi
+
+    [ -s "$_tmp_file" ] || { log "Downloaded package is empty" "ERR"; exit 1; }
+
+    $_SUDO_CMD dpkg -i "$_tmp_file" || $_SUDO_CMD apt-get install -f -y -qq
+
+    trap - EXIT; rm -f "$_tmp_file"
+}
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
-    log "$TOOL_NAME installed successfully" "INFO"
+    # command -v is satisfied by any executable file, so confirm dpkg recorded the package.
+    if command -v dpkg >/dev/null 2>&1; then
+        dpkg -s "$TOOL_NAME" >/dev/null 2>&1 || {
+            log "$TOOL_NAME is on PATH but no package is installed" "ERR"; exit 1; }
+    fi
+    _installed_version=$(dpkg-query -W -f='${Version}' "$TOOL_NAME" 2>/dev/null || true)
+    log "$TOOL_NAME installed successfully: ${_installed_version:-unknown}" "INFO"
 }
 
 set -e
@@ -165,7 +178,7 @@ main() {
     elif [ "$OPT_INTERACTIVE" = true ]; then _method=$(run_menu)
     else _method=$(get_default_method); fi
     log "Using install method: $_method" "INFO"
-    case "$_method" in apt) install_via_apt ;; dnf) install_via_dnf ;; yum) install_via_yum ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
+    case "$_method" in official-deb) install_via_official_deb ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
     verify_install
 }
 

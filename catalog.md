@@ -859,6 +859,24 @@ wget -qO- get.rso.dev/get-vscode | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-vscode | sh -s -- --update
 ```
 
+## Device Management
+
+### enroll-fleetd
+
+Enrol a host into a Fleet server by building and installing fleetd
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
+**Prereqs:** curl|wget
+**Tags:** fleet, fleetd, osquery, mdm, enrolment, orbit
+**Hash:** `3f7b695523ca`
+
+<!-- tests:enroll-fleetd hash:3f7b695523ca -->
+
+```bash
+wget -qO- get.rso.dev/enroll-fleetd | sh
+# alt: curl -sL get.rso.dev/enroll-fleetd | sh
+```
+
 ## Editors
 
 ### get-micro
@@ -2526,11 +2544,12 @@ wget -qO- get.rso.dev/get-1password | sh -s -- --update
 Open-source password manager
 
 **Supported:** Ubuntu, Debian, Mint
-**Methods:** apt, dnf, yum
+**Methods:** official-deb
+**Prereqs:** curl|wget
 **Tags:** password, manager, security, vault, bitwarden
-**Hash:** `245e5d74472b`
+**Hash:** `c3fc80a8e2e8`
 
-<!-- tests:get-bitwarden hash:245e5d74472b amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-bitwarden hash:c3fc80a8e2e8 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-bitwarden | sh

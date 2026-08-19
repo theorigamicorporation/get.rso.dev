@@ -14,6 +14,11 @@
 # @methods github-release
 # @verify command -v rustdesk
 # @prereqs curl|wget
+#
+# NOTE: the package enables rustdesk.service, which runs RustDesk at boot and accepts
+# incoming connections unattended. This script stops and disables it after installing:
+# RustDesk is started by hand when it is needed. Pass --keep-service to leave the service
+# as the package configured it.
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET RUSTDESK"
@@ -26,6 +31,7 @@ OPT_INTERACTIVE=""
 OPT_METHOD=""
 OPT_FORCE=false
 OPT_UPDATE=false
+OPT_KEEP_SERVICE=false
 _DISTRO_FAMILY=""
 _DISTRO_ID=""
 _ARCH=""
@@ -56,6 +62,7 @@ Options:
                             github-release
   -u, --update            Update to latest version if already installed
   -f, --force             Force reinstall regardless of current version
+      --keep-service      Leave rustdesk.service enabled (default: stop and disable it)
   -h, --help              Show this help message
   -v, --version           Show script version
 
@@ -75,6 +82,7 @@ parse_args() {
             --method=*)        OPT_METHOD="${1#*=}"; shift ;;
             -u|--update)       OPT_UPDATE=true; shift ;;
             -f|--force)        OPT_FORCE=true; shift ;;
+            --keep-service)    OPT_KEEP_SERVICE=true; shift ;;
             -h|--help)         usage; exit 0 ;;
             -v|--version)      printf '%s %s\n' "$SCRIPT_NAME" "$SCRIPT_VERSION"; exit 0 ;;
             *)                 log "Unknown option: $1" "ERR"; usage; exit 1 ;;
@@ -272,6 +280,24 @@ install_via_github_release() {
     trap - EXIT; rm -f "$_tmp_file"
 }
 
+# The package ships rustdesk.service enabled, so RustDesk listens for incoming
+# connections from boot onwards without anyone opening it. That is a reasonable default
+# for a machine someone wants to reach unattended, and the wrong one for a workstation
+# where remote access should start when the person at the keyboard starts it.
+disable_service() {
+    [ "$OPT_KEEP_SERVICE" = true ] && { log "Leaving rustdesk.service as installed (--keep-service)" "INFO"; return 0; }
+    command -v systemctl >/dev/null 2>&1 || return 0
+    systemctl list-unit-files 2>/dev/null | grep -q '^rustdesk\.service' || return 0
+
+    ensure_sudo
+    $_SUDO_CMD systemctl stop rustdesk >/dev/null 2>&1 || true
+    if $_SUDO_CMD systemctl disable rustdesk >/dev/null 2>&1; then
+        log "Stopped and disabled rustdesk.service; start RustDesk manually when needed" "INFO"
+    else
+        log "Could not disable rustdesk.service" "WARN"
+    fi
+}
+
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
         log "$TOOL_NAME installation could not be verified." "ERR"; exit 1
@@ -307,6 +333,7 @@ main() {
         github-release) install_via_github_release ;;
         *) log "Unknown method: $_method" "ERR"; exit 1 ;;
     esac
+    disable_service
     verify_install
 }
 

@@ -274,6 +274,38 @@ install_via_yum() {
     $_SUDO_CMD yum install -y -q "$TOOL_NAME"
 }
 
+ensure_extract_tools() {
+    # Minimal images (Amazon Linux 2023, Rocky) ship without tar, gzip, unzip
+    # and xz, and tar shells out to the compressor, so install what this
+    # download needs before extracting.
+    _missing=""
+    for _t in "$@"; do
+        command -v "$_t" >/dev/null 2>&1 && continue
+        if [ "$_t" = "xz" ] && command -v apt-get >/dev/null 2>&1; then
+            _missing="$_missing xz-utils"
+        elif [ "$_t" = "find" ]; then
+            _missing="$_missing findutils"
+        else
+            _missing="$_missing $_t"
+        fi
+    done
+    [ -z "$_missing" ] && return 0
+    log "Installing archive tools:$_missing" "INFO"
+    ensure_sudo
+    if command -v apt-get >/dev/null 2>&1; then
+        $_SUDO_CMD apt-get update -qq >/dev/null 2>&1 || true
+        # shellcheck disable=SC2086
+        $_SUDO_CMD apt-get install -y -qq $_missing || true
+    elif command -v dnf >/dev/null 2>&1; then
+        # shellcheck disable=SC2086
+        $_SUDO_CMD dnf install -y -q $_missing || true
+    elif command -v yum >/dev/null 2>&1; then
+        # shellcheck disable=SC2086
+        $_SUDO_CMD yum install -y -q $_missing || true
+    fi
+    return 0
+}
+
 install_via_github_release() {
     log "Installing $TOOL_NAME via GitHub release..." "INFO"
     _version=$(get_latest_version)
@@ -298,6 +330,7 @@ install_via_github_release() {
         wget -q -O "${_tmp_dir}/${_asset}" "$_download_url"
     fi
 
+    ensure_extract_tools tar gzip find
     tar -xzf "${_tmp_dir}/${_asset}" -C "$_tmp_dir"
     _binary=$(find "$_tmp_dir" -name "fd" -type f | head -1)
     [ -z "$_binary" ] && { log "Binary not found in archive" "ERR"; exit 1; }

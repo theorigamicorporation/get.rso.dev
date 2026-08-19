@@ -11,7 +11,7 @@
 # @tags fuse, appimage, filesystem, userspace
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 # @methods apt, dnf, yum
-# @verify command -v fusermount
+# @verify sh -c 'for f in /usr/lib*/libfuse.so.2* /usr/lib/*/libfuse.so.2*; do [ -e "$f" ] && exit 0; done; exit 1'
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET LIBFUSE2"
@@ -102,8 +102,19 @@ ensure_sudo() {
     log "Root privileges required but sudo is not available." "ERR"; exit 1
 }
 
+find_libfuse() {
+    # This package ships a shared library, not a command. fusermount lives in a
+    # separate package, so locate the library itself.
+    for _dir in /usr/lib /usr/lib64 /lib /lib64 /usr/lib/x86_64-linux-gnu /usr/lib/aarch64-linux-gnu; do
+        for _lib in "$_dir"/libfuse.so.2*; do
+            [ -e "$_lib" ] && { printf '%s' "$_lib"; return 0; }
+        done
+    done
+    return 1
+}
+
 check_existing_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME is not currently installed" "INFO"; return 0; fi
+    if ! find_libfuse >/dev/null 2>&1; then log "$TOOL_NAME is not currently installed" "INFO"; return 0; fi
     log "$TOOL_NAME is already installed" "INFO"
     if [ "$OPT_FORCE" = true ]; then log "Force reinstall" "INFO"; return 0; fi
     if [ "$OPT_UPDATE" = true ]; then log "Updating..." "INFO"; return 0; fi
@@ -152,13 +163,7 @@ install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; 
 install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
 verify_install() {
-    # This package is the libfuse2 shared library, not a command. fusermount
-    # lives in a separate package, so check for the library itself.
-    for _dir in /usr/lib /usr/lib64 /lib /lib64 /usr/lib/x86_64-linux-gnu /usr/lib/aarch64-linux-gnu; do
-        for _lib in "$_dir"/libfuse.so.2*; do
-            [ -e "$_lib" ] && { log "$TOOL_NAME installed successfully: $_lib" "INFO"; return; }
-        done
-    done
+    _found_lib=$(find_libfuse) && { log "$TOOL_NAME installed successfully: $_found_lib" "INFO"; return; }
     command -v "$TOOL_CMD" >/dev/null 2>&1 && { log "$TOOL_NAME installed successfully" "INFO"; return; }
     log "$TOOL_NAME could not be verified" "ERR"; exit 1
 }

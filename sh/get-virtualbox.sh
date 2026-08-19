@@ -11,7 +11,7 @@
 # @tags vm, virtualization, virtualbox, oracle, hypervisor
 # @supported Ubuntu, Debian, RHEL, Rocky
 # @methods apt, dnf, yum
-# @verify vboxmanage --version
+# @verify sh -c 'command -v VBoxManage >/dev/null 2>&1 || command -v vboxmanage >/dev/null 2>&1'
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET VIRTUALBOX"
@@ -167,8 +167,8 @@ resolve_vbox_pkg() {
     return 0
 }
 
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_virtualbox_repo; resolve_vbox_pkg; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_virtualbox_repo; resolve_vbox_pkg; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
+install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_epel lzf; ensure_virtualbox_repo; resolve_vbox_pkg; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
+install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel lzf; ensure_virtualbox_repo; resolve_vbox_pkg; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi

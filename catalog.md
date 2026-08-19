@@ -197,9 +197,9 @@ Open-source team messaging and collaboration platform
 **Methods:** apt, github-release
 **Prereqs:** curl|wget, gpg
 **Tags:** chat, messaging, team, collaboration, slack-alternative
-**Hash:** `5ad3465c6e0b`
+**Hash:** `5643f02be0c6`
 
-<!-- tests:get-mattermost hash:5ad3465c6e0b amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-mattermost hash:5643f02be0c6 -->
 
 ```bash
 wget -qO- get.rso.dev/get-mattermost | sh

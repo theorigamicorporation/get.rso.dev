@@ -2313,6 +2313,45 @@ wget -qO- get.rso.dev/get-wget | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-wget | sh -s -- --update
 ```
 
+## Office & Productivity
+
+### get-onlyoffice
+
+Offline office suite for documents, spreadsheets, presentations and PDF forms
+
+**Supported:** Ubuntu, Debian, Mint
+**Methods:** apt, flatpak, snap
+**Prereqs:** curl|wget, gpg
+**Tags:** office, documents, spreadsheet, presentation, pdf, onlyoffice, msoffice
+**Hash:** `79af8d464469`
+
+<!-- tests:get-onlyoffice hash:79af8d464469 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/get-onlyoffice | sh
+# alt: curl -sL get.rso.dev/get-onlyoffice | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-onlyoffice | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-onlyoffice | sh -s -- --update
+```
+
 ## Productivity Tools
 
 ### get-joplin
@@ -2350,42 +2389,6 @@ wget -qO- get.rso.dev/get-joplin | sh -s -- --method=github-release
 # Update existing install
 wget -qO- get.rso.dev/get-joplin | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-joplin | sh -s -- --update
-```
-
-### get-onlyoffice
-
-Free office suite compatible with Microsoft Office
-
-**Supported:** Ubuntu, Debian, Mint
-**Methods:** apt, dnf, yum
-**Tags:** office, documents, spreadsheet, onlyoffice
-**Hash:** `a4b7c0a1cd8f`
-
-<!-- tests:get-onlyoffice hash:a4b7c0a1cd8f amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
-
-```bash
-wget -qO- get.rso.dev/get-onlyoffice | sh
-# alt: curl -sL get.rso.dev/get-onlyoffice | sh
-```
-
-**Options:**
-
-| Flag | Description |
-|------|-------------|
-| `-i`, `--interactive` | Show interactive menu to pick install method |
-| `-m`, `--method=METHOD` | Use a specific install method |
-| `-u`, `--update` | Update to latest version if already installed |
-| `-f`, `--force` | Force reinstall regardless of current version |
-| `-h`, `--help` | Show help message |
-
-```bash
-# Install via specific method
-wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --method=github-release
-# alt: curl -sL get.rso.dev/get-onlyoffice | sh -s -- --method=github-release
-
-# Update existing install
-wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --update
-# alt: curl -sL get.rso.dev/get-onlyoffice | sh -s -- --update
 ```
 
 ## Search Tools

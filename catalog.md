@@ -2138,11 +2138,11 @@ wget -qO- get.rso.dev/get-socat | sh -s -- --update
 Command-line internet speed test
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
-**Methods:** apt, dnf, yum
+**Methods:** apt, dnf, yum, github-release
 **Tags:** speed, bandwidth, test, internet, network
-**Hash:** `93d5f6406691`
+**Hash:** `419dd103f217`
 
-<!-- tests:get-speedtest-cli hash:93d5f6406691 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-speedtest-cli hash:419dd103f217 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-speedtest-cli | sh

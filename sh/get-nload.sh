@@ -10,7 +10,7 @@
 # @description Real-time network traffic and bandwidth monitor
 # @category Networking Tools
 # @tags network, bandwidth, monitor, traffic, nload
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify command -v nload
 # =============================================================================

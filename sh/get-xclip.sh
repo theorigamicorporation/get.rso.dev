@@ -10,7 +10,7 @@
 # @description Command-line clipboard utility for X11
 # @category Desktop Tools
 # @tags clipboard, copy, paste, x11, xclip
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify command -v xclip
 # =============================================================================

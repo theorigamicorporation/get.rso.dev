@@ -10,7 +10,7 @@
 # @description Tiling terminal emulator for Linux
 # @category Terminal Tools
 # @tags terminal, tiling, emulator, tilix, split
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify command -v tilix
 # =============================================================================

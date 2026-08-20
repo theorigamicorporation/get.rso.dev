@@ -9,7 +9,7 @@
 # @description Command-line internet speed test
 # @category Networking Tools
 # @tags speed, bandwidth, test, internet, network
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify speedtest-cli --version
 # =============================================================================

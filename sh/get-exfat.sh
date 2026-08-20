@@ -9,7 +9,7 @@
 # @description exFAT filesystem support for Linux
 # @category File Tools
 # @tags filesystem, exfat, usb, sdcard, mount
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify command -v mkfs.exfat
 # =============================================================================

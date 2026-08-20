@@ -10,7 +10,7 @@
 # @description TCP/IP packet assembler and analyzer
 # @category Networking Tools
 # @tags network, packet, tcp, scan, hping
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify command -v hping3
 # =============================================================================

@@ -10,7 +10,7 @@
 # @description Remote desktop client supporting RDP, VNC, SSH
 # @category Desktop Tools
 # @tags remote, desktop, rdp, vnc, ssh, remmina
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify command -v remmina
 # =============================================================================

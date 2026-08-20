@@ -10,7 +10,7 @@
 # @description Daemonless container engine compatible with Docker
 # @category Container Tools
 # @tags container, docker, podman, oci, rootless
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify podman --version
 # =============================================================================

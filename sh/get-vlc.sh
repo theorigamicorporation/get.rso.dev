@@ -10,7 +10,7 @@
 # @description Free and open-source cross-platform multimedia player
 # @category Media Tools
 # @tags video, audio, media, player, vlc, multimedia
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify command -v vlc
 # =============================================================================

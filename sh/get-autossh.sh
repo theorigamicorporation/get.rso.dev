@@ -10,7 +10,7 @@
 # @description Automatically restart SSH sessions and tunnels
 # @category Networking Tools
 # @tags ssh, tunnel, persistent, autossh
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify command -v autossh
 # =============================================================================

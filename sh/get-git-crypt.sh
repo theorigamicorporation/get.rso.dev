@@ -10,7 +10,7 @@
 # @description Transparent file encryption in Git repositories
 # @category Security Tools
 # @tags git, encryption, secrets, crypt, transparent
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify git-crypt --version
 # =============================================================================

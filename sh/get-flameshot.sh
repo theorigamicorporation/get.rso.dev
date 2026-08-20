@@ -10,7 +10,7 @@
 # @description Powerful screenshot tool with annotation support
 # @category Desktop Tools
 # @tags screenshot, capture, annotation, screen, flameshot
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint
 # @methods apt, dnf, yum
 # @verify command -v flameshot
 # =============================================================================

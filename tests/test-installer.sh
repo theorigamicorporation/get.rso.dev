@@ -64,6 +64,33 @@ get_script_prereqs() {
     grep -m1 '@prereqs' "$1" 2>/dev/null | sed 's/.*@prereqs[[:space:]]*//' | sed 's/ (.*)//' || true
 }
 
+# Distro tokens a test image satisfies, matched against a script's @supported
+image_distro_tokens() {
+    case "$1" in
+        *ubuntu*)      printf 'Ubuntu' ;;
+        *debian*)      printf 'Debian' ;;
+        *rockylinux*)  printf 'Rocky RHEL' ;;
+        *amazonlinux*) printf 'AmazonLinux' ;;
+        *)             printf '' ;;
+    esac
+}
+
+# A script is only tested on an image its @supported actually names. Scripts
+# saying "All Linux distributions", or carrying no tag, run everywhere. This
+# keeps a distro the script never claimed from being reported as a failure.
+script_supports_image() {
+    _supported=$(grep -m1 '@supported' "$1" 2>/dev/null | sed 's/.*@supported[[:space:]]*//')
+    [ -z "$_supported" ] && return 0
+    case "$_supported" in *"All Linux"*) return 0 ;; esac
+    _tokens=$(image_distro_tokens "$2")
+    [ -z "$_tokens" ] && return 0
+    for _tok in $_tokens; do
+        [ "$_tok" = "AmazonLinux" ] && _tok="Amazon Linux"
+        case "$_supported" in *"$_tok"*) return 0 ;; esac
+    done
+    return 1
+}
+
 get_script_noroot() {
     grep -m1 '@noroot' "$1" 2>/dev/null | sed 's/.*@noroot[[:space:]]*//' || true
 }
@@ -430,6 +457,10 @@ for image in $IMAGES; do
         [ -z "$script" ] && continue
         tool_cmd=$(get_tool_cmd "$script")
         script_path="${SCRIPT_DIR}/${script}"
+        if ! script_supports_image "$script_path" "$image"; then
+            skip "${image} | ${script} (distro not listed in @supported)"
+            continue
+        fi
         verify_cmd=$(get_script_verify "$script_path")
         prereqs=$(get_script_prereqs "$script_path")
         prereqs_cmd=$(prereqs_install_cmd "$prereqs")

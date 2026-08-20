@@ -201,6 +201,13 @@ check_existing_install() {
     log "$TOOL_NAME is already installed: $_current" "INFO"
     if [ "$OPT_FORCE" = true ]; then log "Force flag set, proceeding with reinstall" "INFO"; return 0; fi
     if [ "$OPT_UPDATE" = true ]; then log "Update flag set, proceeding" "INFO"; return 0; fi
+    # The fonts are a separate concern from the editors: a machine that already has
+    # OnlyOffice may still be missing them, and before this it would exit here without ever
+    # looking. install_core_fonts is idempotent, so this costs nothing when they are there.
+    if [ "$OPT_FONTS" = true ] && [ "$_DISTRO_FAMILY" = "debian" ]; then
+        ensure_sudo
+        install_core_fonts
+    fi
     log "$TOOL_NAME is already installed (use --update to upgrade, --force to reinstall)" "INFO"
     exit 0
 }
@@ -319,6 +326,7 @@ install_via_apt() {
     fi
 
     [ "$OPT_FONTS" = true ] && install_core_fonts
+    return 0
 }
 
 # Microsoft core fonts, non-interactively. Without them Calibri, Cambria, Arial and Times

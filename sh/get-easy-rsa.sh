@@ -244,6 +244,13 @@ ensure_epel() {
     $_epel_mgr list --available "$_epel_pkg" >/dev/null 2>&1 && return 0
     $_epel_mgr list --installed "$_epel_pkg" >/dev/null 2>&1 && return 0
     log "$_epel_pkg not found in enabled repos, enabling EPEL..." "INFO"
+    # EPEL expects CRB (PowerTools on EL8) enabled; several EPEL packages depend
+    # on it and fail to resolve without it.
+    $_SUDO_CMD $_epel_mgr install -y -q dnf-plugins-core >/dev/null 2>&1 || true
+    if command -v dnf >/dev/null 2>&1; then
+        $_SUDO_CMD dnf config-manager --set-enabled crb >/dev/null 2>&1 ||
+            $_SUDO_CMD dnf config-manager --set-enabled powertools >/dev/null 2>&1 || true
+    fi
     $_SUDO_CMD $_epel_mgr install -y -q epel-release >/dev/null 2>&1 || \
         log "Could not enable EPEL, continuing anyway" "WARN"
 }

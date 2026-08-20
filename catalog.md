@@ -2323,9 +2323,9 @@ Offline office suite for documents, spreadsheets, presentations and PDF forms
 **Methods:** apt, flatpak, snap
 **Prereqs:** curl|wget, gpg
 **Tags:** office, documents, spreadsheet, presentation, pdf, onlyoffice, msoffice
-**Hash:** `dc35049aebc5`
+**Hash:** `ff42fd94b16f`
 
-<!-- tests:get-onlyoffice hash:dc35049aebc5 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-onlyoffice hash:ff42fd94b16f amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-onlyoffice | sh

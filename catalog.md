@@ -232,12 +232,12 @@ wget -qO- get.rso.dev/get-mattermost | sh -s -- --update
 
 Daemonless container engine compatible with Docker
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** container, docker, podman, oci, rootless
-**Hash:** `ced378bb00de`
+**Hash:** `9a66f6262af0`
 
-<!-- tests:get-podman hash:ced378bb00de amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-podman hash:9a66f6262af0 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-podman | sh
@@ -383,12 +383,12 @@ wget -qO- get.rso.dev/get-copyq | sh -s -- --update
 
 Powerful screenshot tool with annotation support
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
 **Tags:** screenshot, capture, annotation, screen, flameshot
-**Hash:** `6e2a0b6b83cb`
+**Hash:** `f530e4ce6345`
 
-<!-- tests:get-flameshot hash:6e2a0b6b83cb amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-flameshot hash:f530e4ce6345 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-flameshot | sh
@@ -419,12 +419,12 @@ wget -qO- get.rso.dev/get-flameshot | sh -s -- --update
 
 Remote desktop client supporting RDP, VNC, SSH
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** remote, desktop, rdp, vnc, ssh, remmina
-**Hash:** `2b2106707f20`
+**Hash:** `1fc485219bdc`
 
-<!-- tests:get-remmina hash:2b2106707f20 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-remmina hash:1fc485219bdc amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-remmina | sh
@@ -492,12 +492,12 @@ wget -qO- get.rso.dev/get-rustdesk | sh -s -- --update
 
 Command-line clipboard utility for X11
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** clipboard, copy, paste, x11, xclip
-**Hash:** `66669238d9a8`
+**Hash:** `9a74fe1a4fb3`
 
-<!-- tests:get-xclip hash:66669238d9a8 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-xclip hash:9a74fe1a4fb3 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-xclip | sh
@@ -958,12 +958,12 @@ wget -qO- get.rso.dev/get-nano | sh -s -- --update
 
 exFAT filesystem support for Linux
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** filesystem, exfat, usb, sdcard, mount
-**Hash:** `c19df518a1d3`
+**Hash:** `d6837959e54c`
 
-<!-- tests:get-exfat hash:c19df518a1d3 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-exfat hash:d6837959e54c amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-exfat | sh
@@ -1775,12 +1775,12 @@ wget -qO- get.rso.dev/get-obs | sh -s -- --update
 
 Free and open-source cross-platform multimedia player
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** video, audio, media, player, vlc, multimedia
-**Hash:** `79329169e80e`
+**Hash:** `614e315f61bb`
 
-<!-- tests:get-vlc hash:79329169e80e amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-vlc hash:614e315f61bb amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-vlc | sh
@@ -1813,12 +1813,12 @@ wget -qO- get.rso.dev/get-vlc | sh -s -- --update
 
 Automatically restart SSH sessions and tunnels
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** ssh, tunnel, persistent, autossh
-**Hash:** `155cecad6cf4`
+**Hash:** `7e70adb8dba7`
 
-<!-- tests:get-autossh hash:155cecad6cf4 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-autossh hash:7e70adb8dba7 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-autossh | sh
@@ -1921,12 +1921,12 @@ wget -qO- get.rso.dev/get-ethtool | sh -s -- --update
 
 TCP/IP packet assembler and analyzer
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** network, packet, tcp, scan, hping
-**Hash:** `c4ab2cf6db51`
+**Hash:** `3b1b8470d8c0`
 
-<!-- tests:get-hping3 hash:c4ab2cf6db51 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-hping3 hash:3b1b8470d8c0 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-hping3 | sh
@@ -2065,12 +2065,12 @@ wget -qO- get.rso.dev/get-net-tools | sh -s -- --update
 
 Real-time network traffic and bandwidth monitor
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** network, bandwidth, monitor, traffic, nload
-**Hash:** `ab5a773efcfe`
+**Hash:** `719f06149b07`
 
-<!-- tests:get-nload hash:ab5a773efcfe amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-nload hash:719f06149b07 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-nload | sh
@@ -2137,12 +2137,12 @@ wget -qO- get.rso.dev/get-socat | sh -s -- --update
 
 Command-line internet speed test
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** speed, bandwidth, test, internet, network
-**Hash:** `2e83683ecc14`
+**Hash:** `614a24804d5c`
 
-<!-- tests:get-speedtest-cli hash:2e83683ecc14 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-speedtest-cli hash:614a24804d5c amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-speedtest-cli | sh
@@ -2655,12 +2655,12 @@ wget -qO- get.rso.dev/get-easy-rsa | sh -s -- --update
 
 Transparent file encryption in Git repositories
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** git, encryption, secrets, crypt, transparent
-**Hash:** `818062c8bbb6`
+**Hash:** `5f16b0dd7dc9`
 
-<!-- tests:get-git-crypt hash:818062c8bbb6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-git-crypt hash:5f16b0dd7dc9 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-git-crypt | sh
@@ -3455,12 +3455,12 @@ wget -qO- get.rso.dev/get-screen | sh -s -- --update
 
 Tiling terminal emulator for Linux
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** terminal, tiling, emulator, tilix, split
-**Hash:** `ea05461a020d`
+**Hash:** `60dbb60c714c`
 
-<!-- tests:get-tilix hash:ea05461a020d amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-tilix hash:60dbb60c714c amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-tilix | sh

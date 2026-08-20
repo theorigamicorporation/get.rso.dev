@@ -3,6 +3,7 @@
 # =============================================================================
 # get-speedtest-cli.sh — Install speedtest-cli across Linux distributions
 # Usage: curl -sL get.rso.dev/sh/get-speedtest-cli | sh
+#        sh get-speedtest-cli.sh [--method=apt|dnf|yum|github-release]
 #        sh get-speedtest-cli.sh --interactive
 #        sh get-speedtest-cli.sh --update
 # =============================================================================
@@ -10,7 +11,7 @@
 # @category Networking Tools
 # @tags speed, bandwidth, test, internet, network
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky
-# @methods apt, dnf, yum
+# @methods apt, dnf, yum, github-release
 # @verify speedtest-cli --version
 # =============================================================================
 SCRIPT_VERSION="0.1"
@@ -20,6 +21,8 @@ TOOL_NAME="speedtest-cli"
 TOOL_CMD="speedtest-cli"
 APT_PKG="speedtest-cli"
 DNF_PKG="speedtest-cli"
+GITHUB_REPO="sivel/speedtest-cli"
+INSTALL_DIR="/usr/local/bin"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -122,6 +125,8 @@ detect_available_methods() {
 "
         fi
     fi
+    _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:github-release:Install the standalone script from GitHub
+"
     if [ -z "$_AVAILABLE_METHODS" ]; then log "No install methods available." "ERR"; exit 1; fi
 }
 
@@ -157,12 +162,89 @@ ensure_epel() {
 install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
 install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
+get_latest_version() {
+    _releases_url="https://github.com/${GITHUB_REPO}/releases/latest"
+    _latest=""
+    if command -v curl >/dev/null 2>&1; then
+        _latest=$(curl -sI "$_releases_url" 2>/dev/null | grep -i '^location:' | sed 's|.*/tag/||; s/[[:space:]]*$//')
+    elif command -v wget >/dev/null 2>&1; then
+        _latest=$(wget --spider -S "$_releases_url" 2>&1 | grep -i '^ *Location:' | tail -1 | sed 's|.*/tag/||; s/[[:space:]]*$//')
+    fi
+    # A renamed repo redirects to /releases/latest with no /tag/ component, leaving
+    # the whole header line behind. Discard anything that is not tag-shaped so the
+    # API fallback below still runs.
+    case "$_latest" in
+        *[!A-Za-z0-9._+-]*) _latest="" ;;
+    esac
+    if [ -z "$_latest" ]; then
+        _api_url="https://api.github.com/repos/${GITHUB_REPO}/releases/latest"
+        if command -v curl >/dev/null 2>&1; then
+            _latest=$(curl -fsSL "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+        elif command -v wget >/dev/null 2>&1; then
+            _latest=$(wget -qO- "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+        fi
+    fi
+    printf '%s' "$_latest"
+}
+
+install_via_github_release() {
+    log "Installing $TOOL_NAME from GitHub release..." "INFO"
+    ensure_sudo
+    if ! command -v python3 >/dev/null 2>&1; then
+        log "python3 not found, installing it first..." "INFO"
+        if command -v apt-get >/dev/null 2>&1; then
+            $_SUDO_CMD apt-get update -qq >/dev/null 2>&1 || true
+            $_SUDO_CMD apt-get install -y -qq python3
+        elif command -v dnf >/dev/null 2>&1; then
+            $_SUDO_CMD dnf install -y -q python3
+        elif command -v yum >/dev/null 2>&1; then
+            $_SUDO_CMD yum install -y -q python3
+        fi
+    fi
+    command -v python3 >/dev/null 2>&1 || { log "python3 is required" "ERR"; exit 1; }
+
+    _version=$(get_latest_version)
+    [ -z "$_version" ] && { log "Could not determine latest version" "ERR"; exit 1; }
+
+    # Upstream ships one self-contained script rather than a release archive.
+    _download_url="https://raw.githubusercontent.com/${GITHUB_REPO}/${_version}/speedtest.py"
+    log "Downloading speedtest.py (${_version})..." "INFO"
+
+    _tmp_file=$(mktemp)
+    trap 'rm -f "$_tmp_file"' EXIT
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL -o "$_tmp_file" "$_download_url"
+    elif command -v wget >/dev/null 2>&1; then
+        wget -q -O "$_tmp_file" "$_download_url"
+    else
+        log "curl or wget is required" "ERR"; exit 1
+    fi
+    [ -s "$_tmp_file" ] || { log "Download failed" "ERR"; exit 1; }
+
+    # The shebang upstream is "env python", which does not exist on EL10 and
+    # other python3-only distros.
+    sed -i '1s|.*|#!/usr/bin/env python3|' "$_tmp_file"
+
+    $_SUDO_CMD install -m 0755 "$_tmp_file" "${INSTALL_DIR}/${TOOL_CMD}"
+    log "Installed to ${INSTALL_DIR}/${TOOL_CMD}" "INFO"
+}
+
 verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
     log "$TOOL_NAME installed successfully" "INFO"
 }
 
 set -e
+
+run_install_method() {
+    case "$1" in
+        apt) install_via_apt ;;
+        dnf) install_via_dnf ;;
+        yum) install_via_yum ;;
+        github-release) install_via_github_release ;;
+        *) log "Unknown method: $1" "ERR"; exit 1 ;;
+    esac
+}
 
 main() {
     parse_args "$@"; log "Starting $SCRIPT_NAME v$SCRIPT_VERSION" "INFO"
@@ -172,7 +254,17 @@ main() {
     elif [ "$OPT_INTERACTIVE" = true ]; then _method=$(run_menu)
     else _method=$(get_default_method); fi
     log "Using install method: $_method" "INFO"
-    case "$_method" in apt) install_via_apt ;; dnf) install_via_dnf ;; yum) install_via_yum ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
+    if ! run_install_method "$_method"; then
+        # The distro package is absent on EL10 and Amazon Linux; the standalone
+        # script works anywhere python3 does.
+        if [ -z "$OPT_METHOD" ] && [ "$_method" != "github-release" ]; then
+            log "$_method failed, falling back to github-release" "WARN"
+            _method="github-release"
+            run_install_method "$_method"
+        else
+            exit 1
+        fi
+    fi
     verify_install
 }
 

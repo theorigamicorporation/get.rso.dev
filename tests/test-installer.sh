@@ -64,30 +64,55 @@ get_script_prereqs() {
     grep -m1 '@prereqs' "$1" 2>/dev/null | sed 's/.*@prereqs[[:space:]]*//' | sed 's/ (.*)//' || true
 }
 
-# Distro tokens a test image satisfies, matched against a script's @supported
-image_distro_tokens() {
+# Distro name and version a test image represents
+image_distro_name() {
     case "$1" in
         *ubuntu*)      printf 'Ubuntu' ;;
         *debian*)      printf 'Debian' ;;
-        *rockylinux*)  printf 'Rocky RHEL' ;;
-        *amazonlinux*) printf 'AmazonLinux' ;;
+        *rockylinux*)  printf 'Rocky' ;;
+        *amazonlinux*) printf 'Amazon Linux' ;;
         *)             printf '' ;;
     esac
 }
 
-# A script is only tested on an image its @supported actually names. Scripts
-# saying "All Linux distributions", or carrying no tag, run everywhere. This
-# keeps a distro the script never claimed from being reported as a failure.
+image_distro_version() { printf '%s' "${1##*:}"; }
+
+# Compare two dotted versions: 0 if $1 >= $2
+version_ge() {
+    [ "$1" = "$2" ] && return 0
+    [ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | head -1)" = "$2" ]
+}
+
+# A script is only tested on an image its @supported names. Entries may carry a
+# version ("Ubuntu 22.04", "Ubuntu 24.04+"); a bare distro name means any
+# version. Scripts saying "All Linux distributions", or with no tag, run
+# everywhere. This keeps a distro or release the script never claimed from
+# being reported as a failure.
 script_supports_image() {
     _supported=$(grep -m1 '@supported' "$1" 2>/dev/null | sed 's/.*@supported[[:space:]]*//')
     [ -z "$_supported" ] && return 0
     case "$_supported" in *"All Linux"*) return 0 ;; esac
-    _tokens=$(image_distro_tokens "$2")
-    [ -z "$_tokens" ] && return 0
-    for _tok in $_tokens; do
-        [ "$_tok" = "AmazonLinux" ] && _tok="Amazon Linux"
-        case "$_supported" in *"$_tok"*) return 0 ;; esac
+
+    _img_name=$(image_distro_name "$2")
+    _img_ver=$(image_distro_version "$2")
+    [ -z "$_img_name" ] && return 0
+
+    _old_ifs="$IFS"; IFS=','
+    for _entry in $_supported; do
+        _entry=$(printf '%s' "$_entry" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+        # RHEL is treated as naming the Rocky images too
+        case "$_img_name" in
+            Rocky) case "$_entry" in Rocky*|RHEL*) ;; *) continue ;; esac ;;
+            *)     case "$_entry" in "$_img_name"*) ;; *) continue ;; esac ;;
+        esac
+        _want=$(printf '%s' "$_entry" | sed 's/^[A-Za-z ]*//; s/[[:space:]]*$//')
+        case "$_want" in
+            '')   IFS="$_old_ifs"; return 0 ;;
+            *+)   version_ge "$_img_ver" "${_want%+}" && { IFS="$_old_ifs"; return 0 ; } ;;
+            *)    [ "$_img_ver" = "$_want" ] && { IFS="$_old_ifs"; return 0 ; } ;;
+        esac
     done
+    IFS="$_old_ifs"
     return 1
 }
 
@@ -127,15 +152,28 @@ prereqs_install_cmd() {
     # Parse prereqs: "curl|wget, gpg" means (curl OR wget) AND gpg
     _apt_pkgs=""
     _dnf_pkgs=""
+    _or_installs=""
 
     _old_ifs="$IFS"; IFS=','
     for _item in $_prereqs; do
         _item=$(printf '%s' "$_item" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/ (.*)//g')
         [ -z "$_item" ] && continue
 
-        # Handle OR (pipe): "curl|wget" — skip entirely, container already has one
+        # Handle OR (pipe): "curl|wget" — satisfy with the first alternative, but
+        # only when the image ships none of them. ubuntu:22.04 and ubuntu:24.04
+        # ship neither curl nor wget, so assuming one is present turned every
+        # script declaring this prereq into a spurious failure.
         case "$_item" in
             *"|"*)
+                _first=$(printf '%s' "$_item" | cut -d'|' -f1)
+                _guard=""
+                _alt_ifs="$IFS"; IFS='|'
+                for _alt in $_item; do
+                    [ -z "$_guard" ] || _guard="${_guard} || "
+                    _guard="${_guard}command -v ${_alt} >/dev/null 2>&1"
+                done
+                IFS="$_alt_ifs"
+                _or_installs="${_or_installs}if ! { ${_guard}; }; then if command -v apt-get >/dev/null 2>&1; then apt-get update -qq && apt-get install -y -qq ca-certificates ${_first} >/dev/null 2>&1; elif command -v dnf >/dev/null 2>&1; then dnf install -y -q ca-certificates ${_first} >/dev/null 2>&1; elif command -v yum >/dev/null 2>&1; then yum install -y -q ca-certificates ${_first} >/dev/null 2>&1; fi; fi; "
                 ;;
             "gpg")
                 _apt_pkgs="${_apt_pkgs} gpg"
@@ -151,6 +189,8 @@ prereqs_install_cmd() {
         esac
     done
     IFS="$_old_ifs"
+
+    printf '%s' "$_or_installs"
 
     [ -z "$_apt_pkgs" ] && [ -z "$_dnf_pkgs" ] && return
 

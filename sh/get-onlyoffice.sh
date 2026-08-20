@@ -24,7 +24,16 @@
 # flatpak (org.onlyoffice.desktopeditors) and snap (onlyoffice-desktopeditors) are offered
 # below apt, and are the only options on distros without apt.
 #
-# Recommends are not installed: ttf-mscorefonts-installer pulls a debconf EULA prompt and
+# Microsoft core fonts are installed by default and unattended. Documents written
+# elsewhere in Calibri, Cambria, Arial or Times New Roman reflow without them, which shows
+# up as wrong pagination in anything shared outside the company.
+#
+# ttf-mscorefonts-installer normally stops on a debconf EULA prompt, which hangs a piped
+# `curl | sh` run outright. The answer is preseeded with debconf-set-selections, so the
+# licence is accepted non-interactively -- a deliberate choice for managed machines, and
+# --no-fonts skips the whole thing for anyone who would rather not.
+#
+# Other recommends are still not installed: ttf-mscorefonts-installer pulls a debconf EULA prompt and
 # a SourceForge download into what is usually a non-interactive run, and hangs or fails it.
 # Pass --with-recommends to install them anyway.
 # =============================================================================
@@ -50,6 +59,7 @@ OPT_METHOD=""
 OPT_FORCE=false
 OPT_UPDATE=false
 OPT_RECOMMENDS=false
+OPT_FONTS=true
 
 _DISTRO_FAMILY=""
 _DISTRO_ID=""
@@ -84,6 +94,8 @@ Options:
   -m, --method=METHOD     Use specific install method: apt, flatpak, snap
   -u, --update            Update to latest version if already installed
   -f, --force             Force reinstall regardless of current version
+      --no-fonts          Skip the Microsoft core fonts (installed by default,
+                          accepting their EULA non-interactively)
       --with-recommends   Also install apt Recommends (ttf-mscorefonts-installer,
                           fonts-takao-gothic). Needs an interactive terminal for the
                           Microsoft font EULA.
@@ -106,6 +118,7 @@ parse_args() {
             -u|--update)       OPT_UPDATE=true; shift ;;
             -f|--force)        OPT_FORCE=true; shift ;;
             --with-recommends) OPT_RECOMMENDS=true; shift ;;
+            --no-fonts)        OPT_FONTS=false; shift ;;
             -h|--help)         usage; exit 0 ;;
             -v|--version)      printf '%s %s\n' "$SCRIPT_NAME" "$SCRIPT_VERSION"; exit 0 ;;
             *)                 log "Unknown option: $1" "ERR"; usage; exit 1 ;;
@@ -296,12 +309,53 @@ install_via_apt() {
 
     # Recommends pull in ttf-mscorefonts-installer, which prompts for a EULA over debconf
     # and downloads from SourceForge. In a piped `curl | sh` run that hangs or fails the
-    # install; the editors work without it. --with-recommends opts back in.
+    # install; the editors work without it. --with-recommends opts back in, and the fonts
+    # are handled separately below so they can be installed without everything else.
     log "Installing $APT_PKG (about 350 MB to download)..." "INFO"
     if [ "$OPT_RECOMMENDS" = true ]; then
         DEBIAN_FRONTEND=noninteractive $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
     else
         DEBIAN_FRONTEND=noninteractive $_SUDO_CMD apt-get install -y -qq --no-install-recommends "$APT_PKG"
+    fi
+
+    [ "$OPT_FONTS" = true ] && install_core_fonts
+}
+
+# Microsoft core fonts, non-interactively. Without them Calibri, Cambria, Arial and Times
+# New Roman are substituted and documents from outside reflow.
+install_core_fonts() {
+    if dpkg-query -W -f='${Status}' ttf-mscorefonts-installer 2>/dev/null | grep -q "^install ok installed$"; then
+        log "Microsoft core fonts already installed" "INFO"
+        return 0
+    fi
+
+    log "Installing Microsoft core fonts (accepting their EULA non-interactively)..." "INFO"
+
+    # The package lives in multiverse on Ubuntu and contrib on Debian. If neither is
+    # enabled the install cannot proceed, and that is worth saying rather than failing
+    # obscurely -- OnlyOffice itself is already installed at this point either way.
+    if ! apt-cache policy ttf-mscorefonts-installer 2>/dev/null | grep -q 'Candidate: [0-9]'; then
+        log "ttf-mscorefonts-installer is not available; enable multiverse (Ubuntu) or contrib (Debian) for it" "WARN"
+        return 0
+    fi
+
+    # Pre-answer the EULA prompt. Without this debconf blocks waiting on a terminal that a
+    # piped run does not have.
+    if command -v debconf-set-selections >/dev/null 2>&1; then
+        printf 'ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true\n' \
+            | $_SUDO_CMD debconf-set-selections
+    else
+        log "debconf-set-selections missing; cannot accept the font EULA unattended" "WARN"
+        return 0
+    fi
+
+    if DEBIAN_FRONTEND=noninteractive $_SUDO_CMD apt-get install -y -qq ttf-mscorefonts-installer; then
+        command -v fc-cache >/dev/null 2>&1 && $_SUDO_CMD fc-cache -f >/dev/null 2>&1
+        log "Microsoft core fonts installed" "INFO"
+    else
+        # The fonts are fetched from SourceForge, which fails often enough to be worth
+        # surviving: the editors work without them.
+        log "Microsoft core fonts failed to install (they download from SourceForge); OnlyOffice is still usable" "WARN"
     fi
 }
 

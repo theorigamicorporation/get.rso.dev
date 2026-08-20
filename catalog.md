@@ -189,6 +189,43 @@ wget -qO- get.rso.dev/get-nextcloud-client | sh -s -- --update
 
 ## Communication Tools
 
+### get-jitsi
+
+Jitsi Desktop SIP/XMPP communicator, preconfigured for TOC
+
+**Supported:** Ubuntu 22.04, Debian 11
+**Methods:** deb
+**Prereqs:** curl|wget
+**Tags:** jitsi, sip, xmpp, voip, chat, communication
+**Hash:** `d06bab022c47`
+
+<!-- tests:get-jitsi hash:d06bab022c47 amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
+
+```bash
+wget -qO- get.rso.dev/get-jitsi | sh
+# alt: curl -sL get.rso.dev/get-jitsi | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-jitsi | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-jitsi | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-jitsi | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-jitsi | sh -s -- --update
+```
+
 ### get-mattermost
 
 Open-source team messaging and collaboration platform

@@ -197,9 +197,9 @@ Jitsi Desktop SIP/XMPP communicator, preconfigured for TOC
 **Methods:** deb
 **Prereqs:** curl|wget
 **Tags:** jitsi, sip, xmpp, voip, chat, communication
-**Hash:** `d06bab022c47`
+**Hash:** `add2b3f680da`
 
-<!-- tests:get-jitsi hash:d06bab022c47 amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-jitsi hash:add2b3f680da amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-jitsi | sh

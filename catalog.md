@@ -199,7 +199,7 @@ Jitsi Desktop SIP/XMPP communicator, preconfigured for TOC
 **Tags:** jitsi, sip, xmpp, voip, chat, communication
 **Hash:** `add2b3f680da`
 
-<!-- tests:get-jitsi hash:add2b3f680da amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-jitsi hash:add2b3f680da amazonlinux-2023:skip debian-12:skip debian-13:skip rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:skip ubuntu-25.04:skip -->
 
 ```bash
 wget -qO- get.rso.dev/get-jitsi | sh

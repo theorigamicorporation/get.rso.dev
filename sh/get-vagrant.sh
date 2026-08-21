@@ -13,6 +13,7 @@
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods asdf, apt, dnf, yum
 # @verify vagrant --version
+# @prereqs curl|wget, gpg
 # =============================================================================
 SCRIPT_VERSION="0.2"
 SCRIPT_NAME="GET VAGRANT"

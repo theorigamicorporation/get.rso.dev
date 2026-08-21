@@ -20,6 +20,8 @@ TOOL_NAME="virtualbox"
 TOOL_CMD="vboxmanage"
 APT_PKG="virtualbox"
 DNF_PKG="virtualbox"
+VBOX_APT_REPO="https://download.virtualbox.org/virtualbox/debian"
+VBOX_KEY_URL="https://www.virtualbox.org/download/oracle_vbox_2016.asc"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -102,7 +104,9 @@ ensure_sudo() {
 }
 
 check_existing_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME is not currently installed" "INFO"; return 0; fi
+    if ! command -v VBoxManage >/dev/null 2>&1 && ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
+        log "$TOOL_NAME is not currently installed" "INFO"; return 0
+    fi
     log "$TOOL_NAME is already installed" "INFO"
     if [ "$OPT_FORCE" = true ]; then log "Force reinstall" "INFO"; return 0; fi
     if [ "$OPT_UPDATE" = true ]; then log "Updating..." "INFO"; return 0; fi
@@ -131,7 +135,101 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
+# Ubuntu ships virtualbox in multiverse, which is enabled by default. Debian keeps it
+# in contrib, which is not enabled on a stock install (and the package was dropped
+# entirely from Debian 12 onwards), so `apt-get install virtualbox` has no candidate
+# there. Rather than editing the machine's Debian components, use Oracle's own apt
+# repository -- the same source the dnf path already uses.
+apt_candidate() {
+    apt-cache policy "$1" 2>/dev/null | sed -n 's/^[[:space:]]*Candidate:[[:space:]]*//p' | head -1
+}
+
+# Minimal Debian images (and some server installs) ship neither curl nor wget, and
+# without ca-certificates an https fetch fails anyway. apt is right here, so pull in
+# what is needed rather than aborting on a missing prerequisite.
+ensure_downloader() {
+    if command -v curl >/dev/null 2>&1 || command -v wget >/dev/null 2>&1; then
+        [ -e /etc/ssl/certs/ca-certificates.crt ] && return 0
+    fi
+    command -v apt-get >/dev/null 2>&1 || return 0
+    log "Installing curl and ca-certificates to fetch the repository key..." "INFO"
+    $_SUDO_CMD apt-get install -y -qq ca-certificates >/dev/null 2>&1 || true
+    if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+        $_SUDO_CMD apt-get install -y -qq curl >/dev/null 2>&1 || true
+    fi
+}
+
+fetch_vbox_key() {
+    _key_path=/usr/share/keyrings/oracle-virtualbox-2016.asc
+    [ -s "$_key_path" ] && return 0
+    ensure_downloader
+    # apt accepts an ASCII-armoured key directly in signed-by, so no gpg needed.
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL "$VBOX_KEY_URL" | $_SUDO_CMD tee "$_key_path" >/dev/null
+    elif command -v wget >/dev/null 2>&1; then
+        wget -qO- "$VBOX_KEY_URL" | $_SUDO_CMD tee "$_key_path" >/dev/null
+    else
+        log "Neither curl nor wget available to fetch the VirtualBox signing key" "ERR"; exit 1
+    fi
+    [ -s "$_key_path" ] || { log "Failed to fetch the VirtualBox signing key" "ERR"; exit 1; }
+}
+
+# Two entries for the same repository with different Signed-By values make apt refuse
+# to read *every* source on the machine, which silently kills unattended updates. Retire
+# any pre-existing entry for the VirtualBox host before writing ours.
+disable_conflicting_vbox_sources() {
+    for _f in /etc/apt/sources.list /etc/apt/sources.list.d/*.list; do
+        [ -f "$_f" ] || continue
+        [ "$_f" = /etc/apt/sources.list.d/virtualbox.list ] && continue
+        grep -q 'download\.virtualbox\.org' "$_f" 2>/dev/null || continue
+        log "Disabling existing VirtualBox apt entry in $_f" "WARN"
+        $_SUDO_CMD sed -i 's|^\([^#].*download\.virtualbox\.org.*\)$|# disabled by get-virtualbox.sh: \1|' "$_f"
+    done
+    for _f in /etc/apt/sources.list.d/*.sources; do
+        [ -f "$_f" ] || continue
+        [ "$_f" = /etc/apt/sources.list.d/virtualbox.sources ] && continue
+        grep -q 'download\.virtualbox\.org' "$_f" 2>/dev/null || continue
+        log "Disabling existing VirtualBox apt entry in $_f (renamed to ${_f}.disabled)" "WARN"
+        $_SUDO_CMD mv "$_f" "${_f}.disabled"
+    done
+}
+
+ensure_virtualbox_apt_repo() {
+    fetch_vbox_key
+    disable_conflicting_vbox_sources
+    # Mint sets VERSION_CODENAME to its own name and UBUNTU_CODENAME to the Ubuntu base;
+    # Oracle publishes under the upstream codename.
+    _codename=$(. /etc/os-release && printf '%s' "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+    [ -n "$_codename" ] || { log "Could not determine distro codename" "ERR"; exit 1; }
+    log "Adding Oracle VirtualBox repository for ${_codename}..." "INFO"
+    printf 'deb [signed-by=/usr/share/keyrings/oracle-virtualbox-2016.asc] %s %s contrib\n' \
+        "$VBOX_APT_REPO" "$_codename" | $_SUDO_CMD tee /etc/apt/sources.list.d/virtualbox.list >/dev/null
+    $_SUDO_CMD apt-get update -qq
+}
+
+resolve_vbox_apt_pkg() {
+    # Oracle's repo ships version-numbered packages (virtualbox-7.2), not a plain
+    # "virtualbox", so take the highest one it offers.
+    _found=$(apt-cache search --names-only '^virtualbox-[0-9]+\.[0-9]+$' 2>/dev/null \
+        | cut -d' ' -f1 | sort -V | tail -1)
+    [ -n "$_found" ] || { log "Oracle repository offers no virtualbox package for this release" "ERR"; exit 1; }
+    APT_PKG="$_found"
+    log "Selected package: $APT_PKG" "INFO"
+}
+
+install_via_apt() {
+    log "Installing $TOOL_NAME via apt..." "INFO"
+    ensure_sudo
+    $_SUDO_CMD apt-get update -qq
+    _candidate=$(apt_candidate "$APT_PKG")
+    if [ -z "$_candidate" ] || [ "$_candidate" = "(none)" ]; then
+        log "No '$APT_PKG' candidate in the configured repositories" "INFO"
+        ensure_virtualbox_apt_repo
+        resolve_vbox_apt_pkg
+    fi
+    # sudo drops the environment, so set the frontend on the far side of it.
+    $_SUDO_CMD env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq "$APT_PKG"
+}
 ensure_epel() {
     # EL ships only a subset of packages; the rest live in EPEL. Add the repo
     # only when the package is genuinely missing from the enabled repos, and
@@ -177,9 +275,31 @@ resolve_vbox_pkg() {
 install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_epel lzf; ensure_virtualbox_repo; resolve_vbox_pkg; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
 install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel lzf; ensure_virtualbox_repo; resolve_vbox_pkg; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
+# Debian packages ship /usr/bin/VBoxManage with a lowercase symlink; EL packages ship
+# only the CamelCase name. Accept either.
+find_vbox_cmd() {
+    if command -v VBoxManage >/dev/null 2>&1; then printf 'VBoxManage'; return 0; fi
+    if command -v vboxmanage >/dev/null 2>&1; then printf 'vboxmanage'; return 0; fi
+    return 1
+}
+
 verify_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
-    log "$TOOL_NAME installed successfully" "INFO"
+    _cmd=$(find_vbox_cmd) || { log "$TOOL_NAME could not be verified" "ERR"; exit 1; }
+
+    # A binary on PATH is not proof of an install; confirm the package manager
+    # registered one.
+    if command -v dpkg >/dev/null 2>&1; then
+        dpkg -s "$APT_PKG" >/dev/null 2>&1 || {
+            log "$_cmd is on PATH but package $APT_PKG is not installed" "ERR"; exit 1; }
+    elif command -v rpm >/dev/null 2>&1; then
+        rpm -q "$DNF_PKG" >/dev/null 2>&1 || {
+            log "$_cmd is on PATH but package $DNF_PKG is not installed" "ERR"; exit 1; }
+    fi
+
+    # --version on a machine without /dev/vboxdrv prints a warning to stderr and still
+    # reports the version, so this is safe in a container and on a real desktop alike.
+    _installed_version=$("$_cmd" --version 2>/dev/null | tail -1 || true)
+    log "$TOOL_NAME installed successfully: ${_installed_version:-unknown version}" "INFO"
 }
 
 set -e

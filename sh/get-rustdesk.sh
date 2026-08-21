@@ -250,8 +250,12 @@ install_via_github_release() {
     _download_url="https://github.com/${GITHUB_REPO}/releases/download/${_version}/${_asset}"
     log "Downloading ${_asset} (${_version})..." "INFO"
 
-    _tmp_file=$(mktemp)
-    trap 'rm -f "$_tmp_file"' EXIT
+    # dnf/yum identify a local package by its file name, not its contents: handed a
+    # bare mktemp path they look it up as a package name and fail with
+    # "Unable to find a match: /tmp/tmp.XXXXXX". Keep the asset's own name.
+    _tmp_dir=$(mktemp -d)
+    _tmp_file="${_tmp_dir}/${_asset}"
+    trap 'rm -rf "$_tmp_dir"' EXIT
 
     if command -v curl >/dev/null 2>&1; then
         curl -fSL -o "$_tmp_file" "$_download_url"
@@ -277,7 +281,7 @@ install_via_github_release() {
             fi ;;
     esac
 
-    trap - EXIT; rm -f "$_tmp_file"
+    trap - EXIT; rm -rf "$_tmp_dir"
 }
 
 # The package ships rustdesk.service enabled, so RustDesk listens for incoming

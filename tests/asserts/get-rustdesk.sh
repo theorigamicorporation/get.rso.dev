@@ -14,15 +14,27 @@ set -e
 
 echo "Running assertions for ${TEST_SCRIPT} on ${TEST_IMAGE} (method: ${TEST_METHOD:-default})"
 
-# Install prereqs that the script expects to exist
-echo "Installing prereqs: curl, ca-certificates..."
+# Install prereqs the script expects, but only the ones that are actually missing:
+# on Rocky 9 the image ships curl-minimal, and asking dnf for "curl" fails outright
+# with a conflict, which under `set -e` aborted these assertions before they ran.
+install_pkg() {
+    if command -v apt-get >/dev/null 2>&1; then
+        apt-get install -y -qq "$@" >/dev/null 2>&1 || true
+    elif command -v dnf >/dev/null 2>&1; then
+        dnf install -y -q "$@" >/dev/null 2>&1 || true
+    elif command -v yum >/dev/null 2>&1; then
+        yum install -y -q "$@" >/dev/null 2>&1 || true
+    fi
+}
+
+echo "Installing missing prereqs..."
 if command -v apt-get >/dev/null 2>&1; then
-    apt-get update -qq && apt-get install -y -qq curl ca-certificates >/dev/null 2>&1
-elif command -v dnf >/dev/null 2>&1; then
-    dnf install -y -q curl ca-certificates >/dev/null 2>&1
-elif command -v yum >/dev/null 2>&1; then
-    yum install -y -q curl ca-certificates >/dev/null 2>&1
+    apt-get update -qq >/dev/null 2>&1 || true
 fi
+if ! command -v curl >/dev/null 2>&1 && ! command -v wget >/dev/null 2>&1; then
+    install_pkg curl
+fi
+install_pkg ca-certificates
 
 echo "Assert: rustdesk exists on PATH"
 command -v rustdesk

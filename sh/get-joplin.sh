@@ -9,7 +9,7 @@
 # @description Open-source note-taking and to-do application
 # @category Productivity Tools
 # @tags notes, todo, markdown, sync, joplin
-# @supported Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
+# @supported Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
 # @methods script
 # @verify command -v joplin-desktop
 # @prereqs curl|wget, bash
@@ -138,20 +138,45 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-# The AppImage needs FUSE to run. Absent it the install still succeeds and the
-# application fails to start later, which is a miserable thing to debug, so make a
-# best effort here and warn rather than fail.
-ensure_appimage_runtime() {
-    [ "$_DISTRO_FAMILY" = "debian" ] || return 0
-    command -v apt-get >/dev/null 2>&1 || return 0
-    if [ -e /usr/lib/x86_64-linux-gnu/libfuse.so.2 ] || [ -e /usr/lib/aarch64-linux-gnu/libfuse.so.2 ]; then
-        return 0
+# The AppImage needs FUSE to run, and upstream refuses to install at all when
+# libfuse.so.2 is missing: it checks `ldconfig -p` and then the usual library
+# directories, and exits 1 with "Can't get libfuse2 on system". Install it here,
+# using upstream's own check so the two agree.
+have_libfuse2() {
+    if command -v ldconfig >/dev/null 2>&1; then
+        ldconfig -p 2>/dev/null | grep -q 'libfuse\.so\.2' && return 0
     fi
+    for _d in /lib /usr/lib /lib64 /usr/lib64 /usr/local/lib; do
+        [ -d "$_d" ] || continue
+        find "$_d" -name 'libfuse.so.2' 2>/dev/null | grep -q . && return 0
+    done
+    return 1
+}
+
+ensure_appimage_runtime() {
+    have_libfuse2 && return 0
     log "Installing FUSE, needed to run AppImages..." "INFO"
-    $_SUDO_CMD apt-get update -qq >/dev/null 2>&1 || true
-    $_SUDO_CMD apt-get install -y -qq libfuse2t64 >/dev/null 2>&1 \
-        || $_SUDO_CMD apt-get install -y -qq libfuse2 >/dev/null 2>&1 \
-        || log "Could not install FUSE; Joplin may not start until it is present" "WARN"
+    case "$_DISTRO_FAMILY" in
+        debian)
+            command -v apt-get >/dev/null 2>&1 || return 0
+            $_SUDO_CMD apt-get update -qq >/dev/null 2>&1 || true
+            # Ubuntu 24.04+ renamed libfuse2 to libfuse2t64.
+            $_SUDO_CMD apt-get install -y -qq libfuse2t64 >/dev/null 2>&1 \
+                || $_SUDO_CMD apt-get install -y -qq libfuse2 >/dev/null 2>&1 || true
+            ;;
+        rhel|amazon)
+            # EL and Amazon Linux ship libfuse.so.2 in fuse-libs.
+            if command -v dnf >/dev/null 2>&1; then
+                $_SUDO_CMD dnf install -y -q fuse-libs >/dev/null 2>&1 || true
+            elif command -v yum >/dev/null 2>&1; then
+                $_SUDO_CMD yum install -y -q fuse-libs >/dev/null 2>&1 || true
+            fi
+            ;;
+        *) return 0 ;;
+    esac
+    # ldconfig -p reads a cache the package install refreshes; be sure it is current.
+    command -v ldconfig >/dev/null 2>&1 && $_SUDO_CMD ldconfig >/dev/null 2>&1 || true
+    have_libfuse2 || log "Could not install FUSE; the Joplin installer will refuse to run without libfuse.so.2" "WARN"
 }
 
 fetch_upstream_installer() {

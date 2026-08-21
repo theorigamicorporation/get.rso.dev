@@ -9,8 +9,8 @@
 # @description PPA and repository management tools for APT
 # @category System Tools
 # @tags apt, ppa, repository, add-apt-repository
-# @supported Ubuntu, Debian, Mint
-# @methods apt, dnf, yum
+# @supported Ubuntu, Debian 12, Mint
+# @methods apt
 # @verify command -v add-apt-repository
 # =============================================================================
 SCRIPT_VERSION="0.1"
@@ -19,7 +19,6 @@ SCRIPT_NAME="GET SOFTWARE-PROPERTIES-COMMON"
 TOOL_NAME="software-properties-common"
 TOOL_CMD="add-apt-repository"
 APT_PKG="software-properties-common"
-DNF_PKG="software-properties-common"
 
 OPT_INTERACTIVE=""
 OPT_METHOD=""
@@ -115,13 +114,6 @@ detect_available_methods() {
         _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt
 "
     fi
-    if [ "$_DISTRO_FAMILY" = "rhel" ] || [ "$_DISTRO_FAMILY" = "amazon" ]; then
-        if command -v dnf >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:dnf:Install via dnf
-"
-        elif command -v yum >/dev/null 2>&1; then _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:yum:Install via yum
-"
-        fi
-    fi
     if [ -z "$_AVAILABLE_METHODS" ]; then log "No install methods available." "ERR"; exit 1; fi
 }
 
@@ -131,34 +123,26 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
-ensure_epel() {
-    # EL ships only a subset of packages; the rest live in EPEL. Add the repo
-    # only when the package is genuinely missing from the enabled repos, and
-    # never on Amazon Linux, which does not use EPEL.
-    [ "$_DISTRO_FAMILY" = "rhel" ] || return 0
-    _epel_pkg="$1"
-    _epel_mgr="yum"
-    command -v dnf >/dev/null 2>&1 && _epel_mgr="dnf"
-    $_epel_mgr list --available "$_epel_pkg" >/dev/null 2>&1 && return 0
-    $_epel_mgr list --installed "$_epel_pkg" >/dev/null 2>&1 && return 0
-    log "$_epel_pkg not found in enabled repos, enabling EPEL..." "INFO"
-    # EPEL expects CRB (PowerTools on EL8) enabled; several EPEL packages depend
-    # on it and fail to resolve without it.
-    $_SUDO_CMD $_epel_mgr install -y -q dnf-plugins-core >/dev/null 2>&1 || true
-    if command -v dnf >/dev/null 2>&1; then
-        $_SUDO_CMD dnf config-manager --set-enabled crb >/dev/null 2>&1 ||
-            $_SUDO_CMD dnf config-manager --set-enabled powertools >/dev/null 2>&1 || true
+install_via_apt() {
+    log "Installing $TOOL_NAME via apt..." "INFO"
+    ensure_sudo
+    $_SUDO_CMD apt-get update -qq
+    # Debian removed the software-properties source package in trixie (13), so
+    # there is no add-apt-repository to install there. Say so plainly instead of
+    # letting apt fail with "Unable to locate package".
+    _cand=$(apt-cache policy "$APT_PKG" 2>/dev/null | sed -n 's/^[[:space:]]*Candidate:[[:space:]]*//p')
+    if [ -z "$_cand" ] || [ "$_cand" = "(none)" ]; then
+        log "$APT_PKG is not available in this distribution's repositories." "ERR"
+        log "Debian 13 (trixie) and later dropped it; add repositories by writing a" "ERR"
+        log "deb822 file under /etc/apt/sources.list.d/ instead." "ERR"
+        exit 1
     fi
-    $_SUDO_CMD $_epel_mgr install -y -q epel-release >/dev/null 2>&1 || \
-        log "Could not enable EPEL, continuing anyway" "WARN"
+    $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
 }
 
-install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD dnf install -y -q "$DNF_PKG"; }
-install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
-
 verify_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
+    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified: no $TOOL_CMD on PATH" "ERR"; exit 1; fi
+    if ! dpkg -s "$APT_PKG" >/dev/null 2>&1; then log "$APT_PKG is not registered with dpkg" "ERR"; exit 1; fi
     log "$TOOL_NAME installed successfully" "INFO"
 }
 
@@ -172,7 +156,7 @@ main() {
     elif [ "$OPT_INTERACTIVE" = true ]; then _method=$(run_menu)
     else _method=$(get_default_method); fi
     log "Using install method: $_method" "INFO"
-    case "$_method" in apt) install_via_apt ;; dnf) install_via_dnf ;; yum) install_via_yum ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
+    case "$_method" in apt) install_via_apt ;; *) log "Unknown method: $_method" "ERR"; exit 1 ;; esac
     verify_install
 }
 

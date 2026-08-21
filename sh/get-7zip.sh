@@ -11,7 +11,7 @@
 # @tags archive, compression, 7zip, 7z, zip, rar
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 # @methods apt, dnf, yum
-# @verify command -v 7z
+# @verify 7z i
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET 7ZIP"
@@ -19,6 +19,11 @@ SCRIPT_NAME="GET 7ZIP"
 TOOL_NAME="7zip"
 TOOL_CMD="7z"
 APT_PKG="7zip"
+# Older releases (Debian 12, Ubuntu 22.04) ship the 7zip package with only
+# /usr/bin/7zz; the familiar 7z command comes from p7zip-full there. On newer
+# releases p7zip-full is a transitional package pulling in 7zip, so asking for
+# it costs nothing.
+APT_PKG_7Z="p7zip-full"
 DNF_PKG="7zip"
 
 OPT_INTERACTIVE=""
@@ -131,7 +136,28 @@ validate_method() { _found=false; _old_ifs="$IFS"; IFS='
 get_default_method() { printf '%s' "$_AVAILABLE_METHODS" | head -1 | cut -d: -f2; }
 run_menu() { printf '\nAvailable methods for %s:\n' "$TOOL_NAME" >&2; printf '%s' "$_AVAILABLE_METHODS" | while IFS=: read -r _n _m _d; do [ -z "$_n" ] && continue; printf '  %s) %-18s - %s\n' "$_n" "$_m" "$_d" >&2; done; printf '\nSelect [1]: ' >&2; read -r _c; [ -z "$_c" ] && _c=1; _s=$(get_method_by_number "$_c"); [ -z "$_s" ] && { log "Invalid" "ERR"; exit 1; }; printf '%s' "$_s"; }
 
-install_via_apt() { log "Installing $TOOL_NAME via apt..." "INFO"; ensure_sudo; $_SUDO_CMD apt-get update -qq; $_SUDO_CMD apt-get install -y -qq "$APT_PKG"; }
+install_via_apt() {
+    log "Installing $TOOL_NAME via apt..." "INFO"
+    ensure_sudo
+    $_SUDO_CMD apt-get update -qq
+    $_SUDO_CMD apt-get install -y -qq "$APT_PKG"
+    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
+        log "$APT_PKG does not provide $TOOL_CMD here, adding $APT_PKG_7Z..." "INFO"
+        $_SUDO_CMD apt-get install -y -qq "$APT_PKG_7Z" || true
+    fi
+    ensure_7z_command
+}
+
+# Last resort: some releases only ever ship /usr/bin/7zz (the upstream 7-Zip
+# binary, same CLI). Point 7z at it rather than reporting a broken install.
+ensure_7z_command() {
+    command -v "$TOOL_CMD" >/dev/null 2>&1 && return 0
+    _7zz=$(command -v 7zz 2>/dev/null) || _7zz=""
+    [ -n "$_7zz" ] || return 0
+    log "Linking $TOOL_CMD to $_7zz" "INFO"
+    $_SUDO_CMD ln -sf "$_7zz" /usr/local/bin/"$TOOL_CMD"
+}
+
 ensure_epel() {
     # EL ships only a subset of packages; the rest live in EPEL. Add the repo
     # only when the package is genuinely missing from the enabled repos, and
@@ -158,8 +184,10 @@ install_via_dnf() { log "Installing $TOOL_NAME via dnf..." "INFO"; ensure_sudo; 
 install_via_yum() { log "Installing $TOOL_NAME via yum..." "INFO"; ensure_sudo; ensure_epel "$DNF_PKG"; $_SUDO_CMD yum install -y -q "$DNF_PKG"; }
 
 verify_install() {
-    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified" "ERR"; exit 1; fi
-    log "$TOOL_NAME installed successfully" "INFO"
+    if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then log "$TOOL_NAME could not be verified: no $TOOL_CMD on PATH" "ERR"; exit 1; fi
+    # A file on PATH proves nothing; make the archiver actually answer.
+    if ! "$TOOL_CMD" i >/dev/null 2>&1; then log "$TOOL_CMD is on PATH but does not run" "ERR"; exit 1; fi
+    log "$TOOL_NAME installed successfully ($(command -v "$TOOL_CMD"))" "INFO"
 }
 
 set -e

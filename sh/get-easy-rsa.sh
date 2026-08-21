@@ -10,7 +10,7 @@
 # @description CLI utility to build and manage a PKI CA
 # @category Security Tools
 # @tags pki, ca, certificates, vpn, openvpn, easy-rsa
-# @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+# @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @methods apt, dnf, yum
 # @verify sh -c 'command -v easyrsa >/dev/null 2>&1 || for f in /usr/share/easy-rsa/easyrsa /usr/share/easy-rsa/*/easyrsa; do [ -x "$f" ] && exit 0; done; exit 1'
 # =============================================================================

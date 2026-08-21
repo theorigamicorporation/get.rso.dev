@@ -64,22 +64,25 @@ catalog: ## Regenerate catalog.md from script metadata
 
 lint: ## Run shellcheck and dash syntax checks locally
 	@printf "\033[1;34mShellCheck (POSIX scripts):\033[0m\n"
-	@for f in $(SCRIPT_DIR)/*.sh; do \
+	@failed=0; \
+	for f in $(SCRIPT_DIR)/*.sh; do \
 		if head -1 "$$f" | grep -q 'env sh'; then \
 			printf "  %-30s " "$$f"; \
-			if shellcheck --shell=sh --severity=warning "$$f" 2>/dev/null; then printf "\033[32mOK\033[0m\n"; else printf "\033[31mFAIL\033[0m\n"; fi; \
+			if shellcheck --shell=sh --severity=warning "$$f" 2>/dev/null; then printf "\033[32mOK\033[0m\n"; else printf "\033[31mFAIL\033[0m\n"; failed=1; fi; \
 		else \
 			printf "  %-30s " "$$f (bash)"; \
-			if shellcheck --shell=bash --severity=warning "$$f" 2>/dev/null; then printf "\033[32mOK\033[0m\n"; else printf "\033[31mFAIL\033[0m\n"; fi; \
+			if shellcheck --shell=bash --severity=warning "$$f" 2>/dev/null; then printf "\033[32mOK\033[0m\n"; else printf "\033[31mFAIL\033[0m\n"; failed=1; fi; \
 		fi; \
-	done
-	@printf "\n\033[1;34mDash syntax check:\033[0m\n"
-	@for f in $(SCRIPT_DIR)/*.sh; do \
+	done; \
+	printf "\n\033[1;34mDash syntax check:\033[0m\n"; \
+	for f in $(SCRIPT_DIR)/*.sh; do \
 		if head -1 "$$f" | grep -q 'env sh'; then \
 			printf "  %-30s " "$$f"; \
-			if dash -n "$$f" 2>/dev/null; then printf "\033[32mOK\033[0m\n"; else printf "\033[31mFAIL\033[0m\n"; fi; \
+			if dash -n "$$f" 2>/dev/null; then printf "\033[32mOK\033[0m\n"; else printf "\033[31mFAIL\033[0m\n"; failed=1; fi; \
 		fi; \
-	done
+	done; \
+	if [ "$$failed" != "0" ]; then printf "\n\033[1;31mlint failed\033[0m\n"; fi; \
+	exit $$failed
 
 ##@ Development
 .PHONY: shell pull-images clean

@@ -247,8 +247,11 @@ verify_install() {
     if ! dpkg -s "$APT_PKG" 2>/dev/null | grep -q "^Status: install ok installed"; then
         log "$TOOL_NAME is not correctly registered with dpkg" "ERR"; exit 1
     fi
+    # dpkg can be satisfied while the launcher is missing, so check both.
+    command -v "$TOOL_CMD" >/dev/null 2>&1 || {
+        log "$TOOL_CMD is not on PATH despite dpkg reporting it installed" "ERR"; exit 1; }
     _installed_version=$(dpkg-query -W -f='${Version}' "$APT_PKG" 2>/dev/null || true)
-    log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
+    log "$TOOL_NAME installed successfully: $_installed_version ($(command -v "$TOOL_CMD"))" "INFO"
     if [ "$OPT_CONFIGURE" = true ] && [ -f "$DEFAULTS_FILE" ]; then
         if grep -q "provisioning.URL=${OPT_SERVER}" "$DEFAULTS_FILE" 2>/dev/null; then
             log "Provisioning server set to $OPT_SERVER" "INFO"

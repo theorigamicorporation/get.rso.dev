@@ -13,7 +13,7 @@
 # @supported All Linux distributions
 # @methods asdf, github-release
 # @verify terraform version
-# @prereqs curl|wget, unzip
+# @prereqs curl|wget
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET TERRAFORM"
@@ -176,10 +176,6 @@ check_prereqs() {
         log "Missing prerequisite: curl or wget" "ERR"
         log "Install curl or wget first" "ERR"; exit 1
     fi
-    if ! command -v unzip >/dev/null 2>&1; then
-        log "Missing prerequisite: unzip" "ERR"
-        log "Install unzip first" "ERR"; exit 1
-    fi
 }
 
 detect_available_methods() {
@@ -287,11 +283,13 @@ install_via_github_release() {
         wget -q -O "${_tmp_dir}/${_asset}" "$_download_url"
     fi
 
-    if ! command -v unzip >/dev/null 2>&1; then log "unzip is required" "ERR"; exit 1; fi
     ensure_extract_tools unzip
+    if ! command -v unzip >/dev/null 2>&1; then
+        log "unzip is required to extract the release archive and could not be installed" "ERR"; exit 1
+    fi
     unzip -o "${_tmp_dir}/${_asset}" -d "$_tmp_dir"
     _binary="${_tmp_dir}/terraform"
-    [ -z "$_binary" ] && { log "Binary not found in archive" "ERR"; exit 1; }
+    [ -f "$_binary" ] || { log "Binary not found in archive" "ERR"; exit 1; }
     chmod +x "$_binary"
 
     if [ "$(id -u)" -eq 0 ]; then

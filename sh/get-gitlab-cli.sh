@@ -3,7 +3,7 @@
 # =============================================================================
 # get-gitlab-cli.sh — Install glab across Linux distributions
 # Usage: curl -sL get.rso.dev/sh/get-gitlab-cli | sh
-#        sh get-gitlab-cli.sh [--method=apt, snap, github-release]
+#        sh get-gitlab-cli.sh [--method=apt, snap, gitlab-release]
 #        sh get-gitlab-cli.sh --interactive
 #        sh get-gitlab-cli.sh --update
 # =============================================================================
@@ -11,8 +11,8 @@
 # @category Development Tools
 # @tags gitlab, git, cli, merge-request, pipeline, glab
 # @supported All Linux distributions
-# @methods apt, snap, github-release
-# @verify glab version
+# @methods apt, snap, gitlab-release
+# @verify glab --version
 # @prereqs curl|wget
 # =============================================================================
 SCRIPT_VERSION="0.1"
@@ -20,7 +20,12 @@ SCRIPT_NAME="GET GLAB"
 
 TOOL_NAME="glab"
 TOOL_CMD="glab"
-GITHUB_REPO="gitlab-org/cli"
+# glab is developed on GitLab itself, not GitHub. The old github.com/gitlab-org/cli
+# path 404s, and the archived profclems/glab mirror stopped at v1.22.0 in 2022, so
+# both releases and binaries come from the GitLab API.
+GITLAB_PROJECT_PATH="gitlab-org/cli"
+GITLAB_PROJECT="gitlab-org%2Fcli"
+GITLAB_API="https://gitlab.com/api/v4/projects/${GITLAB_PROJECT}"
 INSTALL_DIR="/usr/local/bin"
 FALLBACK_DIR="${HOME}/.local/bin"
 
@@ -55,7 +60,7 @@ Install glab across Linux distributions with automatic distro detection.
 Options:
   -i, --interactive       Show interactive menu to pick install method
   -m, --method=METHOD     Use specific install method:
-                            apt, snap, github-release
+                            apt, snap, gitlab-release
   -u, --update            Update to latest version if already installed
   -f, --force             Force reinstall regardless of current version
   -h, --help              Show this help message
@@ -63,7 +68,7 @@ Options:
 
 Examples:
   curl -sL get.rso.dev/sh/get-gitlab-cli | sh
-  sh get-gitlab-cli.sh --method=github-release
+  sh get-gitlab-cli.sh --method=gitlab-release
   sh get-gitlab-cli.sh --interactive
   sh get-gitlab-cli.sh --update
 USAGE
@@ -135,29 +140,35 @@ version_gte() {
     return 0
 }
 
-get_latest_version() {
-    _releases_url="https://github.com/${GITHUB_REPO}/releases/latest"
-    _latest=""
+fetch_latest_tag() {
+    # The GitLab releases API lists newest first; take the first tag_name.
+    _releases_url="${GITLAB_API}/releases?per_page=1"
+    _permalink_url="https://gitlab.com/${GITLAB_PROJECT_PATH}/-/releases/permalink/latest"
+    _tag=""
     if command -v curl >/dev/null 2>&1; then
-        _latest=$(curl -sI "$_releases_url" 2>/dev/null | grep -i '^location:' | sed 's|.*/tag/||; s/[[:space:]]*$//')
+        _tag=$(curl -fsSL "$_releases_url" 2>/dev/null | tr ',' '\n' | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+        [ -z "$_tag" ] && _tag=$(curl -sI "$_permalink_url" 2>/dev/null | grep -i '^location:' | sed 's|.*/releases/||; s/[[:space:]]*$//')
     elif command -v wget >/dev/null 2>&1; then
-        _latest=$(wget --spider -S "$_releases_url" 2>&1 | grep -i '^ *Location:' | tail -1 | sed 's|.*/tag/||; s/[[:space:]]*$//')
+        _tag=$(wget -qO- "$_releases_url" 2>/dev/null | tr ',' '\n' | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+        [ -z "$_tag" ] && _tag=$(wget --spider -S "$_permalink_url" 2>&1 | grep -i '^ *Location:' | tail -1 | sed 's|.*/releases/||; s/[[:space:]]*$//')
     fi
-    # A renamed repo redirects to /releases/latest with no /tag/ component, leaving
-    # the whole header line behind. Discard anything that is not tag-shaped so the
-    # API fallback below still runs.
-    case "$_latest" in
-        *[!A-Za-z0-9._+-]*) _latest="" ;;
+    # Anything that is not tag-shaped (an error page, a stray header) is not a version.
+    case "$_tag" in
+        ''|*[!A-Za-z0-9._+-]*) _tag="" ;;
     esac
-    if [ -z "$_latest" ]; then
-        _api_url="https://api.github.com/repos/${GITHUB_REPO}/releases/latest"
-        if command -v curl >/dev/null 2>&1; then
-            _latest=$(curl -fsSL "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
-        elif command -v wget >/dev/null 2>&1; then
-            _latest=$(wget -qO- "$_api_url" 2>/dev/null | grep '"tag_name"' | head -1 | cut -d'"' -f4)
-        fi
-    fi
-    printf '%s' "$_latest"
+    printf '%s' "$_tag"
+}
+
+get_latest_version() {
+    # A single transient API hiccup should not fail the whole install.
+    _attempt=1
+    while [ "$_attempt" -le 3 ]; do
+        _latest=$(fetch_latest_tag)
+        [ -n "$_latest" ] && { printf '%s' "$_latest"; return 0; }
+        _attempt=$(( _attempt + 1 ))
+        [ "$_attempt" -le 3 ] && sleep 2
+    done
+    printf ''
 }
 
 check_existing_install() {
@@ -180,7 +191,9 @@ check_prereqs() {
 
 detect_available_methods() {
     _AVAILABLE_METHODS=""; _count=0
-    if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1; then
+    if [ "$_DISTRO_FAMILY" = "debian" ] && command -v apt-get >/dev/null 2>&1 &&
+       command -v apt-cache >/dev/null 2>&1 &&
+       apt-cache policy "$TOOL_NAME" 2>/dev/null | grep -q 'Candidate: [^(]'; then
         _count=$(( _count + 1 ))
         _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:apt:Install via apt
 "
@@ -192,7 +205,7 @@ detect_available_methods() {
     fi
     if command -v curl >/dev/null 2>&1 || command -v wget >/dev/null 2>&1; then
         _count=$(( _count + 1 ))
-        _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:github-release:Download pre-built binary from GitHub
+        _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:gitlab-release:Download pre-built binary from GitLab
 "
     fi
     if [ -z "$_AVAILABLE_METHODS" ]; then log "No install methods available." "ERR"; exit 1; fi
@@ -270,8 +283,8 @@ ensure_extract_tools() {
     return 0
 }
 
-install_via_github_release() {
-    log "Installing $TOOL_NAME via GitHub release..." "INFO"
+install_via_gitlab_release() {
+    log "Installing $TOOL_NAME via GitLab release..." "INFO"
     _version=$(get_latest_version)
     [ -z "$_version" ] && { log "Could not determine latest version" "ERR"; exit 1; }
     _version_num=$(printf '%s' "$_version" | sed 's/^v//')
@@ -279,10 +292,13 @@ install_via_github_release() {
     case "$_ARCH" in
         amd64) _asset="glab_${_version_num}_linux_amd64.tar.gz" ;;
         arm64) _asset="glab_${_version_num}_linux_arm64.tar.gz" ;;
-        *)     log "Unsupported arch for github-release: $_ARCH" "ERR"; exit 1 ;;
+        armhf) _asset="glab_${_version_num}_linux_armv6.tar.gz" ;;
+        *)     log "Unsupported arch for gitlab-release: $_ARCH" "ERR"; exit 1 ;;
     esac
 
-    _download_url="https://github.com/${GITHUB_REPO}/releases/download/${_version}/${_asset}"
+    # Release assets are generic packages, not GitHub-style release downloads:
+    # <api>/packages/generic/glab/<version>/<asset>
+    _download_url="${GITLAB_API}/packages/generic/glab/${_version_num}/${_asset}"
     log "Downloading ${_asset} (${_version})..." "INFO"
 
     _tmp_dir=$(mktemp -d)
@@ -316,7 +332,12 @@ verify_install() {
     if ! command -v "$TOOL_CMD" >/dev/null 2>&1; then
         log "$TOOL_NAME installation could not be verified." "ERR"; exit 1
     fi
+    # A file on PATH proves nothing: check the binary really is glab by running it.
     _installed_version=$("$TOOL_CMD" --version 2>/dev/null | head -1 || true)
+    case "$_installed_version" in
+        *glab*) ;;
+        *) log "$TOOL_CMD on PATH is not a working glab binary (got: '$_installed_version')" "ERR"; exit 1 ;;
+    esac
     log "$TOOL_NAME installed successfully: $_installed_version" "INFO"
 }
 
@@ -326,7 +347,7 @@ run_install_method() {
     case "$1" in
         snap) install_via_snap ;;
         apt) install_via_apt ;;
-        github-release) install_via_github_release ;;
+        gitlab-release) install_via_gitlab_release ;;
         *) log "Unknown method: $1" "ERR"; exit 1 ;;
     esac
 }
@@ -343,10 +364,10 @@ main() {
     if ! run_install_method "$_method"; then
         # The default method is whichever comes first for the distro; if that
         # package is not in the repos, the release tarball still works.
-        if [ -z "$OPT_METHOD" ] && [ "$_method" != "github-release" ] &&
-           printf '%s' "$_AVAILABLE_METHODS" | grep -q ':github-release:'; then
-            log "$_method failed, falling back to github-release" "WARN"
-            _method="github-release"
+        if [ -z "$OPT_METHOD" ] && [ "$_method" != "gitlab-release" ] &&
+           printf '%s' "$_AVAILABLE_METHODS" | grep -q ':gitlab-release:'; then
+            log "$_method failed, falling back to gitlab-release" "WARN"
+            _method="gitlab-release"
             run_install_method "$_method"
         else
             exit 1

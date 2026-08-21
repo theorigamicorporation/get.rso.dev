@@ -112,13 +112,34 @@ jobs:
               # "All" means run everywhere
               if ! echo "$SUPPORTED" | grep -qi "all"; then
                 IMAGE_LOWER=$(echo "${{ matrix.image }}" | tr '[:upper:]' '[:lower:]')
-                MATCH=false
+                IMAGE_VER="${IMAGE_LOWER##*:}"
                 case "$IMAGE_LOWER" in
-                  *ubuntu*)  echo "$SUPPORTED" | grep -qi "ubuntu" && MATCH=true ;;
-                  *debian*)  echo "$SUPPORTED" | grep -qi "debian" && MATCH=true ;;
-                  *rocky*)   echo "$SUPPORTED" | grep -qi "rocky\|rhel" && MATCH=true ;;
-                  *amazon*)  echo "$SUPPORTED" | grep -qi "amazon" && MATCH=true ;;
+                  *ubuntu*)  DISTRO_PAT="ubuntu" ;;
+                  *debian*)  DISTRO_PAT="debian" ;;
+                  *rocky*)   DISTRO_PAT="rocky|rhel" ;;
+                  *amazon*)  DISTRO_PAT="amazon" ;;
+                  *)         DISTRO_PAT="" ;;
                 esac
+                MATCH=false
+                [ -z "$DISTRO_PAT" ] && MATCH=true
+                # Entries may pin a release ("Ubuntu 22.04", "Ubuntu 24.04+"); a
+                # bare distro name means any release. Without this a script that
+                # only supports one release is reported as failing on the others.
+                OLD_IFS="$IFS"; IFS=','
+                for ENTRY in $SUPPORTED; do
+                  [ "$MATCH" = "true" ] && break
+                  ENTRY=$(echo "$ENTRY" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+                  echo "$ENTRY" | grep -qiE "^($DISTRO_PAT)" || continue
+                  WANT=$(echo "$ENTRY" | sed 's/^[A-Za-z ]*//; s/[[:space:]]*$//')
+                  case "$WANT" in
+                    '')  MATCH=true ;;
+                    *+)  BASE="${WANT%+}"
+                         [ "$IMAGE_VER" = "$BASE" ] && MATCH=true
+                         [ "$(printf '%s\n%s\n' "$IMAGE_VER" "$BASE" | sort -V | head -1)" = "$BASE" ] && MATCH=true ;;
+                    *)   [ "$IMAGE_VER" = "$WANT" ] && MATCH=true ;;
+                  esac
+                done
+                IFS="$OLD_IFS"
                 if [ "$MATCH" = "false" ]; then
                   echo "$script: skip (unsupported distro)"
                   RESULTS="${RESULTS}${script}=skip "

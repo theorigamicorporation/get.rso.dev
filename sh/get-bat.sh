@@ -12,7 +12,7 @@
 # @tags cat, syntax, highlight, git, pager, modern
 # @supported All Linux distributions
 # @methods apt, dnf, yum, github-release
-# @verify bat --version
+# @verify sh -c 'command -v bat >/dev/null 2>&1 || command -v batcat >/dev/null 2>&1'
 # @prereqs curl|wget
 # =============================================================================
 SCRIPT_VERSION="0.1"

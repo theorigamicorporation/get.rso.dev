@@ -12,7 +12,7 @@
 # @tags find, search, files, fast, fd, modern
 # @supported All Linux distributions
 # @methods apt, dnf, yum, github-release
-# @verify fd --version
+# @verify sh -c 'command -v fd >/dev/null 2>&1 || command -v fdfind >/dev/null 2>&1'
 # @prereqs curl|wget
 # =============================================================================
 SCRIPT_VERSION="0.1"

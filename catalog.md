@@ -2656,12 +2656,12 @@ wget -qO- get.rso.dev/get-ca-certificates | sh -s -- --update
 
 CLI utility to build and manage a PKI CA
 
-**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** pki, ca, certificates, vpn, openvpn, easy-rsa
-**Hash:** `5664c3c19de2`
+**Hash:** `29fb5ca71b53`
 
-<!-- tests:get-easy-rsa hash:5664c3c19de2 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-easy-rsa hash:29fb5ca71b53 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-easy-rsa | sh

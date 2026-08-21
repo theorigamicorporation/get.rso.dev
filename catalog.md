@@ -9,9 +9,9 @@ High-compression file archiver supporting multiple formats
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** archive, compression, 7zip, 7z, zip, rar
-**Hash:** `b410c9bac54d`
+**Hash:** `03acb2c86025`
 
-<!-- tests:get-7zip hash:b410c9bac54d amazonlinux-2023:pass debian-12:fail debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-7zip hash:03acb2c86025 -->
 
 ```bash
 wget -qO- get.rso.dev/get-7zip | sh
@@ -496,9 +496,9 @@ Open-source remote desktop with self-hosted server option
 **Methods:** github-release
 **Prereqs:** curl|wget
 **Tags:** remote, desktop, rustdesk, self-hosted, screen-sharing
-**Hash:** `dea455205ebe`
+**Hash:** `e1d9b0a5f6e0`
 
-<!-- tests:get-rustdesk hash:dea455205ebe amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-rustdesk hash:e1d9b0a5f6e0 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-rustdesk | sh
@@ -716,12 +716,12 @@ wget -qO- get.rso.dev/get-git | sh -s -- --update
 Official command-line tool for GitLab
 
 **Supported:** All Linux distributions
-**Methods:** apt, snap, github-release
+**Methods:** apt, snap, gitlab-release
 **Prereqs:** curl|wget
 **Tags:** gitlab, git, cli, merge-request, pipeline, glab
-**Hash:** `05827dadbb19`
+**Hash:** `8c773262624f`
 
-<!-- tests:get-gitlab-cli hash:05827dadbb19 amazonlinux-2023:fail debian-12:fail debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-gitlab-cli hash:8c773262624f -->
 
 ```bash
 wget -qO- get.rso.dev/get-gitlab-cli | sh
@@ -790,11 +790,11 @@ Command runner for project-specific tasks (justfile)
 
 **Supported:** All Linux distributions
 **Methods:** asdf, github-release
-**Prereqs:** curl|wget, tar, gzip
+**Prereqs:** curl|wget
 **Tags:** just, justfile, task-runner, command-runner, make
-**Hash:** `2f9d9a338f58`
+**Hash:** `ccea870bbbbc`
 
-<!-- tests:get-just hash:2f9d9a338f58 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-just hash:ccea870bbbbc -->
 
 ```bash
 wget -qO- get.rso.dev/get-just | sh
@@ -1180,11 +1180,11 @@ Build automated machine images for multiple platforms
 
 **Supported:** All Linux distributions
 **Methods:** github-release
-**Prereqs:** curl|wget, unzip
+**Prereqs:** curl|wget
 **Tags:** packer, images, ami, hashicorp, automation
-**Hash:** `8457e0c707a6`
+**Hash:** `b6ffaa7aac1d`
 
-<!-- tests:get-packer hash:8457e0c707a6 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-packer hash:b6ffaa7aac1d -->
 
 ```bash
 wget -qO- get.rso.dev/get-packer | sh
@@ -1217,11 +1217,11 @@ Infrastructure as Code tool for provisioning cloud resources
 
 **Supported:** All Linux distributions
 **Methods:** asdf, github-release
-**Prereqs:** curl|wget, unzip
+**Prereqs:** curl|wget
 **Tags:** iac, terraform, cloud, provisioning, hashicorp
-**Hash:** `5d0fe2b84832`
+**Hash:** `91389245fcd4`
 
-<!-- tests:get-terraform hash:5d0fe2b84832 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-terraform hash:91389245fcd4 -->
 
 ```bash
 wget -qO- get.rso.dev/get-terraform | sh
@@ -1740,11 +1740,12 @@ wget -qO- get.rso.dev/get-kubeseal | sh -s -- --update
 Kubernetes IDE for managing clusters
 
 **Supported:** Ubuntu, Debian, Mint
-**Methods:** apt, dnf, yum
+**Methods:** apt
+**Prereqs:** curl|wget, gpg
 **Tags:** kubernetes, k8s, lens, ide, cluster, dashboard
-**Hash:** `5463c8c3e666`
+**Hash:** `fb29ac2ca2a5`
 
-<!-- tests:get-lens hash:5463c8c3e666 amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-lens hash:fb29ac2ca2a5 -->
 
 ```bash
 wget -qO- get.rso.dev/get-lens | sh
@@ -2396,13 +2397,13 @@ wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --update
 
 Open-source note-taking and to-do application
 
-**Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
+**Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
 **Methods:** script
 **Prereqs:** curl|wget, bash
 **Tags:** notes, todo, markdown, sync, joplin
-**Hash:** `67eea16d8a35`
+**Hash:** `84b15b755597`
 
-<!-- tests:get-joplin hash:67eea16d8a35 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-joplin hash:84b15b755597 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-joplin | sh
@@ -2549,11 +2550,12 @@ wget -qO- get.rso.dev/get-ripgrep | sh -s -- --update
 Secure password manager and digital vault
 
 **Supported:** Ubuntu, Debian, Mint
-**Methods:** apt, dnf, yum
+**Methods:** apt
+**Prereqs:** curl|wget, gpg
 **Tags:** password, manager, security, vault, 1password
-**Hash:** `68333e1a0901`
+**Hash:** `32919ba46ad4`
 
-<!-- tests:get-1password hash:68333e1a0901 amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-1password hash:32919ba46ad4 -->
 
 ```bash
 wget -qO- get.rso.dev/get-1password | sh
@@ -3131,12 +3133,12 @@ wget -qO- get.rso.dev/get-pv | sh -s -- --update
 
 PPA and repository management tools for APT
 
-**Supported:** Ubuntu, Debian, Mint
-**Methods:** apt, dnf, yum
+**Supported:** Ubuntu, Debian 12, Mint
+**Methods:** apt
 **Tags:** apt, ppa, repository, add-apt-repository
-**Hash:** `5344838a11bd`
+**Hash:** `34434daf8a8e`
 
-<!-- tests:get-software-properties-common hash:5344838a11bd amazonlinux-2023:skip debian-12:pass debian-13:fail rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-software-properties-common hash:34434daf8a8e -->
 
 ```bash
 wget -qO- get.rso.dev/get-software-properties-common | sh
@@ -3607,9 +3609,9 @@ Powerful open-source x86 and AMD64 virtualization
 **Supported:** Ubuntu, Debian, RHEL, Rocky
 **Methods:** apt, dnf, yum
 **Tags:** vm, virtualization, virtualbox, oracle, hypervisor
-**Hash:** `1fab13604c3b`
+**Hash:** `50cb3642cd9a`
 
-<!-- tests:get-virtualbox hash:1fab13604c3b amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-virtualbox hash:50cb3642cd9a amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-virtualbox | sh
@@ -3647,7 +3649,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `480f70c4786b`
 
-<!-- tests:get-pc-info hash:e4171ef19cdd amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pc-info hash:480f70c4786b -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

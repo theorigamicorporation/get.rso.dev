@@ -122,7 +122,7 @@ Google Chrome web browser
 **Tags:** browser, chrome, google, web
 **Hash:** `d4680b85f676`
 
-<!-- tests:get-google-chrome hash:d4680b85f676 rockylinux-rockylinux-10:pass -->
+<!-- tests:get-google-chrome hash:d4680b85f676 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-google-chrome | sh
@@ -236,7 +236,7 @@ Open-source team messaging and collaboration platform
 **Tags:** chat, messaging, team, collaboration, slack-alternative
 **Hash:** `5643f02be0c6`
 
-<!-- tests:get-mattermost hash:5643f02be0c6 -->
+<!-- tests:get-mattermost hash:5643f02be0c6 amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-mattermost | sh
@@ -313,7 +313,7 @@ Container platform for building and running applications
 **Tags:** docker, containers, oci, devops
 **Hash:** `b745115acb3e`
 
-<!-- tests:get-docker hash:b745115acb3e -->
+<!-- tests:get-docker hash:b745115acb3e amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-docker | sh
@@ -574,7 +574,7 @@ Extendable version manager for multiple runtimes
 **Tags:** version-manager, asdf, runtime, node, python, ruby
 **Hash:** `2a7e08fa8e4d`
 
-<!-- tests:get-asdf hash:2a7e08fa8e4d -->
+<!-- tests:get-asdf hash:2a7e08fa8e4d amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-asdf | sh
@@ -611,7 +611,7 @@ Anthropic's official CLI for Claude — AI-powered coding assistant
 **Tags:** ai, claude, anthropic, cli, coding, assistant, llm
 **Hash:** `3bf2ef7e5ead`
 
-<!-- tests:get-claude-code hash:3bf2ef7e5ead rockylinux-rockylinux-10:pass -->
+<!-- tests:get-claude-code hash:3bf2ef7e5ead amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-claude-code | sh
@@ -832,7 +832,7 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
 **Hash:** `f666707c485e`
 
-<!-- tests:get-rustup hash:f666707c485e rockylinux-rockylinux-10:pass -->
+<!-- tests:get-rustup hash:f666707c485e amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-rustup | sh
@@ -869,7 +869,7 @@ Visual Studio Code editor
 **Tags:** editor, ide, vscode, microsoft, code
 **Hash:** `a5b31014864f`
 
-<!-- tests:get-vscode hash:a5b31014864f rockylinux-rockylinux-10:pass -->
+<!-- tests:get-vscode hash:a5b31014864f amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-vscode | sh
@@ -1371,7 +1371,7 @@ Lightweight command-line YAML, JSON, and XML processor
 **Tags:** yaml, json, xml, parser, cli
 **Hash:** `0e077dbaf047`
 
-<!-- tests:get-yq hash:0e077dbaf047 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-yq hash:0e077dbaf047 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:skip ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-yq | sh
@@ -2845,7 +2845,7 @@ OpenSSH server — secure remote access via SSH
 **Tags:** ssh, remote, server, network, openssh, sshd
 **Hash:** `0e9c6a21cd48`
 
-<!-- tests:get-openssh-server hash:0e9c6a21cd48 rockylinux-rockylinux-10:pass -->
+<!-- tests:get-openssh-server hash:0e9c6a21cd48 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-openssh-server | sh
@@ -3283,7 +3283,7 @@ Accelerated apt package manager wrapper using aria2
 **Tags:** apt, fast, aria2, package-manager, accelerator
 **Hash:** `1a24f5949762`
 
-<!-- tests:get-apt-fast hash:1a24f5949762 rockylinux-rockylinux-10:skip -->
+<!-- tests:get-apt-fast hash:1a24f5949762 amazonlinux-2023:skip debian-12:skip debian-13:skip rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-apt-fast | sh
@@ -3609,7 +3609,7 @@ Powerful open-source x86 and AMD64 virtualization
 **Tags:** vm, virtualization, virtualbox, oracle, hypervisor
 **Hash:** `1fab13604c3b`
 
-<!-- tests:get-virtualbox hash:1fab13604c3b amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-virtualbox hash:1fab13604c3b amazonlinux-2023:skip debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-virtualbox | sh
@@ -3647,7 +3647,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `480f70c4786b`
 
-<!-- tests:get-pc-info hash:480f70c4786b -->
+<!-- tests:get-pc-info hash:e4171ef19cdd amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

@@ -2438,9 +2438,9 @@ Simple, fast alternative to find
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** find, search, files, fast, fd, modern
-**Hash:** `7b94846f43c8`
+**Hash:** `00bdbc9d1739`
 
-<!-- tests:get-fd-find hash:7b94846f43c8 amazonlinux-2023:pass debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-fd-find hash:00bdbc9d1739 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-fd-find | sh
@@ -2659,9 +2659,9 @@ CLI utility to build and manage a PKI CA
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Tags:** pki, ca, certificates, vpn, openvpn, easy-rsa
-**Hash:** `fb6f14aa8936`
+**Hash:** `5664c3c19de2`
 
-<!-- tests:get-easy-rsa hash:fb6f14aa8936 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-easy-rsa hash:5664c3c19de2 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-easy-rsa | sh
@@ -3386,9 +3386,9 @@ Cat clone with syntax highlighting and git integration
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
 **Tags:** cat, syntax, highlight, git, pager, modern
-**Hash:** `555ed50398dc`
+**Hash:** `c25ae375a446`
 
-<!-- tests:get-bat hash:555ed50398dc amazonlinux-2023:pass debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-bat hash:c25ae375a446 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-bat | sh

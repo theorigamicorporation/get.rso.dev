@@ -1291,10 +1291,11 @@ Build and manage virtualized development environments
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** asdf, apt, dnf, yum
+**Prereqs:** curl|wget, gpg
 **Tags:** vagrant, vm, development, hashicorp
-**Hash:** `97538d4179ef`
+**Hash:** `dfba94f4dc4b`
 
-<!-- tests:get-vagrant hash:97538d4179ef amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-vagrant hash:dfba94f4dc4b amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-vagrant | sh

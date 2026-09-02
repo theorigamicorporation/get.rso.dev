@@ -572,9 +572,9 @@ Extendable version manager for multiple runtimes
 **Prereqs:** git
 **Requires:** non-root user
 **Tags:** version-manager, asdf, runtime, node, python, ruby
-**Hash:** `2a7e08fa8e4d`
+**Hash:** `e3d778937c5e`
 
-<!-- tests:get-asdf hash:2a7e08fa8e4d amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-asdf hash:e3d778937c5e amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-asdf | sh

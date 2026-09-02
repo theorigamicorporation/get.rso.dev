@@ -568,13 +568,13 @@ wget -qO- get.rso.dev/get-xclip | sh -s -- --update
 Extendable version manager for multiple runtimes
 
 **Supported:** All Linux distributions
-**Methods:** git
-**Prereqs:** git
+**Methods:** github-release
+**Prereqs:** curl|wget, tar, gzip
 **Requires:** non-root user
 **Tags:** version-manager, asdf, runtime, node, python, ruby
-**Hash:** `e3d778937c5e`
+**Hash:** `105c813a0992`
 
-<!-- tests:get-asdf hash:e3d778937c5e amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-asdf hash:105c813a0992 amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-asdf | sh

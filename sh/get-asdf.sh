@@ -148,10 +148,10 @@ install_via_git() {
     log "Installing asdf via git clone to ${ASDF_DIR}..." "INFO"
     if [ -d "${ASDF_DIR}/.git" ]; then
         log "asdf directory exists, pulling latest..." "INFO"
-        git -C "$ASDF_DIR" pull --quiet
+        GIT_TERMINAL_PROMPT=0 git -C "$ASDF_DIR" pull --quiet
     else
         # v0.14.x is the last pure-shell release; v0.16+ requires building a Go binary
-        git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.14.1 --quiet
+        GIT_TERMINAL_PROMPT=0 git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch v0.14.1 --quiet
     fi
     for _profile in "$HOME/.bashrc" "$HOME/.profile" "$HOME/.bash_profile"; do
         [ -f "$_profile" ] || continue

@@ -2362,9 +2362,9 @@ Offline office suite for documents, spreadsheets, presentations and PDF forms
 **Methods:** apt, flatpak, snap
 **Prereqs:** curl|wget, gpg
 **Tags:** office, documents, spreadsheet, presentation, pdf, onlyoffice, msoffice
-**Hash:** `ff42fd94b16f`
+**Hash:** `b3cb7bd8557f`
 
-<!-- tests:get-onlyoffice hash:ff42fd94b16f amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-onlyoffice hash:b3cb7bd8557f amazonlinux-2023:skip debian-12:pass debian-13:pass rockylinux-rockylinux-10:skip rockylinux-rockylinux-9:skip ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-onlyoffice | sh
@@ -2392,6 +2392,43 @@ wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --update
 ```
 
 ## Productivity Tools
+
+### get-betterbird
+
+Betterbird email client (enhanced Thunderbird fork)
+
+**Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
+**Methods:** flatpak, official-tar
+**Prereqs:** curl|wget, tar, xz
+**Tags:** email, mail, thunderbird, betterbird
+**Hash:** `2273d1698600`
+
+<!-- tests:get-betterbird hash:2273d1698600 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+
+```bash
+wget -qO- get.rso.dev/get-betterbird | sh
+# alt: curl -sL get.rso.dev/get-betterbird | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-betterbird | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-betterbird | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-betterbird | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-betterbird | sh -s -- --update
+```
 
 ### get-joplin
 
@@ -2428,6 +2465,43 @@ wget -qO- get.rso.dev/get-joplin | sh -s -- --method=github-release
 # Update existing install
 wget -qO- get.rso.dev/get-joplin | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-joplin | sh -s -- --update
+```
+
+### get-obsidian
+
+Knowledge base and note-taking app built on local Markdown files
+
+**Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
+**Methods:** appimage
+**Prereqs:** curl|wget
+**Tags:** notes, markdown, knowledge, obsidian, pkm
+**Hash:** `aaf55d630a69`
+
+<!-- tests:get-obsidian hash:aaf55d630a69 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/get-obsidian | sh
+# alt: curl -sL get.rso.dev/get-obsidian | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-obsidian | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-obsidian | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-obsidian | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-obsidian | sh -s -- --update
 ```
 
 ## Search Tools

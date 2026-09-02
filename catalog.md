@@ -2398,12 +2398,12 @@ wget -qO- get.rso.dev/get-onlyoffice | sh -s -- --update
 Betterbird email client (enhanced Thunderbird fork)
 
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
-**Methods:** flatpak, official-tar
+**Methods:** official-tar, flatpak
 **Prereqs:** curl|wget, tar, xz
 **Tags:** email, mail, thunderbird, betterbird
-**Hash:** `2273d1698600`
+**Hash:** `88f2ab140598`
 
-<!-- tests:get-betterbird hash:2273d1698600 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
+<!-- tests:get-betterbird hash:88f2ab140598 amazonlinux-2023:fail debian-12:fail debian-13:fail rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:fail ubuntu-22.04:fail ubuntu-24.04:fail ubuntu-25.04:fail -->
 
 ```bash
 wget -qO- get.rso.dev/get-betterbird | sh
@@ -2475,9 +2475,9 @@ Knowledge base and note-taking app built on local Markdown files
 **Methods:** appimage
 **Prereqs:** curl|wget
 **Tags:** notes, markdown, knowledge, obsidian, pkm
-**Hash:** `aaf55d630a69`
+**Hash:** `7e0200a1eda9`
 
-<!-- tests:get-obsidian hash:aaf55d630a69 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-obsidian hash:7e0200a1eda9 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-obsidian | sh

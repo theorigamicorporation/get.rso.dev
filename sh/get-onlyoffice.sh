@@ -24,6 +24,11 @@
 # flatpak (org.onlyoffice.desktopeditors) and snap (onlyoffice-desktopeditors) are offered
 # below apt, and are the only options on distros without apt.
 #
+# Interface scaling is forced to 100% after install. OnlyOffice's Auto scaling reads the
+# panel's EDID DPI (often 150+) while the desktop compositor runs at 96, and renders the
+# UI oversized. --force-scale=1 is persisted in the app's config on first run, so this is
+# a one-shot fix. Pass --no-scaling-fix to skip it.
+#
 # Microsoft core fonts are installed by default and unattended. Documents written
 # elsewhere in Calibri, Cambria, Arial or Times New Roman reflow without them, which shows
 # up as wrong pagination in anything shared outside the company.
@@ -60,6 +65,7 @@ OPT_FORCE=false
 OPT_UPDATE=false
 OPT_RECOMMENDS=false
 OPT_FONTS=true
+OPT_SCALING_FIX=true
 
 _DISTRO_FAMILY=""
 _DISTRO_ID=""
@@ -96,6 +102,9 @@ Options:
   -f, --force             Force reinstall regardless of current version
       --no-fonts          Skip the Microsoft core fonts (installed by default,
                           accepting their EULA non-interactively)
+      --no-scaling-fix    Skip forcing interface scaling to 100%. By default the
+                          script writes --force-scale=1 to prevent the Auto
+                          scaler from misjudging DPI on mixed-DPI setups.
       --with-recommends   Also install apt Recommends (ttf-mscorefonts-installer,
                           fonts-takao-gothic). Needs an interactive terminal for the
                           Microsoft font EULA.
@@ -119,6 +128,7 @@ parse_args() {
             -f|--force)        OPT_FORCE=true; shift ;;
             --with-recommends) OPT_RECOMMENDS=true; shift ;;
             --no-fonts)        OPT_FONTS=false; shift ;;
+            --no-scaling-fix)  OPT_SCALING_FIX=false; shift ;;
             -h|--help)         usage; exit 0 ;;
             -v|--version)      printf '%s %s\n' "$SCRIPT_NAME" "$SCRIPT_VERSION"; exit 0 ;;
             *)                 log "Unknown option: $1" "ERR"; usage; exit 1 ;;
@@ -201,13 +211,15 @@ check_existing_install() {
     log "$TOOL_NAME is already installed: $_current" "INFO"
     if [ "$OPT_FORCE" = true ]; then log "Force flag set, proceeding with reinstall" "INFO"; return 0; fi
     if [ "$OPT_UPDATE" = true ]; then log "Update flag set, proceeding" "INFO"; return 0; fi
-    # The fonts are a separate concern from the editors: a machine that already has
-    # OnlyOffice may still be missing them, and before this it would exit here without ever
-    # looking. install_core_fonts is idempotent, so this costs nothing when they are there.
+    # The fonts and scaling fix are separate concerns from the editors: a machine that
+    # already has OnlyOffice may still be missing fonts or have the wrong scaling, and
+    # before this it would exit here without ever looking. Both are idempotent.
+    _USED_METHOD=$(printf '%s' "$_current" | cut -d' ' -f1)
+    ensure_sudo
     if [ "$OPT_FONTS" = true ] && [ "$_DISTRO_FAMILY" = "debian" ]; then
-        ensure_sudo
         install_core_fonts
     fi
+    fix_scaling
     log "$TOOL_NAME is already installed (use --update to upgrade, --force to reinstall)" "INFO"
     exit 0
 }
@@ -383,6 +395,35 @@ install_via_snap() {
 }
 
 ###########################
+# Post-install: scaling fix
+###########################
+# OnlyOffice's Auto scaler reads the panel's EDID DPI while the desktop runs at
+# a different logical DPI, and renders oversized on mixed-DPI setups. Patching
+# the .desktop file to pass --force-scale=1 fixes it machine-wide, survives apt
+# upgrades (override in /usr/local, package owns /usr/share), and needs no
+# per-user config manipulation.
+fix_scaling() {
+    [ "$OPT_SCALING_FIX" = true ] || return 0
+
+    case "$_USED_METHOD" in
+        apt)
+            _src="/usr/share/applications/onlyoffice-desktopeditors.desktop"
+            _dst="/usr/local/share/applications/onlyoffice-desktopeditors.desktop"
+            [ -f "$_src" ] || { log "Desktop file not found, skipping scaling fix" "WARN"; return 0; }
+            $_SUDO_CMD mkdir -p "$(dirname "$_dst")"
+            sed 's|Exec=/usr/bin/onlyoffice-desktopeditors|Exec=/usr/bin/onlyoffice-desktopeditors --force-scale=1|g' \
+                "$_src" | $_SUDO_CMD tee "$_dst" >/dev/null
+            command -v update-desktop-database >/dev/null 2>&1 \
+                && $_SUDO_CMD update-desktop-database /usr/local/share/applications >/dev/null 2>&1 || true
+            log "Interface scaling fixed to 100% (override at $_dst)" "INFO"
+            ;;
+        flatpak|snap)
+            log "Scaling fix is only applied for apt installs; set scaling to 100%% in Settings > Interface scaling" "INFO"
+            ;;
+    esac
+}
+
+###########################
 # Verification
 ###########################
 # `command -v` is satisfied by any executable file on $PATH, which is how a downloaded
@@ -455,6 +496,7 @@ main() {
         *)       log "Unknown method: $_method" "ERR"; exit 1 ;;
     esac
 
+    fix_scaling
     verify_install
 }
 

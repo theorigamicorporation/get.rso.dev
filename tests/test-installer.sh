@@ -179,6 +179,10 @@ prereqs_install_cmd() {
                 _apt_pkgs="${_apt_pkgs} gpg"
                 _dnf_pkgs="${_dnf_pkgs} gnupg2"
                 ;;
+            "xz")
+                _apt_pkgs="${_apt_pkgs} xz-utils"
+                _dnf_pkgs="${_dnf_pkgs} xz"
+                ;;
             "software-properties-common")
                 _apt_pkgs="${_apt_pkgs} software-properties-common"
                 ;;

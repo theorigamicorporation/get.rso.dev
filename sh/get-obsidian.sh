@@ -308,38 +308,38 @@ install_via_appimage() {
         | $_SUDO_CMD tee "$LAUNCHER_PATH" >/dev/null
     $_SUDO_CMD chmod 0755 "$LAUNCHER_PATH"
 
-    # Extract icon from the AppImage. --appimage-extract writes squashfs-root/
-    # into the current directory, so work in a temp dir to avoid littering.
-    # The top-level .png is a symlink into usr/share/icons/, so extract the
-    # whole icon tree and dereference when copying.
-    _icon_path="${INSTALL_DIR}/obsidian.png"
+    # Extract icon from the AppImage and install into the hicolor theme so
+    # Icon=obsidian resolves under KDE Breeze and other icon themes.
     _extract_dir=$(mktemp -d)
     _old_pwd=$(pwd)
     cd "$_extract_dir"
     if "${INSTALL_DIR}/Obsidian.AppImage" --appimage-extract "usr/share/icons/*" >/dev/null 2>&1; then
         _found=$(find squashfs-root -name 'obsidian.png' -type f 2>/dev/null | head -1)
         if [ -n "$_found" ]; then
-            $_SUDO_CMD cp "$_found" "$_icon_path"
+            _hicolor="/usr/share/icons/hicolor/512x512/apps"
+            $_SUDO_CMD mkdir -p "$_hicolor"
+            $_SUDO_CMD cp "$_found" "${_hicolor}/obsidian.png"
+            $_SUDO_CMD cp "$_found" "${INSTALL_DIR}/obsidian.png"
         fi
     fi
     cd "$_old_pwd"
     rm -rf "$_extract_dir"
+    command -v gtk-update-icon-cache >/dev/null 2>&1 \
+        && $_SUDO_CMD gtk-update-icon-cache -f /usr/share/icons/hicolor >/dev/null 2>&1 || true
 
     # Desktop entry
     $_SUDO_CMD mkdir -p "$(dirname "$DESKTOP_FILE")"
-    _icon_line="Icon=obsidian"
-    [ -f "$_icon_path" ] && _icon_line="Icon=${_icon_path}"
     printf '%s\n' \
         '[Desktop Entry]' \
         'Name=Obsidian' \
         'Comment=Knowledge base and note-taking' \
         "Exec=${LAUNCHER_PATH} %U" \
-        "$_icon_line" \
+        'Icon=obsidian' \
         'Terminal=false' \
         'Type=Application' \
         'Categories=Office;TextEditor;' \
         'MimeType=x-scheme-handler/obsidian;' \
-        'StartupWMClass=obsidian' \
+        'StartupWMClass=md.obsidian.Obsidian' \
         | $_SUDO_CMD tee "$DESKTOP_FILE" >/dev/null
 
     command -v update-desktop-database >/dev/null 2>&1 \

@@ -308,18 +308,22 @@ install_via_appimage() {
         | $_SUDO_CMD tee "$LAUNCHER_PATH" >/dev/null
     $_SUDO_CMD chmod 0755 "$LAUNCHER_PATH"
 
-    # Extract icon from the AppImage
+    # Extract icon from the AppImage. --appimage-extract writes squashfs-root/
+    # into the current directory, so work in a temp dir to avoid littering.
+    # The top-level .png is a symlink into usr/share/icons/, so extract the
+    # whole icon tree and dereference when copying.
     _icon_path="${INSTALL_DIR}/obsidian.png"
-    _tmp_mount=$(mktemp -d)
-    if "${INSTALL_DIR}/Obsidian.AppImage" --appimage-extract "*.png" >/dev/null 2>&1; then
-        if [ -f "squashfs-root/obsidian.png" ]; then
-            $_SUDO_CMD cp "squashfs-root/obsidian.png" "$_icon_path"
-        elif [ -f "squashfs-root/.DirIcon" ]; then
-            $_SUDO_CMD cp "squashfs-root/.DirIcon" "$_icon_path"
+    _extract_dir=$(mktemp -d)
+    _old_pwd=$(pwd)
+    cd "$_extract_dir"
+    if "${INSTALL_DIR}/Obsidian.AppImage" --appimage-extract "usr/share/icons/*" >/dev/null 2>&1; then
+        _found=$(find squashfs-root -name 'obsidian.png' -type f 2>/dev/null | head -1)
+        if [ -n "$_found" ]; then
+            $_SUDO_CMD cp "$_found" "$_icon_path"
         fi
-        rm -rf squashfs-root
     fi
-    rm -rf "$_tmp_mount"
+    cd "$_old_pwd"
+    rm -rf "$_extract_dir"
 
     # Desktop entry
     $_SUDO_CMD mkdir -p "$(dirname "$DESKTOP_FILE")"

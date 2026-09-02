@@ -10,7 +10,7 @@
 # @category Productivity Tools
 # @tags email, mail, thunderbird, betterbird
 # @supported Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
-# @methods flatpak, official-tar
+# @methods official-tar, flatpak
 # @verify command -v betterbird
 # @prereqs curl|wget, tar, xz
 #
@@ -190,13 +190,15 @@ check_existing_install() {
 detect_available_methods() {
     _AVAILABLE_METHODS=""; _count=0
 
-    if command -v flatpak >/dev/null 2>&1; then
-        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:flatpak:Install via Flatpak from Flathub
+    # Native tar install first so managed workstations get a real /opt binary,
+    # not a flatpak sandbox. Flatpak is the fallback.
+    if command -v curl >/dev/null 2>&1 || command -v wget >/dev/null 2>&1; then
+        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:official-tar:Download official tar.xz archive to /opt
 "
     fi
 
-    if command -v curl >/dev/null 2>&1 || command -v wget >/dev/null 2>&1; then
-        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:official-tar:Download official tar.xz archive to /opt
+    if command -v flatpak >/dev/null 2>&1; then
+        _count=$(( _count + 1 )); _AVAILABLE_METHODS="${_AVAILABLE_METHODS}${_count}:flatpak:Install via Flatpak from Flathub
 "
     fi
 

@@ -322,10 +322,13 @@ ensure_build_tools() {
     esac
 }
 
-ensure_runtime_deps() {
-    # awg-quick is a bash script driving iproute2
+ensure_deps() {
+    # awg-quick is a bash script driving iproute2; tar and gzip unpack the Go
+    # toolchain and source tarballs (minimal Amazon Linux images ship neither)
     _deps=""
     command -v bash >/dev/null 2>&1 || _deps="$_deps bash"
+    command -v tar >/dev/null 2>&1 || _deps="$_deps tar"
+    command -v gzip >/dev/null 2>&1 || _deps="$_deps gzip"
     if ! command -v ip >/dev/null 2>&1; then
         case "$_DISTRO_FAMILY" in
             debian) _deps="$_deps iproute2" ;;
@@ -333,7 +336,7 @@ ensure_runtime_deps() {
         esac
     fi
     [ -z "$_deps" ] && return 0
-    log "Installing awg-quick dependencies:$_deps" "INFO"
+    log "Installing dependencies:$_deps" "INFO"
     # shellcheck disable=SC2086
     pkg_install $_deps
 }
@@ -572,7 +575,7 @@ main() {
     _TMP_DIR=$(mktemp -d)
     trap cleanup EXIT
 
-    ensure_runtime_deps
+    ensure_deps
     install_tools
     [ "$OPT_GO" = true ] && install_go
     [ "$OPT_DKMS" = true ] && install_dkms_module

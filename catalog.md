@@ -1846,6 +1846,25 @@ wget -qO- get.rso.dev/get-vlc | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-vlc | sh -s -- --update
 ```
 
+## Networking & VPN
+
+### get-amneziawg
+
+AmneziaWG VPN client: awg/awg-quick tools, amneziawg-go userspace daemon, optional DKMS kernel module
+
+**Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
+**Prereqs:** curl|wget
+**Requires:** non-root user
+**Tags:** vpn, wireguard, amnezia, amneziawg, awg, dkms
+**Hash:** `44db6bcb951f`
+
+<!-- tests:get-amneziawg hash:44db6bcb951f amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/get-amneziawg | sh
+# alt: curl -sL get.rso.dev/get-amneziawg | sh
+```
+
 ## Networking Tools
 
 ### get-autossh

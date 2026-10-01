@@ -254,16 +254,22 @@ fetch() {
     fi
 }
 
+json_values() {
+    # Print every string value of key $1 from JSON on stdin. GitHub's API may return
+    # JSON on a single line, so never assume one key per line.
+    grep -o "\"$1\"[[:space:]]*:[[:space:]]*\"[^\"]*\"" | sed 's/.*"\([^"]*\)"$/\1/'
+}
+
 latest_tag() {
     # Highest v* tag. amneziawg-go and the kernel module have tags but no
     # GitHub releases, so /releases/latest is not usable for them.
     fetch "https://api.github.com/repos/$1/tags?per_page=30" 2>/dev/null |
-        grep '"name"' | cut -d'"' -f4 | grep '^v[0-9]' | sort -V | tail -1
+        json_values name | grep '^v[0-9]' | sort -V | tail -1
 }
 
 latest_release() {
     fetch "https://api.github.com/repos/$1/releases/latest" 2>/dev/null |
-        grep '"tag_name"' | head -1 | cut -d'"' -f4
+        json_values tag_name | head -1
 }
 
 version_of() {
@@ -392,7 +398,7 @@ ensure_go() {
             return 0
         fi
     fi
-    _gover=$(fetch "https://go.dev/dl/?mode=json" | grep -m1 '"version"' | cut -d'"' -f4)
+    _gover=$(fetch "https://go.dev/dl/?mode=json" | json_values version | head -1)
     [ -z "$_gover" ] && { log "Could not determine latest Go version" "ERR"; exit 1; }
     log "No usable Go found, downloading $_gover (~70 MB, removed afterwards)..." "INFO"
     download "https://go.dev/dl/${_gover}.linux-${_ARCH}.tar.gz" "$_TMP_DIR/go.tar.gz"
@@ -481,7 +487,9 @@ install_dkms_module() {
 
     # upstream's dkms.conf pins PACKAGE_VERSION to 1.0.0; use the tag so updates are visible
     $_SUDO_CMD make -C "$_TMP_DIR/mod-src/src" dkms-install DKMSDIR="/usr/src/amneziawg-$_ver" >/dev/null
-    $_SUDO_CMD sed -i "s/^PACKAGE_VERSION=.*/PACKAGE_VERSION=\"$_ver\"/" "/usr/src/amneziawg-$_ver/dkms.conf"
+    # REMAKE_INITRD is deprecated in dkms 3 and pointless for a VPN module
+    $_SUDO_CMD sed -i -e "s/^PACKAGE_VERSION=.*/PACKAGE_VERSION=\"$_ver\"/" -e '/^REMAKE_INITRD=/d' \
+        "/usr/src/amneziawg-$_ver/dkms.conf"
 
     log "Building kernel module with DKMS (this takes a minute)..." "INFO"
     $_SUDO_CMD dkms add "amneziawg/$_ver"

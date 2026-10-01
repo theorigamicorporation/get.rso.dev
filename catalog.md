@@ -1856,9 +1856,9 @@ AmneziaWG VPN client: awg/awg-quick tools, amneziawg-go userspace daemon, option
 **Prereqs:** curl|wget
 **Requires:** non-root user
 **Tags:** vpn, wireguard, amnezia, amneziawg, awg, dkms
-**Hash:** `44db6bcb951f`
+**Hash:** `94428c66583f`
 
-<!-- tests:get-amneziawg hash:44db6bcb951f amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-amneziawg hash:94428c66583f amazonlinux-2023:fail debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-amneziawg | sh

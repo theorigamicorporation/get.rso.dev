@@ -1917,7 +1917,7 @@
                 btn.textContent = 'Copy';
                 btn.onclick = async () => {
                     const text = pre.querySelector('code').textContent;
-                    await navigator.clipboard.writeText(text);
+                    await copyToClipboard(text);
                     btn.textContent = 'Copied!';
                     btn.classList.add('copied');
                     setTimeout(() => {
@@ -1948,11 +1948,30 @@
             });
         }
 
+        // Clipboard helper with execCommand fallback for Android/Firefox mobile
+        async function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    return;
+                } catch {}
+            }
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            ta.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+        }
+
         function addHeadingLinks() {
             document.querySelectorAll('#content h2, #content h3').forEach(heading => {
                 heading.onclick = async () => {
                     const url = window.location.origin + window.location.pathname + '#' + heading.id;
-                    await navigator.clipboard.writeText(url);
+                    await copyToClipboard(url);
                     showToast();
                 };
             });
@@ -2238,7 +2257,7 @@
 
         function copyBuilderScript() {
             const script = generateBuilderScript();
-            navigator.clipboard.writeText(script).then(() => {
+            copyToClipboard(script).then(() => {
                 const btn = document.getElementById('builderCopy');
                 btn.textContent = 'Copied!';
                 setTimeout(() => { btn.textContent = 'Copy Script'; }, 2000);

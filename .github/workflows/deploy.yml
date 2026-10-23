@@ -36,12 +36,15 @@ on:
 jobs:
   lint:
     if: github.event_name == 'push'
-    runs-on: ubuntu-latest
+    runs-on: o4-k8s-runner-set-o4
     steps:
       - uses: actions/checkout@v4
 
+      # The self-hosted runner image ships no apt lists and no shellcheck.
       - name: Install ShellCheck
-        run: sudo apt-get install -y shellcheck
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y shellcheck
 
       - name: ShellCheck scripts
         run: |
@@ -68,7 +71,7 @@ jobs:
   deploy:
     needs: [lint]
     if: always() && (needs.lint.result == 'success' || needs.lint.result == 'skipped')
-    runs-on: ubuntu-latest
+    runs-on: o4-k8s-runner-set-o4
     steps:
       - name: Get Codebase
         uses: actions/checkout@v4

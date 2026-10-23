@@ -21,17 +21,21 @@ on:
       - 'sh/**'
       - 'ps/**'
       - '_templates/**'
+      - '.github/workflows/lint.yml'
 
 jobs:
   shellcheck:
     name: ShellCheck
-    runs-on: ubuntu-latest
+    runs-on: o4-k8s-runner-set-o4
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # The self-hosted runner image ships no apt lists and no shellcheck.
       - name: Install ShellCheck
-        run: sudo apt-get install -y shellcheck
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y shellcheck
 
       - name: ShellCheck POSIX scripts (sh/)
         run: |
@@ -59,7 +63,7 @@ jobs:
 
   posix-check:
     name: POSIX Compatibility
-    runs-on: ubuntu-latest
+    runs-on: o4-k8s-runner-set-o4
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -90,7 +94,7 @@ jobs:
 
   syntax-check:
     name: Dash Syntax Validation
-    runs-on: ubuntu-latest
+    runs-on: o4-k8s-runner-set-o4
     steps:
       - name: Checkout
         uses: actions/checkout@v4

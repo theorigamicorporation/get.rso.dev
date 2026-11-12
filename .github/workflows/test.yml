@@ -23,13 +23,14 @@ on:
 
 concurrency:
   group: test-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: write
 
 jobs:
   detect-changes:
+    timeout-minutes: 10
     runs-on: o4-k8s-runner-set-o4
     outputs:
       scripts: ${{ steps.changed.outputs.scripts }}
@@ -63,6 +64,7 @@ jobs:
   test:
     needs: detect-changes
     if: needs.detect-changes.outputs.scripts != ''
+    timeout-minutes: 10
     runs-on: o4-k8s-runner-set-o4
     strategy:
       fail-fast: false
@@ -240,6 +242,7 @@ jobs:
   update-catalog:
     needs: [detect-changes, test]
     if: always() && needs.detect-changes.outputs.scripts != ''
+    timeout-minutes: 10
     runs-on: o4-k8s-runner-set-o4
     steps:
       - uses: actions/checkout@v4

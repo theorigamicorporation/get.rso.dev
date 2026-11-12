@@ -30,6 +30,7 @@ concurrency:
 jobs:
   shellcheck:
     name: ShellCheck
+    timeout-minutes: 10
     runs-on: o4-k8s-runner-set-o4
     steps:
       - name: Checkout
@@ -67,6 +68,7 @@ jobs:
 
   posix-check:
     name: POSIX Compatibility
+    timeout-minutes: 20
     runs-on: o4-k8s-runner-set-o4
     steps:
       - name: Checkout
@@ -98,6 +100,7 @@ jobs:
 
   syntax-check:
     name: Dash Syntax Validation
+    timeout-minutes: 10
     runs-on: o4-k8s-runner-set-o4
     steps:
       - name: Checkout

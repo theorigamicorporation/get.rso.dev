@@ -33,9 +33,14 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   lint:
     if: github.event_name == 'push'
+    timeout-minutes: 60
     runs-on: o4-k8s-runner-set-o4
     steps:
       - uses: actions/checkout@v4
@@ -71,6 +76,7 @@ jobs:
   deploy:
     needs: [lint]
     if: always() && (needs.lint.result == 'success' || needs.lint.result == 'skipped')
+    timeout-minutes: 60
     runs-on: o4-k8s-runner-set-o4
     steps:
       - name: Get Codebase

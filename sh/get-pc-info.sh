@@ -6,6 +6,7 @@
 # @supported Ubuntu, Debian, RHEL, Rocky, Amazon Linux
 # @prereqs hostname
 # @verify hostname
+# @safety idempotent
 _SCRIPT_VERSION="0.1"
 _SCRIPT_NAME="GET MACHINE INFO"
 ###########################

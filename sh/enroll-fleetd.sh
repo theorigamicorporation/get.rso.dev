@@ -15,6 +15,7 @@
 # @tags fleet, fleetd, osquery, mdm, enrolment, orbit
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky
 # @prereqs curl|wget
+# @safety one-time
 # =============================================================================
 #
 # Every step is checked before the next one runs. Nothing here is idempotent in the way

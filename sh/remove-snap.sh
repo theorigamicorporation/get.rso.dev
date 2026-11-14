@@ -9,6 +9,7 @@
 # @tags snap, snapd, ubuntu, kubuntu, lubuntu, remove, purge, cleanup
 # @supported Ubuntu, Kubuntu, Lubuntu, Xubuntu, Debian
 # @verify test ! -d /var/lib/snapd && test -f /etc/apt/preferences.d/no-snapd
+# @safety idempotent
 # =============================================================================
 set -euo pipefail
 

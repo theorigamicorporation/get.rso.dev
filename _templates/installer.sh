@@ -15,6 +15,7 @@
 # @verify TOOLNAME --version
 # @prereqs curl|wget
 # @noroot false
+# @safety idempotent
 # =============================================================================
 SCRIPT_VERSION="0.1"
 SCRIPT_NAME="GET TOOLNAME"

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # =============================================================================
 # generate-catalog.sh — Auto-generate catalog.md from script metadata
-# Parses @description, @category, @tags, @supported, @methods from scripts
+# Parses @description, @category, @tags, @supported, @methods, @safety from scripts
 # =============================================================================
 set -e
 
@@ -105,14 +105,18 @@ generate_platform() {
 
         _prereqs=$(get_meta "$_script" "prereqs")
         _noroot=$(get_meta "$_script" "noroot")
+        # idempotent|one-time; installers are re-runnable (--update/--force) unless tagged otherwise
+        _safety=$(get_meta "$_script" "safety")
+        [ -z "$_safety" ] && [ -n "$_methods" ] && _safety="idempotent"
 
         [ -n "$_supported" ] && printf '**Supported:** %s\n' "$_supported"
         [ -n "$_methods" ] && printf '**Methods:** %s\n' "$_methods"
         [ -n "$_prereqs" ] && printf '**Prereqs:** %s\n' "$_prereqs"
         [ -n "$_noroot" ] && printf '**Requires:** non-root user\n'
+        [ -n "$_safety" ] && printf '**Safety:** %s\n' "$_safety"
         [ -n "$_tags" ] && printf '**Tags:** %s\n' "$_tags"
         printf '**Hash:** `%s`\n' "$_hash"
-        [ -n "$_supported" ] || [ -n "$_methods" ] || [ -n "$_tags" ] && printf '\n'
+        [ -n "$_supported" ] || [ -n "$_methods" ] || [ -n "$_tags" ] || [ -n "$_safety" ] && printf '\n'
 
         # Test results comment (parsed by landing page JS)
         if [ -n "$_test_results" ]; then

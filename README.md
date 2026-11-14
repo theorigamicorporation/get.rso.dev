@@ -98,6 +98,7 @@ Every script must have metadata tags at the top. These drive the landing page ca
 | `@verify` | No | Command to verify successful install (used by test runner) |
 | `@prereqs` | No | Required tools (e.g. `curl\|wget, gpg`). Script should error if missing, asserts install them |
 | `@noroot` | No | Set to `true` if the script must not run as root (e.g. rustup) |
+| `@safety` | No | `idempotent` (safe to re-run) or `one-time` (re-running may fail, duplicate or re-register). Installers with `@methods` default to `idempotent`; other scripts show no badge unless tagged |
 
 ### 3. Implement the install methods
 

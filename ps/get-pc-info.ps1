@@ -8,6 +8,7 @@
     @description Display PC information including OS, CPU, RAM, and system details
     @category System Utilities
     @tags system, info, windows, hardware
+    @safety idempotent
 
     .PARAMETER ComputerName
     The name of the computer to get info for

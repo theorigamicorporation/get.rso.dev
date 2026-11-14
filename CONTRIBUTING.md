@@ -44,6 +44,7 @@ Fill in the tags at the top of the file:
 | `@verify` | No | Command the test runner uses to verify install worked |
 | `@prereqs` | No | Required tools the script expects (e.g. `curl\|wget, gpg`). Script errors if missing; test asserts install them |
 | `@noroot` | No | Set to `true` if the script must not run as root (shown on landing page as warning) |
+| `@safety` | No | `idempotent` or `one-time`, shown as a badge on the landing page. Installers with `@methods` default to `idempotent` |
 
 ### 3. Configure the script
 
@@ -111,6 +112,8 @@ git push
 Not every script installs a package. Config, hardening, info, and utility scripts follow the same metadata pattern but don't need `@methods` or install functions.
 
 Use `#!/usr/bin/env bash` if you need bash features, or `#!/usr/bin/env sh` for POSIX compatibility.
+
+Tag it with `# @safety idempotent` if running it twice leaves the machine in the same state, or `# @safety one-time` if a second run can fail, duplicate something or register the host again. Without the tag a non-installer gets no badge.
 
 The test runner will:
 - Run `--help` only if the script supports it

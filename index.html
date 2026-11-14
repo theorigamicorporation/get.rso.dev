@@ -280,6 +280,7 @@
             margin-left: 320px;
             padding: 3rem 4rem;
             max-width: 1400px;
+            min-width: 0;
         }
 
         h1, h2, h3, h4 {
@@ -329,6 +330,13 @@
             line-height: 1.6;
             background: none;
             padding: 0;
+        }
+
+        /* highlight.js theme sets its own bg/padding/overflow on code.hljs; let the <pre> own those */
+        pre code.hljs {
+            background: none;
+            padding: 0;
+            overflow-x: visible;
         }
 
         code {
@@ -560,7 +568,7 @@
 
         @media (max-width: 768px) {
             .main { padding: 1.5rem 1rem; }
-            pre { padding-left: 0.75rem; padding-right: 0.75rem; margin-left: -0.5rem; margin-right: -0.5rem; }
+            pre { padding-left: 0.75rem; padding-right: 0.75rem; }
             h2 { font-size: 1.5rem; }
             h3 { font-size: 1.15rem; }
         }
@@ -877,7 +885,10 @@
 
         details.script-details .details-content {
             padding: 0.75rem 1rem;
+            overflow-x: auto;
         }
+
+        td code { white-space: nowrap; }
 
         details.script-details .details-content pre {
             margin: 0.5rem 0;

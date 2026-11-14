@@ -31,7 +31,10 @@ All scripts must include metadata tags as comments for the auto-generated catalo
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 # @methods apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 # @verify tool --version
+# @safety idempotent   # or one-time; optional, installers default to idempotent
 ```
+
+`@safety` drives the badge next to each code block on the landing page. Use `idempotent` when running the script twice leaves the same result, and `one-time` when a re-run may fail, duplicate data or re-register something (like `enroll-fleetd.sh`). Installers with `@methods` default to `idempotent`; other scripts show no badge unless they are tagged.
 
 For PowerShell, place them inside the `<# ... #>` comment block.
 

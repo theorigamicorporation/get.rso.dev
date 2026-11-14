@@ -1111,6 +1111,7 @@
             margin-top: -0.75rem;
             margin-bottom: 1rem;
         }
+        .add-builder-wrap.after-picker { margin-top: 0.25rem; }
         .add-builder-btn {
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
@@ -2378,7 +2379,11 @@
                             updateAddButtons();
                         };
                         wrap.appendChild(btn);
-                        el.parentNode.insertBefore(wrap, el.nextSibling);
+                        // keep the Method picker right under its code block
+                        const next = el.nextElementSibling;
+                        const anchor = next && next.classList.contains('method-picker') ? next : el;
+                        if (anchor !== el) wrap.classList.add('after-picker');
+                        anchor.parentNode.insertBefore(wrap, anchor.nextSibling);
                         break;
                     }
                     el = el.nextElementSibling;

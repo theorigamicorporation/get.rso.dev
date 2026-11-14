@@ -122,6 +122,10 @@
             text-decoration: none;
         }
 
+        @media (hover: none) {
+            .kbd { display: none; }
+        }
+
         .kbd {
             position: absolute;
             right: 0.5rem;
@@ -235,6 +239,11 @@
         .toc-section { margin-bottom: 0.5rem; }
 
         .toc-section-title {
+            width: 100%;
+            background: none;
+            border: none;
+            font-family: inherit;
+            text-align: left;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -280,6 +289,7 @@
             margin-left: 320px;
             padding: 3rem 4rem;
             max-width: 1400px;
+            min-width: 0;
         }
 
         h1, h2, h3, h4 {
@@ -329,6 +339,13 @@
             line-height: 1.6;
             background: none;
             padding: 0;
+        }
+
+        /* highlight.js theme sets its own bg/padding/overflow on code.hljs; let the <pre> own those */
+        pre code.hljs {
+            background: none;
+            padding: 0;
+            overflow-x: visible;
         }
 
         code {
@@ -519,10 +536,11 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 99;
             opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s ease;
         }
 
-        .sidebar-backdrop.show { opacity: 1; }
+        .sidebar-backdrop.show { opacity: 1; pointer-events: auto; }
 
         .mobile-toggle {
             display: none;
@@ -543,6 +561,7 @@
         }
 
         .mobile-toggle:hover { background: var(--bg-tertiary); border-color: var(--accent); transform: scale(1.05); }
+        .mobile-toggle:active { transform: scale(0.95); }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
@@ -559,7 +578,7 @@
 
         @media (max-width: 768px) {
             .main { padding: 1.5rem 1rem; }
-            pre { padding-left: 0.75rem; padding-right: 0.75rem; margin-left: -0.5rem; margin-right: -0.5rem; }
+            pre { padding-left: 0.75rem; padding-right: 0.75rem; }
             h2 { font-size: 1.5rem; }
             h3 { font-size: 1.15rem; }
         }
@@ -876,7 +895,10 @@
 
         details.script-details .details-content {
             padding: 0.75rem 1rem;
+            overflow-x: auto;
         }
+
+        td code { white-space: nowrap; }
 
         details.script-details .details-content pre {
             margin: 0.5rem 0;
@@ -910,7 +932,11 @@
         .build-footer a:hover { color: var(--accent); }
 
         @media (max-width: 1024px) {
-            .build-footer { left: 0; }
+            .build-footer { left: 0; text-align: left; }
+            /* keep the page end clear of the fixed footer and the floating buttons */
+            .main { padding-bottom: calc(28px + 6rem); }
+            /* the menu button floats over the last sidebar rows otherwise */
+            .sidebar { padding-bottom: 6rem; }
         }
 
         /* Script Builder Drawer */
@@ -952,7 +978,7 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.5);
-            z-index: 200;
+            z-index: 1001;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -966,7 +992,7 @@
             height: 100vh;
             background: var(--bg-secondary);
             border-left: 1px solid var(--border);
-            z-index: 201;
+            z-index: 1002;
             transform: translateX(100%);
             transition: transform 0.3s ease;
             display: flex;
@@ -1094,6 +1120,7 @@
             margin-top: -0.75rem;
             margin-bottom: 1rem;
         }
+        .add-builder-wrap.after-picker { margin-top: 0.25rem; }
         .add-builder-btn {
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
@@ -1111,8 +1138,264 @@
         .add-builder-btn.added { background: var(--purple); color: #fff; border-color: var(--purple); }
 
         @media (max-width: 1024px) {
-            .builder-toggle { bottom: 1.5rem; right: 5rem; z-index: 150; }
+            /* stack the floating buttons around the 56px menu button, 12px apart and centred on it */
+            .back-to-top { bottom: calc(1.5rem + 56px + 12px); right: calc(1.5rem + 6px); }
+            .builder-toggle { bottom: calc(1.5rem + 6px); right: calc(1.5rem + 56px + 12px); z-index: 150; }
             .builder-drawer { width: 100%; max-width: 100%; }
+        }
+        /* Terminal catalog banner */
+        .tui-banner {
+            margin: 0 0 2rem;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tui-head {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 24px;
+        }
+
+        .tui-glyph {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .tui-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* small visuals, 44px tall tap areas via padding + negative margin */
+        .tui-src {
+            font-size: 13px;
+            color: var(--text-muted);
+            padding: 12px 4px;
+            margin: -12px 0;
+            white-space: nowrap;
+        }
+
+        .tui-src:hover { color: var(--accent); }
+
+        .tui-dismiss {
+            width: 44px;
+            height: 44px;
+            margin: -10px -12px -10px -6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .tui-dismiss:hover { color: var(--text); }
+
+        .tui-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 36px;
+            padding: 2px 2px 2px 12px;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .tui-prompt {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            opacity: 0.6;
+            user-select: none;
+        }
+
+        .tui-cmd {
+            flex: 1;
+            min-width: 0;
+            padding: 0;
+            background: none;
+            border-radius: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13.5px;
+            color: var(--text);
+            white-space: nowrap;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tui-cmd::-webkit-scrollbar { display: none; }
+
+        .tui-seg {
+            display: inline-flex;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--bg);
+        }
+
+        .tui-seg-btn {
+            position: relative;
+            height: 26px;
+            padding: 0 0.55rem;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            cursor: pointer;
+        }
+
+        .tui-seg-btn:hover:not(.active) { color: var(--text); }
+        .tui-seg-btn.active { background: var(--accent); color: var(--bg); }
+
+        .tui-copy {
+            position: relative;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .tui-copy:hover { color: var(--text); border-color: var(--border); background: var(--bg-tertiary); }
+        .tui-copy.ok { color: var(--success); }
+        .tui-copy.fail { color: #f85149; }
+        .tui-copy svg { width: 16px; height: 16px; }
+
+        .tui-foot {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+        }
+
+        .tui-hint {
+            flex: 1 1 180px;
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        /* the segmented toggle lives in the bar, or on the hint row on narrow screens */
+        .tui-foot .tui-seg { display: none; }
+
+        @media (pointer: coarse) {
+            .tui-copy { width: 36px; height: 36px; }
+            .tui-copy::after,
+            .tui-seg-btn::after {
+                content: '';
+                position: absolute;
+                inset: -4px;
+            }
+            .tui-seg-btn { height: 32px; }
+            .tui-seg-btn::after { inset: -6px 0; }
+        }
+
+        @media (max-width: 480px) {
+            .tui-banner { padding: 12px; }
+            .tui-head { gap: 6px; }
+            .tui-glyph { font-size: 12px; }
+            .tui-title { font-size: 14px; white-space: nowrap; }
+            .tui-src-long { display: none; }
+            .tui-bar .tui-seg { display: none; }
+            .tui-foot .tui-seg { display: inline-flex; }
+            /* room for the whole curl one-liner on one line at 360px */
+            .tui-bar { padding-left: 8px; gap: 5px; margin: 0 -11px; }
+        }
+
+        /* Keyboard focus */
+        a:focus-visible,
+        button:focus-visible,
+        select:focus-visible,
+        summary:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Bigger code block controls on small screens */
+        @media (max-width: 768px) {
+            pre { padding-top: 4rem; }
+            .code-lang { top: 1.6rem; }
+            .copy-btn {
+                min-height: 40px;
+                min-width: 56px;
+                padding: 0.5rem 0.75rem;
+            }
+            .dl-toggle-btn {
+                min-height: 38px;
+                padding: 0.5rem 0.65rem;
+            }
+        }
+
+        /* Long toggle labels (WebClient / Invoke-WebRequest) don't fit next to
+           the language label on narrow phones, give the toggle its own row */
+        @media (max-width: 480px) {
+            pre.dl-long { padding-top: calc(0.7rem + 100px); }
+            pre.dl-long .dl-toggle { top: calc(0.7rem + 48px); left: 0.75rem; right: auto; }
+        }
+
+        /* Touch screens: 44px tap targets */
+        @media (pointer: coarse) {
+            .toc-item,
+            .toc-section-title,
+            .search-result {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                min-height: 44px;
+            }
+            .search-result-section { flex-basis: 100%; margin-top: 0; }
+            .github-btn { min-height: 44px; padding: 0 1rem; }
+            .tab-btn { min-height: 44px; }
+            /* 16px stops iOS from zooming the page when the input gets focus */
+            .search-input { min-height: 44px; font-size: 16px; }
+            .filter-summary { min-height: 44px; }
+            .filter-pills { gap: 0.35rem; }
+            .filter-pill,
+            .filter-clear {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 0 0.75rem;
+                font-size: 0.75rem;
+            }
+            .method-picker select { min-height: 44px; font-size: 16px; padding: 0 0.6rem; }
+            .add-builder-btn { min-height: 44px; padding: 0 1rem; }
+            .builder-close,
+            .builder-item-remove { min-width: 44px; min-height: 44px; }
         }
     </style>
 </head>
@@ -1129,20 +1412,20 @@
                     <div class="stats-badge">
                         <span id="scriptCount">0</span> scripts
                     </div>
-                    <a href="https://github.com/theorigamicorporation/get.rso.dev" target="_blank" class="github-btn">
+                    <a href="https://github.com/theorigamicorporation/get.rso.dev" target="_blank" rel="noopener" class="github-btn">
                         Star
                     </a>
                 </div>
             </div>
             <div class="tabs-container">
-                <button class="tab-btn active" data-tab="linux">Linux</button>
-                <button class="tab-btn" data-tab="windows">Windows</button>
+                <button type="button" class="tab-btn active" data-tab="linux" aria-pressed="true">Linux</button>
+                <button type="button" class="tab-btn" data-tab="windows" aria-pressed="false">Windows</button>
             </div>
             <div class="search-container">
                 <div class="search-wrapper">
-                    <span class="search-icon">?</span>
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search..." autocomplete="off">
-                    <span class="kbd">Ctrl+K</span>
+                    <span class="search-icon" aria-hidden="true">🔍</span>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search..." autocomplete="off" aria-label="Search scripts">
+                    <span class="kbd" aria-hidden="true">Ctrl+K</span>
                 </div>
             </div>
             <div class="search-results hidden" id="searchResults"></div>
@@ -1156,19 +1439,42 @@
         <main class="main" id="content"></main>
     </div>
 
+    <template id="tuiBannerTpl">
+        <section class="tui-banner" aria-label="Terminal catalog">
+            <div class="tui-head">
+                <span class="tui-glyph" aria-hidden="true">&gt;_</span>
+                <span class="tui-title">Browse from your terminal</span>
+                <a class="tui-src" href="https://get.rso.dev/tui" target="_blank" rel="noopener"><span class="tui-src-long">read the </span>script &#8599;</a>
+                <button type="button" class="tui-dismiss" aria-label="Dismiss" title="Dismiss">&#10005;</button>
+            </div>
+            <div class="tui-bar">
+                <span class="tui-prompt" aria-hidden="true">$</span>
+                <code class="tui-cmd" tabindex="0"></code>
+                <div class="tui-seg" role="group" aria-label="Download tool">
+                    <button type="button" class="tui-seg-btn" data-pref="alt">curl</button>
+                    <button type="button" class="tui-seg-btn" data-pref="primary">wget</button>
+                </div>
+                <button type="button" class="tui-copy" aria-label="Copy command" title="Copy command"></button>
+            </div>
+            <div class="tui-foot">
+                <p class="tui-hint">Search, preview, and nothing runs until you press y.</p>
+            </div>
+        </section>
+    </template>
+
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-    <button class="back-to-top" id="backToTop">&uarr;</button>
-    <button class="mobile-toggle" id="mobileToggle">&#9776;</button>
-    <div class="link-copied-toast" id="toast">Link copied to clipboard!</div>
-    <button class="builder-toggle" id="builderToggle" title="Script Builder">
+    <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+    <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Menu" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
+    <div class="link-copied-toast" id="toast" role="status" aria-live="polite">Link copied to clipboard!</div>
+    <button type="button" class="builder-toggle" id="builderToggle" title="Script Builder" aria-label="Script builder" aria-controls="builderDrawer" aria-expanded="false">
         +
         <span class="builder-count" id="builderCount"></span>
     </button>
     <div class="builder-backdrop" id="builderBackdrop"></div>
-    <div class="builder-drawer" id="builderDrawer">
+    <div class="builder-drawer" id="builderDrawer" role="dialog" aria-label="Script builder">
         <div class="builder-header">
             <h3>Script Builder</h3>
-            <button class="builder-close" id="builderClose">&times;</button>
+            <button type="button" class="builder-close" id="builderClose" aria-label="Close script builder">&times;</button>
         </div>
         <div class="builder-list" id="builderList">
             <div class="builder-empty">Click <code>+ Add</code> on any script<br>to build a combined installer</div>
@@ -1201,13 +1507,17 @@
 
         let sidebar, backdrop, mobileToggle;
         let activeTab = 'linux';
-        let allSections = {}; // { bash: [...], powershell: [...] }
+        let allSections = {}; // { linux: '...markdown...', windows: '...' }
         let fullMarkdown = '';
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        function scrollBehavior() { return reduceMotion.matches ? 'auto' : 'smooth'; }
 
         function toggleSidebar() {
             if (sidebar) {
-                sidebar.classList.toggle('open');
-                backdrop.classList.toggle('show');
+                const open = sidebar.classList.toggle('open');
+                backdrop.classList.toggle('show', open);
+                mobileToggle.setAttribute('aria-expanded', open);
             }
         }
 
@@ -1215,6 +1525,7 @@
             if (sidebar) {
                 sidebar.classList.remove('open');
                 backdrop.classList.remove('show');
+                mobileToggle.setAttribute('aria-expanded', 'false');
             }
         }
 
@@ -1284,6 +1595,7 @@
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.tab === tabName);
+                btn.setAttribute('aria-pressed', btn.dataset.tab === tabName);
             });
 
             buildTOC();
@@ -1293,6 +1605,71 @@
             buildSearchIndex();
             updateStats();
             renderBuilder();
+            addTuiBanner();
+        }
+
+        // "Browse from your terminal" block at the top of the Linux tab.
+        // Added last so the catalog post-processing above never sees it.
+        const TUI_CMDS = { primary: 'wget -qO- get.rso.dev/tui | bash', alt: 'curl -sL get.rso.dev/tui | bash' };
+        const TUI_DISMISS_KEY = 'rso-tui-banner-dismissed';
+        const TUI_ICONS = {
+            copy: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 3.5v-.5A1.5 1.5 0 0 0 9 1.5H4A1.5 1.5 0 0 0 2.5 3v5A1.5 1.5 0 0 0 4 9.5h.5"/></svg>',
+            ok: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>',
+            fail: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'
+        };
+
+        // null when localStorage isn't usable (private mode, blocked storage)
+        function tuiDismissState() {
+            try {
+                return localStorage.getItem(TUI_DISMISS_KEY) === '1';
+            } catch {
+                return null;
+            }
+        }
+
+        function addTuiBanner() {
+            if (activeTab !== 'linux') return;
+            const dismissed = tuiDismissState();
+            if (dismissed) return;
+            const banner = document.getElementById('tuiBannerTpl').content.firstElementChild.cloneNode(true);
+            const cmd = banner.querySelector('.tui-cmd');
+            cmd.textContent = TUI_CMDS[dlPref] || TUI_CMDS.primary;
+
+            // one toggle in the bar, a copy on the hint row for narrow screens; CSS shows one
+            const seg = banner.querySelector('.tui-seg');
+            banner.querySelector('.tui-foot').prepend(seg.cloneNode(true));
+            banner.querySelectorAll('.tui-seg-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.pref === dlPref);
+                btn.onclick = () => switchDlPref(btn.dataset.pref);
+            });
+
+            const copy = banner.querySelector('.tui-copy');
+            copy.innerHTML = TUI_ICONS.copy;
+            copy.onclick = async () => {
+                const ok = await copyToClipboard(cmd.textContent);
+                clearTimeout(copy._resetTimer);
+                copy.innerHTML = ok ? TUI_ICONS.ok : TUI_ICONS.fail;
+                copy.classList.toggle('ok', ok);
+                copy.classList.toggle('fail', !ok);
+                copy.title = ok ? 'Copied' : 'Copy failed';
+                copy._resetTimer = setTimeout(() => {
+                    copy.innerHTML = TUI_ICONS.copy;
+                    copy.classList.remove('ok', 'fail');
+                    copy.title = 'Copy command';
+                }, 1500);
+            };
+
+            const dismiss = banner.querySelector('.tui-dismiss');
+            if (dismissed === null) {
+                dismiss.remove();
+            } else {
+                dismiss.onclick = () => {
+                    try { localStorage.setItem(TUI_DISMISS_KEY, '1'); } catch {}
+                    banner.remove();
+                };
+            }
+
+            document.getElementById('content').prepend(banner);
         }
 
         // Post-process code blocks: extract # alt: lines and store wget/curl variants
@@ -1688,6 +2065,7 @@
                 label.textContent = 'Method:';
 
                 const select = document.createElement('select');
+                select.setAttribute('aria-label', 'Install method');
 
                 const autoOpt = document.createElement('option');
                 autoOpt.value = '';
@@ -1815,12 +2193,23 @@
                 fullMarkdown = await response.text();
 
                 allSections = parseTabs(fullMarkdown);
-                renderTab('linux');
+                const hashId = currentHashId();
+                renderTab((hashId && tabForId(hashId)) || 'linux');
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'flex';
 
                 initMobileMenu();
+
+                // The browser tried to jump to the hash before the content existed
+                if (hashId) {
+                    const jump = () => {
+                        const el = document.getElementById(hashId);
+                        if (el) scrollToEl(el, 'instant');
+                    };
+                    requestAnimationFrame(jump);
+                    if (document.fonts && document.fonts.ready) document.fonts.ready.then(jump);
+                }
             } catch (error) {
                 document.getElementById('loading').textContent = 'Error loading content: ' + error.message;
             }
@@ -1837,10 +2226,14 @@
                 section.className = 'toc-section';
                 if (index === 0) section.classList.add('open');
 
-                const title = document.createElement('div');
+                const title = document.createElement('button');
+                title.type = 'button';
                 title.className = 'toc-section-title';
                 title.textContent = h2.textContent;
-                title.onclick = () => section.classList.toggle('open');
+                title.setAttribute('aria-expanded', index === 0);
+                title.onclick = () => {
+                    title.setAttribute('aria-expanded', section.classList.toggle('open'));
+                };
                 section.appendChild(title);
 
                 const items = document.createElement('div');
@@ -1867,7 +2260,11 @@
         }
 
         // Global preference: 'primary' (first option) or 'alt' (second option)
-        let dlPref = localStorage.getItem('get-rso-dl-pref') || 'primary';
+        // localStorage throws when site data is blocked; treat that as empty
+        function storeGet(key) { try { return localStorage.getItem(key); } catch { return null; } }
+        function storeSet(key, value) { try { localStorage.setItem(key, value); } catch {} }
+
+        let dlPref = storeGet('get-rso-dl-pref') || 'primary';
 
         function addCopyButtons() {
             document.querySelectorAll('pre').forEach(pre => {
@@ -1892,13 +2289,16 @@
 
                     const toggle = document.createElement('div');
                     toggle.className = 'dl-toggle';
+                    if ((primaryLabel + altLabel).length > 14) pre.classList.add('dl-long');
 
                     const primaryBtn = document.createElement('button');
+                    primaryBtn.type = 'button';
                     primaryBtn.className = 'dl-toggle-btn' + (dlPref === 'primary' ? ' active' : '');
                     primaryBtn.textContent = primaryLabel;
                     primaryBtn.dataset.pref = 'primary';
 
                     const altBtn = document.createElement('button');
+                    altBtn.type = 'button';
                     altBtn.className = 'dl-toggle-btn' + (dlPref === 'alt' ? ' active' : '');
                     altBtn.textContent = altLabel;
                     altBtn.dataset.pref = 'alt';
@@ -1915,12 +2315,14 @@
                 const btn = document.createElement('button');
                 btn.className = 'copy-btn';
                 btn.textContent = 'Copy';
+                btn.type = 'button';
                 btn.onclick = async () => {
                     const text = pre.querySelector('code').textContent;
-                    await copyToClipboard(text);
-                    btn.textContent = 'Copied!';
-                    btn.classList.add('copied');
-                    setTimeout(() => {
+                    const ok = await copyToClipboard(text);
+                    clearTimeout(btn._resetTimer);
+                    btn.textContent = ok ? 'Copied!' : 'Copy failed';
+                    btn.classList.toggle('copied', ok);
+                    btn._resetTimer = setTimeout(() => {
                         btn.textContent = 'Copy';
                         btn.classList.remove('copied');
                     }, 2000);
@@ -1931,7 +2333,7 @@
 
         function switchDlPref(pref) {
             dlPref = pref;
-            localStorage.setItem('get-rso-dl-pref', pref);
+            storeSet('get-rso-dl-pref', pref);
 
             // Update all code blocks with alternatives
             document.querySelectorAll('pre[data-has-alt]').forEach(pre => {
@@ -1942,37 +2344,44 @@
                 if (lang && hljs.getLanguage(lang)) hljs.highlightElement(code);
             });
 
+            document.querySelectorAll('.tui-cmd').forEach(c => { c.textContent = TUI_CMDS[pref]; });
+
             // Update all toggle buttons
-            document.querySelectorAll('.dl-toggle-btn').forEach(btn => {
+            document.querySelectorAll('.dl-toggle-btn, .tui-seg-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.pref === pref);
             });
         }
 
-        // Clipboard helper with execCommand fallback for Android/Firefox mobile
+        // Clipboard helper with execCommand fallback for Android/Firefox mobile.
+        // Resolves to true only when the text actually made it to the clipboard.
         async function copyToClipboard(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 try {
                     await navigator.clipboard.writeText(text);
-                    return;
+                    return true;
                 } catch {}
             }
             const ta = document.createElement('textarea');
             ta.value = text;
+            ta.setAttribute('readonly', '');
             ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
             document.body.appendChild(ta);
             ta.focus();
             ta.select();
-            ta.setSelectionRange(0, 99999);
-            document.execCommand('copy');
+            ta.setSelectionRange(0, text.length);
+            let ok = false;
+            try {
+                ok = document.execCommand('copy');
+            } catch {}
             document.body.removeChild(ta);
+            return ok;
         }
 
         function addHeadingLinks() {
             document.querySelectorAll('#content h2, #content h3').forEach(heading => {
                 heading.onclick = async () => {
                     const url = window.location.origin + window.location.pathname + '#' + heading.id;
-                    await copyToClipboard(url);
-                    showToast();
+                    if (await copyToClipboard(url)) showToast();
                 };
             });
         }
@@ -2004,7 +2413,7 @@
         }
 
         document.getElementById('backToTop').onclick = () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: scrollBehavior() });
         };
 
         window.addEventListener('scroll', updateScrollProgress);
@@ -2034,12 +2443,8 @@
         // Search
         let searchIndex = [];
 
-        function buildSearchIndex() {
-            searchIndex = [];
-            const content = document.getElementById('content');
-            const headings = content.querySelectorAll('h2, h3');
-
-            headings.forEach(heading => {
+        function indexHeadings(root, tab) {
+            root.querySelectorAll('h2, h3').forEach(heading => {
                 let parentSection = '';
                 if (heading.tagName === 'H3') {
                     let prev = heading.previousElementSibling;
@@ -2060,32 +2465,40 @@
 
                 searchIndex.push({
                     title: heading.textContent,
-                    id: heading.id,
+                    id: heading.id || slugify(heading.textContent),
                     section: parentSection,
-                    tab: activeTab,
+                    tab: tab,
                     type: heading.tagName,
                     content: codeContent.toLowerCase()
                 });
             });
+        }
 
-            // Also index the other tab
-            const otherTab = activeTab === 'bash' ? 'powershell' : 'bash';
-            const otherContent = allSections[otherTab];
-            if (otherContent) {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = marked.parse(otherContent);
-                const otherHeadings = tempDiv.querySelectorAll('h2, h3');
-                otherHeadings.forEach(heading => {
-                    searchIndex.push({
-                        title: heading.textContent,
-                        id: heading.id,
-                        section: '',
-                        tab: otherTab,
-                        type: heading.tagName,
-                        content: ''
-                    });
-                });
+        // Parsed (unrendered) copy of each tab, used for cross-tab search and deep links
+        const parsedTabs = {};
+        function parsedTab(tab) {
+            if (!parsedTabs[tab]) {
+                const div = document.createElement('div');
+                div.innerHTML = marked.parse(allSections[tab] || '');
+                div.querySelectorAll('h1, h2, h3, h4').forEach(h => { h.id = slugify(h.textContent); });
+                parsedTabs[tab] = div;
             }
+            return parsedTabs[tab];
+        }
+
+        function tabForId(id) {
+            if (!id) return null;
+            if (document.getElementById(id) && document.getElementById('content').contains(document.getElementById(id))) return activeTab;
+            return Object.keys(allSections).find(tab => parsedTab(tab).querySelector('[id="' + CSS.escape(id) + '"]')) || null;
+        }
+
+        function buildSearchIndex() {
+            searchIndex = [];
+            indexHeadings(document.getElementById('content'), activeTab);
+            // Also index the other tab(s), with the same slugs renderTab gives them
+            Object.keys(allSections).filter(tab => tab !== activeTab).forEach(tab => {
+                indexHeadings(parsedTab(tab), tab);
+            });
         }
 
         function performSearch(query) {
@@ -2113,7 +2526,7 @@
 
             searchResults.innerHTML = results.slice(0, 20).map(item => {
                 const tabLabel = item.tab !== activeTab ? ' [' + item.tab + ']' : '';
-                return '<a href="#' + item.id + '" class="search-result" data-tab="' + item.tab + '" onclick="searchNavigate(\'' + item.tab + '\', \'' + item.id + '\')">' +
+                return '<a href="#' + item.id + '" class="search-result" data-tab="' + item.tab + '" data-id="' + item.id + '">' +
                     item.title + tabLabel +
                     (item.section ? '<span class="search-result-section">' + item.section + '</span>' : '') +
                 '</a>';
@@ -2121,15 +2534,38 @@
         }
 
         function searchNavigate(tab, id) {
-            if (tab !== activeTab) {
-                renderTab(tab);
-            }
             clearSearch();
-            setTimeout(() => {
-                const el = document.getElementById(id);
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+            if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
+            goToId(id, tab);
         }
+
+        // Scroll to a heading id, switching tab first if it lives in the other one
+        function goToId(id, tab) {
+            tab = tab || tabForId(id);
+            if (!tab) return false;
+            if (tab !== activeTab) renderTab(tab);
+            const el = document.getElementById(id);
+            if (!el) return false;
+            requestAnimationFrame(() => scrollToEl(el, scrollBehavior()));
+            return true;
+        }
+
+        // Like scrollIntoView, but uses layout offsets so the fadeInUp transform
+        // on freshly rendered headings doesn't leave us 20px short
+        function scrollToEl(el, behavior) {
+            let top = 0;
+            for (let n = el; n; n = n.offsetParent) top += n.offsetTop;
+            window.scrollTo({ top: Math.max(0, top - 12), behavior: behavior });
+        }
+
+        function currentHashId() {
+            try { return decodeURIComponent(location.hash.slice(1)); } catch { return location.hash.slice(1); }
+        }
+
+        window.addEventListener('hashchange', () => {
+            const id = currentHashId();
+            if (id) goToId(id);
+        });
 
         function clearSearch() {
             document.getElementById('searchInput').value = '';
@@ -2146,6 +2582,13 @@
                 searchTimeout = setTimeout(() => performSearch(e.target.value), 150);
             });
 
+            document.getElementById('searchResults').addEventListener('click', (e) => {
+                const link = e.target.closest('.search-result');
+                if (!link) return;
+                e.preventDefault();
+                searchNavigate(link.dataset.tab, link.dataset.id);
+            });
+
             document.getElementById('searchInput').addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') { clearSearch(); e.target.blur(); }
             });
@@ -2154,6 +2597,15 @@
                 if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                     e.preventDefault();
                     document.getElementById('searchInput').focus();
+                }
+                if (e.key === 'Escape') {
+                    if (document.getElementById('builderDrawer').classList.contains('open')) {
+                        closeBuilder();
+                        document.getElementById('builderToggle').focus();
+                    } else if (sidebar && sidebar.classList.contains('open')) {
+                        closeSidebar();
+                        mobileToggle.focus();
+                    }
                 }
             });
 
@@ -2166,22 +2618,25 @@
         // =============================================
         // Script Builder
         // =============================================
-        let builderScripts = JSON.parse(localStorage.getItem('get-rso-builder') || '[]');
+        let builderScripts = [];
+        try { builderScripts = JSON.parse(storeGet('get-rso-builder') || '[]'); } catch {}
 
         function openBuilder() {
             document.getElementById('builderDrawer').classList.add('open');
             document.getElementById('builderBackdrop').classList.add('show');
+            document.getElementById('builderToggle').setAttribute('aria-expanded', 'true');
         }
         function closeBuilder() {
             document.getElementById('builderDrawer').classList.remove('open');
             document.getElementById('builderBackdrop').classList.remove('show');
+            document.getElementById('builderToggle').setAttribute('aria-expanded', 'false');
         }
         function toggleBuilder() {
             document.getElementById('builderDrawer').classList.contains('open') ? closeBuilder() : openBuilder();
         }
 
         function saveBuilder() {
-            localStorage.setItem('get-rso-builder', JSON.stringify(builderScripts));
+            storeSet('get-rso-builder', JSON.stringify(builderScripts));
             renderBuilder();
         }
 
@@ -2224,7 +2679,7 @@
             list.innerHTML = builderScripts.map(s =>
                 '<div class="builder-item">' +
                     '<span class="builder-item-name">' + s.name + '</span>' +
-                    '<button class="builder-item-remove" onclick="removeFromBuilder(\'' + s.name.replace(/'/g, "\\'") + '\')" title="Remove">&times;</button>' +
+                    '<button type="button" class="builder-item-remove" onclick="removeFromBuilder(\'' + s.name.replace(/'/g, "\\'") + '\')" title="Remove" aria-label="Remove ' + s.name + '">&times;</button>' +
                 '</div>'
             ).join('');
 
@@ -2257,10 +2712,11 @@
 
         function copyBuilderScript() {
             const script = generateBuilderScript();
-            copyToClipboard(script).then(() => {
+            copyToClipboard(script).then(ok => {
                 const btn = document.getElementById('builderCopy');
-                btn.textContent = 'Copied!';
-                setTimeout(() => { btn.textContent = 'Copy Script'; }, 2000);
+                clearTimeout(btn._resetTimer);
+                btn.textContent = ok ? 'Copied!' : 'Copy failed';
+                btn._resetTimer = setTimeout(() => { btn.textContent = 'Copy Script'; }, 2000);
             });
         }
 
@@ -2285,6 +2741,7 @@
                         const wrap = document.createElement('div');
                         wrap.className = 'add-builder-wrap';
                         const btn = document.createElement('button');
+                        btn.type = 'button';
                         btn.className = 'add-builder-btn';
                         btn.dataset.script = scriptName;
                         const isAdded = builderScripts.find(s => s.name === scriptName);
@@ -2299,7 +2756,11 @@
                             updateAddButtons();
                         };
                         wrap.appendChild(btn);
-                        el.parentNode.insertBefore(wrap, el.nextSibling);
+                        // keep the Method picker right under its code block
+                        const next = el.nextElementSibling;
+                        const anchor = next && next.classList.contains('method-picker') ? next : el;
+                        if (anchor !== el) wrap.classList.add('after-picker');
+                        anchor.parentNode.insertBefore(wrap, anchor.nextSibling);
                         break;
                     }
                     el = el.nextElementSibling;

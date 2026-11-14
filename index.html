@@ -1143,6 +1143,77 @@
             .builder-toggle { bottom: calc(1.5rem + 6px); right: calc(1.5rem + 56px + 12px); z-index: 150; }
             .builder-drawer { width: 100%; max-width: 100%; }
         }
+        /* Terminal catalog banner */
+        .tui-banner {
+            margin: 0 0 2rem;
+            padding: 0.9rem 1rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--success);
+            border-radius: 8px;
+        }
+
+        .tui-banner-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tui-banner-label {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .tui-banner-src {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            font-size: 0.8rem;
+        }
+
+        .tui-banner-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tui-cmd {
+            flex: 1 1 260px;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 0 0.75rem;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--success);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        .tui-banner .dl-toggle { position: static; }
+        .tui-banner .dl-toggle-btn { min-height: 42px; padding: 0 0.75rem; font-size: 0.75rem; }
+
+        .tui-banner .copy-btn {
+            position: static;
+            min-height: 44px;
+            min-width: 64px;
+            margin-left: auto;
+            padding: 0 0.9rem;
+            font-size: 0.8rem;
+        }
+
+        .tui-banner-note {
+            margin: 0.5rem 0 0;
+            font-size: 0.8rem;
+        }
+
         /* Keyboard focus */
         a:focus-visible,
         button:focus-visible,
@@ -1254,6 +1325,24 @@
 
         <main class="main" id="content"></main>
     </div>
+
+    <template id="tuiBannerTpl">
+        <section class="tui-banner" aria-label="Terminal catalog">
+            <div class="tui-banner-head">
+                <span class="tui-banner-label">Browse from your terminal</span>
+                <a class="tui-banner-src" href="https://get.rso.dev/tui" target="_blank" rel="noopener">read it first</a>
+            </div>
+            <div class="tui-banner-row">
+                <code class="tui-cmd"></code>
+                <div class="dl-toggle" role="group" aria-label="Download tool">
+                    <button type="button" class="dl-toggle-btn" data-pref="primary">wget</button>
+                    <button type="button" class="dl-toggle-btn" data-pref="alt">curl</button>
+                </div>
+                <button type="button" class="copy-btn">Copy</button>
+            </div>
+            <p class="tui-banner-note">Search every script, preview it, and nothing runs until you say yes.</p>
+        </section>
+    </template>
 
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
     <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
@@ -1398,6 +1487,33 @@
             buildSearchIndex();
             updateStats();
             renderBuilder();
+            addTuiBanner();
+        }
+
+        // "Browse from your terminal" block at the top of the Linux tab.
+        // Added last so the catalog post-processing above never sees it.
+        const TUI_CMDS = { primary: 'wget -qO- get.rso.dev/tui | bash', alt: 'curl -sL get.rso.dev/tui | bash' };
+        function addTuiBanner() {
+            if (activeTab !== 'linux') return;
+            const banner = document.getElementById('tuiBannerTpl').content.firstElementChild.cloneNode(true);
+            const cmd = banner.querySelector('.tui-cmd');
+            cmd.textContent = TUI_CMDS[dlPref] || TUI_CMDS.primary;
+            banner.querySelectorAll('.dl-toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.pref === dlPref);
+                btn.onclick = () => switchDlPref(btn.dataset.pref);
+            });
+            const copy = banner.querySelector('.copy-btn');
+            copy.onclick = async () => {
+                const ok = await copyToClipboard(cmd.textContent);
+                clearTimeout(copy._resetTimer);
+                copy.textContent = ok ? 'Copied!' : 'Copy failed';
+                copy.classList.toggle('copied', ok);
+                copy._resetTimer = setTimeout(() => {
+                    copy.textContent = 'Copy';
+                    copy.classList.remove('copied');
+                }, 2000);
+            };
+            document.getElementById('content').prepend(banner);
         }
 
         // Post-process code blocks: extract # alt: lines and store wget/curl variants
@@ -2067,6 +2183,8 @@
                 code.textContent = text;
                 if (lang && hljs.getLanguage(lang)) hljs.highlightElement(code);
             });
+
+            document.querySelectorAll('.tui-cmd').forEach(c => { c.textContent = TUI_CMDS[pref]; });
 
             // Update all toggle buttons
             document.querySelectorAll('.dl-toggle-btn').forEach(btn => {

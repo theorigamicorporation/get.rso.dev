@@ -122,6 +122,10 @@
             text-decoration: none;
         }
 
+        @media (hover: none) {
+            .kbd { display: none; }
+        }
+
         .kbd {
             position: absolute;
             right: 0.5rem;
@@ -235,6 +239,11 @@
         .toc-section { margin-bottom: 0.5rem; }
 
         .toc-section-title {
+            width: 100%;
+            background: none;
+            border: none;
+            font-family: inherit;
+            text-align: left;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -1134,6 +1143,25 @@
             .builder-toggle { bottom: calc(1.5rem + 6px); right: calc(1.5rem + 56px + 12px); z-index: 150; }
             .builder-drawer { width: 100%; max-width: 100%; }
         }
+        /* Keyboard focus */
+        a:focus-visible,
+        button:focus-visible,
+        select:focus-visible,
+        summary:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
         /* Bigger code block controls on small screens */
         @media (max-width: 768px) {
             pre { padding-top: 4rem; }
@@ -1200,20 +1228,20 @@
                     <div class="stats-badge">
                         <span id="scriptCount">0</span> scripts
                     </div>
-                    <a href="https://github.com/theorigamicorporation/get.rso.dev" target="_blank" class="github-btn">
+                    <a href="https://github.com/theorigamicorporation/get.rso.dev" target="_blank" rel="noopener" class="github-btn">
                         Star
                     </a>
                 </div>
             </div>
             <div class="tabs-container">
-                <button class="tab-btn active" data-tab="linux">Linux</button>
-                <button class="tab-btn" data-tab="windows">Windows</button>
+                <button type="button" class="tab-btn active" data-tab="linux" aria-pressed="true">Linux</button>
+                <button type="button" class="tab-btn" data-tab="windows" aria-pressed="false">Windows</button>
             </div>
             <div class="search-container">
                 <div class="search-wrapper">
-                    <span class="search-icon">?</span>
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search..." autocomplete="off">
-                    <span class="kbd">Ctrl+K</span>
+                    <span class="search-icon" aria-hidden="true">🔍</span>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search..." autocomplete="off" aria-label="Search scripts">
+                    <span class="kbd" aria-hidden="true">Ctrl+K</span>
                 </div>
             </div>
             <div class="search-results hidden" id="searchResults"></div>
@@ -1228,18 +1256,18 @@
     </div>
 
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-    <button class="back-to-top" id="backToTop">&uarr;</button>
-    <button class="mobile-toggle" id="mobileToggle">&#9776;</button>
-    <div class="link-copied-toast" id="toast">Link copied to clipboard!</div>
-    <button class="builder-toggle" id="builderToggle" title="Script Builder">
+    <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+    <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Menu" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
+    <div class="link-copied-toast" id="toast" role="status" aria-live="polite">Link copied to clipboard!</div>
+    <button type="button" class="builder-toggle" id="builderToggle" title="Script Builder" aria-label="Script builder" aria-controls="builderDrawer" aria-expanded="false">
         +
         <span class="builder-count" id="builderCount"></span>
     </button>
     <div class="builder-backdrop" id="builderBackdrop"></div>
-    <div class="builder-drawer" id="builderDrawer">
+    <div class="builder-drawer" id="builderDrawer" role="dialog" aria-label="Script builder">
         <div class="builder-header">
             <h3>Script Builder</h3>
-            <button class="builder-close" id="builderClose">&times;</button>
+            <button type="button" class="builder-close" id="builderClose" aria-label="Close script builder">&times;</button>
         </div>
         <div class="builder-list" id="builderList">
             <div class="builder-empty">Click <code>+ Add</code> on any script<br>to build a combined installer</div>
@@ -1275,10 +1303,14 @@
         let allSections = {}; // { linux: '...markdown...', windows: '...' }
         let fullMarkdown = '';
 
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        function scrollBehavior() { return reduceMotion.matches ? 'auto' : 'smooth'; }
+
         function toggleSidebar() {
             if (sidebar) {
-                sidebar.classList.toggle('open');
-                backdrop.classList.toggle('show');
+                const open = sidebar.classList.toggle('open');
+                backdrop.classList.toggle('show', open);
+                mobileToggle.setAttribute('aria-expanded', open);
             }
         }
 
@@ -1286,6 +1318,7 @@
             if (sidebar) {
                 sidebar.classList.remove('open');
                 backdrop.classList.remove('show');
+                mobileToggle.setAttribute('aria-expanded', 'false');
             }
         }
 
@@ -1355,6 +1388,7 @@
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.tab === tabName);
+                btn.setAttribute('aria-pressed', btn.dataset.tab === tabName);
             });
 
             buildTOC();
@@ -1759,6 +1793,7 @@
                 label.textContent = 'Method:';
 
                 const select = document.createElement('select');
+                select.setAttribute('aria-label', 'Install method');
 
                 const autoOpt = document.createElement('option');
                 autoOpt.value = '';
@@ -1898,7 +1933,7 @@
                 if (hashId) {
                     const jump = () => {
                         const el = document.getElementById(hashId);
-                        if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+                        if (el) scrollToEl(el, 'instant');
                     };
                     requestAnimationFrame(jump);
                     if (document.fonts && document.fonts.ready) document.fonts.ready.then(jump);
@@ -1919,10 +1954,14 @@
                 section.className = 'toc-section';
                 if (index === 0) section.classList.add('open');
 
-                const title = document.createElement('div');
+                const title = document.createElement('button');
+                title.type = 'button';
                 title.className = 'toc-section-title';
                 title.textContent = h2.textContent;
-                title.onclick = () => section.classList.toggle('open');
+                title.setAttribute('aria-expanded', index === 0);
+                title.onclick = () => {
+                    title.setAttribute('aria-expanded', section.classList.toggle('open'));
+                };
                 section.appendChild(title);
 
                 const items = document.createElement('div');
@@ -1977,11 +2016,13 @@
                     if ((primaryLabel + altLabel).length > 14) pre.classList.add('dl-long');
 
                     const primaryBtn = document.createElement('button');
+                    primaryBtn.type = 'button';
                     primaryBtn.className = 'dl-toggle-btn' + (dlPref === 'primary' ? ' active' : '');
                     primaryBtn.textContent = primaryLabel;
                     primaryBtn.dataset.pref = 'primary';
 
                     const altBtn = document.createElement('button');
+                    altBtn.type = 'button';
                     altBtn.className = 'dl-toggle-btn' + (dlPref === 'alt' ? ' active' : '');
                     altBtn.textContent = altLabel;
                     altBtn.dataset.pref = 'alt';
@@ -2094,7 +2135,7 @@
         }
 
         document.getElementById('backToTop').onclick = () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: scrollBehavior() });
         };
 
         window.addEventListener('scroll', updateScrollProgress);
@@ -2227,8 +2268,16 @@
             if (tab !== activeTab) renderTab(tab);
             const el = document.getElementById(id);
             if (!el) return false;
-            requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth' }));
+            requestAnimationFrame(() => scrollToEl(el, scrollBehavior()));
             return true;
+        }
+
+        // Like scrollIntoView, but uses layout offsets so the fadeInUp transform
+        // on freshly rendered headings doesn't leave us 20px short
+        function scrollToEl(el, behavior) {
+            let top = 0;
+            for (let n = el; n; n = n.offsetParent) top += n.offsetTop;
+            window.scrollTo({ top: Math.max(0, top - 12), behavior: behavior });
         }
 
         function currentHashId() {
@@ -2271,6 +2320,15 @@
                     e.preventDefault();
                     document.getElementById('searchInput').focus();
                 }
+                if (e.key === 'Escape') {
+                    if (document.getElementById('builderDrawer').classList.contains('open')) {
+                        closeBuilder();
+                        document.getElementById('builderToggle').focus();
+                    } else if (sidebar && sidebar.classList.contains('open')) {
+                        closeSidebar();
+                        mobileToggle.focus();
+                    }
+                }
             });
 
             // Tab switching
@@ -2287,10 +2345,12 @@
         function openBuilder() {
             document.getElementById('builderDrawer').classList.add('open');
             document.getElementById('builderBackdrop').classList.add('show');
+            document.getElementById('builderToggle').setAttribute('aria-expanded', 'true');
         }
         function closeBuilder() {
             document.getElementById('builderDrawer').classList.remove('open');
             document.getElementById('builderBackdrop').classList.remove('show');
+            document.getElementById('builderToggle').setAttribute('aria-expanded', 'false');
         }
         function toggleBuilder() {
             document.getElementById('builderDrawer').classList.contains('open') ? closeBuilder() : openBuilder();
@@ -2340,7 +2400,7 @@
             list.innerHTML = builderScripts.map(s =>
                 '<div class="builder-item">' +
                     '<span class="builder-item-name">' + s.name + '</span>' +
-                    '<button class="builder-item-remove" onclick="removeFromBuilder(\'' + s.name.replace(/'/g, "\\'") + '\')" title="Remove">&times;</button>' +
+                    '<button type="button" class="builder-item-remove" onclick="removeFromBuilder(\'' + s.name.replace(/'/g, "\\'") + '\')" title="Remove" aria-label="Remove ' + s.name + '">&times;</button>' +
                 '</div>'
             ).join('');
 
@@ -2402,6 +2462,7 @@
                         const wrap = document.createElement('div');
                         wrap.className = 'add-builder-wrap';
                         const btn = document.createElement('button');
+                        btn.type = 'button';
                         btn.className = 'add-builder-btn';
                         btn.dataset.script = scriptName;
                         const isAdded = builderScripts.find(s => s.name === scriptName);

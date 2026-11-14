@@ -1133,6 +1133,50 @@
             .builder-toggle { bottom: calc(1.5rem + 6px); right: calc(1.5rem + 56px + 12px); z-index: 150; }
             .builder-drawer { width: 100%; max-width: 100%; }
         }
+        /* Bigger code block controls on small screens */
+        @media (max-width: 768px) {
+            pre { padding-top: 4rem; }
+            .code-lang { top: 1.6rem; }
+            .copy-btn {
+                min-height: 40px;
+                min-width: 56px;
+                padding: 0.5rem 0.75rem;
+            }
+            .dl-toggle-btn {
+                min-height: 38px;
+                padding: 0.5rem 0.65rem;
+            }
+        }
+
+        /* Touch screens: 44px tap targets */
+        @media (pointer: coarse) {
+            .toc-item,
+            .toc-section-title,
+            .search-result {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                min-height: 44px;
+            }
+            .search-result-section { flex-basis: 100%; margin-top: 0; }
+            .github-btn { min-height: 44px; padding: 0 1rem; }
+            .tab-btn { min-height: 44px; }
+            /* 16px stops iOS from zooming the page when the input gets focus */
+            .search-input { min-height: 44px; font-size: 16px; }
+            .filter-summary { min-height: 44px; }
+            .filter-pills { gap: 0.35rem; }
+            .filter-pill,
+            .filter-clear {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 0 0.75rem;
+                font-size: 0.75rem;
+            }
+            .method-picker select { min-height: 44px; font-size: 16px; padding: 0 0.6rem; }
+            .add-builder-btn { min-height: 44px; padding: 0 1rem; }
+            .builder-close,
+            .builder-item-remove { min-width: 44px; min-height: 44px; }
+        }
     </style>
 </head>
 <body>

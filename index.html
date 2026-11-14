@@ -1272,7 +1272,7 @@
 
         let sidebar, backdrop, mobileToggle;
         let activeTab = 'linux';
-        let allSections = {}; // { bash: [...], powershell: [...] }
+        let allSections = {}; // { linux: '...markdown...', windows: '...' }
         let fullMarkdown = '';
 
         function toggleSidebar() {
@@ -1886,12 +1886,23 @@
                 fullMarkdown = await response.text();
 
                 allSections = parseTabs(fullMarkdown);
-                renderTab('linux');
+                const hashId = currentHashId();
+                renderTab((hashId && tabForId(hashId)) || 'linux');
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'flex';
 
                 initMobileMenu();
+
+                // The browser tried to jump to the hash before the content existed
+                if (hashId) {
+                    const jump = () => {
+                        const el = document.getElementById(hashId);
+                        if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+                    };
+                    requestAnimationFrame(jump);
+                    if (document.fonts && document.fonts.ready) document.fonts.ready.then(jump);
+                }
             } catch (error) {
                 document.getElementById('loading').textContent = 'Error loading content: ' + error.message;
             }
@@ -2113,12 +2124,8 @@
         // Search
         let searchIndex = [];
 
-        function buildSearchIndex() {
-            searchIndex = [];
-            const content = document.getElementById('content');
-            const headings = content.querySelectorAll('h2, h3');
-
-            headings.forEach(heading => {
+        function indexHeadings(root, tab) {
+            root.querySelectorAll('h2, h3').forEach(heading => {
                 let parentSection = '';
                 if (heading.tagName === 'H3') {
                     let prev = heading.previousElementSibling;
@@ -2139,32 +2146,40 @@
 
                 searchIndex.push({
                     title: heading.textContent,
-                    id: heading.id,
+                    id: heading.id || slugify(heading.textContent),
                     section: parentSection,
-                    tab: activeTab,
+                    tab: tab,
                     type: heading.tagName,
                     content: codeContent.toLowerCase()
                 });
             });
+        }
 
-            // Also index the other tab
-            const otherTab = activeTab === 'bash' ? 'powershell' : 'bash';
-            const otherContent = allSections[otherTab];
-            if (otherContent) {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = marked.parse(otherContent);
-                const otherHeadings = tempDiv.querySelectorAll('h2, h3');
-                otherHeadings.forEach(heading => {
-                    searchIndex.push({
-                        title: heading.textContent,
-                        id: heading.id,
-                        section: '',
-                        tab: otherTab,
-                        type: heading.tagName,
-                        content: ''
-                    });
-                });
+        // Parsed (unrendered) copy of each tab, used for cross-tab search and deep links
+        const parsedTabs = {};
+        function parsedTab(tab) {
+            if (!parsedTabs[tab]) {
+                const div = document.createElement('div');
+                div.innerHTML = marked.parse(allSections[tab] || '');
+                div.querySelectorAll('h1, h2, h3, h4').forEach(h => { h.id = slugify(h.textContent); });
+                parsedTabs[tab] = div;
             }
+            return parsedTabs[tab];
+        }
+
+        function tabForId(id) {
+            if (!id) return null;
+            if (document.getElementById(id) && document.getElementById('content').contains(document.getElementById(id))) return activeTab;
+            return Object.keys(allSections).find(tab => parsedTab(tab).querySelector('[id="' + CSS.escape(id) + '"]')) || null;
+        }
+
+        function buildSearchIndex() {
+            searchIndex = [];
+            indexHeadings(document.getElementById('content'), activeTab);
+            // Also index the other tab(s), with the same slugs renderTab gives them
+            Object.keys(allSections).filter(tab => tab !== activeTab).forEach(tab => {
+                indexHeadings(parsedTab(tab), tab);
+            });
         }
 
         function performSearch(query) {
@@ -2192,7 +2207,7 @@
 
             searchResults.innerHTML = results.slice(0, 20).map(item => {
                 const tabLabel = item.tab !== activeTab ? ' [' + item.tab + ']' : '';
-                return '<a href="#' + item.id + '" class="search-result" data-tab="' + item.tab + '" onclick="searchNavigate(\'' + item.tab + '\', \'' + item.id + '\')">' +
+                return '<a href="#' + item.id + '" class="search-result" data-tab="' + item.tab + '" data-id="' + item.id + '">' +
                     item.title + tabLabel +
                     (item.section ? '<span class="search-result-section">' + item.section + '</span>' : '') +
                 '</a>';
@@ -2200,15 +2215,30 @@
         }
 
         function searchNavigate(tab, id) {
-            if (tab !== activeTab) {
-                renderTab(tab);
-            }
             clearSearch();
-            setTimeout(() => {
-                const el = document.getElementById(id);
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
+            if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
+            goToId(id, tab);
         }
+
+        // Scroll to a heading id, switching tab first if it lives in the other one
+        function goToId(id, tab) {
+            tab = tab || tabForId(id);
+            if (!tab) return false;
+            if (tab !== activeTab) renderTab(tab);
+            const el = document.getElementById(id);
+            if (!el) return false;
+            requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth' }));
+            return true;
+        }
+
+        function currentHashId() {
+            try { return decodeURIComponent(location.hash.slice(1)); } catch { return location.hash.slice(1); }
+        }
+
+        window.addEventListener('hashchange', () => {
+            const id = currentHashId();
+            if (id) goToId(id);
+        });
 
         function clearSearch() {
             document.getElementById('searchInput').value = '';
@@ -2223,6 +2253,13 @@
             document.getElementById('searchInput').addEventListener('input', (e) => {
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(() => performSearch(e.target.value), 150);
+            });
+
+            document.getElementById('searchResults').addEventListener('click', (e) => {
+                const link = e.target.closest('.search-result');
+                if (!link) return;
+                e.preventDefault();
+                searchNavigate(link.dataset.tab, link.dataset.id);
             });
 
             document.getElementById('searchInput').addEventListener('keydown', (e) => {

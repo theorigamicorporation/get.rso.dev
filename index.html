@@ -2260,7 +2260,11 @@
         }
 
         // Global preference: 'primary' (first option) or 'alt' (second option)
-        let dlPref = localStorage.getItem('get-rso-dl-pref') || 'primary';
+        // localStorage throws when site data is blocked; treat that as empty
+        function storeGet(key) { try { return localStorage.getItem(key); } catch { return null; } }
+        function storeSet(key, value) { try { localStorage.setItem(key, value); } catch {} }
+
+        let dlPref = storeGet('get-rso-dl-pref') || 'primary';
 
         function addCopyButtons() {
             document.querySelectorAll('pre').forEach(pre => {
@@ -2329,7 +2333,7 @@
 
         function switchDlPref(pref) {
             dlPref = pref;
-            localStorage.setItem('get-rso-dl-pref', pref);
+            storeSet('get-rso-dl-pref', pref);
 
             // Update all code blocks with alternatives
             document.querySelectorAll('pre[data-has-alt]').forEach(pre => {
@@ -2614,7 +2618,8 @@
         // =============================================
         // Script Builder
         // =============================================
-        let builderScripts = JSON.parse(localStorage.getItem('get-rso-builder') || '[]');
+        let builderScripts = [];
+        try { builderScripts = JSON.parse(storeGet('get-rso-builder') || '[]'); } catch {}
 
         function openBuilder() {
             document.getElementById('builderDrawer').classList.add('open');
@@ -2631,7 +2636,7 @@
         }
 
         function saveBuilder() {
-            localStorage.setItem('get-rso-builder', JSON.stringify(builderScripts));
+            storeSet('get-rso-builder', JSON.stringify(builderScripts));
             renderBuilder();
         }
 

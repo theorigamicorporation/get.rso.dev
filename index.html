@@ -1148,6 +1148,13 @@
             }
         }
 
+        /* Long toggle labels (WebClient / Invoke-WebRequest) don't fit next to
+           the language label on narrow phones, give the toggle its own row */
+        @media (max-width: 480px) {
+            pre.dl-long { padding-top: calc(0.7rem + 100px); }
+            pre.dl-long .dl-toggle { top: calc(0.7rem + 48px); left: 0.75rem; right: auto; }
+        }
+
         /* Touch screens: 44px tap targets */
         @media (pointer: coarse) {
             .toc-item,
@@ -1955,6 +1962,7 @@
 
                     const toggle = document.createElement('div');
                     toggle.className = 'dl-toggle';
+                    if ((primaryLabel + altLabel).length > 14) pre.classList.add('dl-long');
 
                     const primaryBtn = document.createElement('button');
                     primaryBtn.className = 'dl-toggle-btn' + (dlPref === 'primary' ? ' active' : '');

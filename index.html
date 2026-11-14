@@ -118,6 +118,120 @@
         }
 
         .stats-badge span { color: var(--accent); font-weight: 600; }
+        .stats-badge[role="button"] { cursor: help; }
+
+        /* Favorites */
+        .favorite-btn {
+            float: right;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            margin-left: 0.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.2s ease;
+        }
+
+        .favorite-btn:hover { opacity: 1; transform: scale(1.2); }
+        .favorite-btn.active { color: #f85149; opacity: 1; }
+
+        .favorites-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin: 0 1.25rem 0.25rem;
+            padding: 0.35rem 0;
+            background: none;
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+
+        .favorites-toggle:hover { color: var(--text); }
+        .favorites-toggle .fav-icon { font-size: 0.8rem; line-height: 1; }
+        .favorites-toggle[aria-pressed="true"] { color: #f85149; }
+        .favorites-toggle .fav-count:empty { display: none; }
+        .favorites-toggle .fav-count { opacity: 0.7; }
+
+        .fav-empty {
+            margin: 1rem 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Copy-link button on headings */
+        .heading-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            margin-left: 0.25rem;
+            vertical-align: middle;
+            background: none;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        h2:hover .heading-link,
+        h3:hover .heading-link,
+        .heading-link:focus-visible { opacity: 0.6; }
+        .heading-link:hover { opacity: 1 !important; }
+
+        @media (hover: none) {
+            .heading-link { opacity: 0.35; }
+        }
+
+        /* Tooltip (fixed so it never gets clipped by the sidebar or a code block) */
+        .tooltip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            color: var(--text);
+            border: 2px solid var(--accent);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: normal;
+            min-width: 200px;
+            max-width: min(300px, calc(100vw - 20px));
+            line-height: 1.4;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+            z-index: 10000;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            transform: translateY(4px);
+        }
+
+        .tooltip.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .tooltip-title { font-weight: 600; margin-bottom: 0.4rem; color: var(--accent); }
+        .tooltip-row { display: flex; justify-content: space-between; gap: 1rem; }
+        .tooltip-row b { color: var(--accent); font-weight: 600; }
+        .tooltip-sep { height: 1px; background: var(--border); margin: 0.5rem 0; }
 
         .github-btn {
             display: inline-flex;
@@ -334,12 +448,21 @@
             overflow-x: auto;
             margin: 1rem 0 1.5rem;
             position: relative;
+            /* height of the Copy button; the lang label and safety badge centre on it */
+            --copy-h: 25px;
         }
 
-        .code-lang {
+        .code-tags {
             position: absolute;
             top: 0.7rem;
             left: 0.75rem;
+            height: var(--copy-h);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-lang {
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -388,6 +511,42 @@
             transition: all 0.15s ease;
             opacity: 1;
             line-height: 1;
+            height: var(--copy-h);
+        }
+
+        /* Safety badges */
+        .safety-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            cursor: help;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .safety-badge.idempotent {
+            background: rgba(63, 185, 80, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(63, 185, 80, 0.3);
+        }
+
+        .safety-badge.one-time {
+            background: rgba(210, 153, 34, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(210, 153, 34, 0.3);
+        }
+
+        .safety-badge .safety-icon { font-size: 0.75rem; }
+
+        /* the Examples blocks sit inside an indented panel; on the narrowest phones
+           there is only room for the icon next to the wget/curl toggle */
+        @media (max-width: 400px) {
+            .details-content .safety-badge .safety-label { display: none; }
         }
 
         .copy-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
@@ -1364,8 +1523,7 @@
 
         /* Bigger code block controls on small screens */
         @media (max-width: 768px) {
-            pre { padding-top: 4rem; }
-            .code-lang { top: 1.6rem; }
+            pre { padding-top: 4rem; --copy-h: 40px; }
             .copy-btn {
                 min-height: 40px;
                 min-width: 56px;
@@ -1412,7 +1570,26 @@
             .add-builder-btn { min-height: 44px; padding: 0 1rem; }
             .builder-close,
             .builder-item-remove { min-width: 44px; min-height: 44px; }
+            .stats-badge { min-height: 44px; padding: 0.3rem 0.9rem; }
+            .favorites-toggle { min-height: 44px; }
+            .favorites-toggle .fav-icon { font-size: 1rem; }
+            .favorite-btn {
+                width: 44px;
+                height: 44px;
+                margin-top: -8px;
+                margin-bottom: -8px;
+                margin-right: -8px;
+            }
+            .heading-link {
+                width: 44px;
+                height: 44px;
+                margin: -8px -8px -8px -4px;
+            }
+            /* touch: the safety badge is a 44px-tall tap target, the visual stays small */
+            .safety-badge { position: relative; }
+            .safety-badge::after { content: ''; position: absolute; inset: -10px -4px; }
         }
+
     </style>
 </head>
 <body>
@@ -1445,6 +1622,9 @@
                 </div>
             </div>
             <div class="search-results hidden" id="searchResults"></div>
+            <button type="button" class="favorites-toggle" id="favoritesToggle" aria-pressed="false">
+                <span class="fav-icon" aria-hidden="true">&#9825;</span> favorites only <span class="fav-count" id="favoritesCount"></span>
+            </button>
             <details class="filter-details" id="filterDetails">
                 <summary class="filter-summary">Filters</summary>
                 <div class="filter-bar" id="filterBar"></div>
@@ -1482,6 +1662,7 @@
     <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
     <button type="button" class="mobile-toggle" id="mobileToggle" aria-label="Menu" aria-controls="sidebar" aria-expanded="false">&#9776;</button>
     <div class="link-copied-toast" id="toast" role="status" aria-live="polite">Link copied to clipboard!</div>
+    <div class="tooltip" id="tooltip" role="tooltip"></div>
     <button type="button" class="builder-toggle" id="builderToggle" title="Script Builder" aria-label="Script builder" aria-controls="builderDrawer" aria-expanded="false">
         +
         <span class="builder-count" id="builderCount"></span>
@@ -1519,6 +1700,17 @@
                 .replace(/\s+/g, '-')
                 .replace(/-+/g, '-')
                 .trim();
+        }
+
+        // Plain heading text. The favorite and copy-link buttons live inside the
+        // headings, so textContent alone would pick up their icons.
+        function headingTitle(h) {
+            return h.dataset.title || h.textContent.trim();
+        }
+
+        function initHeading(h) {
+            h.dataset.title = h.textContent.trim();
+            h.id = slugify(h.dataset.title);
         }
 
         let sidebar, backdrop, mobileToggle;
@@ -1581,9 +1773,7 @@
             document.getElementById('content').innerHTML = html;
 
             // Add IDs to headings
-            document.querySelectorAll('#content h1, #content h2, #content h3, #content h4').forEach(h => {
-                h.id = slugify(h.textContent);
-            });
+            document.querySelectorAll('#content h1, #content h2, #content h3, #content h4').forEach(initHeading);
 
             // Syntax highlight code blocks
             document.querySelectorAll('pre code').forEach(block => {
@@ -1616,11 +1806,14 @@
 
             buildTOC();
             addCopyButtons();
+            addSafetyBadges();
             addBuilderButtons();
             addHeadingLinks();
+            addFavoriteButtons();
             buildSearchIndex();
             updateStats();
             renderBuilder();
+            applyFilters();
             addTuiBanner();
         }
 
@@ -1762,7 +1955,8 @@
 
         function applyFilters() {
             const totalActive = activeFilters.tags.size + activeFilters.methods.size + activeFilters.distros.size;
-            const hasFilters = totalActive > 0;
+            const favorites = favoritesOnly ? new Set(loadFavorites()) : null;
+            const hasFilters = totalActive > 0 || favoritesOnly;
 
             // Update summary text
             const summary = document.querySelector('.filter-summary');
@@ -1775,6 +1969,9 @@
                     showScript(h3, true);
                     return;
                 }
+
+                if (favorites && !favorites.has(favoriteKey(h3))) { showScript(h3, false); return; }
+                if (totalActive === 0) { showScript(h3, true); return; }
 
                 // Find the script-meta block for this h3
                 let meta = null;
@@ -1816,6 +2013,98 @@
                 }
                 h2.classList.toggle('script-filtered-out', !hasVisible);
             });
+
+            // Say why the page is empty instead of showing nothing
+            const content = document.getElementById('content');
+            let empty = content.querySelector('.fav-empty');
+            const noneVisible = !content.querySelector('h3:not(.script-filtered-out)');
+            if (favoritesOnly && noneVisible) {
+                if (!empty) {
+                    empty = document.createElement('p');
+                    empty.className = 'fav-empty';
+                    const banner = content.querySelector('.tui-banner');
+                    content.insertBefore(empty, banner ? banner.nextSibling : content.firstChild);
+                }
+                empty.textContent = totalActive > 0
+                    ? 'None of your favorites match the active filters.'
+                    : 'No favorites in this tab yet. Tap \u2661 next to a script to add it.';
+            } else if (empty) {
+                empty.remove();
+            }
+        }
+
+        // =============================================
+        // Favorites
+        // =============================================
+        // Stored as "<tab>:<id>": Linux and Windows both have a get-pc-info.
+        const FAVORITES_KEY = 'get-rso-favorites';
+        let favoritesOnly = false;
+
+        function loadFavorites() {
+            try {
+                const list = JSON.parse(storeGet(FAVORITES_KEY) || '[]');
+                return Array.isArray(list) ? list : [];
+            } catch {
+                return [];
+            }
+        }
+
+        function saveFavorites(list) {
+            storeSet(FAVORITES_KEY, JSON.stringify(list));
+        }
+
+        function favoriteKey(h3, tab) {
+            return (tab || activeTab) + ':' + h3.id;
+        }
+
+        function toggleFavorite(key) {
+            let list = loadFavorites();
+            const on = !list.includes(key);
+            list = on ? list.concat(key) : list.filter(k => k !== key);
+            saveFavorites(list);
+            return on;
+        }
+
+        function addFavoriteButtons() {
+            const favorites = loadFavorites();
+            document.querySelectorAll('#content h3').forEach(h3 => {
+                const name = headingTitle(h3);
+                const key = favoriteKey(h3);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'favorite-btn';
+                btn.setAttribute('aria-label', 'Favorite: ' + name);
+                const setState = (on) => {
+                    btn.classList.toggle('active', on);
+                    btn.textContent = on ? '\u2665' : '\u2661';
+                    btn.title = on ? 'Remove from favorites' : 'Add to favorites';
+                    btn.setAttribute('aria-pressed', String(on));
+                };
+                setState(favorites.includes(key));
+                btn.onclick = (e) => {
+                    e.stopPropagation();
+                    setState(toggleFavorite(key));
+                    updateFavoritesCount();
+                    if (favoritesOnly) applyFilters();
+                };
+                h3.appendChild(btn);
+            });
+            updateFavoritesCount();
+        }
+
+        function updateFavoritesCount() {
+            const count = loadFavorites().length;
+            document.getElementById('favoritesCount').textContent = count ? '(' + count + ')' : '';
+        }
+
+        function setFavoritesOnly(on) {
+            favoritesOnly = on;
+            const toggle = document.getElementById('favoritesToggle');
+            toggle.setAttribute('aria-pressed', String(on));
+            toggle.querySelector('.fav-icon').textContent = on ? '\u2665' : '\u2661';
+            applyFilters();
+            const q = document.getElementById('searchInput').value;
+            if (q.trim()) performSearch(q);
         }
 
         function showScript(h3, visible) {
@@ -1837,6 +2126,10 @@
 
                 const meta = document.createElement('div');
                 meta.className = 'script-meta';
+
+                // Safety is shown as a badge on the code blocks, not as a pill row
+                const safety = p.innerHTML.match(/<strong>Safety:<\/strong>\s*([\w-]+)/);
+                if (safety) meta.dataset.safety = safety[1].toLowerCase();
 
                 // Parse each metadata field from the <strong> elements
                 const fields = [
@@ -1969,7 +2262,7 @@
 
             // Attach badges to each h3 script heading
             document.querySelectorAll('#content h3').forEach(h3 => {
-                const scriptName = h3.textContent.trim();
+                const scriptName = headingTitle(h3);
                 const data = testData[scriptName];
                 if (!data) return;
 
@@ -2245,7 +2538,7 @@
                 const title = document.createElement('button');
                 title.type = 'button';
                 title.className = 'toc-section-title';
-                title.textContent = h2.textContent;
+                title.textContent = headingTitle(h2);
                 title.setAttribute('aria-expanded', index === 0);
                 title.onclick = () => {
                     title.setAttribute('aria-expanded', section.classList.toggle('open'));
@@ -2261,7 +2554,7 @@
                         const link = document.createElement('a');
                         link.className = 'toc-item';
                         link.href = '#' + sibling.id;
-                        link.textContent = sibling.textContent;
+                        link.textContent = headingTitle(sibling);
                         link.onclick = () => {
                             if (window.innerWidth <= 1024) closeSidebar();
                         };
@@ -2290,13 +2583,16 @@
                 // Language badge
                 const classes = code.className.split(' ');
                 const langClass = classes.find(c => c.startsWith('language-'));
+                const tags = document.createElement('span');
+                tags.className = 'code-tags';
                 if (langClass) {
                     const lang = langClass.replace('language-', '');
                     const badge = document.createElement('span');
                     badge.className = 'code-lang';
                     badge.textContent = lang;
-                    pre.appendChild(badge);
+                    tags.appendChild(badge);
                 }
+                pre.appendChild(tags);
 
                 // Add toggle if this block has alternatives
                 if (pre.dataset.hasAlt === 'true') {
@@ -2393,24 +2689,187 @@
             return ok;
         }
 
+        async function copyHeadingLink(heading) {
+            const url = window.location.origin + window.location.pathname + '#' + heading.id;
+            const ok = await copyToClipboard(url);
+            showToast(ok ? 'Link copied to clipboard!' : 'Could not copy the link', ok);
+        }
+
+        // Clicking a heading copies its deep link; the 🔗 button does the same for keyboards
         function addHeadingLinks() {
             document.querySelectorAll('#content h2, #content h3').forEach(heading => {
-                heading.onclick = async () => {
-                    const url = window.location.origin + window.location.pathname + '#' + heading.id;
-                    if (await copyToClipboard(url)) showToast();
+                heading.onclick = () => copyHeadingLink(heading);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'heading-link';
+                btn.textContent = '\u{1F517}';
+                btn.title = 'Copy link';
+                btn.setAttribute('aria-label', 'Copy link to ' + headingTitle(heading));
+                btn.onclick = (e) => {
+                    e.stopPropagation();
+                    copyHeadingLink(heading);
                 };
+                heading.appendChild(btn);
             });
         }
 
-        function showToast() {
+        let toastTimer;
+        function showToast(message = 'Link copied to clipboard!', ok = true) {
             const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = ok ? '' : '#f85149';
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2000);
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // Safety badges, from the **Safety:** line generate-catalog.sh writes
+        const SAFETY = {
+            'idempotent': {
+                icon: '\u{1F504}', label: 'Idempotent',
+                tip: 'Idempotent: safe to run again. A second run leaves the machine in the same state; installers use it to update.'
+            },
+            'one-time': {
+                icon: '\u26A1', label: 'One-time',
+                tip: 'One-time: running it again may fail, duplicate something or register the machine twice.'
+            }
+        };
+
+        function addSafetyBadges() {
+            document.querySelectorAll('#content .script-meta[data-safety]').forEach(meta => {
+                const info = SAFETY[meta.dataset.safety];
+                if (!info) return;
+                let el = meta.nextElementSibling;
+                while (el && !['H2', 'H3'].includes(el.tagName)) {
+                    const pres = el.tagName === 'PRE' ? [el] : Array.from(el.querySelectorAll('pre'));
+                    pres.forEach(pre => {
+                        const tags = pre.querySelector('.code-tags');
+                        if (!tags || tags.querySelector('.safety-badge')) return;
+                        const badge = document.createElement('span');
+                        badge.className = 'safety-badge ' + meta.dataset.safety;
+                        badge.innerHTML = '<span class="safety-icon" aria-hidden="true">' + info.icon + '</span><span class="safety-label">' + info.label + '</span>';
+                        badge.setAttribute('aria-label', info.label);
+                        attachTooltip(badge, () => info.tip);
+                        tags.appendChild(badge);
+                    });
+                    el = el.nextElementSibling;
+                }
+            });
+        }
+
+        // Tooltip: hover on mouse, tap/Enter to toggle on touch and keyboard
+        let tooltip;
+        let tooltipOwner = null;
+
+        function showTooltip(element, content) {
+            if (!tooltip) tooltip = document.getElementById('tooltip');
+            tooltip.innerHTML = content;
+            tooltip.classList.add('show');
+
+            const rect = element.getBoundingClientRect();
+            const tipRect = tooltip.getBoundingClientRect();
+
+            let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+            let top = rect.top - tipRect.height - 10;
+
+            if (left < 10) left = 10;
+            if (left + tipRect.width > window.innerWidth - 10) left = window.innerWidth - tipRect.width - 10;
+            if (top < 10) top = rect.bottom + 10;
+
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+        }
+
+        function hideTooltip() {
+            if (!tooltip) tooltip = document.getElementById('tooltip');
+            tooltip.classList.remove('show');
+            if (tooltipOwner) tooltipOwner.removeAttribute('aria-describedby');
+            tooltipOwner = null;
+        }
+
+        function openTooltip(el, getContent) {
+            if (tooltipOwner && tooltipOwner !== el) tooltipOwner.removeAttribute('aria-describedby');
+            showTooltip(el, getContent());
+            tooltipOwner = el;
+            el.setAttribute('aria-describedby', 'tooltip');
+        }
+
+        function attachTooltip(el, getContent) {
+            let lastPointer = '';
+            el.tabIndex = 0;
+            el.setAttribute('role', 'button');
+            el.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') openTooltip(el, getContent); });
+            el.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && tooltipOwner === el) hideTooltip(); });
+            el.addEventListener('pointerdown', (e) => { lastPointer = e.pointerType; });
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (lastPointer === 'mouse') { lastPointer = ''; return; }
+                lastPointer = '';
+                if (tooltipOwner === el) hideTooltip();
+                else openTooltip(el, getContent);
+            });
+            el.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    if (tooltipOwner === el) hideTooltip();
+                    else openTooltip(el, getContent);
+                }
+            });
+            el.addEventListener('blur', () => { if (tooltipOwner === el) hideTooltip(); });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (tooltipOwner && !tooltipOwner.contains(e.target)) hideTooltip();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && tooltipOwner) hideTooltip();
+        });
+        // The tooltip is position:fixed, so it would drift away from its owner
+        window.addEventListener('scroll', () => { if (tooltipOwner) hideTooltip(); }, { passive: true });
+        document.getElementById('sidebar').addEventListener('scroll', () => { if (tooltipOwner) hideTooltip(); }, { passive: true });
+
+        function escapeHtml(text) {
+            return String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+        }
+
+        // Script counts per tab and per category, from the parsed catalog
+        function catalogStats() {
+            const perTab = {};
+            const perCategory = {};
+            Object.keys(allSections).forEach(tab => {
+                let category = '';
+                perTab[tab] = 0;
+                parsedTab(tab).querySelectorAll('h2, h3').forEach(h => {
+                    if (h.tagName === 'H2') { category = headingTitle(h); return; }
+                    perTab[tab]++;
+                    if (category) perCategory[category] = (perCategory[category] || 0) + 1;
+                });
+            });
+            return { perTab, perCategory };
+        }
+
+        function statsTooltip() {
+            const { perTab, perCategory } = catalogStats();
+            const row = (label, n) => '<div class="tooltip-row"><span>' + escapeHtml(label) + '</span><b>' + n + '</b></div>';
+            const tabs = Object.keys(perTab)
+                .map(tab => row(tab.charAt(0).toUpperCase() + tab.slice(1), perTab[tab])).join('');
+            const top = Object.entries(perCategory)
+                .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+                .slice(0, 5)
+                .map(([cat, n]) => row(cat, n)).join('');
+            return '<div class="tooltip-title">Scripts by platform</div>' + tabs +
+                '<div class="tooltip-sep"></div><div class="tooltip-title">Top categories</div>' + top;
         }
 
         function updateStats() {
             const count = document.querySelectorAll('#content h3').length;
             document.getElementById('scriptCount').textContent = count;
+            const badge = document.querySelector('.stats-badge');
+            if (badge && !badge.dataset.tooltip) {
+                badge.dataset.tooltip = '1';
+                badge.setAttribute('aria-label', 'Script stats');
+                attachTooltip(badge, statsTooltip);
+            }
         }
 
         // Scroll progress
@@ -2465,7 +2924,7 @@
                 if (heading.tagName === 'H3') {
                     let prev = heading.previousElementSibling;
                     while (prev) {
-                        if (prev.tagName === 'H2') { parentSection = prev.textContent; break; }
+                        if (prev.tagName === 'H2') { parentSection = headingTitle(prev); break; }
                         prev = prev.previousElementSibling;
                     }
                 }
@@ -2480,8 +2939,8 @@
                 }
 
                 searchIndex.push({
-                    title: heading.textContent,
-                    id: heading.id || slugify(heading.textContent),
+                    title: headingTitle(heading),
+                    id: heading.id || slugify(headingTitle(heading)),
                     section: parentSection,
                     tab: tab,
                     type: heading.tagName,
@@ -2496,7 +2955,7 @@
             if (!parsedTabs[tab]) {
                 const div = document.createElement('div');
                 div.innerHTML = marked.parse(allSections[tab] || '');
-                div.querySelectorAll('h1, h2, h3, h4').forEach(h => { h.id = slugify(h.textContent); });
+                div.querySelectorAll('h1, h2, h3, h4').forEach(initHeading);
                 parsedTabs[tab] = div;
             }
             return parsedTabs[tab];
@@ -2531,12 +2990,15 @@
             searchResults.classList.remove('hidden');
             toc.classList.add('hidden');
 
+            const favorites = favoritesOnly ? new Set(loadFavorites()) : null;
             const results = searchIndex.filter(item =>
-                item.title.toLowerCase().includes(q) || item.content.includes(q)
+                (item.title.toLowerCase().includes(q) || item.content.includes(q)) &&
+                (!favorites || (item.type === 'H3' && favorites.has(item.tab + ':' + item.id)))
             );
 
             if (results.length === 0) {
-                searchResults.innerHTML = '<div class="search-no-results">No results found</div>';
+                searchResults.innerHTML = '<div class="search-no-results">' +
+                    (favorites ? 'No favorites match' : 'No results found') + '</div>';
                 return;
             }
 
@@ -2629,6 +3091,8 @@
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.onclick = () => renderTab(btn.dataset.tab);
             });
+
+            document.getElementById('favoritesToggle').onclick = () => setFavoritesOnly(!favoritesOnly);
         });
 
         // =============================================
@@ -2750,7 +3214,7 @@
         // Add "+" buttons below script code blocks
         function addBuilderButtons() {
             document.querySelectorAll('#content h3').forEach(h3 => {
-                const scriptName = h3.textContent.trim();
+                const scriptName = headingTitle(h3);
                 let el = h3.nextElementSibling;
                 while (el && !['H2', 'H3'].includes(el.tagName)) {
                     if (el.tagName === 'PRE') {

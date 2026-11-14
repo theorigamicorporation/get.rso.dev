@@ -1927,12 +1927,14 @@
                 const btn = document.createElement('button');
                 btn.className = 'copy-btn';
                 btn.textContent = 'Copy';
+                btn.type = 'button';
                 btn.onclick = async () => {
                     const text = pre.querySelector('code').textContent;
-                    await copyToClipboard(text);
-                    btn.textContent = 'Copied!';
-                    btn.classList.add('copied');
-                    setTimeout(() => {
+                    const ok = await copyToClipboard(text);
+                    clearTimeout(btn._resetTimer);
+                    btn.textContent = ok ? 'Copied!' : 'Copy failed';
+                    btn.classList.toggle('copied', ok);
+                    btn._resetTimer = setTimeout(() => {
                         btn.textContent = 'Copy';
                         btn.classList.remove('copied');
                     }, 2000);
@@ -1960,31 +1962,36 @@
             });
         }
 
-        // Clipboard helper with execCommand fallback for Android/Firefox mobile
+        // Clipboard helper with execCommand fallback for Android/Firefox mobile.
+        // Resolves to true only when the text actually made it to the clipboard.
         async function copyToClipboard(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 try {
                     await navigator.clipboard.writeText(text);
-                    return;
+                    return true;
                 } catch {}
             }
             const ta = document.createElement('textarea');
             ta.value = text;
+            ta.setAttribute('readonly', '');
             ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
             document.body.appendChild(ta);
             ta.focus();
             ta.select();
-            ta.setSelectionRange(0, 99999);
-            document.execCommand('copy');
+            ta.setSelectionRange(0, text.length);
+            let ok = false;
+            try {
+                ok = document.execCommand('copy');
+            } catch {}
             document.body.removeChild(ta);
+            return ok;
         }
 
         function addHeadingLinks() {
             document.querySelectorAll('#content h2, #content h3').forEach(heading => {
                 heading.onclick = async () => {
                     const url = window.location.origin + window.location.pathname + '#' + heading.id;
-                    await copyToClipboard(url);
-                    showToast();
+                    if (await copyToClipboard(url)) showToast();
                 };
             });
         }
@@ -2269,10 +2276,11 @@
 
         function copyBuilderScript() {
             const script = generateBuilderScript();
-            copyToClipboard(script).then(() => {
+            copyToClipboard(script).then(ok => {
                 const btn = document.getElementById('builderCopy');
-                btn.textContent = 'Copied!';
-                setTimeout(() => { btn.textContent = 'Copy Script'; }, 2000);
+                clearTimeout(btn._resetTimer);
+                btn.textContent = ok ? 'Copied!' : 'Copy failed';
+                btn._resetTimer = setTimeout(() => { btn.textContent = 'Copy Script'; }, 2000);
             });
         }
 

@@ -1146,72 +1146,185 @@
         /* Terminal catalog banner */
         .tui-banner {
             margin: 0 0 2rem;
-            padding: 0.9rem 1rem 1rem;
+            padding: 12px 16px;
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-left: 3px solid var(--success);
+            border-left: 3px solid var(--accent);
             border-radius: 8px;
-        }
-
-        .tui-banner-head {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0 1rem;
-            margin-bottom: 0.5rem;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .tui-banner-label {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .tui-banner-src {
-            display: inline-flex;
-            align-items: center;
-            min-height: 44px;
-            font-size: 0.8rem;
-        }
-
-        .tui-banner-row {
+        .tui-head {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
             gap: 0.5rem;
+            min-height: 24px;
         }
 
-        .tui-cmd {
-            flex: 1 1 260px;
+        .tui-glyph {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .tui-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
             min-width: 0;
+        }
+
+        /* small visuals, 44px tall tap areas via padding + negative margin */
+        .tui-src {
+            font-size: 13px;
+            color: var(--text-muted);
+            padding: 12px 4px;
+            margin: -12px 0;
+            white-space: nowrap;
+        }
+
+        .tui-src:hover { color: var(--accent); }
+
+        .tui-dismiss {
+            width: 44px;
+            height: 44px;
+            margin: -10px -12px -10px -6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .tui-dismiss:hover { color: var(--text); }
+
+        .tui-bar {
             display: flex;
             align-items: center;
-            min-height: 44px;
-            padding: 0 0.75rem;
+            gap: 8px;
+            min-height: 36px;
+            padding: 2px 2px 2px 12px;
             background: var(--code-bg);
             border: 1px solid var(--border);
             border-radius: 6px;
-            color: var(--success);
-            font-size: 0.85rem;
+        }
+
+        .tui-prompt {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            opacity: 0.6;
+            user-select: none;
+        }
+
+        .tui-cmd {
+            flex: 1;
+            min-width: 0;
+            padding: 0;
+            background: none;
+            border-radius: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13.5px;
+            color: var(--text);
             white-space: nowrap;
             overflow-x: auto;
+            scrollbar-width: none;
         }
 
-        .tui-banner .dl-toggle { position: static; }
-        .tui-banner .dl-toggle-btn { min-height: 42px; padding: 0 0.75rem; font-size: 0.75rem; }
+        .tui-cmd::-webkit-scrollbar { display: none; }
 
-        .tui-banner .copy-btn {
-            position: static;
-            min-height: 44px;
-            min-width: 64px;
-            margin-left: auto;
-            padding: 0 0.9rem;
-            font-size: 0.8rem;
+        .tui-seg {
+            display: inline-flex;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--bg);
         }
 
-        .tui-banner-note {
-            margin: 0.5rem 0 0;
-            font-size: 0.8rem;
+        .tui-seg-btn {
+            position: relative;
+            height: 26px;
+            padding: 0 0.55rem;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            cursor: pointer;
+        }
+
+        .tui-seg-btn:hover:not(.active) { color: var(--text); }
+        .tui-seg-btn.active { background: var(--accent); color: var(--bg); }
+
+        .tui-copy {
+            position: relative;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .tui-copy:hover { color: var(--text); border-color: var(--border); background: var(--bg-tertiary); }
+        .tui-copy.ok { color: var(--success); }
+        .tui-copy.fail { color: #f85149; }
+        .tui-copy svg { width: 16px; height: 16px; }
+
+        .tui-foot {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+        }
+
+        .tui-hint {
+            flex: 1 1 180px;
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        /* the segmented toggle lives in the bar, or on the hint row on narrow screens */
+        .tui-foot .tui-seg { display: none; }
+
+        @media (pointer: coarse) {
+            .tui-copy { width: 36px; height: 36px; }
+            .tui-copy::after,
+            .tui-seg-btn::after {
+                content: '';
+                position: absolute;
+                inset: -4px;
+            }
+            .tui-seg-btn { height: 32px; }
+            .tui-seg-btn::after { inset: -6px 0; }
+        }
+
+        @media (max-width: 480px) {
+            .tui-banner { padding: 12px; }
+            .tui-head { gap: 6px; }
+            .tui-glyph { font-size: 12px; }
+            .tui-title { font-size: 14px; white-space: nowrap; }
+            .tui-src-long { display: none; }
+            .tui-bar .tui-seg { display: none; }
+            .tui-foot .tui-seg { display: inline-flex; }
+            /* room for the whole curl one-liner on one line at 360px */
+            .tui-bar { padding-left: 8px; gap: 5px; margin: 0 -11px; }
         }
 
         /* Keyboard focus */
@@ -1328,19 +1441,24 @@
 
     <template id="tuiBannerTpl">
         <section class="tui-banner" aria-label="Terminal catalog">
-            <div class="tui-banner-head">
-                <span class="tui-banner-label">Browse from your terminal</span>
-                <a class="tui-banner-src" href="https://get.rso.dev/tui" target="_blank" rel="noopener">read it first</a>
+            <div class="tui-head">
+                <span class="tui-glyph" aria-hidden="true">&gt;_</span>
+                <span class="tui-title">Browse from your terminal</span>
+                <a class="tui-src" href="https://get.rso.dev/tui" target="_blank" rel="noopener"><span class="tui-src-long">read the </span>script &#8599;</a>
+                <button type="button" class="tui-dismiss" aria-label="Dismiss" title="Dismiss">&#10005;</button>
             </div>
-            <div class="tui-banner-row">
-                <code class="tui-cmd"></code>
-                <div class="dl-toggle" role="group" aria-label="Download tool">
-                    <button type="button" class="dl-toggle-btn" data-pref="primary">wget</button>
-                    <button type="button" class="dl-toggle-btn" data-pref="alt">curl</button>
+            <div class="tui-bar">
+                <span class="tui-prompt" aria-hidden="true">$</span>
+                <code class="tui-cmd" tabindex="0"></code>
+                <div class="tui-seg" role="group" aria-label="Download tool">
+                    <button type="button" class="tui-seg-btn" data-pref="alt">curl</button>
+                    <button type="button" class="tui-seg-btn" data-pref="primary">wget</button>
                 </div>
-                <button type="button" class="copy-btn">Copy</button>
+                <button type="button" class="tui-copy" aria-label="Copy command" title="Copy command"></button>
             </div>
-            <p class="tui-banner-note">Search every script, preview it, and nothing runs until you say yes.</p>
+            <div class="tui-foot">
+                <p class="tui-hint">Search, preview, and nothing runs until you press y.</p>
+            </div>
         </section>
     </template>
 
@@ -1493,26 +1611,64 @@
         // "Browse from your terminal" block at the top of the Linux tab.
         // Added last so the catalog post-processing above never sees it.
         const TUI_CMDS = { primary: 'wget -qO- get.rso.dev/tui | bash', alt: 'curl -sL get.rso.dev/tui | bash' };
+        const TUI_DISMISS_KEY = 'rso-tui-banner-dismissed';
+        const TUI_ICONS = {
+            copy: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 3.5v-.5A1.5 1.5 0 0 0 9 1.5H4A1.5 1.5 0 0 0 2.5 3v5A1.5 1.5 0 0 0 4 9.5h.5"/></svg>',
+            ok: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>',
+            fail: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'
+        };
+
+        // null when localStorage isn't usable (private mode, blocked storage)
+        function tuiDismissState() {
+            try {
+                return localStorage.getItem(TUI_DISMISS_KEY) === '1';
+            } catch {
+                return null;
+            }
+        }
+
         function addTuiBanner() {
             if (activeTab !== 'linux') return;
+            const dismissed = tuiDismissState();
+            if (dismissed) return;
             const banner = document.getElementById('tuiBannerTpl').content.firstElementChild.cloneNode(true);
             const cmd = banner.querySelector('.tui-cmd');
             cmd.textContent = TUI_CMDS[dlPref] || TUI_CMDS.primary;
-            banner.querySelectorAll('.dl-toggle-btn').forEach(btn => {
+
+            // one toggle in the bar, a copy on the hint row for narrow screens; CSS shows one
+            const seg = banner.querySelector('.tui-seg');
+            banner.querySelector('.tui-foot').prepend(seg.cloneNode(true));
+            banner.querySelectorAll('.tui-seg-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.pref === dlPref);
                 btn.onclick = () => switchDlPref(btn.dataset.pref);
             });
-            const copy = banner.querySelector('.copy-btn');
+
+            const copy = banner.querySelector('.tui-copy');
+            copy.innerHTML = TUI_ICONS.copy;
             copy.onclick = async () => {
                 const ok = await copyToClipboard(cmd.textContent);
                 clearTimeout(copy._resetTimer);
-                copy.textContent = ok ? 'Copied!' : 'Copy failed';
-                copy.classList.toggle('copied', ok);
+                copy.innerHTML = ok ? TUI_ICONS.ok : TUI_ICONS.fail;
+                copy.classList.toggle('ok', ok);
+                copy.classList.toggle('fail', !ok);
+                copy.title = ok ? 'Copied' : 'Copy failed';
                 copy._resetTimer = setTimeout(() => {
-                    copy.textContent = 'Copy';
-                    copy.classList.remove('copied');
-                }, 2000);
+                    copy.innerHTML = TUI_ICONS.copy;
+                    copy.classList.remove('ok', 'fail');
+                    copy.title = 'Copy command';
+                }, 1500);
             };
+
+            const dismiss = banner.querySelector('.tui-dismiss');
+            if (dismissed === null) {
+                dismiss.remove();
+            } else {
+                dismiss.onclick = () => {
+                    try { localStorage.setItem(TUI_DISMISS_KEY, '1'); } catch {}
+                    banner.remove();
+                };
+            }
+
             document.getElementById('content').prepend(banner);
         }
 
@@ -2187,7 +2343,7 @@
             document.querySelectorAll('.tui-cmd').forEach(c => { c.textContent = TUI_CMDS[pref]; });
 
             // Update all toggle buttons
-            document.querySelectorAll('.dl-toggle-btn').forEach(btn => {
+            document.querySelectorAll('.dl-toggle-btn, .tui-seg-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.pref === pref);
             });
         }

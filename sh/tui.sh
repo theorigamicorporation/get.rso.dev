@@ -11,6 +11,7 @@
 # @tags tui, catalog, menu, search, browse, oneline, interactive
 # @supported Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux, Fedora, Arch, macOS
 # @verify true
+# @safety idempotent
 # =============================================================================
 #
 # How it works, in reading order:

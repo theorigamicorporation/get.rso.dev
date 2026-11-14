@@ -12,6 +12,7 @@
 # @verify awg --version && amneziawg-go --version
 # @prereqs curl|wget
 # @noroot false
+# @safety idempotent
 # =============================================================================
 #
 # AmneziaWG needs two parts: the tools (awg, awg-quick) and a data plane, which is

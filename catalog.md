@@ -8,6 +8,7 @@ High-compression file archiver supporting multiple formats
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** archive, compression, 7zip, 7z, zip, rar
 **Hash:** `03acb2c86025`
 
@@ -44,6 +45,7 @@ High-quality block-sorting file compressor
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** compression, archive, bzip2, bz2
 **Hash:** `446ca43685ff`
 
@@ -80,6 +82,7 @@ Extraction utility for ZIP archives
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** archive, zip, extract, decompress
 **Hash:** `80b1025743a7`
 
@@ -119,6 +122,7 @@ Google Chrome web browser
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
 **Methods:** apt, dnf, flatpak
 **Prereqs:** curl|wget, gpg
+**Safety:** idempotent
 **Tags:** browser, chrome, google, web
 **Hash:** `d4680b85f676`
 
@@ -157,6 +161,7 @@ Sync client for Nextcloud self-hosted cloud storage
 
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** cloud, sync, storage, nextcloud, self-hosted
 **Hash:** `90f44e1555ad`
 
@@ -196,6 +201,7 @@ Jitsi Desktop SIP/XMPP communicator, preconfigured for TOC
 **Supported:** Ubuntu 22.04, Debian 11
 **Methods:** deb
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** jitsi, sip, xmpp, voip, chat, communication
 **Hash:** `add2b3f680da`
 
@@ -233,6 +239,7 @@ Open-source team messaging and collaboration platform
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, github-release
 **Prereqs:** curl|wget, gpg
+**Safety:** idempotent
 **Tags:** chat, messaging, team, collaboration, slack-alternative
 **Hash:** `5643f02be0c6`
 
@@ -271,6 +278,7 @@ Daemonless container engine compatible with Docker
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** container, docker, podman, oci, rootless
 **Hash:** `e43c7a3c0381`
 
@@ -310,6 +318,7 @@ Container platform for building and running applications
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
 **Prereqs:** curl|wget, gpg
+**Safety:** idempotent
 **Tags:** docker, containers, oci, devops
 **Hash:** `b745115acb3e`
 
@@ -348,6 +357,7 @@ Lightweight embedded SQL database engine
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** database, sql, sqlite, embedded, cli
 **Hash:** `702812f5f2ed`
 
@@ -386,6 +396,7 @@ Advanced clipboard manager with editing and scripting
 
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** clipboard, copy, paste, manager, copyq
 **Hash:** `6272adc9f5ea`
 
@@ -422,6 +433,7 @@ Powerful screenshot tool with annotation support
 
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** screenshot, capture, annotation, screen, flameshot
 **Hash:** `52ff0dd212ca`
 
@@ -458,6 +470,7 @@ Remote desktop client supporting RDP, VNC, SSH
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** remote, desktop, rdp, vnc, ssh, remmina
 **Hash:** `5f680a9cee05`
 
@@ -495,6 +508,7 @@ Open-source remote desktop with self-hosted server option
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** remote, desktop, rustdesk, self-hosted, screen-sharing
 **Hash:** `e1d9b0a5f6e0`
 
@@ -531,6 +545,7 @@ Command-line clipboard utility for X11
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** clipboard, copy, paste, x11, xclip
 **Hash:** `9dc291046e02`
 
@@ -571,6 +586,7 @@ Extendable version manager for multiple runtimes
 **Methods:** github-release
 **Prereqs:** curl|wget, tar, gzip
 **Requires:** non-root user
+**Safety:** idempotent
 **Tags:** version-manager, asdf, runtime, node, python, ruby
 **Hash:** `105c813a0992`
 
@@ -608,6 +624,7 @@ Anthropic's official CLI for Claude — AI-powered coding assistant
 **Supported:** Ubuntu, Debian, Rocky, Amazon Linux
 **Methods:** npm, snap
 **Prereqs:** npm|snap
+**Safety:** idempotent
 **Tags:** ai, claude, anthropic, cli, coding, assistant, llm
 **Hash:** `3bf2ef7e5ead`
 
@@ -645,6 +662,7 @@ Clone all repos from a GitHub/GitLab/Bitbucket org
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** git, clone, github, gitlab, organization, backup
 **Hash:** `149676516330`
 
@@ -681,6 +699,7 @@ Distributed version control system
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** git, vcs, version-control, scm
 **Hash:** `ba8fb0e97d8b`
 
@@ -718,6 +737,7 @@ Official command-line tool for GitLab
 **Supported:** All Linux distributions
 **Methods:** apt, snap, gitlab-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** gitlab, git, cli, merge-request, pipeline, glab
 **Hash:** `8c773262624f`
 
@@ -754,6 +774,7 @@ Fast statically typed compiled language by Google
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** go, golang, programming, language, compiler
 **Hash:** `b9b4772449ed`
 
@@ -791,6 +812,7 @@ Command runner for project-specific tasks (justfile)
 **Supported:** All Linux distributions
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** just, justfile, task-runner, command-runner, make
 **Hash:** `ccea870bbbbc`
 
@@ -829,6 +851,7 @@ Rust toolchain installer (rustup, cargo, rustc)
 **Methods:** official
 **Prereqs:** curl|wget
 **Requires:** non-root user
+**Safety:** idempotent
 **Tags:** rust, cargo, rustc, rustup, compiler, toolchain
 **Hash:** `f666707c485e`
 
@@ -866,6 +889,7 @@ Visual Studio Code editor
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky
 **Methods:** apt, dnf, snap, flatpak
 **Prereqs:** curl|wget, gpg
+**Safety:** idempotent
 **Tags:** editor, ide, vscode, microsoft, code
 **Hash:** `a5b31014864f`
 
@@ -904,10 +928,11 @@ Enrol a host into a Fleet server by building and installing fleetd
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Prereqs:** curl|wget
+**Safety:** one-time
 **Tags:** fleet, fleetd, osquery, mdm, enrolment, orbit
-**Hash:** `3f7b695523ca`
+**Hash:** `456922343638`
 
-<!-- tests:enroll-fleetd hash:3f7b695523ca -->
+<!-- tests:enroll-fleetd hash:456922343638 -->
 
 ```bash
 wget -qO- get.rso.dev/enroll-fleetd | sh
@@ -923,6 +948,7 @@ Modern and intuitive terminal-based text editor
 **Supported:** All Linux distributions
 **Methods:** apt, snap, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** editor, text, terminal, modern, micro
 **Hash:** `22d40a902ba0`
 
@@ -959,6 +985,7 @@ Simple and easy terminal text editor
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** editor, text, terminal, nano
 **Hash:** `73d03ebf77c1`
 
@@ -997,6 +1024,7 @@ exFAT filesystem support for Linux
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** filesystem, exfat, usb, sdcard, mount
 **Hash:** `b9966010c683`
 
@@ -1033,6 +1061,7 @@ NFS client support for mounting remote filesystems
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** nfs, mount, network, filesystem, share
 **Hash:** `71dd52f6dbb8`
 
@@ -1070,6 +1099,7 @@ Sync files to and from cloud storage
 **Supported:** All Linux distributions
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** cloud, sync, storage, s3, gdrive, backup, rclone
 **Hash:** `3c94cdb5eeec`
 
@@ -1106,6 +1136,7 @@ Fast and versatile file synchronization tool
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** sync, copy, backup, transfer, rsync
 **Hash:** `7b674d214111`
 
@@ -1144,6 +1175,7 @@ Agentless IT automation and configuration management
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** ansible, automation, configuration, devops, iac
 **Hash:** `d69b0720fc89`
 
@@ -1181,6 +1213,7 @@ Build automated machine images for multiple platforms
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** packer, images, ami, hashicorp, automation
 **Hash:** `b6ffaa7aac1d`
 
@@ -1218,6 +1251,7 @@ Infrastructure as Code tool for provisioning cloud resources
 **Supported:** All Linux distributions
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** iac, terraform, cloud, provisioning, hashicorp
 **Hash:** `91389245fcd4`
 
@@ -1255,6 +1289,7 @@ Thin wrapper for Terraform that provides extra tools for working with multiple m
 **Supported:** All Linux distributions
 **Methods:** asdf, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** iac, terraform, terragrunt, cloud, provisioning, gruntwork
 **Hash:** `25bfb9fe605d`
 
@@ -1292,6 +1327,7 @@ Build and manage virtualized development environments
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** asdf, apt, dnf, yum
 **Prereqs:** curl|wget, gpg
+**Safety:** idempotent
 **Tags:** vagrant, vm, development, hashicorp
 **Hash:** `dfba94f4dc4b`
 
@@ -1331,6 +1367,7 @@ Lightweight command-line JSON processor
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Prereqs:** curl|wget (for github-release method)
+**Safety:** idempotent
 **Tags:** json, parser, filter, query, cli
 **Hash:** `03fb4faac592`
 
@@ -1368,6 +1405,7 @@ Lightweight command-line YAML, JSON, and XML processor
 **Supported:** Ubuntu 24.04+, Debian, Mint, RHEL (EPEL), Rocky, Amazon Linux
 **Methods:** apt (24.04+), dnf, yum, asdf, gitpak, flatpak, snap, github-release
 **Prereqs:** curl|wget (for github-release method)
+**Safety:** idempotent
 **Tags:** yaml, json, xml, parser, cli
 **Hash:** `0e077dbaf047`
 
@@ -1407,6 +1445,7 @@ Kubernetes command-line tool for managing clusters
 **Supported:** All Linux distributions
 **Methods:** apt, github-release, asdf
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubectl, kubernetes, k8s, cluster, devops
 **Hash:** `d77484264fcc`
 
@@ -1446,6 +1485,7 @@ CLI for Argo CD GitOps continuous delivery
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, argocd, gitops, cd
 **Hash:** `401ba9c3d7d8`
 
@@ -1483,6 +1523,7 @@ CLI for installing and managing Cilium in Kubernetes
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, cilium, networking, ebpf, cni
 **Hash:** `ba8995c8645f`
 
@@ -1520,6 +1561,7 @@ Official CLI for Amazon EKS cluster management
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, aws, eks, cluster, eksctl
 **Hash:** `e99a120af14d`
 
@@ -1557,6 +1599,7 @@ GitOps toolkit for Kubernetes continuous delivery
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, gitops, flux, cd
 **Hash:** `54e9999a8c30`
 
@@ -1594,6 +1637,7 @@ The package manager for Kubernetes
 **Supported:** All Linux distributions
 **Methods:** snap, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, helm, charts, package-manager
 **Hash:** `25f0f1043885`
 
@@ -1631,6 +1675,7 @@ CLI for Hubble network observability in Kubernetes
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, hubble, observability, networking
 **Hash:** `9a4b166dc2c1`
 
@@ -1668,6 +1713,7 @@ Plugin manager for kubectl
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, kubectl, plugins, krew
 **Hash:** `7280b6c330a1`
 
@@ -1705,6 +1751,7 @@ CLI for Sealed Secrets encryption in Kubernetes
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, secrets, encryption, sealed-secrets
 **Hash:** `3bb622d14f0e`
 
@@ -1742,6 +1789,7 @@ Kubernetes IDE for managing clusters
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt
 **Prereqs:** curl|wget, gpg
+**Safety:** idempotent
 **Tags:** kubernetes, k8s, lens, ide, cluster, dashboard
 **Hash:** `fb29ac2ca2a5`
 
@@ -1780,6 +1828,7 @@ Free and open-source streaming and recording software
 
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** streaming, recording, obs, video, broadcast
 **Hash:** `27ef3ea8bba2`
 
@@ -1816,6 +1865,7 @@ Free and open-source cross-platform multimedia player
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** video, audio, media, player, vlc, multimedia
 **Hash:** `3cd97b069447`
 
@@ -1855,10 +1905,11 @@ AmneziaWG VPN client: awg/awg-quick tools, amneziawg-go userspace daemon, option
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
 **Prereqs:** curl|wget
 **Requires:** non-root user
+**Safety:** idempotent
 **Tags:** vpn, wireguard, amnezia, amneziawg, awg, dkms
-**Hash:** `33f067d67efd`
+**Hash:** `7bca5413749b`
 
-<!-- tests:get-amneziawg hash:33f067d67efd amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-amneziawg hash:7bca5413749b amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-amneziawg | sh
@@ -1873,6 +1924,7 @@ Automatically restart SSH sessions and tunnels
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** ssh, tunnel, persistent, autossh
 **Hash:** `f4f8e2059e19`
 
@@ -1909,6 +1961,7 @@ Command-line tool for transferring data with URLs
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** http, api, download, transfer, curl
 **Hash:** `e8ece96beeec`
 
@@ -1945,6 +1998,7 @@ Query and control network device driver and hardware settings
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** network, ethernet, driver, hardware, ethtool
 **Hash:** `64d83046a988`
 
@@ -1981,6 +2035,7 @@ TCP/IP packet assembler and analyzer
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** network, packet, tcp, scan, hping
 **Hash:** `fd2fc6ec4337`
 
@@ -2017,6 +2072,7 @@ Network reachability testing utility
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** network, ping, icmp, diagnostic
 **Hash:** `43d1c581c3cb`
 
@@ -2053,6 +2109,7 @@ Network diagnostic tool combining traceroute and ping
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** network, traceroute, ping, diagnostic, mtr
 **Hash:** `3150934a7293`
 
@@ -2089,6 +2146,7 @@ Classic networking utilities (ifconfig, netstat, route)
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** network, ifconfig, netstat, route, arp
 **Hash:** `953551003a9e`
 
@@ -2125,6 +2183,7 @@ Real-time network traffic and bandwidth monitor
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** network, bandwidth, monitor, traffic, nload
 **Hash:** `c2c3e8fbe7a7`
 
@@ -2161,6 +2220,7 @@ Multipurpose relay for bidirectional data transfer
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** relay, socket, proxy, tunnel, socat
 **Hash:** `c7a3d229425e`
 
@@ -2197,6 +2257,7 @@ Command-line internet speed test
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum, github-release
+**Safety:** idempotent
 **Tags:** speed, bandwidth, test, internet, network
 **Hash:** `419dd103f217`
 
@@ -2233,6 +2294,7 @@ Non-interactive SSH password authentication
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** ssh, password, automation, sshpass
 **Hash:** `f44b0b9ff62f`
 
@@ -2269,6 +2331,7 @@ Command-line packet analyzer for network traffic
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** network, packet, capture, sniff, tcpdump
 **Hash:** `a24729255555`
 
@@ -2305,6 +2368,7 @@ User interface to the TELNET protocol
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** network, telnet, remote, protocol
 **Hash:** `f7cb5aab2263`
 
@@ -2341,6 +2405,7 @@ Network file retriever via HTTP/HTTPS/FTP
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** download, http, ftp, wget, transfer
 **Hash:** `4b2d8da28467`
 
@@ -2380,6 +2445,7 @@ Offline office suite for documents, spreadsheets, presentations and PDF forms
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, flatpak, snap
 **Prereqs:** curl|wget, gpg
+**Safety:** idempotent
 **Tags:** office, documents, spreadsheet, presentation, pdf, onlyoffice, msoffice
 **Hash:** `b3cb7bd8557f`
 
@@ -2419,6 +2485,7 @@ Betterbird email client (enhanced Thunderbird fork)
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
 **Methods:** official-tar, flatpak
 **Prereqs:** curl|wget, tar, xz
+**Safety:** idempotent
 **Tags:** email, mail, thunderbird, betterbird
 **Hash:** `88f2ab140598`
 
@@ -2456,6 +2523,7 @@ Open-source note-taking and to-do application
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
 **Methods:** script
 **Prereqs:** curl|wget, bash
+**Safety:** idempotent
 **Tags:** notes, todo, markdown, sync, joplin
 **Hash:** `84b15b755597`
 
@@ -2493,6 +2561,7 @@ Knowledge base and note-taking app built on local Markdown files
 **Supported:** Ubuntu, Debian, Mint, Fedora, RHEL, Rocky, Amazon Linux
 **Methods:** appimage
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** notes, markdown, knowledge, obsidian, pkm
 **Hash:** `065db9321b52`
 
@@ -2532,6 +2601,7 @@ Simple, fast alternative to find
 **Supported:** All Linux distributions
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** find, search, files, fast, fd, modern
 **Hash:** `00bdbc9d1739`
 
@@ -2569,6 +2639,7 @@ General-purpose command-line fuzzy finder
 **Supported:** All Linux distributions
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** fuzzy, search, filter, finder, interactive, fzf
 **Hash:** `3d130231c4ba`
 
@@ -2606,6 +2677,7 @@ Extremely fast recursive text search tool
 **Supported:** All Linux distributions
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** grep, search, regex, fast, recursive, rg
 **Hash:** `85148719215f`
 
@@ -2645,6 +2717,7 @@ Secure password manager and digital vault
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt
 **Prereqs:** curl|wget, gpg
+**Safety:** idempotent
 **Tags:** password, manager, security, vault, 1password
 **Hash:** `32919ba46ad4`
 
@@ -2682,6 +2755,7 @@ Open-source password manager
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** official-deb
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** password, manager, security, vault, bitwarden
 **Hash:** `c3fc80a8e2e8`
 
@@ -2718,6 +2792,7 @@ Common CA certificates for SSL/TLS verification
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** ssl, tls, certificates, ca, trust
 **Hash:** `569d7798998c`
 
@@ -2754,6 +2829,7 @@ CLI utility to build and manage a PKI CA
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** pki, ca, certificates, vpn, openvpn, easy-rsa
 **Hash:** `29fb5ca71b53`
 
@@ -2790,6 +2866,7 @@ Transparent file encryption in Git repositories
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** git, encryption, secrets, crypt, transparent
 **Hash:** `b1ccd36f4635`
 
@@ -2826,6 +2903,7 @@ GNU Privacy Guard for encryption and signing
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** encryption, gpg, pgp, signing, privacy
 **Hash:** `37707c507258`
 
@@ -2862,6 +2940,7 @@ Cryptography toolkit for SSL/TLS protocols
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** ssl, tls, crypto, certificates, encryption
 **Hash:** `df346d22ffa2`
 
@@ -2899,6 +2978,7 @@ Simple and flexible tool for managing encrypted secrets
 **Supported:** All Linux distributions
 **Methods:** github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** secrets, encryption, yaml, json, sops, mozilla
 **Hash:** `521109df263d`
 
@@ -2937,6 +3017,7 @@ OpenSSH server — secure remote access via SSH
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** ssh, remote, server, network, openssh, sshd
 **Hash:** `0e9c6a21cd48`
 
@@ -2975,6 +3056,7 @@ HTTPS transport for APT package downloads
 
 **Supported:** Ubuntu, Debian, Mint
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** apt, https, transport, security
 **Hash:** `67bb3d811550`
 
@@ -3012,6 +3094,7 @@ Resource monitor with advanced CPU, memory, and process stats
 **Supported:** All Linux distributions
 **Methods:** apt, dnf, yum, snap, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** monitor, cpu, memory, process, system, btop
 **Hash:** `cd48279938f0`
 
@@ -3048,6 +3131,7 @@ Interactive process viewer and system monitor
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** monitor, process, system, top, htop
 **Hash:** `1cca3eeaa27e`
 
@@ -3084,6 +3168,7 @@ I/O usage monitor for processes
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** io, disk, monitor, process, iotop
 **Hash:** `cc880f4bf832`
 
@@ -3120,6 +3205,7 @@ FUSE library for AppImage and userspace filesystem support
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** fuse, appimage, filesystem, userspace
 **Hash:** `6054031420af`
 
@@ -3156,6 +3242,7 @@ System process monitoring utilities (ps, top, free, vmstat)
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** process, monitor, ps, top, free, vmstat
 **Hash:** `9f6d7f57479e`
 
@@ -3192,6 +3279,7 @@ Monitor the progress of data through a pipeline
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** progress, pipe, monitor, transfer, pv
 **Hash:** `7a184ba85c72`
 
@@ -3228,6 +3316,7 @@ PPA and repository management tools for APT
 
 **Supported:** Ubuntu, Debian 12, Mint
 **Methods:** apt
+**Safety:** idempotent
 **Tags:** apt, ppa, repository, add-apt-repository
 **Hash:** `34434daf8a8e`
 
@@ -3264,6 +3353,7 @@ System call tracer for debugging and diagnostics
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** debug, trace, syscall, diagnostic, strace
 **Hash:** `bb0ec363ad7e`
 
@@ -3300,6 +3390,7 @@ Execute commands as another user securely
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** sudo, root, privilege, security
 **Hash:** `deb569edc6c3`
 
@@ -3336,6 +3427,7 @@ UUID generation utilities
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** uuid, generate, unique-id
 **Hash:** `5f33a77f3dd3`
 
@@ -3375,6 +3467,7 @@ Accelerated apt package manager wrapper using aria2
 **Supported:** Ubuntu, Mint
 **Methods:** apt
 **Prereqs:** software-properties-common
+**Safety:** idempotent
 **Tags:** apt, fast, aria2, package-manager, accelerator
 **Hash:** `1a24f5949762`
 
@@ -3411,10 +3504,11 @@ Display machine information including hostname, user, and system details
 
 **Supported:** Ubuntu, Debian, RHEL, Rocky, Amazon Linux
 **Prereqs:** hostname
+**Safety:** idempotent
 **Tags:** system, info, hostname, uname
-**Hash:** `e4171ef19cdd`
+**Hash:** `09add1b498dc`
 
-<!-- tests:get-pc-info hash:e4171ef19cdd amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:pass rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pc-info hash:09add1b498dc amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-pc-info | bash
@@ -3426,14 +3520,31 @@ wget -qO- get.rso.dev/get-pc-info | bash
 Fully remove snapd and prevent reinstallation (idempotent)
 
 **Supported:** Ubuntu, Kubuntu, Lubuntu, Xubuntu, Debian
+**Safety:** idempotent
 **Tags:** snap, snapd, ubuntu, kubuntu, lubuntu, remove, purge, cleanup
-**Hash:** `94e11e0dd2bc`
+**Hash:** `4bebf5d18515`
 
-<!-- tests:remove-snap hash:94e11e0dd2bc -->
+<!-- tests:remove-snap hash:4bebf5d18515 -->
 
 ```bash
 wget -qO- get.rso.dev/remove-snap | bash
 # alt: curl -sL get.rso.dev/remove-snap | bash
+```
+
+### tui
+
+Interactive terminal catalog of every get.rso.dev and oneline.sh snippet
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux, Fedora, Arch, macOS
+**Safety:** idempotent
+**Tags:** tui, catalog, menu, search, browse, oneline, interactive
+**Hash:** `b07c5559dc3a`
+
+<!-- tests:tui hash:b07c5559dc3a -->
+
+```bash
+wget -qO- get.rso.dev/tui | bash
+# alt: curl -sL get.rso.dev/tui | bash
 ```
 
 ## Terminal Tools
@@ -3444,6 +3555,7 @@ Programmable completion functions for bash
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** bash, completion, autocomplete, shell
 **Hash:** `b156a065ed22`
 
@@ -3481,6 +3593,7 @@ Cat clone with syntax highlighting and git integration
 **Supported:** All Linux distributions
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** cat, syntax, highlight, git, pager, modern
 **Hash:** `c25ae375a446`
 
@@ -3518,6 +3631,7 @@ Modern ls replacement with colors and icons
 **Supported:** All Linux distributions
 **Methods:** apt, dnf, yum, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** ls, files, directory, colors, icons, modern
 **Hash:** `394ec68c7b92`
 
@@ -3554,6 +3668,7 @@ Terminal multiplexer for persistent sessions
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** terminal, multiplexer, session, screen
 **Hash:** `050a2a8536f9`
 
@@ -3590,6 +3705,7 @@ Tiling terminal emulator for Linux
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** terminal, tiling, emulator, tilix, split
 **Hash:** `67b8c0d654f5`
 
@@ -3627,6 +3743,7 @@ Instant terminal sharing via SSH
 **Supported:** All Linux distributions
 **Methods:** apt, snap, github-release
 **Prereqs:** curl|wget
+**Safety:** idempotent
 **Tags:** terminal, sharing, ssh, tmux, pair-programming
 **Hash:** `ef4f8fe7f278`
 
@@ -3663,6 +3780,7 @@ Terminal multiplexer with window management
 
 **Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** terminal, multiplexer, session, tmux, window
 **Hash:** `adad203440ba`
 
@@ -3701,6 +3819,7 @@ Powerful open-source x86 and AMD64 virtualization
 
 **Supported:** Ubuntu, Debian, RHEL, Rocky
 **Methods:** apt, dnf, yum
+**Safety:** idempotent
 **Tags:** vm, virtualization, virtualbox, oracle, hypervisor
 **Hash:** `50cb3642cd9a`
 
@@ -3739,10 +3858,11 @@ wget -qO- get.rso.dev/get-virtualbox | sh -s -- --update
 
 Display PC information including OS, CPU, RAM, and system details
 
+**Safety:** idempotent
 **Tags:** system, info, windows, hardware
-**Hash:** `480f70c4786b`
+**Hash:** `c1f82b58d9ed`
 
-<!-- tests:get-pc-info hash:480f70c4786b -->
+<!-- tests:get-pc-info hash:09add1b498dc amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')

@@ -27,6 +27,17 @@ wget -qO- get.rso.dev/get-jq | sh -s -- --method=github-release
 wget -qO- get.rso.dev/get-jq | sh -s -- --update
 ```
 
+## Browse From the Terminal
+
+```bash
+curl -sL get.rso.dev/tui | bash
+# or: wget -qO- get.rso.dev/tui | bash
+```
+
+Opens an interactive catalog of every get.rso.dev script and every oneline.sh snippet: categories, items and a preview side by side, live search with `/`, `1`/`2`/`0` to switch between get.rso.dev, oneline.sh and both. Enter shows the exact command and only runs it after you press `y`; `s` opens the script source in a pager first, `c` copies the command, `e` lets you edit it before running.
+
+It is one pure-bash file ([sh/tui.sh](sh/tui.sh)) with no binaries, so you can read it before running it: `curl -sL get.rso.dev/tui | less`. Needs bash 3.2+, `stty`, `awk` and `curl` or `wget`.
+
 ## Repository Structure
 
 ```

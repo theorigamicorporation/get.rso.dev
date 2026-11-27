@@ -27,7 +27,7 @@
 # (default https://hs.theorigamicorporation.com). Without --authkey it prints a login
 # link to open in a browser (SSO); with --authkey it registers non-interactively.
 # =============================================================================
-SCRIPT_VERSION="0.1"
+SCRIPT_VERSION="0.2"
 SCRIPT_NAME="GET TAILSCALE"
 
 ###########################
@@ -54,6 +54,7 @@ OPT_LOGIN_SERVER="$DEFAULT_LOGIN_SERVER"
 OPT_AUTHKEY=""
 OPT_HOSTNAME=""
 OPT_EXIT_NODE=""
+OPT_OPERATOR=""
 
 _DISTRO_FAMILY=""
 _DISTRO_ID=""
@@ -97,6 +98,8 @@ Options:
       --authkey=KEY         Pre-auth key for --join (skips the browser login)
       --hostname=NAME       Device name for --join
       --exit-node=NODE      Route all traffic through NODE after --join (e.g. dc01-router)
+      --operator=USER       Local user allowed to control tailscale without sudo (default:
+                            the user who ran the script; 'none' to skip)
   -h, --help                Show this help message
   -v, --version             Show script version
 
@@ -121,6 +124,7 @@ parse_args() {
             --authkey=*)       OPT_AUTHKEY="${1#*=}"; OPT_JOIN=true; shift ;;
             --hostname=*)      OPT_HOSTNAME="${1#*=}"; shift ;;
             --exit-node=*)     OPT_EXIT_NODE="${1#*=}"; shift ;;
+            --operator=*)      OPT_OPERATOR="${1#*=}"; shift ;;
             -h|--help)         usage; exit 0 ;;
             -v|--version)      printf '%s %s\n' "$SCRIPT_NAME" "$SCRIPT_VERSION"; exit 0 ;;
             *)                 log "Unknown option: $1" "ERR"; usage; exit 1 ;;
@@ -346,6 +350,23 @@ verify_install() {
     log "$TOOL_NAME installed successfully: $_v" "INFO"
 }
 
+# Without an operator only root can talk to tailscaled, so the tray, `tailscale up` and
+# exit-node switching all need sudo on a desktop. The operator is the person who ran the
+# script: $USER when they ran it themselves (this script sudo's per command), $SUDO_USER
+# when it was started with `sudo sh`. Plain root (servers, containers) gets none.
+operator_user() {
+    case "$OPT_OPERATOR" in
+        none) return 0 ;;
+        "") ;;
+        *) printf '%s' "$OPT_OPERATOR"; return 0 ;;
+    esac
+    if [ "$(id -u)" -ne 0 ]; then
+        id -un
+    elif [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != root ]; then
+        printf '%s' "$SUDO_USER"
+    fi
+}
+
 join_tailnet() {
     [ "$OPT_JOIN" = true ] || return 0
     ensure_sudo
@@ -353,6 +374,8 @@ join_tailnet() {
     set -- up --login-server "$OPT_LOGIN_SERVER" --accept-routes
     [ -n "$OPT_AUTHKEY" ] && set -- "$@" --authkey "$OPT_AUTHKEY"
     [ -n "$OPT_HOSTNAME" ] && set -- "$@" --hostname "$OPT_HOSTNAME"
+    _operator=$(operator_user)
+    [ -n "$_operator" ] && set -- "$@" --operator "$_operator"
     [ -z "$OPT_AUTHKEY" ] && log "Open the link below and sign in with your company account" "INFO"
     $_SUDO_CMD "$TOOL_CMD" "$@"
     if [ -n "$OPT_EXIT_NODE" ]; then

@@ -2334,9 +2334,9 @@ WireGuard mesh VPN client, with optional login to the TOC Headscale
 **Prereqs:** curl|wget
 **Safety:** idempotent
 **Tags:** vpn, wireguard, tailscale, headscale, mesh, zero-trust
-**Hash:** `9617186e94b0`
+**Hash:** `d5a5737d6d82`
 
-<!-- tests:get-tailscale hash:9617186e94b0 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-tailscale hash:d5a5737d6d82 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
 
 ```bash
 wget -qO- get.rso.dev/get-tailscale | sh

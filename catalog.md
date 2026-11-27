@@ -2325,6 +2325,44 @@ wget -qO- get.rso.dev/get-sshpass | sh -s -- --update
 # alt: curl -sL get.rso.dev/get-sshpass | sh -s -- --update
 ```
 
+### get-tailscale
+
+WireGuard mesh VPN client, with optional login to the TOC Headscale
+
+**Supported:** Ubuntu, Debian, Mint, RHEL, Rocky, Amazon Linux
+**Methods:** apt, dnf, yum, static
+**Prereqs:** curl|wget
+**Safety:** idempotent
+**Tags:** vpn, wireguard, tailscale, headscale, mesh, zero-trust
+**Hash:** `9617186e94b0`
+
+<!-- tests:get-tailscale hash:9617186e94b0 amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+
+```bash
+wget -qO- get.rso.dev/get-tailscale | sh
+# alt: curl -sL get.rso.dev/get-tailscale | sh
+```
+
+**Options:**
+
+| Flag | Description |
+|------|-------------|
+| `-i`, `--interactive` | Show interactive menu to pick install method |
+| `-m`, `--method=METHOD` | Use a specific install method |
+| `-u`, `--update` | Update to latest version if already installed |
+| `-f`, `--force` | Force reinstall regardless of current version |
+| `-h`, `--help` | Show help message |
+
+```bash
+# Install via specific method
+wget -qO- get.rso.dev/get-tailscale | sh -s -- --method=github-release
+# alt: curl -sL get.rso.dev/get-tailscale | sh -s -- --method=github-release
+
+# Update existing install
+wget -qO- get.rso.dev/get-tailscale | sh -s -- --update
+# alt: curl -sL get.rso.dev/get-tailscale | sh -s -- --update
+```
+
 ### get-tcpdump
 
 Command-line packet analyzer for network traffic
@@ -3862,7 +3900,7 @@ Display PC information including OS, CPU, RAM, and system details
 **Tags:** system, info, windows, hardware
 **Hash:** `c1f82b58d9ed`
 
-<!-- tests:get-pc-info hash:09add1b498dc amazonlinux-2023:pass debian-12:pass debian-13:pass rockylinux-rockylinux-10:fail rockylinux-rockylinux-9:pass ubuntu-22.04:pass ubuntu-24.04:pass ubuntu-25.04:pass -->
+<!-- tests:get-pc-info hash:c1f82b58d9ed -->
 
 ```powershell
 iex (New-Object Net.WebClient).DownloadString('https://get.rso.dev/ps/get-pc-info')
